@@ -242,11 +242,13 @@ yarn test-ingest
 
 MIT License - see [LICENSE](LICENSE) for details
 
+---
 ## 🔗 Related Projects
 
 - [Trading Strategies](https://github.com/yourusername/trading-strategies)
 - [Market Making Bot](https://github.com/yourusername/market-maker)
 - [Analytics Dashboard](https://github.com/yourusername/analytics-dashboard)
+---
 
 ## 📊 Performance Metrics
 

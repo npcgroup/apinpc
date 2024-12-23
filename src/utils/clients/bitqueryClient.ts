@@ -1,4 +1,4 @@
-export class DuneClient {
+export class BitqueryClient {
   constructor(private apiKey: string) {}
   // Implementation
 } 

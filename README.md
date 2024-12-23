@@ -2,9 +2,69 @@
 
 A comprehensive enterprise-grade platform for aggregating, analyzing, and deriving insights from blockchain data across multiple protocols, chains, and data sources.
 
-![Architecture Overview](./docs/assets/architecture.png)
+```mermaid
+graph TB
+subgraph Data Sources
+DL[DeFi Llama]
+DA[Dune Analytics]
+BQ[Bitquery]
+HL[Hyperliquid]
+TG[The Graph]
+FA[Footprint Analytics]
+end
+subgraph Ingestion Layer
+WS[WebSocket Service]
+DI[Data Ingestion Service]
+RL[Rate Limiter]
+end
+subgraph Processing Layer
+VP[Validation Pipeline]
+NP[Normalization Pipeline]
+QS[Quality Scoring]
+AD[Anomaly Detection]
+end
+subgraph Storage Layer
+RC[Redis Cache]
+TS[Time Series DB]
+SB[Supabase]
+end
+subgraph Analytics Engine
+MA[Market Analysis]
+FA2[Funding Arbitrage]
+LM[Liquidity Monitoring]
+VM[Volume Metrics]
+end
+subgraph API Layer
+REST[REST API]
+WS2[WebSocket API]
+GQL[GraphQL API]
+end
+%% Data flow connections
+DL & DA & BQ & HL & TG & FA --> WS & DI
+WS & DI --> RL
+RL --> VP
+VP --> NP
+NP --> QS
+QS --> AD
+AD --> RC
+RC --> TS
+TS --> SB
+SB --> MA & FA2 & LM & VM
+MA & FA2 & LM & VM --> REST & WS2 & GQL
+%% Styling
+classDef source fill:#f9f,stroke:#333,stroke-width:2px
+classDef service fill:#bbf,stroke:#333,stroke-width:2px
+classDef storage fill:#bfb,stroke:#333,stroke-width:2px
+classDef analytics fill:#ffb,stroke:#333,stroke-width:2px
+classDef api fill:#fbb,stroke:#333,stroke-width:2px
+class DL,DA,BQ,HL,TG,FA source
+class WS,DI,RL,VP,NP,QS,AD service
+class RC,TS,SB storage
+class MA,FA2,LM,VM analytics
+class REST,WS2,GQL api
+```
 
-## 🌟 Features
+## Features
 
 ### Data Collection & Processing
 - **Multi-Source Integration**

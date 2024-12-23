@@ -1,4 +1,4 @@
-export class DuneClient {
+export class TheGraphClient {
   constructor(private apiKey: string) {}
   // Implementation
 } 

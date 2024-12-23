@@ -1,4 +1,4 @@
-# Blockchain Analytics Platform
+# NPC Onchain Data Ingestion Platform
 
 A comprehensive enterprise-grade platform for aggregating, analyzing, and deriving insights from blockchain data across multiple protocols, chains, and data sources.
 

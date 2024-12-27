@@ -1,4 +1,4 @@
-# Blockchain Analytics Platform
+# NPC Onchain Data Ingestion Platform
 
 A comprehensive enterprise-grade platform for aggregating, analyzing, and deriving insights from blockchain data across multiple protocols, chains, and data sources.
 
@@ -242,11 +242,13 @@ yarn test-ingest
 
 MIT License - see [LICENSE](LICENSE) for details
 
+<!--
 ## 🔗 Related Projects
 
 - [Trading Strategies](https://github.com/yourusername/trading-strategies)
 - [Market Making Bot](https://github.com/yourusername/market-maker)
 - [Analytics Dashboard](https://github.com/yourusername/analytics-dashboard)
+-->
 
 ## 📊 Performance Metrics
 

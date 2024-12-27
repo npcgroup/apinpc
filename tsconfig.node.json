@@ -2,16 +2,19 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
     "outDir": "dist",
     "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@api/*": [".api/apis/*"]
     }
   },
   "include": [
-    "scripts/**/*.ts",
-    "src/**/*.ts"
+    "src/**/*",
+    "scripts/**/*",
+    ".api/**/*"
   ],
   "exclude": [
     "node_modules",

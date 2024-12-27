@@ -5,11 +5,16 @@ async function main() {
   try {
     const service = new DataIngestionService()
     
+    // Test Supabase connection first
+    const isConnected = await service.testConnection()
+    if (!isConnected) {
+      throw new Error('Failed to connect to Supabase')
+    }
+    
     for (const [symbol, address] of Object.entries(TOKEN_ADDRESSES)) {
       console.log(`Processing ${symbol}...`)
       
       try {
-        // Fetch data from both sources in parallel
         const [birdeyeData, fundingRate] = await Promise.all([
           service.fetchBirdeyeData(address),
           service.fetchHyperLiquidFunding(symbol)
@@ -20,7 +25,7 @@ async function main() {
           timestamp: new Date().toISOString(),
           mark_price: birdeyeData.price,
           funding_rate: fundingRate,
-          open_interest: 0, // Will be updated from HyperLiquid if available
+          open_interest: 0,
           volume_24h: birdeyeData.volume24h,
           price_change_24h: birdeyeData.priceChange24h,
           total_supply: birdeyeData.totalSupply,
@@ -28,14 +33,14 @@ async function main() {
           liquidity: birdeyeData.liquidity,
           spot_price: birdeyeData.price,
           spot_volume_24h: birdeyeData.volume24h,
-          txns_24h: 0, // Not available from Birdeye
+          txns_24h: 0,
           holder_count: birdeyeData.holderCount
         }
 
         await service.ingestMetrics([metric])
-        console.log(`Successfully ingested data for ${symbol}`)
+        console.log(`✅ Successfully ingested data for ${symbol}`)
       } catch (error) {
-        console.error(`Error processing ${symbol}:`, error)
+        console.error(`❌ Error processing ${symbol}:`, error)
       }
     }
   } catch (error) {

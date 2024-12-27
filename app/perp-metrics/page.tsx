@@ -6,7 +6,7 @@ import type { Database } from '@/types/supabase'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
 import { format, parseISO } from 'date-fns'
 import { getCachedHolderCount, setCachedHolderCount } from '@/utils/cache'
-import { TOKEN_ADDRESSES, TokenSymbol } from '@/config/tokens'
+import { TOKEN_ADDRESSES, TokenSymbol } from '../src/config/tokens'
 
 // Update PerpMetric interface
 interface PerpMetric {
@@ -236,10 +236,12 @@ export function PerpMetricsPage() {
         .from('perpetual_metrics')
         .select('*')
         .order('timestamp', { ascending: false })
+        .limit(100) // Limit to recent data for better performance
 
       if (latestError) throw latestError
 
       if (latest) {
+        // Group by symbol and get latest entry for each
         const latestBySymbol = latest.reduce<Record<string, PerpMetric>>((acc, curr) => {
           if (!acc[curr.symbol] || new Date(curr.timestamp) > new Date(acc[curr.symbol].timestamp)) {
             acc[curr.symbol] = curr
@@ -247,19 +249,7 @@ export function PerpMetricsPage() {
           return acc
         }, {})
 
-        // Fetch holder counts for each token
-        const activeTokensWithHolders = await Promise.all(
-          Object.values(latestBySymbol).map(async (token) => {
-            const address = TOKEN_ADDRESSES[token.symbol as TokenSymbol]
-            if (address) {
-              const holderCount = await fetchHolderCount(address)
-              return { ...token, holder_count: holderCount }
-            }
-            return { ...token, holder_count: null }
-          })
-        )
-
-        const sortedTokens = activeTokensWithHolders.sort((a, b) => {
+        const sortedTokens = Object.values(latestBySymbol).sort((a, b) => {
           if (!a.market_cap && !b.market_cap) return 0
           if (!a.market_cap) return 1
           if (!b.market_cap) return -1
@@ -268,14 +258,13 @@ export function PerpMetricsPage() {
 
         setMetrics(sortedTokens)
 
+        // Set initial selected token if none selected
         if (!selectedToken && sortedTokens.length > 0) {
-          const firstActiveToken = sortedTokens.find(t => t.spot_price > 0)
-          if (firstActiveToken) {
-            setSelectedToken(firstActiveToken.symbol)
-          }
+          setSelectedToken(sortedTokens[0].symbol)
         }
       }
 
+      // Fetch historical data if token is selected
       if (selectedToken) {
         await fetchHistoricalData()
       }

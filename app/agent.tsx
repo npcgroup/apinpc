@@ -7,8 +7,6 @@ import {
 } from '../src/utils/metrics'
 import { handleNaturalLanguageQuery } from '../src/utils/naturalLanguageQuery'
 import { validateConfig } from '../config/env'
-import { createClient } from '@supabase/supabase-js'
-import type { Database } from '../src/types/supabase'
 
 interface HistoryEntry {
   type: 'system' | 'user' | 'error' | 'ascii' | 'success' | 'chart' | 'link' | 'metric' | 'analytics' | 'protocol' | 'defi' | 'database' | 'table' | 'warning';
@@ -142,7 +140,6 @@ interface Commands {
   'list-endpoints': (context: CommandContext) => HistoryEntry;
   'ingest-api': () => Promise<HistoryEntry>;
   curl: (context: CommandContext) => Promise<HistoryEntry>;
-  'visualize-data': (dataType: string) => Promise<HistoryEntry>;
   'get-my-perps': (context: CommandContext) => Promise<HistoryEntry>;
 }
 
@@ -1305,40 +1302,6 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
       }
     },
 
-    // Add visualization helper
-    'visualize-data': async (dataType: string) => {
-      if (!dataType) {
-        return {
-          type: 'error',
-          content: 'Please specify data type to visualize'
-        };
-      }
-
-      try {
-        // Mock data for demonstration
-        const mockData = [
-          { label: 'Sample 1', value: 100 },
-          { label: 'Sample 2', value: 200 },
-          { label: 'Sample 3', value: 150 }
-        ];
-        
-        // Generate visualization with mock data
-        const chartData = generateVisualization(mockData);
-
-        return {
-          type: 'chart',
-          content: `${dataType} Visualization`,
-          data: chartData
-        };
-
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to generate visualization: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
     'get-my-perps': async (context: CommandContext) => {
       try {
         // Navigate to the perp metrics page
@@ -1783,21 +1746,6 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
     return undefined;
   };
 
-  // Add visualization helper
-  const generateVisualization = (data: any) => {
-    // This would integrate with your preferred charting library
-    // For example, using Chart.js or D3.js
-    return {
-      type: 'bar', // or 'line', 'pie', etc.
-      data: {
-        labels: data.map((item: any) => item.label || ''),
-        datasets: [{
-          label: 'Value',
-          data: data.map((item: any) => item.value || 0)
-        }]
-      }
-    };
-  };
 
   return (
     <div

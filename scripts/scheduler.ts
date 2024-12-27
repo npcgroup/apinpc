@@ -1,6 +1,12 @@
 import { CronJob } from 'cron'
 import { exec } from 'child_process'
 import { promisify } from 'util'
+import dotenv from 'dotenv'
+import path from 'path'
+
+// Load environment variables
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
+dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
 const execAsync = promisify(exec)
 
@@ -23,9 +29,9 @@ async function runIngestion() {
       console.log(`ℹ️ Last successful run: ${lastRunTime.toISOString()}`)
     }
 
-    const { stdout, stderr } = await execAsync('npm run ingest:all')
+    const { stdout, stderr } = await execAsync('npm run ingest')
     
-    if (stderr) {
+    if (stderr && !stderr.includes('DeprecationWarning')) {
       console.error('⚠️ Ingestion warnings:', stderr)
     }
     

@@ -1,51 +1,36 @@
-export interface DexScreenerPair {
-  chainId: string
-  dexId: string
-  url: string
-  pairAddress: string
-  baseToken: {
-    address: string
-    name: string
-    symbol: string
-  }
-  priceUsd: string
-  priceChange24h: string
-  volume24h: string
-  liquidity: {
-    usd: string
-  }
-  txns: {
-    h24: number
+interface BirdeyeTokenInfo {
+  price: string | number
+  volume24h: string | number
+  priceChange24h: string | number
+  marketCap: string | number
+  totalSupply: string | number
+  holderCount: string | number
+  liquidity: string | number
+  [key: string]: unknown // Allow for additional properties
+}
+
+export interface BirdeyeApiResponse {
+  success: boolean
+  data: {
+    [key: string]: unknown
+    data: BirdeyeTokenInfo
   }
 }
 
-export interface DexScreenerResponse {
-  pairs: DexScreenerPair[]
-}
-
-export interface HyperLiquidAsset {
-  name: string
-  funding: string
-  volume24h: string
-  openInterest: string
-  markPrice: string
-}
-
-export interface HyperLiquidResponse {
-  assetCtxs: HyperLiquidAsset[]
+export interface BirdeyeTokenData {
+  price: number
+  volume24h: number
+  priceChange24h: number
+  marketCap: number
+  totalSupply: number
+  holderCount: number
+  liquidity: number
 }
 
 export interface RawData {
   timestamp: string
-  hyperliquid: {
-    [symbol: string]: HyperLiquidAsset
-  }
-  dexscreener: {
-    [symbol: string]: DexScreenerPair
-  }
-  solscan: {
-    [symbol: string]: {
-      holder_count: number
-    }
-  }
+  hyperliquid: Record<string, any>
+  dexscreener: Record<string, any>
+  birdeye: Record<string, any>
+  solscan: Record<string, any>
 } 

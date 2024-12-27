@@ -1,22 +1,14 @@
-'use client'
-
 import React, { useState, useRef, useEffect } from 'react'
-import { Terminal as LucideTerminal, Send, X, Maximize2, Minimize2, Network } from 'lucide-react'
-import { DuneClient } from '@/utils/duneClient'
-import { FlipsideClient } from '@/utils/flipsideClient'
+import { Terminal as LucideTerminal, Send, X, Maximize2, Minimize2 } from 'lucide-react'
 import { 
-  formatDuneMetrics, 
-  formatFlipsideMetrics, 
-  generateCharts,
   aggregateProtocolData,
   trackBlockchainMetrics,
   formatNumber
-} from '@/utils/metrics'
-import { handleNaturalLanguageQuery } from '../utils/naturalLanguageQuery';
-import { getApiKeys } from '../utils/env';
-import { validateConfig } from '../config/env';
+} from '../src/utils/metrics'
+import { handleNaturalLanguageQuery } from '../src/utils/naturalLanguageQuery'
+import { validateConfig } from '../config/env'
 import { createClient } from '@supabase/supabase-js'
-import type { Database } from '@/types/supabase'
+import type { Database } from '../src/types/supabase'
 
 interface HistoryEntry {
   type: 'system' | 'user' | 'error' | 'ascii' | 'success' | 'chart' | 'link' | 'metric' | 'analytics' | 'protocol' | 'defi' | 'database' | 'table' | 'warning';
@@ -148,9 +140,9 @@ interface Commands {
   'api-help': () => HistoryEntry;
   'test-endpoint': (context: CommandContext) => Promise<HistoryEntry>;
   'list-endpoints': (context: CommandContext) => HistoryEntry;
-  'ingest-api': (context: CommandContext) => Promise<HistoryEntry>;
+  'ingest-api': () => Promise<HistoryEntry>;
   curl: (context: CommandContext) => Promise<HistoryEntry>;
-  'visualize-data': (context: CommandContext) => Promise<HistoryEntry>;
+  'visualize-data': (dataType: string) => Promise<HistoryEntry>;
   'get-my-perps': (context: CommandContext) => Promise<HistoryEntry>;
 }
 
@@ -241,12 +233,11 @@ const API_ENDPOINTS: ApiEndpoint[] = [
 ];
 
 const ASCII_LOGO = `
-     █████╗ ██╗ ██████╗ █████╗ ██████  █████╗  ██╗     
-    ██╔══██╗██║██╔════╝██╔══██╗██╔══██╗██╔══██╗ ██║     
-    ███████║█║██║     █████��█║██████╔╝██████╔╝ ██║                
-    ██╔══██║██║██║     ██╔══██║██╔══██╗██╔══██║ ██║     
-    ██║  ██║██║╚█████╗██║  ██║████╔╝██║  ██║     
-    ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝ ╚╝
+:::= === :::====  :::===== :::==== :::===== :::====  :::======= 
+:::===== :::  === :::      :::==== :::      :::  === ::: === ===
+======== =======  ===        ===   ======   =======  === === ===
+=== ==== ===      ===        ===   ===      === ===  ===     ===
+===  === ===       =======   ===   ======== ===  === ===     ===
 `
 
 const STARTUP_MESSAGES = [
@@ -256,62 +247,6 @@ const STARTUP_MESSAGES = [
   "NEURAL INTERFACE CALIBRATING...",
   "DIMENSIONAL PROTOCOL ENGAGING..."
 ]
-
-// Add at the top with other utility functions
-function formatQueryResult(data: any): string {
-  if (!data) return 'No data available';
-  
-  if (Array.isArray(data)) {
-    return data.map(row => JSON.stringify(row, null, 2)).join('\n');
-  }
-  
-  if (typeof data === 'object') {
-    return Object.entries(data)
-      .map(([key, value]) => `${key}: ${formatValue(value)}`)
-      .join('\n');
-  }
-  
-  return String(data);
-}
-
-function formatValue(value: any): string {
-  if (typeof value === 'number') {
-    return new Intl.NumberFormat('en-US', {
-      notation: 'compact',
-      maximumFractionDigits: 2
-    }).format(value);
-  }
-  return String(value);
-}
-
-// Add type guard for environment variables
-function getRequiredEnvVar(name: string): string {
-  // Check all possible environment variable formats
-  const value = process.env[name] || 
-                process.env[`NEXT_${name}`] || 
-                process.env[`NEXT_PUBLIC_${name}`] ||
-                process.env[name.replace('NEXT_PUBLIC_', '')];
-
-  if (!value) {
-    console.error(`Environment variables available:`, Object.keys(process.env));
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-}
-
-// Add a utility function for consistent date formatting
-function formatDate(date: Date): string {
-  // Use UTC to ensure consistent formatting between server and client
-  return new Date(date).toLocaleString('en-US', {
-    timeZone: 'UTC',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-}
 
 // Update the getApiKeys function to handle errors gracefully
 function getApiKeysWithFallback() {
@@ -405,42 +340,6 @@ const formatTableData = (data: Record<string, unknown>[]) => {
   };
 };
 
-// First, update the PerpetualMetric interface
-interface PerpetualMetric {
-  id: number;
-  symbol: string;
-  timestamp: string;
-  funding_rate: number;
-  perp_volume_24h: number;
-  open_interest: number;
-  mark_price: number;
-  spot_price: number;
-  spot_volume_24h: number;
-  liquidity: number;
-  market_cap: number;
-  total_supply: number;
-  price_change_24h: number;
-  txns_24h: number;
-}
-
-// Update the Supabase client initialization
-const supabaseClient = (() => {
-  let instance: ReturnType<typeof createClient<Database>> | null = null;
-  
-  return () => {
-    if (!instance) {
-      instance = createClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-        process.env.NEXT_PUBLIC_SUPABASE_KEY || ''
-      );
-    }
-    return instance;
-  };
-})();
-
-// Use non-null assertion for Supabase client
-const supabase = supabaseClient()!;
-
 // Keep your MetricData interface definition
 interface MetricData {
   name: string;
@@ -531,33 +430,6 @@ const CabalTerminal = () => {
 
     validateEnvironment();
   }, []);
-
-  const COMMAND_SUGGESTIONS: CommandSuggestion[] = [
-    {
-      command: "analyze",
-      description: "Analyze blockchain/protocol metrics in natural language"
-    },
-    {
-      command: "compare", 
-      description: "Compare multiple protocols or chains"
-    },
-    {
-      command: "track",
-      description: "Track specific metrics over time"
-    },
-    {
-      command: "alert",
-      description: "Set alerts for specific conditions"
-    },
-    {
-      command: "visualize",
-      description: "Generate charts and visualizations"
-    },
-    {
-      command: 'api-docs',
-      description: 'View available API endpoints and documentation'
-    }
-  ];
 
   const processNaturalLanguage = async (query: string): Promise<HistoryEntry[]> => {
     try {
@@ -673,7 +545,7 @@ clear         - Clear terminal
 help          - Show this help message`
     }),
     
-    'create-cabal': (context: CommandContext) => {
+    'create-cabal': (context: CommandContext): HistoryEntry | undefined => {
       const steps = [
         {
           prompt: 'Enter cabal name (must be unique):',
@@ -777,6 +649,7 @@ Type 'help' to see available commands.
           };
         }
       }
+      return undefined;
     },
 
     'list-cabals': (context: CommandContext) => ({
@@ -809,7 +682,7 @@ Type 'help' to see available commands.
       }
     },
 
-    'create-proposal': (context: CommandContext) => {
+    'create-proposal': (context: CommandContext): HistoryEntry | undefined => {
       if (!context.state.currentCabal) {
         return {
           type: 'error',
@@ -842,6 +715,7 @@ Tips:
       }
 
       // ... handle proposal creation steps
+      return undefined;
     },
 
     'view-agent': (context: CommandContext) => {
@@ -1082,7 +956,7 @@ ${message.length > 0 ? `"${message}"` : 'Please provide a message to interact wi
     },
 
     'analyze-protocol': async (context: CommandContext) => {
-      const [protocol, timeframe = '24h'] = context.args;
+      const [protocol] = context.args;
       if (!protocol) {
         return {
           type: 'error',
@@ -1091,9 +965,8 @@ ${message.length > 0 ? `"${message}"` : 'Please provide a message to interact wi
       }
 
       try {
-        // Aggregate data from multiple sources
-        const protocolData = await aggregateProtocolData(protocol, timeframe);
-
+        // Add default timeframe of '24h'
+        const protocolData = await aggregateProtocolData(protocol, '24h');
         return {
           type: 'protocol',
           content: `Analysis for ${protocol}`,
@@ -1102,17 +975,16 @@ ${message.length > 0 ? `"${message}"` : 'Please provide a message to interact wi
             ...protocolData
           }
         };
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      } catch (error) {
         return {
           type: 'error',
-          content: `Failed to analyze protocol: ${errorMessage}`
+          content: `Failed to analyze protocol: ${error instanceof Error ? error.message : 'Unknown error'}`
         };
       }
     },
 
     'track-metrics': async (context: CommandContext) => {
-      const [metric, ...filters] = context.args;
+      const [metric] = context.args;
       if (!metric) {
         return {
           type: 'error',
@@ -1121,23 +993,26 @@ ${message.length > 0 ? `"${message}"` : 'Please provide a message to interact wi
       }
 
       try {
-        const metricData = await trackBlockchainMetrics(metric, filters);
-        
+        const metricData = await trackBlockchainMetrics(metric, []);
         return {
           type: 'metric',
           content: `Tracking ${metric}`,
-          metrics: metricData.map(m => ({
+          metrics: metricData.map((m: { 
+            name: string;
+            value: any;
+            change?: string;
+            trend?: 'up' | 'down' | 'neutral';
+          }) => ({
             label: m.name,
             value: String(m.value),
             change: m.change,
             trend: m.trend
           }))
         };
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      } catch (error) {
         return {
           type: 'error',
-          content: `Failed to track metrics: ${errorMessage}`
+          content: `Failed to track metrics: ${error instanceof Error ? error.message : 'Unknown error'}`
         };
       }
     },
@@ -1167,27 +1042,27 @@ ${message.length > 0 ? `"${message}"` : 'Please provide a message to interact wi
         };
       }
 
+      if (!['dune', 'flipside', 'defillama'].includes(service)) {
+        return {
+          type: 'error',
+          content: 'Invalid service. Available services: dune, flipside, defillama'
+        };
+      }
+
       try {
-        const apiKeys = getApiKeys();
+        const apiKeys = getApiKeysWithFallback();
+        // Type assertion for service
+        const apiKey = apiKeys[service as keyof typeof apiKeys];
         const result = await handleNaturalLanguageQuery(
           service as 'dune' | 'flipside' | 'defillama',
           question,
-          {
-            apiKey: service === 'dune' ? apiKeys.dune : apiKeys.flipside,
-            chain: 'ethereum'
-          }
+          { apiKey }
         );
-
-        if (result.error) {
-          return {
-            type: 'error',
-            content: `Failed to get answer: ${result.error}`
-          };
-        }
 
         return {
           type: 'success',
-          content: formatQueryResult(result.data)
+          content: result.answer,
+          data: result.data
         };
       } catch (error) {
         return {
@@ -1388,9 +1263,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
       }
     },
 
-    'ingest-api': async (context: CommandContext) => {
-      // Implement API data ingestion logic here
-      // For now, return a placeholder response
+    'ingest-api': async () => {
       return {
         type: 'system',
         content: 'API data ingestion logic not implemented yet'
@@ -1415,15 +1288,12 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
           throw new Error(result.error);
         }
 
-        const db = await connectToDatabase();
+        // Format the data without database operations for now
         const data = Array.isArray(result.data) ? result.data : [result.data];
         
-        const createTableSQL = createTableSchema(data);
-        await db.query(createTableSQL, []);
-
         return {
           type: 'database',
-          content: 'API Data Ingested Successfully',
+          content: 'API Data Retrieved Successfully',
           tableData: formatTableData(data)
         };
 
@@ -1436,9 +1306,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
     },
 
     // Add visualization helper
-    'visualize-data': async (context: CommandContext) => {
-      const [dataType] = context.args;
-      
+    'visualize-data': async (dataType: string) => {
       if (!dataType) {
         return {
           type: 'error',
@@ -1447,8 +1315,6 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
       }
 
       try {
-        // Fetch latest data from database
-        const db = await connectToDatabase();
         // Mock data for demonstration
         const mockData = [
           { label: 'Sample 1', value: 100 },
@@ -1456,7 +1322,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
           { label: 'Sample 3', value: 150 }
         ];
         
-        // Generate visualization with actual data
+        // Generate visualization with mock data
         const chartData = generateVisualization(mockData);
 
         return {
@@ -1649,7 +1515,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
   }
 
   // Update the renderHistoryEntry function
-  const renderHistoryEntry = (entry: HistoryEntry) => {
+  const renderHistoryEntry = (entry: HistoryEntry): JSX.Element | undefined => {
     switch(entry.type) {
       case 'chart':
         return (
@@ -1914,35 +1780,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
 
       // ... existing cases ...
     }
-  };
-
-  // Add database connection utility
-  const connectToDatabase = async () => {
-    // In a real implementation, you'd use your preferred database library
-    // This is a mock implementation for demonstration
-    return {
-      async query(sql: string, params: any[]) {
-        console.log('Executing query:', sql, params);
-        return true;
-      }
-    };
-  };
-
-  // Add function to create table schema
-  const createTableSchema = (data: any) => {
-    const columns = Object.keys(data[0] || {}).map(key => {
-      const value = data[0][key];
-      const type = typeof value === 'number' ? 'NUMERIC' :
-                   typeof value === 'boolean' ? 'BOOLEAN' :
-                   'TEXT';
-      return `${key} ${type}`;
-    });
-    
-    return `CREATE TABLE IF NOT EXISTS api_data (
-      id SERIAL PRIMARY KEY,
-      ${columns.join(',\n      ')},
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )`;
+    return undefined;
   };
 
   // Add visualization helper
@@ -2024,9 +1862,11 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
             }`}
           >
             {entry.type === 'user' ? '> ' : ''}
-            <pre className="font-mono">
-              {entry.content}
-            </pre>
+            {renderHistoryEntry(entry) || (
+              <pre className="whitespace-pre-wrap font-mono">
+                {entry.content}
+              </pre>
+            )}
           </div>
         ))}
       </div>
@@ -2060,7 +1900,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
               value={input}
               onChange={handleInputChange}
               onFocus={() => setShowSuggestions(true)}
-              onBlur={(e) => {
+              onBlur={() => {
                 // Delay hiding suggestions to allow for clicks
                 setTimeout(() => setShowSuggestions(false), 200)
               }}
@@ -2080,5 +1920,5 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
     </div>
   )
 }
-
 export default CabalTerminal
+

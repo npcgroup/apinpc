@@ -1,29 +1,46 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
 import { format, parseISO } from 'date-fns'
+import { getCachedHolderCount, setCachedHolderCount } from '@/utils/cache'
+import { TOKEN_ADDRESSES, TokenSymbol } from '@/config/tokens'
 
-// Define types for our metrics
+// Update PerpMetric interface
 interface PerpMetric {
   id: number
   symbol: string
   timestamp: string
-  funding_rate: number
-  perp_volume_24h: number
-  open_interest: number
   mark_price: number
+  funding_rate: number
+  open_interest: number
+  volume_24h: number
+  price_change_24h: number
+  total_supply: number
+  market_cap: number
+  liquidity: number
   spot_price: number
   spot_volume_24h: number
-  liquidity: number
-  market_cap: number
-  total_supply: number
-  price_change_24h: number
   txns_24h: number
-  holder_count: number
+  holder_count: number | null
 }
+
+// Add Birdeye API types
+interface BirdeyeResponse {
+  success: boolean
+  data: {
+    holderCount: number;
+    // Add other Birdeye fields as needed
+  }
+}
+
+// Create a properly typed Supabase client
+const supabase = createClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_KEY!
+)
 
 // Add this type for our chart metrics
 type MetricType = 'spot_price' | 'spot_volume_24h' | 'liquidity' | 'mark_price' | 'funding_rate' | 'open_interest' | 'market_cap' | 'txns_24h';
@@ -86,54 +103,135 @@ const metricOptions: MetricOption[] = [
   }
 ];
 
-const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_KEY!
-)
-
 // Add TimeRange type at the top with other type definitions
 type TimeRange = '1H' | '4H' | '12H' | '24H';
 
-export default function PerpMetricsPage() {
+// Add error boundary component at the top level
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Dashboard Error:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-900 text-white p-8">
+          <div className="p-4 bg-red-500/20 rounded-lg">
+            <h2 className="text-xl font-bold mb-2">Something went wrong</h2>
+            <button
+              onClick={() => this.setState({ hasError: false })}
+              className="px-4 py-2 bg-red-500/30 hover:bg-red-500/40 rounded"
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+    return this.props.children
+  }
+}
+
+// Add Birdeye API configuration
+const BIRDEYE_API_KEY = process.env.NEXT_PUBLIC_BIRDEYE_API_KEY!
+const BIRDEYE_API_URL = 'https://public-api.birdeye.so/v1'
+
+// Add function to fetch holder count
+async function fetchHolderCount(tokenAddress: string): Promise<number> {
+  // Check cache first
+  const cached = getCachedHolderCount(tokenAddress)
+  if (cached !== null) {
+    return cached
+  }
+
+  try {
+    const response = await fetch(
+      `${BIRDEYE_API_URL}/token/holder_count?address=${tokenAddress}`,
+      {
+        headers: {
+          'X-API-KEY': BIRDEYE_API_KEY,
+          'Accept': 'application/json',
+        }
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Birdeye API error: ${response.statusText}`)
+    }
+
+    const data: BirdeyeResponse = await response.json()
+    const holderCount = data.success ? data.data.holderCount : 0
+    
+    // Cache the result
+    setCachedHolderCount(tokenAddress, holderCount)
+    
+    return holderCount
+  } catch (error) {
+    console.error('Error fetching holder count:', error)
+    return 0
+  }
+}
+
+export default function PerpMetricsPageWrapper() {
+  return (
+    <ErrorBoundary>
+      <PerpMetricsPage />
+    </ErrorBoundary>
+  )
+}
+
+export function PerpMetricsPage() {
   const [metrics, setMetrics] = useState<PerpMetric[]>([])
   const [historicalData, setHistoricalData] = useState<PerpMetric[]>([])
   const [loading, setLoading] = useState(true)
-  const [nextUpdate, setNextUpdate] = useState<Date>()
-  const [timeToUpdate, setTimeToUpdate] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const [selectedToken, setSelectedToken] = useState<string>('')
   const [selectedMetric, setSelectedMetric] = useState<MetricType>('spot_price')
   const [timeRange, setTimeRange] = useState<TimeRange>('24H')
+  const [timeToUpdate, setTimeToUpdate] = useState('')
 
+  // Add real-time subscription
   useEffect(() => {
-    fetchMetrics()
-    const interval = setInterval(fetchMetrics, 60000) // Refresh every minute
-    return () => clearInterval(interval)
+    let mounted = true
+    const channel = supabase
+      .channel('perpetual_metrics_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'perpetual_metrics'
+        },
+        () => {
+          if (mounted) {
+            fetchMetrics()
+          }
+        }
+      )
+      .subscribe()
+
+    return () => {
+      mounted = false
+      supabase.removeChannel(channel)
+    }
   }, [])
 
-  useEffect(() => {
-    // Calculate next update time (next 15-minute mark)
-    const now = new Date()
-    const next = new Date(now)
-    const minutes = next.getMinutes()
-    const nextQuarter = Math.ceil(minutes / 15) * 15
-    next.setMinutes(nextQuarter)
-    next.setSeconds(0)
-    setNextUpdate(next)
-
-    // Update countdown timer every second
-    const timer = setInterval(() => {
-      const now = new Date()
-      const diff = next.getTime() - now.getTime()
-      const minutes = Math.floor(diff / 60000)
-      const seconds = Math.floor((diff % 60000) / 1000)
-      setTimeToUpdate(`${minutes}m ${seconds}s`)
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [metrics])
-
+  // Update fetchMetrics to handle errors properly
   async function fetchMetrics() {
     try {
+      setLoading(true)
+      setError(null)
+
       const { data: latest, error: latestError } = await supabase
         .from('perpetual_metrics')
         .select('*')
@@ -142,88 +240,158 @@ export default function PerpMetricsPage() {
       if (latestError) throw latestError
 
       if (latest) {
-        // Group by symbol and get latest for each
         const latestBySymbol = latest.reduce<Record<string, PerpMetric>>((acc, curr) => {
           if (!acc[curr.symbol] || new Date(curr.timestamp) > new Date(acc[curr.symbol].timestamp)) {
-            acc[curr.symbol] = curr as PerpMetric;
+            acc[curr.symbol] = curr
           }
-          return acc;
-        }, {});
+          return acc
+        }, {})
 
-        // Convert to array and sort by market cap, handle inactive tokens
-        const activeTokens = Object.values(latestBySymbol)
-          .sort((a: PerpMetric, b: PerpMetric) => {
-            // Put tokens with no market cap at the end
-            if (!a.market_cap && !b.market_cap) return 0;
-            if (!a.market_cap) return 1;
-            if (!b.market_cap) return -1;
-            return b.market_cap - a.market_cap;
-          });
-
-        setMetrics(activeTokens);
-        
-        // Set initial selected token if none selected
-        if (!selectedToken && activeTokens.length > 0) {
-          // Select first token with price data
-          const firstActiveToken = activeTokens.find(t => t.spot_price > 0);
-          if (firstActiveToken) {
-            setSelectedToken(firstActiveToken.symbol);
-          }
-        }
-      }
-
-      // Fetch historical data if we have a selected token
-      if (selectedToken) {
-        const twentyFourHoursAgo = new Date();
-        twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
-
-        const { data: historical, error: historicalError } = await supabase
-          .from('perpetual_metrics')
-          .select('*')
-          .eq('symbol', selectedToken)
-          .gte('timestamp', twentyFourHoursAgo.toISOString())
-          .order('timestamp', { ascending: true });
-
-        if (historicalError) throw historicalError;
-
-        if (historical) {
-          // Filter out duplicate timestamps and ensure data is properly sorted
-          const uniqueHistorical = historical.reduce<Record<number, PerpMetric>>((acc, curr) => {
-            const timestamp = new Date(curr.timestamp).getTime();
-            if (!acc[timestamp] || curr.id > acc[timestamp].id) {
-              acc[timestamp] = curr as PerpMetric;
+        // Fetch holder counts for each token
+        const activeTokensWithHolders = await Promise.all(
+          Object.values(latestBySymbol).map(async (token) => {
+            const address = TOKEN_ADDRESSES[token.symbol as TokenSymbol]
+            if (address) {
+              const holderCount = await fetchHolderCount(address)
+              return { ...token, holder_count: holderCount }
             }
-            return acc;
-          }, {});
+            return { ...token, holder_count: null }
+          })
+        )
 
-          const sortedHistorical = Object.values(uniqueHistorical)
-            .sort((a: PerpMetric, b: PerpMetric) => 
-              new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-            );
+        const sortedTokens = activeTokensWithHolders.sort((a, b) => {
+          if (!a.market_cap && !b.market_cap) return 0
+          if (!a.market_cap) return 1
+          if (!b.market_cap) return -1
+          return b.market_cap - a.market_cap
+        })
 
-          setHistoricalData(sortedHistorical);
+        setMetrics(sortedTokens)
+
+        if (!selectedToken && sortedTokens.length > 0) {
+          const firstActiveToken = sortedTokens.find(t => t.spot_price > 0)
+          if (firstActiveToken) {
+            setSelectedToken(firstActiveToken.symbol)
+          }
         }
       }
-    } catch (error) {
-      console.error('Error fetching metrics:', error);
+
+      if (selectedToken) {
+        await fetchHistoricalData()
+      }
+    } catch (err) {
+      console.error('Error fetching metrics:', err)
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching data')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
+  // Separate function for historical data
+  async function fetchHistoricalData() {
+    try {
+      const timeRangeHours = {
+        '1H': 1,
+        '4H': 4,
+        '12H': 12,
+        '24H': 24
+      }[timeRange]
+
+      const rangeStart = new Date()
+      rangeStart.setHours(rangeStart.getHours() - timeRangeHours)
+
+      const { data: historical, error: historicalError } = await supabase
+        .from('perpetual_metrics')
+        .select('*')
+        .eq('symbol', selectedToken)
+        .gte('timestamp', rangeStart.toISOString())
+        .order('timestamp', { ascending: true })
+
+      if (historicalError) throw historicalError
+
+      if (historical) {
+        // Filter duplicates and ensure proper sorting
+        const uniqueHistorical = historical.reduce<Record<string, PerpMetric>>((acc, curr) => {
+          const timestamp = new Date(curr.timestamp).getTime().toString()
+          if (!acc[timestamp] || curr.id > acc[timestamp].id) {
+            acc[timestamp] = curr
+          }
+          return acc
+        }, {})
+
+        setHistoricalData(Object.values(uniqueHistorical).sort((a, b) => 
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+        ))
+      }
+    } catch (err) {
+      console.error('Error fetching historical data:', err)
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching historical data')
+    }
+  }
+
+  // Add effect for fetching data
+  useEffect(() => {
+    fetchMetrics()
+    const interval = setInterval(fetchMetrics, 60000) // Refresh every minute
+    return () => clearInterval(interval)
+  }, [])
+
+  // Add effect for fetching historical data when token or time range changes
   useEffect(() => {
     if (selectedToken) {
-      fetchMetrics()
+      fetchHistoricalData()
     }
-  }, [selectedToken])
+  }, [selectedToken, timeRange])
+
+  // Add countdown effect
+  useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date()
+      const next = new Date(now)
+      next.setMinutes(now.getMinutes() + 1, 0, 0)
+      
+      const diff = next.getTime() - now.getTime()
+      if (diff <= 0) {
+        fetchMetrics()
+        return
+      }
+      
+      const seconds = Math.floor(diff / 1000)
+      setTimeToUpdate(`${Math.floor(seconds / 60)}m ${seconds % 60}s`)
+    }
+
+    updateTimer() // Initial call
+    const timer = setInterval(updateTimer, 1000)
+
+    return () => clearInterval(timer)
+  }, [metrics])
+
+  if (error) {
+    return (
+      <div className="p-4 text-red-400">
+        <h2 className="text-lg font-bold mb-2">Error</h2>
+        <p>{error}</p>
+        <button 
+          onClick={fetchMetrics}
+          className="mt-4 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded"
+        >
+          Retry
+        </button>
+      </div>
+    )
+  }
 
   // Get the current metric option
   const currentMetric = metricOptions.find(m => m.value === selectedMetric)!;
 
+  // Add loading indicator
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 text-white p-8">
-        <div className="animate-pulse text-center">Loading metrics...</div>
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+          <p className="text-gray-400">Loading metrics...</p>
+        </div>
       </div>
     )
   }
@@ -435,7 +603,9 @@ export default function PerpMetricsPage() {
                   <span className="text-right font-mono">{metric.txns_24h.toLocaleString()}</span>
                   <span className="text-gray-400">Holders</span>
                   <span className="text-right font-mono">
-                    {metric.holder_count > 0 ? metric.holder_count.toLocaleString() : '-'}
+                    {metric.holder_count !== null 
+                      ? metric.holder_count.toLocaleString() 
+                      : '-'}
                   </span>
                 </div>
               </div>

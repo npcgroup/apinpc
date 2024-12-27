@@ -1,76 +1,89 @@
 import { CronJob } from 'cron'
-import { runIngestAndStore } from './ingestAndStore'
+import { exec } from 'child_process'
+import { promisify } from 'util'
 
-async function startScheduler() {
-  console.log('🚀 Starting perpetual metrics scheduler...')
+const execAsync = promisify(exec)
 
-  // Initialize last run time
-  let lastRunTime = new Date()
-  let isRunning = false
+// Track the state of the ingestion
+let isRunning = false
+let lastRunTime: Date | null = null
+let consecutiveFailures = 0
+const MAX_FAILURES = 3
 
-  // Function to run the ingestion
-  async function runIngestion() {
-    if (isRunning) {
-      console.log('⚠️ Previous job still running, skipping this iteration')
-      return
-    }
-
-    try {
-      isRunning = true
-      console.log(`\n📊 Starting data ingestion at ${new Date().toLocaleString()}`)
-      console.log(`ℹ️ Last successful run: ${lastRunTime.toLocaleString()}`)
-
-      await runIngestAndStore()
-      
-      lastRunTime = new Date()
-      console.log(`✅ Data ingestion completed at ${lastRunTime.toLocaleString()}`)
-    } catch (error) {
-      console.error('🚨 Error during data ingestion:', error)
-    } finally {
-      isRunning = false
-    }
+async function runIngestion() {
+  if (isRunning) {
+    console.log('⚠️ Previous ingestion still running, skipping...')
+    return
   }
 
-  // Run immediately on startup
-  await runIngestion()
+  try {
+    isRunning = true
+    console.log(`\n📊 Starting data ingestion at ${new Date().toISOString()}`)
+    if (lastRunTime) {
+      console.log(`ℹ️ Last successful run: ${lastRunTime.toISOString()}`)
+    }
 
-  // Run every 15 minutes
-  const job = new CronJob('*/15 * * * *', async () => {
-    await runIngestion()
-  }, null, true, 'UTC')
+    const { stdout, stderr } = await execAsync('npm run ingest:all')
+    
+    if (stderr) {
+      console.error('⚠️ Ingestion warnings:', stderr)
+    }
+    
+    if (stdout) {
+      console.log('📝 Ingestion output:', stdout)
+    }
 
-  job.start()
+    lastRunTime = new Date()
+    consecutiveFailures = 0
+    console.log(`✅ Data ingestion completed at ${lastRunTime.toISOString()}`)
 
-  console.log('⌛ Next run scheduled for:', job.nextDate().toLocaleString())
-
-  // Keep the process alive
-  process.stdin.resume()
-
-  // Handle graceful shutdown
-  process.on('SIGINT', () => {
-    console.log('\n🛑 Stopping scheduler...')
-    job.stop()
-    process.exit(0)
-  })
-
-  process.on('SIGTERM', () => {
-    console.log('\n🛑 Stopping scheduler...')
-    job.stop()
-    process.exit(0)
-  })
+  } catch (error) {
+    consecutiveFailures++
+    console.error('🚨 Error during ingestion:', error)
+    
+    if (consecutiveFailures >= MAX_FAILURES) {
+      console.error(`🛑 ${MAX_FAILURES} consecutive failures reached, stopping scheduler`)
+      job.stop()
+      process.exit(1)
+    }
+  } finally {
+    isRunning = false
+  }
 }
 
-// Error handling for the main process
+// Run every 5 minutes
+const job = new CronJob('*/5 * * * *', runIngestion, null, false, 'UTC')
+
+console.log('🚀 Starting perpetual metrics scheduler...')
+job.start()
+
+// Run immediately on startup
+runIngestion()
+
+// Calculate and log next run time
+const nextRun = job.nextDate()
+console.log('⏰ Next run scheduled for:', nextRun.toString())
+
+// Handle graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\n👋 Stopping scheduler gracefully...')
+  job.stop()
+  process.exit(0)
+})
+
+process.on('SIGTERM', () => {
+  console.log('\n👋 Stopping scheduler gracefully...')
+  job.stop()
+  process.exit(0)
+})
+
+// Global error handlers
 process.on('uncaughtException', (error) => {
   console.error('🚨 Uncaught Exception:', error)
+  job.stop()
+  process.exit(1)
 })
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('🚨 Unhandled Rejection at:', promise, 'reason:', reason)
-})
-
-// Start the scheduler with proper error handling
-startScheduler().catch(error => {
-  console.error('🚨 Failed to start scheduler:', error)
-  process.exit(1)
 })

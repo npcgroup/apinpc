@@ -34,30 +34,46 @@ class PerpDataCollector:
     async def get_hl_market_data(self, session: aiohttp.ClientSession, token: str):
         """Fetch Hyperliquid market data"""
         try:
-            # Get all markets data
+            # Update the request payload format
+            markets_payload = {
+                "type": "meta",
+                "coin": token
+            }
+            
+            funding_payload = {
+                "type": "fundingHistory",
+                "coin": token
+            }
+            
+            # Get market data
             async with session.post(
                 self.hl_base_url,
-                json={"type": "allMids"},
+                json=markets_payload,
                 headers={'Content-Type': 'application/json'}
             ) as response:
+                if response.status != 200:
+                    logger.error(f"Market data request failed for {token}: {response.status}")
+                    return None
                 markets_data = await response.json()
                 
             # Get funding rates
             async with session.post(
                 self.hl_base_url,
-                json={"type": "fundingHistory"},
+                json=funding_payload,
                 headers={'Content-Type': 'application/json'}
             ) as response:
+                if response.status != 200:
+                    logger.error(f"Funding data request failed for {token}: {response.status}")
+                    return None
                 funding_data = await response.json()
                 
-            # Find market data for token
-            market = next((m for m in markets_data if m.get('coin') == token), None)
-            if market:
-                # Get funding rate for this token
-                funding = next((f for f in funding_data if f.get('coin') == token), None)
+            # Extract market data
+            if markets_data and isinstance(markets_data, dict):
+                market = markets_data.get('assetInfo', {}).get(token, {})
+                funding = funding_data[0] if funding_data else {}
                 
                 return {
-                    'funding_rate': float(funding.get('funding', 0)) if funding else 0,
+                    'funding_rate': float(funding.get('funding', 0)),
                     'volume_24h': float(market.get('dayNtlVlm', 0)),
                     'open_interest': float(market.get('openInterest', 0)),
                     'mark_price': float(market.get('markPx', 0))

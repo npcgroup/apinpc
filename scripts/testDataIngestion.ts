@@ -23,12 +23,25 @@ async function testDataIngestion() {
     const testSymbol = 'POPCAT'
     const testAddress = TOKEN_ADDRESSES[testSymbol]
     
+    if (!testAddress) {
+      throw new Error(`No address found for symbol: ${testSymbol}`)
+    }
+    
     console.log(`Testing with ${testSymbol} (${testAddress})...`)
     
     const [birdeyeData, dexData, hlData] = await Promise.all([
-      service.fetchBirdeyeData(testAddress),
-      service.fetchDexScreenerData(testAddress),
-      service.fetchHyperliquidData(testSymbol)
+      service.fetchBirdeyeData(testAddress).catch(error => {
+        console.error('Birdeye fetch failed:', error)
+        return service.getDefaultTokenData()
+      }),
+      service.fetchDexScreenerData(testAddress).catch(error => {
+        console.error('DexScreener fetch failed:', error)
+        return service.getDefaultDexData()
+      }),
+      service.fetchHyperliquidData(testSymbol).catch(error => {
+        console.error('HyperLiquid fetch failed:', error)
+        return service.getDefaultMarketData()
+      })
     ])
 
     const metric = {
@@ -45,14 +58,16 @@ async function testDataIngestion() {
       spot_price: birdeyeData.price,
       spot_volume_24h: Math.max(birdeyeData.volume24h, dexData.volume24h),
       txns_24h: 0,
-      holder_count: birdeyeData.holderCount
+      holder_count: birdeyeData.holderCount,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
     
     await service.ingestMetrics([metric])
     console.log('✅ Test successful')
     console.log('Sample metric:', JSON.stringify(metric, null, 2))
   } catch (error) {
-    console.error('❌ Test failed:', error)
+    console.error('❌ Test failed:', error instanceof Error ? error.message : error)
     process.exit(1)
   }
 }

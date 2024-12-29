@@ -33,8 +33,26 @@
       "@/*": [
         "src/*"
       ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@scripts/*": [
+        "scripts/*"
+      ],
       "@api/*": [
-        ".api/apis/*"
+        "src/api/*"
       ]
     },
     "baseUrl": ".",
@@ -50,7 +68,10 @@
     "app/**/*.ts",
     "app/**/*.tsx",
     "config/**/*.ts",
-    ".next/types/**/*.ts"
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    ".next/types/**/*.ts",
+    "scripts/**/*.ts"
   ],
   "exclude": [
     "node_modules",

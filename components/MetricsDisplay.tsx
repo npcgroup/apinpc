@@ -1,73 +1,99 @@
-import { useEffect, useState } from 'react';
-import { TokenMetric, DexPair } from '../types/metrics';
-import { getTokenMetrics, getDexPairs, getTokenStats } from '../utils/loadMetrics';
+import React, { useState, useEffect } from 'react'
+import { TokenMetrics, DexPair } from '@/types/metrics'
+import { loadTokenMetrics, loadDexPairs } from '@/utils/loadMetrics'
+import { formatNumber } from '@/utils/metrics'
 
-export default function MetricsDisplay() {
-  const [tokens, setTokens] = useState<TokenMetric[]>([]);
-  const [pairs, setPairs] = useState<DexPair[]>([]);
-  const [stats, setStats] = useState<any>(null);
+interface MetricsDisplayProps {
+  symbol: string;
+  onUpdate?: (metrics: TokenMetrics) => void;
+}
+
+export function MetricsDisplay({ symbol, onUpdate }: MetricsDisplayProps) {
+  const [metrics, setMetrics] = useState<TokenMetrics | null>(null)
+  const [pairs, setPairs] = useState<DexPair[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Load all data
-    setTokens(getTokenMetrics());
-    setPairs(getDexPairs());
-    setStats(getTokenStats());
-  }, []);
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const [tokenMetrics, dexPairs] = await Promise.all([
+          loadTokenMetrics(symbol),
+          loadDexPairs(symbol)
+        ])
+        
+        setMetrics(tokenMetrics)
+        setPairs(dexPairs)
+        onUpdate?.(tokenMetrics)
+        setError(null)
+      } catch (err) {
+        console.error('Error fetching metrics:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load metrics')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [symbol, onUpdate])
+
+  if (loading) {
+    return (
+      <div className="animate-pulse">
+        <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500">
+        Error: {error}
+      </div>
+    )
+  }
+
+  if (!metrics) {
+    return null
+  }
 
   return (
-    <div className="p-4">
-      {/* Stats Overview */}
-      {stats && (
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          <div className="p-4 bg-white rounded shadow">
-            <h3>Total Tokens</h3>
-            <p className="text-2xl font-bold">{stats.totalTokens}</p>
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-2">Price</h3>
+          <div className="text-2xl">${formatNumber(metrics.price)}</div>
+          <div className={`text-sm ${metrics.priceChange24h >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+            {metrics.priceChange24h > 0 ? '+' : ''}{metrics.priceChange24h.toFixed(2)}%
           </div>
-          <div className="p-4 bg-white rounded shadow">
-            <h3>Total Market Cap</h3>
-            <p className="text-2xl font-bold">${stats.totalMarketCap.toLocaleString()}</p>
-          </div>
-          <div className="p-4 bg-white rounded shadow">
-            <h3>Average Price</h3>
-            <p className="text-2xl font-bold">${stats.averagePrice.toFixed(4)}</p>
-          </div>
-          <div className="p-4 bg-white rounded shadow">
-            <h3>24h Volume</h3>
-            <p className="text-2xl font-bold">${stats.totalVolume24h.toLocaleString()}</p>
+        </div>
+
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold mb-2">Volume (24h)</h3>
+          <div className="text-2xl">${formatNumber(metrics.volume24h)}</div>
+        </div>
+      </div>
+
+      {pairs.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold mb-2">DEX Pairs</h3>
+          <div className="space-y-2">
+            {pairs.map((pair) => (
+              <div key={pair.address} className="bg-gray-800 p-4 rounded-lg">
+                <div className="flex justify-between">
+                  <span>{pair.baseToken}/{pair.quoteToken}</span>
+                  <span>${formatNumber(pair.price)}</span>
+                </div>
+                <div className="text-sm text-gray-400">
+                  Volume: ${formatNumber(pair.volume24h)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
-
-      {/* Token List */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Tokens</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tokens.map(token => (
-            <div key={token.address} className="p-4 bg-white rounded shadow">
-              <h3 className="font-bold">{token.name} ({token.symbol})</h3>
-              <p>Price: ${token.price.toFixed(6)}</p>
-              <p>Market Cap: ${token.marketCap?.toLocaleString()}</p>
-              <p>24h Volume: ${token.volume24h?.toLocaleString()}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* DEX Pairs */}
-      <div>
-        <h2 className="text-xl font-bold mb-4">DEX Pairs</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {pairs.map(pair => (
-            <div key={pair.pair_address} className="p-4 bg-white rounded shadow">
-              <h3 className="font-bold">{pair.token_1_symbol}/{pair.token_2_symbol}</h3>
-              <p>Price: ${pair.price_usd.toFixed(6)}</p>
-              <p>Liquidity: ${pair.liquidity_usd.toLocaleString()}</p>
-              <p>24h Volume: ${pair.volume_24h.toLocaleString()}</p>
-              <p>24h Change: {pair.price_change_24h.toFixed(2)}%</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
-  );
+  )
 } 

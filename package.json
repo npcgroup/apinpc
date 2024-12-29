@@ -10,7 +10,9 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "clean": "rm -rf .next && rm -rf node_modules && yarn install",
     "ingest:all": "./scripts/run-ingestion.sh",
-    "ingest": "ts-node -r dotenv/config -r tsconfig-paths/register --project tsconfig.node.json scripts/ingestAndStore.ts",
+    "ingest": "ts-node -r tsconfig-paths/register scripts/ingestAndStore.ts",
+    "ingest:setup": "chmod +x scripts/run-ingestion.sh && ./scripts/run-ingestion.sh",
+    "ingest:dev": "nodemon -r tsconfig-paths/register scripts/ingestAndStore.ts",
     "scheduler": "ts-node -r dotenv/config -r tsconfig-paths/register --project tsconfig.node.json scripts/scheduler.ts",
     "test-ingest": "ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/testDataIngestion.ts",
     "migrate:transform": "ts-node scripts/migrations/transformSchema.ts",
@@ -20,7 +22,7 @@
     "prepare": "yarn build",
     "test": "jest",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
-    "test:ingest": "ts-node -r tsconfig-paths/register --project tsconfig.node.json scripts/testDataIngestion.ts"
+    "test:ingest": "ts-node -r tsconfig-paths/register scripts/testDataIngestion.ts"
   },
   "dependencies": {
     "@api/birdeyedotso": "file:.api/apis/birdeyedotso",

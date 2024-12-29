@@ -6,25 +6,31 @@ import type { Database } from '@/types/supabase'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
 import { format, parseISO } from 'date-fns'
 import { getCachedHolderCount, setCachedHolderCount } from '@/utils/cache'
-import { TOKEN_ADDRESSES, TokenSymbol } from '../src/config/tokens'
+import { TOKEN_ADDRESSES } from '@/config/tokens'
+
+// Add TokenSymbol type if not already defined
+type TokenSymbol = keyof typeof TOKEN_ADDRESSES;
 
 // Update PerpMetric interface
 interface PerpMetric {
-  id: number
-  symbol: string
-  timestamp: string
-  mark_price: number
-  funding_rate: number
-  open_interest: number
-  volume_24h: number
-  price_change_24h: number
-  total_supply: number
-  market_cap: number
-  liquidity: number
-  spot_price: number
-  spot_volume_24h: number
-  txns_24h: number
-  holder_count: number | null
+  id: number;
+  symbol: string;
+  timestamp: string;
+  mark_price: number;
+  funding_rate: number;
+  open_interest: number;
+  volume_24h: number;
+  daily_volume: number;
+  price_change_24h: number;
+  total_supply: number;
+  market_cap: number;
+  liquidity: number;
+  spot_price: number;
+  spot_volume_24h: number;
+  txns_24h: number;
+  holder_count: number | null;
+  created_at: string;
+  updated_at: string;
 }
 
 // Add Birdeye API types
@@ -181,6 +187,44 @@ async function fetchHolderCount(tokenAddress: string): Promise<number> {
     return 0
   }
 }
+
+// Update the fetch function to handle the data properly
+const fetchMetrics = async () => {
+  try {
+    const supabase = createClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { data, error } = await supabase
+      .from('perpetual_metrics')
+      .select('*')
+      .order('timestamp', { ascending: false })
+      .limit(100);
+
+    if (error) throw error;
+
+    // Ensure all numeric fields are properly typed
+    return data.map(metric => ({
+      ...metric,
+      mark_price: Number(metric.mark_price),
+      funding_rate: Number(metric.funding_rate),
+      open_interest: Number(metric.open_interest),
+      volume_24h: Number(metric.volume_24h),
+      price_change_24h: Number(metric.price_change_24h),
+      total_supply: Number(metric.total_supply),
+      market_cap: Number(metric.market_cap),
+      liquidity: Number(metric.liquidity),
+      spot_price: Number(metric.spot_price),
+      spot_volume_24h: Number(metric.spot_volume_24h),
+      txns_24h: Number(metric.txns_24h),
+      holder_count: metric.holder_count ? Number(metric.holder_count) : null
+    }));
+  } catch (error) {
+    console.error('Error fetching metrics:', error);
+    return [];
+  }
+};
 
 export default function PerpMetricsPageWrapper() {
   return (
@@ -354,6 +398,26 @@ export function PerpMetricsPage() {
 
     return () => clearInterval(timer)
   }, [metrics])
+
+  // Add effect to update holder counts
+  useEffect(() => {
+    const updateHolderCounts = async () => {
+      if (!metrics.length) return;
+      
+      const updatedMetrics = await Promise.all(
+        metrics.map(async (metric) => {
+          if (!TOKEN_ADDRESSES[metric.symbol as TokenSymbol]) return metric;
+          
+          const holderCount = await fetchHolderCount(TOKEN_ADDRESSES[metric.symbol as TokenSymbol]);
+          return { ...metric, holder_count: holderCount };
+        })
+      );
+      
+      setMetrics(updatedMetrics);
+    };
+
+    updateHolderCounts();
+  }, [metrics]);
 
   if (error) {
     return (

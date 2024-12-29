@@ -1,4 +1,4 @@
-import { DataIngestionService } from '../services/dataIngestion';
+import { DataIngestionService } from '../src/services/dataIngestion';
 import { supabaseAdmin } from '../lib/supabaseClient';
 import { promisify } from 'util';
 import { exec as execCallback } from 'child_process';

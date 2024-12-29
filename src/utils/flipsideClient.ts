@@ -1,25 +1,25 @@
-import { Flipside, QueryResultsRpcResponse } from '@flipsidecrypto/sdk'
+import { Flipside, QueryResultSet } from '@flipsidecrypto/sdk'
 
-const flipside = new Flipside(
-  process.env.NEXT_PUBLIC_FLIPSIDE_API_KEY!,
-  'https://api.flipsidecrypto.com'
-)
+export class FlipsideClient {
+  private sdk: Flipside
 
-export async function runQuery(query: string): Promise<QueryResultsRpcResponse> {
-  try {
-    const result = await flipside.query.run({
-      sql: query,
-      timeoutMinutes: 5,
-      cached: true
-    })
+  constructor(apiKey: string) {
+    this.sdk = new Flipside(
+      apiKey,
+      'https://api.flipsidecrypto.com'
+    )
+  }
 
-    if (!result.success) {
-      throw new Error(result.error || 'Query failed')
+  async runQuery(query: string): Promise<QueryResultSet> {
+    try {
+      const result = await this.sdk.query.run({
+        sql: query,
+        timeoutMinutes: 5,
+      })
+      
+      return result
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : 'Query failed')
     }
-
-    return result
-  } catch (error) {
-    console.error('Flipside query error:', error)
-    throw error
   }
 } 

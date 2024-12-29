@@ -10,12 +10,15 @@ export interface BaseMetrics {
   created_at: Date;
 }
 
-export interface TokenMetrics extends BaseMetrics {
+export interface TokenMetrics {
+  symbol: string;
   price: number;
-  volume_24h: number;
-  market_cap: number;
-  total_supply: number;
-  holder_count?: number;
+  volume24h: number;
+  priceChange24h: number;
+  marketCap: number;
+  totalSupply: number;
+  holderCount: number;
+  liquidity: number;
 }
 
 export interface NFTMetrics extends BaseMetrics {
@@ -39,4 +42,14 @@ export interface ProtocolMetrics {
   source_id: number;
   raw_data?: Record<string, any>;
   created_at: Date;
+}
+
+export interface DexPair {
+  address: string;
+  baseToken: string;
+  quoteToken: string;
+  price: number;
+  volume24h: number;
+  liquidity: number;
+  priceChange24h: number;
 } 

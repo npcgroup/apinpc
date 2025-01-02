@@ -33,26 +33,17 @@
       "@/*": [
         "src/*"
       ],
-      "@components/*": [
-        "components/*"
+      "@/lib/*": [
+        "src/lib/*"
       ],
-      "@utils/*": [
+      "@/utils/*": [
         "src/utils/*"
       ],
-      "@types/*": [
+      "@/types/*": [
         "src/types/*"
       ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@services/*": [
+      "@/services/*": [
         "src/services/*"
-      ],
-      "@scripts/*": [
-        "scripts/*"
-      ],
-      "@api/*": [
-        "src/api/*"
       ]
     },
     "baseUrl": ".",

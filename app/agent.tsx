@@ -141,7 +141,7 @@ interface Commands {
   'list-endpoints': () => HistoryEntry;
   'ingest-api': () => Promise<HistoryEntry>;
   curl: (context: CommandContext) => Promise<HistoryEntry>;
-  'get-my-perps': (context: CommandContext) => Promise<HistoryEntry>;
+  'get-my-perps': () => Promise<HistoryEntry>;
 }
 
 // Add new interface for command suggestions
@@ -493,14 +493,23 @@ Use 'create-proposal' to suggest treasury actions.
         };
       }
 
-      const results = await handleNaturalLanguageQuery(query, {
-        type: 'track'
-      });
+      try {
+        const results = await handleNaturalLanguageQuery(query, {
+          type: 'track',
+          query,
+          parameters: {}
+        });
 
-      return {
-        type: 'metric',
-        content: results.data || 'No tracking data could be generated'
-      };
+        return {
+          type: 'metric',
+          content: results.data || 'No tracking data could be generated'
+        };
+      } catch (error) {
+        return {
+          type: 'error',
+          content: `Failed to track data: ${error instanceof Error ? error.message : 'Unknown error'}`
+        };
+      }
     },
 
     alert: async (context: CommandContext) => {
@@ -634,13 +643,16 @@ Use 'create-proposal' to suggest treasury actions.
         const apiKeys = getApiKeysWithFallback();
         const apiKey = apiKeys[service as keyof typeof apiKeys];
         
-        // Fix: Use correct number of arguments
-        const result = await handleNaturalLanguageQuery(question, { apiKey });
+        const results = await handleNaturalLanguageQuery(question, {
+          query: question,
+          apiKey,
+          parameters: {}
+        });
 
         return {
           type: 'success',
-          content: result.data?.answer || 'No answer available',
-          data: result.data
+          content: results.data?.answer || 'No answer available',
+          data: results.data
         };
       } catch (error) {
         return {
@@ -883,7 +895,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
       }
     },
 
-    'get-my-perps': async (context: CommandContext) => {
+    'get-my-perps': async () => {
       try {
         // Navigate to the perp metrics page
         window.open('/perp-metrics', '_blank')

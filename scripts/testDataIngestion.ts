@@ -14,7 +14,7 @@ async function testDataIngestion() {
   
   try {
     // Test Supabase connection first
-    const isConnected = await service.testConnection()
+    const isConnected = await service.testSupabaseConnection()
     if (!isConnected) {
       throw new Error('Failed to connect to Supabase')
     }

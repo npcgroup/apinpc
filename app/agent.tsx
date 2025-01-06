@@ -913,6 +913,24 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
       }
     },
 
+    'get-my-memes': async () => {
+      try {
+        // Navigate to the perp metrics page
+        window.open('/perp-metrics/pagememe.tsx', '_blank')
+        
+        return {
+          type: 'success',
+          content: 'Opening perpetual metrics dashboard in new tab...'
+        };
+      } catch (error) {
+        console.error('Error in get-my-perps:', error);
+        return {
+          type: 'error',
+          content: `Failed to open perpetual metrics dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+        };
+      }
+    },
+
     'create-cabal': () => ({
       type: 'system',
       content: 'Cabal creation functionality temporarily disabled'

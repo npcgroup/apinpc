@@ -14,7 +14,7 @@ import urllib.parse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class SupabaseFundingSync:
+class SupabaseSync:
     def __init__(self):
         load_dotenv()
         
@@ -66,22 +66,34 @@ class SupabaseFundingSync:
         except (KeyError, TypeError, ValueError):
             return 0.0
 
-    def process_funding_data(self, funding_file: str) -> Optional[Dict]:
-        """Process a funding analysis JSON file"""
+    def process_funding_data(self, file_path: str) -> List[Dict]:
+        """Process funding data from JSON file"""
         try:
-            with open(funding_file, 'r') as f:
+            with open(file_path, 'r') as f:
                 data = json.load(f)
                 
-            # Ensure all markets have notional_open_interest
-            if 'all_markets' in data:
-                for market in data['all_markets']:
-                    if 'notional_open_interest' not in market:
-                        market['notional_open_interest'] = self.calculate_notional_oi(market)
-            
-            return data
+            funding_data = []
+            for market in data.get('all_markets', []):
+                # Calculate notional open interest
+                notional_oi = float(market['mark_price']) * float(market['open_interest'])
+                
+                funding_data.append({
+                    'timestamp': market['timestamp'],
+                    'token': market['token'],
+                    'current_funding_rate': market['current_funding_rate'],
+                    'predicted_funding_rate': market['predicted_funding_rate'],
+                    'mark_price': market['mark_price'],
+                    'open_interest': market['open_interest'],
+                    'notional_open_interest': notional_oi,
+                    'volume_24h': market['volume_24h'],
+                    'avg_24h_funding_rate': market.get('avg_24h_funding_rate', 0),
+                    'exchange': 'hyperliquid'
+                })
+                
+            return funding_data
         except Exception as e:
-            logger.error(f"Error processing funding file {funding_file}: {str(e)}")
-            return None
+            logger.error(f"Error processing funding file {file_path}: {str(e)}")
+            return []
 
     async def sync_funding_rates(self, data: Dict):
         """Sync funding rate data to Supabase tables"""
@@ -205,7 +217,7 @@ async def main():
         funding_dir = "data/funding_rates"
         os.makedirs(funding_dir, exist_ok=True)
         
-        syncer = SupabaseFundingSync()
+        syncer = SupabaseSync()
         
         # Validate directory and files
         if not os.path.exists(funding_dir):

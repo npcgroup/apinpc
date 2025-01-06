@@ -1,670 +1,509 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
 import { format, parseISO } from 'date-fns'
-import { getCachedHolderCount, setCachedHolderCount } from '@/utils/cache'
-import { TOKEN_ADDRESSES } from '@/config/tokens'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
-// Add TokenSymbol type if not already defined
-type TokenSymbol = keyof typeof TOKEN_ADDRESSES;
-
-// Update PerpMetric interface
-interface PerpMetric {
-  id: number;
-  symbol: string;
+// Update interfaces for our new data structure
+interface FundingSnapshot {
   timestamp: string;
+  token: string;
+  current_funding_rate: number;
+  predicted_funding_rate: number;
   mark_price: number;
-  funding_rate: number;
   open_interest: number;
+  notional_open_interest: number;
   volume_24h: number;
-  daily_volume: number;
-  price_change_24h: number;
-  total_supply: number;
-  market_cap: number;
-  liquidity: number;
-  spot_price: number;
-  spot_volume_24h: number;
-  txns_24h: number;
-  holder_count: number | null;
-  created_at: string;
-  updated_at: string;
+  avg_24h_funding_rate: number;
+  exchange: string;
+  metadata: {
+    funding_difference: number;
+  };
 }
 
-// Add Birdeye API types
-interface BirdeyeResponse {
-  success: boolean
-  data: {
-    holderCount: number;
-    // Add other Birdeye fields as needed
-  }
+interface MarketMetrics {
+  token: string;
+  latest_snapshot: FundingSnapshot;
+  historical_data: FundingSnapshot[];
 }
 
-// Create a properly typed Supabase client
+// Create Supabase client
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_KEY!
 )
 
-// Add this type for our chart metrics
-type MetricType = 'spot_price' | 'spot_volume_24h' | 'liquidity' | 'mark_price' | 'funding_rate' | 'open_interest' | 'market_cap' | 'txns_24h';
+// Add this custom hook for controlled input
+const useDebounceValue = (value: string, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-interface MetricOption {
-  value: MetricType;
-  label: string;
-  format: (value: number) => string;
-  color: string;
-}
-
-const metricOptions: MetricOption[] = [
-  { 
-    value: 'spot_price', 
-    label: 'Price', 
-    format: (v) => `$${v.toFixed(4)}`,
-    color: '#8B5CF6' // Purple
-  },
-  { 
-    value: 'spot_volume_24h', 
-    label: 'Volume 24h', 
-    format: (v) => `$${(v/1e6).toFixed(2)}M`,
-    color: '#10B981' // Green
-  },
-  { 
-    value: 'liquidity', 
-    label: 'Liquidity', 
-    format: (v) => `$${(v/1e6).toFixed(2)}M`,
-    color: '#3B82F6' // Blue
-  },
-  { 
-    value: 'mark_price', 
-    label: 'Mark Price', 
-    format: (v) => `$${v.toFixed(4)}`,
-    color: '#EC4899' // Pink
-  },
-  { 
-    value: 'funding_rate', 
-    label: 'Funding Rate', 
-    format: (v) => `${(v * 100).toFixed(4)}%`,
-    color: '#F59E0B' // Yellow
-  },
-  { 
-    value: 'open_interest', 
-    label: 'Open Interest', 
-    format: (v) => `$${(v/1e6).toFixed(2)}M`,
-    color: '#6366F1' // Indigo
-  },
-  { 
-    value: 'market_cap', 
-    label: 'Market Cap', 
-    format: (v) => `$${(v/1e6).toFixed(2)}M`,
-    color: '#14B8A6' // Teal
-  },
-  { 
-    value: 'txns_24h', 
-    label: 'Transactions', 
-    format: (v) => v.toLocaleString(),
-    color: '#F472B6' // Pink
-  }
-];
-
-// Add TimeRange type at the top with other type definitions
-type TimeRange = '1H' | '4H' | '12H' | '24H';
-
-// Add error boundary component at the top level
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props)
-    this.state = { hasError: false }
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true }
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Dashboard Error:', error, errorInfo)
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="min-h-screen bg-gray-900 text-white p-8">
-          <div className="p-4 bg-red-500/20 rounded-lg">
-            <h2 className="text-xl font-bold mb-2">Something went wrong</h2>
-            <button
-              onClick={() => this.setState({ hasError: false })}
-              className="px-4 py-2 bg-red-500/30 hover:bg-red-500/40 rounded"
-            >
-              Try again
-            </button>
-          </div>
-        </div>
-      )
-    }
-
-    return this.props.children
-  }
-}
-
-// Add Birdeye API configuration
-const BIRDEYE_API_KEY = process.env.NEXT_PUBLIC_BIRDEYE_API_KEY!
-const BIRDEYE_API_URL = 'https://public-api.birdeye.so/v1'
-
-// Add function to fetch holder count
-async function fetchHolderCount(tokenAddress: string): Promise<number> {
-  // Check cache first
-  const cached = getCachedHolderCount(tokenAddress)
-  if (cached !== null) {
-    return cached
-  }
-
-  try {
-    const response = await fetch(
-      `${BIRDEYE_API_URL}/token/holder_count?address=${tokenAddress}`,
-      {
-        headers: {
-          'X-API-KEY': BIRDEYE_API_KEY,
-          'Accept': 'application/json',
-        }
-      }
-    )
-
-    if (!response.ok) {
-      throw new Error(`Birdeye API error: ${response.statusText}`)
-    }
-
-    const data: BirdeyeResponse = await response.json()
-    const holderCount = data.success ? data.data.holderCount : 0
-    
-    // Cache the result
-    setCachedHolderCount(tokenAddress, holderCount)
-    
-    return holderCount
-  } catch (error) {
-    console.error('Error fetching holder count:', error)
-    return 0
-  }
-}
-
-// Update the fetch function to handle the data properly
-const fetchMetrics = async () => {
-  try {
-    const supabase = createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-
-    const { data, error } = await supabase
-      .from('perpetual_metrics')
-      .select('*')
-      .order('timestamp', { ascending: false })
-      .limit(100);
-
-    if (error) throw error;
-
-    // Ensure all numeric fields are properly typed
-    return data.map(metric => ({
-      ...metric,
-      mark_price: Number(metric.mark_price),
-      funding_rate: Number(metric.funding_rate),
-      open_interest: Number(metric.open_interest),
-      volume_24h: Number(metric.volume_24h),
-      price_change_24h: Number(metric.price_change_24h),
-      total_supply: Number(metric.total_supply),
-      market_cap: Number(metric.market_cap),
-      liquidity: Number(metric.liquidity),
-      spot_price: Number(metric.spot_price),
-      spot_volume_24h: Number(metric.spot_volume_24h),
-      txns_24h: Number(metric.txns_24h),
-      holder_count: metric.holder_count ? Number(metric.holder_count) : null
-    }));
-  } catch (error) {
-    console.error('Error fetching metrics:', error);
-    return [];
-  }
-};
-
-export default function PerpMetricsPageWrapper() {
-  return (
-    <ErrorBoundary>
-      <PerpMetricsPage />
-    </ErrorBoundary>
-  )
-}
-
-export function PerpMetricsPage() {
-  const [metrics, setMetrics] = useState<PerpMetric[]>([])
-  const [historicalData, setHistoricalData] = useState<PerpMetric[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [selectedToken, setSelectedToken] = useState<string>('')
-  const [selectedMetric, setSelectedMetric] = useState<MetricType>('spot_price')
-  const [timeRange, setTimeRange] = useState<TimeRange>('24H')
-  const [timeToUpdate, setTimeToUpdate] = useState('')
-
-  // Add real-time subscription
   useEffect(() => {
-    let mounted = true
-    const channel = supabase
-      .channel('perpetual_metrics_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'perpetual_metrics'
-        },
-        () => {
-          if (mounted) {
-            fetchMetrics()
-          }
-        }
-      )
-      .subscribe()
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
 
     return () => {
-      mounted = false
-      supabase.removeChannel(channel)
-    }
-  }, [])
-
-  // Update fetchMetrics to handle errors properly
-  async function fetchMetrics() {
-    try {
-      setLoading(true)
-      setError(null)
-
-      const { data: latest, error: latestError } = await supabase
-        .from('perpetual_metrics')
-        .select('*')
-        .order('timestamp', { ascending: false })
-        .limit(100) // Limit to recent data for better performance
-
-      if (latestError) throw latestError
-
-      if (latest) {
-        // Group by symbol and get latest entry for each
-        const latestBySymbol = latest.reduce<Record<string, PerpMetric>>((acc, curr) => {
-          if (!acc[curr.symbol] || new Date(curr.timestamp) > new Date(acc[curr.symbol].timestamp)) {
-            acc[curr.symbol] = curr
-          }
-          return acc
-        }, {})
-
-        const sortedTokens = Object.values(latestBySymbol).sort((a, b) => {
-          if (!a.market_cap && !b.market_cap) return 0
-          if (!a.market_cap) return 1
-          if (!b.market_cap) return -1
-          return b.market_cap - a.market_cap
-        })
-
-        setMetrics(sortedTokens)
-
-        // Set initial selected token if none selected
-        if (!selectedToken && sortedTokens.length > 0) {
-          setSelectedToken(sortedTokens[0].symbol)
-        }
-      }
-
-      // Fetch historical data if token is selected
-      if (selectedToken) {
-        await fetchHistoricalData()
-      }
-    } catch (err) {
-      console.error('Error fetching metrics:', err)
-      setError(err instanceof Error ? err.message : 'An error occurred while fetching data')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Separate function for historical data
-  async function fetchHistoricalData() {
-    try {
-      const timeRangeHours = {
-        '1H': 1,
-        '4H': 4,
-        '12H': 12,
-        '24H': 24
-      }[timeRange]
-
-      const rangeStart = new Date()
-      rangeStart.setHours(rangeStart.getHours() - timeRangeHours)
-
-      const { data: historical, error: historicalError } = await supabase
-        .from('perpetual_metrics')
-        .select('*')
-        .eq('symbol', selectedToken)
-        .gte('timestamp', rangeStart.toISOString())
-        .order('timestamp', { ascending: true })
-
-      if (historicalError) throw historicalError
-
-      if (historical) {
-        // Filter duplicates and ensure proper sorting
-        const uniqueHistorical = historical.reduce<Record<string, PerpMetric>>((acc, curr) => {
-          const timestamp = new Date(curr.timestamp).getTime().toString()
-          if (!acc[timestamp] || curr.id > acc[timestamp].id) {
-            acc[timestamp] = curr
-          }
-          return acc
-        }, {})
-
-        setHistoricalData(Object.values(uniqueHistorical).sort((a, b) => 
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-        ))
-      }
-    } catch (err) {
-      console.error('Error fetching historical data:', err)
-      setError(err instanceof Error ? err.message : 'An error occurred while fetching historical data')
-    }
-  }
-
-  // Add effect for fetching data
-  useEffect(() => {
-    fetchMetrics()
-    const interval = setInterval(fetchMetrics, 60000) // Refresh every minute
-    return () => clearInterval(interval)
-  }, [])
-
-  // Add effect for fetching historical data when token or time range changes
-  useEffect(() => {
-    if (selectedToken) {
-      fetchHistoricalData()
-    }
-  }, [selectedToken, timeRange])
-
-  // Add countdown effect
-  useEffect(() => {
-    const updateTimer = () => {
-      const now = new Date()
-      const next = new Date(now)
-      next.setMinutes(now.getMinutes() + 1, 0, 0)
-      
-      const diff = next.getTime() - now.getTime()
-      if (diff <= 0) {
-        fetchMetrics()
-        return
-      }
-      
-      const seconds = Math.floor(diff / 1000)
-      setTimeToUpdate(`${Math.floor(seconds / 60)}m ${seconds % 60}s`)
-    }
-
-    updateTimer() // Initial call
-    const timer = setInterval(updateTimer, 1000)
-
-    return () => clearInterval(timer)
-  }, [metrics])
-
-  // Add effect to update holder counts
-  useEffect(() => {
-    const updateHolderCounts = async () => {
-      if (!metrics.length) return;
-      
-      const updatedMetrics = await Promise.all(
-        metrics.map(async (metric) => {
-          if (!TOKEN_ADDRESSES[metric.symbol as TokenSymbol]) return metric;
-          
-          const holderCount = await fetchHolderCount(TOKEN_ADDRESSES[metric.symbol as TokenSymbol]);
-          return { ...metric, holder_count: holderCount };
-        })
-      );
-      
-      setMetrics(updatedMetrics);
+      clearTimeout(handler);
     };
+  }, [value, delay]);
 
-    updateHolderCounts();
-  }, [metrics]);
+  return debouncedValue;
+};
 
-  if (error) {
-    return (
-      <div className="p-4 text-red-400">
-        <h2 className="text-lg font-bold mb-2">Error</h2>
-        <p>{error}</p>
-        <button 
-          onClick={fetchMetrics}
-          className="mt-4 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded"
-        >
-          Retry
-        </button>
-      </div>
-    )
+export default function PerpMetricsPage() {
+  const [markets, setMarkets] = useState<MarketMetrics[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState<'oi' | 'volume' | 'current_funding' | 'predicted' | 'opportunity'>('oi')
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [showSearchHistory, setShowSearchHistory] = useState(false)
+  const [inputValue, setInputValue] = useState('');
+  const debouncedSearchQuery = useDebounceValue(inputValue, 300);
+
+  // Update useEffect to use debouncedSearchQuery
+  useEffect(() => {
+    setSearchQuery(debouncedSearchQuery);
+  }, [debouncedSearchQuery]);
+
+  // Update search input handler for better responsiveness
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setInputValue(query);
+    setShowSearchHistory(query.length > 0);
+  };
+
+  // Handle search history
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    if (query && !recentSearches.includes(query)) {
+      setRecentSearches(prev => [query, ...prev.slice(0, 4)])
+    }
+    setShowSearchHistory(false)
   }
 
-  // Get the current metric option
-  const currentMetric = metricOptions.find(m => m.value === selectedMetric)!;
-
-  // Add loading indicator
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white p-8">
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
-          <p className="text-gray-400">Loading metrics...</p>
-        </div>
-      </div>
+  // Sort and filter markets
+  const sortedAndFilteredMarkets = useMemo(() => {
+    let filtered = markets.filter(market => 
+      market.token.toLowerCase().includes(searchQuery.toLowerCase())
     )
-  }
+
+    return filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'volume':
+          return (b.latest_snapshot.volume_24h || 0) - (a.latest_snapshot.volume_24h || 0)
+        case 'current_funding':
+          return Math.abs(b.latest_snapshot.current_funding_rate || 0) - Math.abs(a.latest_snapshot.current_funding_rate || 0)
+        case 'predicted':
+          return Math.abs(b.latest_snapshot.predicted_funding_rate || 0) - Math.abs(a.latest_snapshot.predicted_funding_rate || 0)
+        case 'opportunity':
+          const oppA = Math.abs((a.latest_snapshot.predicted_funding_rate || 0) - (a.latest_snapshot.current_funding_rate || 0))
+          const oppB = Math.abs((b.latest_snapshot.predicted_funding_rate || 0) - (b.latest_snapshot.current_funding_rate || 0))
+          return oppB - oppA
+        case 'oi':
+        default:
+          return (b.latest_snapshot.notional_open_interest || 0) - (a.latest_snapshot.notional_open_interest || 0)
+      }
+    })
+  }, [markets, searchQuery, sortBy])
+
+  useEffect(() => {
+    async function fetchMarketData() {
+      try {
+        setLoading(true)
+        
+        // Get the latest snapshot for each token
+        const { data: latestSnapshots, error: snapshotError } = await supabase
+          .from('funding_rate_snapshots')
+          .select('*')
+          .order('timestamp', { ascending: false })
+          .limit(1000) // Adjust based on your needs
+
+        if (snapshotError) throw snapshotError
+
+        // Group by token and get latest data
+        const tokenGroups = latestSnapshots.reduce((acc: { [key: string]: FundingSnapshot[] }, snapshot) => {
+          if (!acc[snapshot.token]) {
+            acc[snapshot.token] = []
+          }
+          acc[snapshot.token].push(snapshot)
+          return acc
+        }, {})
+
+        // Get historical data for each token (last 24 hours)
+        const marketMetrics: MarketMetrics[] = await Promise.all(
+          Object.entries(tokenGroups).map(async ([token, snapshots]) => {
+            const { data: historicalData, error: historyError } = await supabase
+              .from('funding_rate_snapshots')
+              .select('*')
+              .eq('token', token)
+              .gte('timestamp', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+              .order('timestamp', { ascending: true })
+
+            if (historyError) throw historyError
+
+            return {
+              token,
+              latest_snapshot: snapshots[0],
+              historical_data: historicalData
+            }
+          })
+        )
+
+        // Sort markets by notional open interest
+        const sortedMarkets = marketMetrics.sort((a, b) => 
+          (b.latest_snapshot.notional_open_interest || 0) - (a.latest_snapshot.notional_open_interest || 0)
+        )
+
+        setMarkets(sortedMarkets)
+        setLoading(false)
+      } catch (err) {
+        console.error('Error fetching market data:', err)
+        setError(err instanceof Error ? err.message : 'Failed to fetch market data')
+        setLoading(false)
+      }
+    }
+
+    fetchMarketData()
+  }, [])
+
+  // Update the filter buttons section
+  const sortOptions = [
+    { value: 'oi', label: 'Open Interest' },
+    { value: 'volume', label: 'Volume' },
+    { value: 'current_funding', label: '|Current Funding|' },
+    { value: 'predicted', label: '|Predicted Funding|' },
+    { value: 'opportunity', label: 'Funding Opportunities' }
+  ]
+
+  if (loading) return <div className="p-4">Loading market data...</div>
+  if (error) return <div className="p-4 text-red-500">Error: {error}</div>
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Perpetual Metrics Dashboard</h1>
-        <div className="text-right">
-          <div className="text-sm text-gray-400">Next update in</div>
-          <div className="text-xl font-mono text-purple-400">{timeToUpdate}</div>
-        </div>
-      </div>
-
-      {/* Historical Chart */}
-      <div className="mb-8 bg-gray-800/50 backdrop-blur-sm p-6 rounded-lg shadow-lg">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-4">
-            <h2 className="text-xl font-bold text-purple-400">
-              {selectedToken} - {currentMetric.label} History
-            </h2>
-            <select 
-              value={selectedMetric}
-              onChange={(e) => setSelectedMetric(e.target.value as MetricType)}
-              className="bg-gray-700/50 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            >
-              {metricOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <select 
-            value={selectedToken}
-            onChange={(e) => setSelectedToken(e.target.value)}
-            className="bg-gray-700/50 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            {metrics.map((m) => (
-              <option key={m.symbol} value={m.symbol}>{m.symbol}</option>
-            ))}
-          </select>
-        </div>
+    <div className="p-4 max-w-7xl mx-auto">
+      <div className="mb-6 space-y-4">
+        <h1 className="text-2xl font-bold">Perpetual Markets Overview</h1>
         
-        <div className="h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={historicalData}>
-              <defs>
-                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={currentMetric.color} stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor={currentMetric.color} stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid 
-                strokeDasharray="3 3" 
-                vertical={false}
-                stroke="#374151"
-              />
-              <XAxis 
-                dataKey="timestamp" 
-                tickFormatter={(time: string) => format(parseISO(time), 'HH:mm')}
-                stroke="#9CA3AF"
-                tick={{ fill: '#9CA3AF' }}
-                axisLine={{ stroke: '#4B5563' }}
-                tickLine={{ stroke: '#4B5563' }}
-              />
-              <YAxis 
-                domain={['auto', 'auto']}
-                stroke="#9CA3AF"
-                tick={{ fill: '#9CA3AF' }}
-                axisLine={{ stroke: '#4B5563' }}
-                tickLine={{ stroke: '#4B5563' }}
-                tickFormatter={(value) => {
-                  if (selectedMetric === 'funding_rate') {
-                    return `${(value * 100).toFixed(2)}%`
-                  }
-                  if (['spot_volume_24h', 'liquidity', 'open_interest', 'market_cap'].includes(selectedMetric)) {
-                    return `$${(value/1e6).toFixed(1)}M`
-                  }
-                  if (selectedMetric === 'txns_24h') {
-                    return value.toLocaleString()
-                  }
-                  return `$${value.toFixed(4)}`
-                }}
-              />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length && payload[0].value != null) {
-                    return (
-                      <div className="bg-gray-800 border border-gray-700 p-4 rounded-lg shadow-lg">
-                        <p className="text-gray-400 mb-2">
-                          {format(parseISO(label), 'MMM dd, HH:mm')}
-                        </p>
-                        <p className="text-white font-medium">
-                          {currentMetric.label}: {currentMetric.format(Number(payload[0].value))}
-                        </p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Area 
-                type="monotone" 
-                dataKey={selectedMetric}
-                stroke={currentMetric.color}
-                strokeWidth={2}
-                fill="url(#colorGradient)"
-                dot={false}
-                activeDot={{
-                  r: 6,
-                  stroke: currentMetric.color,
-                  strokeWidth: 2,
-                  fill: '#1F2937'
-                }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-        
-        {/* Add time range selector */}
-        <div className="flex justify-center gap-4 mt-4">
-          {(['1H', '4H', '12H', '24H'] as const).map((range) => (
-            <button
-              key={range}
-              className={`px-4 py-2 rounded-lg transition-all ${
-                timeRange === range 
-                  ? 'bg-purple-600 text-white' 
-                  : 'bg-gray-700/50 text-gray-400 hover:bg-gray-700'
-              }`}
-              onClick={() => setTimeRange(range)}
-            >
-              {range}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Current Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {metrics.map((metric) => (
-          <div 
-            key={metric.symbol} 
-            className={`bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all ${
-              (metric.spot_price === 0 && metric.symbol !== 'BRETT') ? 'opacity-70' : ''
-            } ${selectedToken === metric.symbol ? 'ring-2 ring-purple-500' : ''}`}
-            onClick={() => (metric.spot_price > 0 || metric.symbol === 'BRETT') && setSelectedToken(metric.symbol)}
-            role="button"
-            tabIndex={0}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-purple-400">{metric.symbol}</h2>
-              {metric.price_change_24h !== 0 || metric.symbol === 'BRETT' ? (
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  metric.price_change_24h > 0 ? 'bg-green-500/20 text-green-400' :
-                  metric.price_change_24h < 0 ? 'bg-red-500/20 text-red-400' :
-                  'bg-gray-500/20 text-gray-400'
-                }`}>
-                  {metric.price_change_24h > 0 ? '↑' : '↓'} 
-                  {Math.abs(metric.price_change_24h).toFixed(2)}%
-                </span>
-              ) : (
-                <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-500/20 text-gray-400">
-                  Inactive
-                </span>
+        {/* Search and Sort Section */}
+        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+          {/* Enhanced Search Bar */}
+          <div className="relative w-full md:w-96">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleSearchInput}
+              onFocus={() => setShowSearchHistory(inputValue.length > 0)}
+              placeholder="Search markets..."
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-600 rounded-lg 
+                       bg-gray-800 text-white placeholder-gray-400
+                       focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                       transition-all duration-200 ease-in-out
+                       hover:border-gray-500
+                       text-base leading-relaxed
+                       selection:bg-purple-500/20
+                       font-medium
+                       shadow-sm
+                       backdrop-blur-sm
+                       focus:shadow-lg focus:shadow-purple-500/10"
+              autoComplete="off"
+              spellCheck="false"
+              aria-label="Search markets"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              {inputValue && (
+                <button
+                  onClick={() => {
+                    setInputValue('');
+                    setSearchQuery('');
+                    setShowSearchHistory(false);
+                  }}
+                  className="p-1 hover:bg-gray-700/50 rounded-full transition-colors duration-200
+                           text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 
+                           focus:ring-purple-500"
+                  aria-label="Clear search"
+                >
+                  <span className="text-lg">×</span>
+                </button>
               )}
             </div>
 
-            <div className="space-y-6">
-              {/* Spot Market */}
-              <div>
-                <h3 className="text-sm font-semibold text-purple-400 mb-2">Spot Market</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <span className="text-gray-400">Price</span>
-                  <span className="text-right font-mono">
-                    {metric.spot_price > 0 ? `$${metric.spot_price.toFixed(4)}` : '-'}
-                  </span>
-                  <span className="text-gray-400">Volume 24h</span>
-                  <span className="text-right font-mono">
-                    {metric.spot_volume_24h > 0 ? `$${(metric.spot_volume_24h/1e6).toFixed(2)}M` : '-'}
-                  </span>
-                  <span className="text-gray-400">Liquidity</span>
-                  <span className="text-right font-mono">
-                    {metric.liquidity > 0 ? `$${(metric.liquidity/1e6).toFixed(2)}M` : '-'}
-                  </span>
-                </div>
+            {/* Improved Search History Dropdown */}
+            {showSearchHistory && recentSearches.length > 0 && (
+              <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm
+                            border border-gray-700 rounded-lg shadow-lg
+                            transform transition-all duration-200 ease-out
+                            animate-in fade-in slide-in-from-top-2">
+                {recentSearches.map((query, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setInputValue(query);
+                      handleSearch(query);
+                    }}
+                    className="w-full px-4 py-2.5 text-left text-gray-300 
+                             hover:bg-gray-700/50 first:rounded-t-lg last:rounded-b-lg 
+                             flex items-center gap-2 transition-colors duration-150
+                             group focus:outline-none focus:bg-gray-700/70"
+                  >
+                    <span className="text-gray-400 group-hover:text-purple-400 transition-colors duration-150">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </span>
+                    <span className="truncate">{query}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Enhanced Sort Options */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {sortOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setSortBy(option.value as typeof sortBy)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors
+                  ${sortBy === option.value
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-gray-700/50 text-gray-400 hover:bg-gray-700/70'
+                  }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Results count */}
+        <div className="text-sm text-gray-400">
+          Showing {sortedAndFilteredMarkets.length} of {markets.length} markets
+        </div>
+      </div>
+      
+      {/* Markets Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {sortedAndFilteredMarkets.length > 0 ? (
+          sortedAndFilteredMarkets.map((market) => (
+            <div key={market.token} className="bg-gray-800 rounded-lg p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">{market.token}</h2>
+                <span className="text-sm text-gray-400">
+                  {format(parseISO(market.latest_snapshot.timestamp), 'MMM d, HH:mm')}
+                </span>
               </div>
 
-              {/* Perpetual Market */}
-              <div>
-                <h3 className="text-sm font-semibold text-purple-400 mb-2">Perpetual Market</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <span className="text-gray-400">Mark Price</span>
-                  <span className="text-right font-mono">${metric.mark_price.toFixed(4)}</span>
-                  <span className="text-gray-400">Funding Rate</span>
-                  <span className="text-right font-mono">{(metric.funding_rate * 100).toFixed(4)}%</span>
-                  <span className="text-gray-400">Open Interest</span>
-                  <span className="text-right font-mono">${(metric.open_interest/1e6).toFixed(2)}M</span>
-                </div>
+              {/* Price Chart */}
+              <div className="h-32 mb-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={market.historical_data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="timestamp"
+                      tickFormatter={(timestamp) => format(parseISO(timestamp), 'HH:mm')}
+                    />
+                    <YAxis />
+                    <Tooltip 
+                      labelFormatter={(timestamp) => format(parseISO(timestamp as string), 'MMM d, HH:mm')}
+                      formatter={(value: number) => [`$${value.toFixed(4)}`, 'Price']}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="mark_price" 
+                      stroke="#8884d8" 
+                      fill="#8884d8" 
+                      fillOpacity={0.3}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
 
-              {/* Market Stats */}
-              <div>
-                <h3 className="text-sm font-semibold text-purple-400 mb-2">Market Stats</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <span className="text-gray-400">Market Cap</span>
-                  <span className="text-right font-mono">${(metric.market_cap/1e6).toFixed(2)}M</span>
-                  <span className="text-gray-400">24h Transactions</span>
-                  <span className="text-right font-mono">{metric.txns_24h.toLocaleString()}</span>
-                  <span className="text-gray-400">Holders</span>
-                  <span className="text-right font-mono">
-                    {metric.holder_count !== null 
-                      ? metric.holder_count.toLocaleString() 
-                      : '-'}
-                  </span>
+              {/* Market Metrics */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Market Overview</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    <span className="text-gray-400">Mark Price</span>
+                    <span className="text-right font-mono">
+                      ${market.latest_snapshot.mark_price.toFixed(4)}
+                    </span>
+                    <span className="text-gray-400">Funding Rate</span>
+                    <span className="text-right font-mono">
+                      {(market.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+                    </span>
+                    <span className="text-gray-400">Predicted Rate</span>
+                    <span className="text-right font-mono">
+                      {(market.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold text-purple-400 mb-2">Volume & OI</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    <span className="text-gray-400">24h Volume</span>
+                    <span className="text-right font-mono">
+                      ${(market.latest_snapshot.volume_24h/1e6).toFixed(2)}M
+                    </span>
+                    <span className="text-gray-400">Open Interest</span>
+                    <span className="text-right font-mono">
+                      ${(market.latest_snapshot.notional_open_interest/1e6).toFixed(2)}M
+                    </span>
+                    <span className="text-gray-400">Avg 24h Rate</span>
+                    <span className="text-right font-mono">
+                      {(market.latest_snapshot.avg_24h_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="col-span-full text-center py-8 text-gray-400">
+            No markets found matching "{searchQuery}"
           </div>
-        ))}
+        )}
+      </div>
+
+      {/* Add Funding Highlights */}
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-green-900/20 rounded-lg p-4 border border-green-500/20">
+          <h3 className="text-green-400 font-semibold mb-2">Highest Positive Funding</h3>
+          {sortedAndFilteredMarkets
+            .filter(m => m.latest_snapshot.current_funding_rate > 0)
+            .slice(0, 3)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <span className="text-green-400">
+                  {(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+                </span>
+              </div>
+            ))}
+        </div>
+
+        <div className="bg-red-900/20 rounded-lg p-4 border border-red-500/20">
+          <h3 className="text-red-400 font-semibold mb-2">Highest Negative Funding</h3>
+          {sortedAndFilteredMarkets
+            .filter(m => m.latest_snapshot.current_funding_rate < 0)
+            .slice(0, 3)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <span className="text-red-400">
+                  {(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+                </span>
+              </div>
+            ))}
+        </div>
+
+        <div className="bg-blue-900/20 rounded-lg p-4 border border-blue-500/20">
+          <h3 className="text-blue-400 font-semibold mb-2">Largest Funding Opportunities</h3>
+          {sortedAndFilteredMarkets
+            .sort((a, b) => {
+              const oppA = Math.abs(a.latest_snapshot.predicted_funding_rate - a.latest_snapshot.current_funding_rate)
+              const oppB = Math.abs(b.latest_snapshot.predicted_funding_rate - b.latest_snapshot.current_funding_rate)
+              return oppB - oppA
+            })
+            .slice(0, 3)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <div className="text-right">
+                  <div className="text-gray-400 text-sm">Current: 
+                    <span className={m.latest_snapshot.current_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}>
+                      {' '}{(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
+                  <div className="text-gray-400 text-sm">Predicted: 
+                    <span className={m.latest_snapshot.predicted_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}>
+                      {' '}{(m.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Add Predicted Funding Rate Highlights */}
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-indigo-900/20 rounded-lg p-4 border border-indigo-500/20">
+          <h3 className="text-indigo-400 font-semibold mb-2">Highest Predicted Funding</h3>
+          {sortedAndFilteredMarkets
+            .sort((a, b) => b.latest_snapshot.predicted_funding_rate - a.latest_snapshot.predicted_funding_rate)
+            .slice(0, 5)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <div className="text-right">
+                  <span className="text-indigo-400">
+                    {(m.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+                  </span>
+                  <span className="text-gray-400 text-sm ml-2">
+                    (Current: {(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%)
+                  </span>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        <div className="bg-violet-900/20 rounded-lg p-4 border border-violet-500/20">
+          <h3 className="text-violet-400 font-semibold mb-2">Lowest Predicted Funding</h3>
+          {sortedAndFilteredMarkets
+            .sort((a, b) => a.latest_snapshot.predicted_funding_rate - b.latest_snapshot.predicted_funding_rate)
+            .slice(0, 5)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <div className="text-right">
+                  <span className="text-violet-400">
+                    {(m.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+                  </span>
+                  <span className="text-gray-400 text-sm ml-2">
+                    (Current: {(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%)
+                  </span>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        <div className="bg-fuchsia-900/20 rounded-lg p-4 border border-fuchsia-500/20">
+          <h3 className="text-fuchsia-400 font-semibold mb-2">Largest Predicted Changes</h3>
+          {sortedAndFilteredMarkets
+            .sort((a, b) => {
+              const changeA = Math.abs(a.latest_snapshot.predicted_funding_rate - a.latest_snapshot.current_funding_rate)
+              const changeB = Math.abs(b.latest_snapshot.predicted_funding_rate - b.latest_snapshot.current_funding_rate)
+              return changeB - changeA
+            })
+            .slice(0, 5)
+            .map(m => (
+              <div key={m.token} className="flex justify-between items-center py-1">
+                <span className="text-white">{m.token}</span>
+                <div className="text-right">
+                  <div className="text-sm">
+                    <span className="text-gray-400">Pred: </span>
+                    <span className={m.latest_snapshot.predicted_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}>
+                      {(m.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="text-gray-400">Curr: </span>
+                    <span className={m.latest_snapshot.current_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}>
+                      {(m.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   )

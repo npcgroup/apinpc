@@ -8,6 +8,7 @@ from tabulate import tabulate
 import logging
 from typing import Dict, List
 import numpy as np
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,228 +20,175 @@ class FundingRateAnalyzer:
         os.makedirs(self.output_dir, exist_ok=True)
 
     def load_latest_data(self) -> pd.DataFrame:
-        """Load the most recent funding rate data with better error handling"""
+        """Load and process the most recent funding rate data"""
         try:
-            # Get latest funding rate file
             files = [f for f in os.listdir(self.data_dir) if f.startswith('funding_raw_')]
             if not files:
                 raise FileNotFoundError("No funding rate data files found")
             
             latest_file = max(files)
+            file_path = os.path.join(self.data_dir, latest_file)
             logger.info(f"Loading data from {latest_file}")
             
-            with open(os.path.join(self.data_dir, latest_file)) as f:
+            with open(file_path, 'r') as f:
                 data = json.load(f)
             
-            # Convert to DataFrame
-            df = pd.DataFrame(data)
+            # Convert to DataFrame for easier analysis
+            processed_data = []
+            for market in data:
+                # Calculate additional metrics
+                historical_rates = pd.DataFrame(market['historical_rates'])
+                avg_funding_rate = historical_rates['rate'].mean() if not historical_rates.empty else market['current_funding_rate']
+                rate_volatility = historical_rates['rate'].std() if not historical_rates.empty else 0
+                
+                # Calculate notional values
+                notional_oi = float(market['open_interest']) * float(market['mark_price'])
+                
+                processed_data.append({
+                    'token': market['token'],
+                    'current_funding_rate': float(market['current_funding_rate']),
+                    'predicted_funding_rate': float(market['predicted_funding_rate']),
+                    'mark_price': float(market['mark_price']),
+                    'open_interest': float(market['open_interest']),
+                    'notional_open_interest': notional_oi,
+                    'volume_24h': float(market['volume_24h']),
+                    'avg_funding_rate_24h': avg_funding_rate,
+                    'funding_rate_volatility': rate_volatility,
+                    'historical_rates': market['historical_rates']
+                })
             
-            # Add timestamp if missing
-            if 'timestamp' not in df.columns:
-                logger.warning("Timestamp column missing, adding current timestamp")
-                df['timestamp'] = datetime.now().isoformat()
-            
-            # Ensure all required columns exist
-            required_columns = [
-                'token', 
-                'current_funding_rate', 
-                'predicted_funding_rate',
-                'mark_price',
-                'open_interest',
-                'volume_24h'
-            ]
-            
-            for col in required_columns:
-                if col not in df.columns:
-                    logger.warning(f"Missing column {col}, adding with default values")
-                    df[col] = 0.0
-            
-            # Convert timestamp to datetime
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
-            
-            # Clean up data
-            df = df.fillna(0)  # Fill NaN values with 0
-            df = df.replace([np.inf, -np.inf], 0)  # Replace infinite values
-            
-            # Validate numeric columns
-            numeric_columns = ['current_funding_rate', 'predicted_funding_rate', 'mark_price', 'open_interest', 'volume_24h']
-            for col in numeric_columns:
-                df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
-
-            logger.info(f"Successfully loaded {len(df)} records")
+            df = pd.DataFrame(processed_data)
             return df
-
+            
         except Exception as e:
             logger.error(f"Error loading data: {str(e)}")
-            # Return empty DataFrame with required columns
-            return pd.DataFrame(columns=[
-                'timestamp',
-                'token',
-                'current_funding_rate',
-                'predicted_funding_rate',
-                'mark_price',
-                'open_interest',
-                'volume_24h'
-            ])
+            raise
 
-    def generate_analysis(self):
-        """Generate comprehensive funding rate analysis with error handling"""
+    def identify_opportunities(self, df: pd.DataFrame) -> Dict:
+        """Identify funding rate opportunities with improved metrics"""
+        try:
+            # Calculate annualized rates
+            df['annualized_funding'] = df['current_funding_rate'] * 365 * 24
+            df['predicted_annual'] = df['predicted_funding_rate'] * 365 * 24
+            
+            # Calculate opportunity scores
+            df['opportunity_score'] = (
+                (df['predicted_funding_rate'] - df['current_funding_rate']).abs() * 
+                np.log1p(df['notional_open_interest']) * 
+                (1 + df['volume_24h'] / df['notional_open_interest'])
+            )
+            
+            # Filter for liquid markets
+            liquid_markets = df[df['notional_open_interest'] > df['notional_open_interest'].median()]
+            
+            opportunities = {
+                'highest_current_rates': df.nlargest(5, 'current_funding_rate')[
+                    ['token', 'current_funding_rate', 'predicted_funding_rate', 'notional_open_interest']
+                ].to_dict('records'),
+                
+                'highest_predicted_rates': df.nlargest(5, 'predicted_funding_rate')[
+                    ['token', 'current_funding_rate', 'predicted_funding_rate', 'notional_open_interest']
+                ].to_dict('records'),
+                
+                'best_opportunities': liquid_markets.nlargest(5, 'opportunity_score')[
+                    ['token', 'current_funding_rate', 'predicted_funding_rate', 'opportunity_score', 'notional_open_interest']
+                ].to_dict('records')
+            }
+            
+            return opportunities
+            
+        except Exception as e:
+            logger.error(f"Error identifying opportunities: {str(e)}")
+            raise
+
+    def calculate_market_metrics(self, df: pd.DataFrame) -> Dict:
+        """Calculate comprehensive market metrics"""
+        try:
+            total_oi = df['notional_open_interest'].sum()
+            total_volume = df['volume_24h'].sum()
+            
+            metrics = {
+                'total_markets': len(df),
+                'total_open_interest': total_oi,
+                'total_volume_24h': total_volume,
+                'avg_funding_rate': df['current_funding_rate'].mean(),
+                'weighted_funding_rate': (
+                    df['current_funding_rate'] * df['notional_open_interest']
+                ).sum() / total_oi if total_oi > 0 else 0,
+                'market_concentration': (
+                    df.nlargest(5, 'notional_open_interest')['notional_open_interest'].sum() / total_oi
+                ) * 100 if total_oi > 0 else 0
+            }
+            
+            return metrics
+            
+        except Exception as e:
+            logger.error(f"Error calculating market metrics: {str(e)}")
+            raise
+
+    def generate_analysis(self) -> Dict:
+        """Generate comprehensive market analysis"""
         try:
             df = self.load_latest_data()
             
-            if len(df) == 0:
-                logger.warning("No data available for analysis")
-                return {
-                    "timestamp": datetime.now().isoformat(),
-                    "market_summary": {
-                        "total_markets": 0,
-                        "error": "No data available for analysis"
-                    }
-                }
-
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            opportunities = self.identify_opportunities(df)
+            market_metrics = self.calculate_market_metrics(df)
             
             analysis = {
-                "timestamp": datetime.now().isoformat(),
-                "market_summary": self._generate_market_summary(df),
-                "opportunities": self._identify_opportunities(df),
-                "risk_metrics": self._calculate_risk_metrics(df),
-                "volume_analysis": self._analyze_volume(df),
-                "recommendations": self._generate_recommendations(df)
+                'timestamp': datetime.now().isoformat(),
+                'market_summary': market_metrics,
+                'opportunities': opportunities,
+                'risk_metrics': {
+                    'liquidity_metrics': {
+                        'volume_concentration': market_metrics['market_concentration'],
+                        'illiquid_markets': len(df[df['volume_24h'] < df['volume_24h'].median()]),
+                    }
+                },
+                'recommendations': [
+                    {
+                        'token': opp['token'],
+                        'type': 'long' if opp['predicted_funding_rate'] > opp['current_funding_rate'] else 'short',
+                        'confidence': min(abs(opp['opportunity_score']) / df['opportunity_score'].max() * 100, 100)
+                    }
+                    for opp in opportunities['best_opportunities'][:3]
+                ]
             }
-
-            # Save analysis
-            output_file = f"{self.output_dir}/funding_analysis_{timestamp}.json"
+            
+            # Save detailed analysis
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_file = Path(self.output_dir) / f"funding_analysis_{timestamp}.json"
+            
             with open(output_file, 'w') as f:
                 json.dump(analysis, f, indent=2, default=str)
             
-            logger.info(f"Analysis saved to {output_file}")
-            
-            # Print report
-            self._print_report(analysis)
+            # Print summary
+            self._print_analysis_summary(analysis)
             
             return analysis
-
+            
         except Exception as e:
             logger.error(f"Error generating analysis: {str(e)}")
-            return {
-                "timestamp": datetime.now().isoformat(),
-                "error": str(e),
-                "market_summary": {
-                    "total_markets": 0,
-                    "error": "Analysis failed"
-                }
-            }
+            raise
 
-    def _generate_market_summary(self, df: pd.DataFrame) -> Dict:
-        """Generate market overview statistics"""
-        return {
-            "total_markets": len(df),
-            "total_volume_24h": df['volume_24h'].sum(),
-            "total_open_interest": df['open_interest'].sum(),
-            "avg_funding_rate": df['current_funding_rate'].mean() * 100,
-            "median_funding_rate": df['current_funding_rate'].median() * 100,
-            "highest_funding_rate": df['current_funding_rate'].max() * 100,
-            "lowest_funding_rate": df['current_funding_rate'].min() * 100,
-            "positive_funding_markets": len(df[df['current_funding_rate'] > 0]),
-            "negative_funding_markets": len(df[df['current_funding_rate'] < 0])
-        }
-
-    def _identify_opportunities(self, df: pd.DataFrame) -> Dict:
-        """Identify trading opportunities"""
-        df['funding_difference'] = df['predicted_funding_rate'] - df['current_funding_rate']
-        df['annualized_funding'] = df['current_funding_rate'] * 365 * 100
-
-        return {
-            "highest_current_rates": df.nlargest(5, 'current_funding_rate')[
-                ['token', 'current_funding_rate', 'predicted_funding_rate', 'annualized_funding']
-            ].to_dict('records'),
-            
-            "largest_predicted_changes": df.nlargest(5, 'funding_difference')[
-                ['token', 'current_funding_rate', 'predicted_funding_rate', 'funding_difference']
-            ].to_dict('records'),
-            
-            "high_volume_opportunities": df[df['volume_24h'] > df['volume_24h'].quantile(0.75)].nlargest(5, 'funding_difference')[
-                ['token', 'current_funding_rate', 'predicted_funding_rate', 'volume_24h', 'funding_difference']
-            ].to_dict('records')
-        }
-
-    def _calculate_risk_metrics(self, df: pd.DataFrame) -> Dict:
-        """Calculate risk-related metrics"""
-        return {
-            "high_risk_markets": df[
-                (df['volume_24h'] < df['volume_24h'].quantile(0.25)) & 
-                (abs(df['current_funding_rate']) > df['current_funding_rate'].quantile(0.75))
-            ]['token'].tolist(),
-            "liquidity_metrics": {
-                "avg_volume_per_market": df['volume_24h'].mean(),
-                "median_open_interest": df['open_interest'].median(),
-                "volume_concentration": (df.nlargest(5, 'volume_24h')['volume_24h'].sum() / df['volume_24h'].sum()) * 100
-            }
-        }
-
-    def _analyze_volume(self, df: pd.DataFrame) -> Dict:
-        """Analyze volume patterns"""
-        return {
-            "top_volume_markets": df.nlargest(5, 'volume_24h')[
-                ['token', 'volume_24h', 'open_interest']
-            ].to_dict('records'),
-            "volume_distribution": {
-                "low_volume": len(df[df['volume_24h'] < df['volume_24h'].quantile(0.25)]),
-                "medium_volume": len(df[
-                    (df['volume_24h'] >= df['volume_24h'].quantile(0.25)) & 
-                    (df['volume_24h'] < df['volume_24h'].quantile(0.75))
-                ]),
-                "high_volume": len(df[df['volume_24h'] >= df['volume_24h'].quantile(0.75)])
-            }
-        }
-
-    def _generate_recommendations(self, df: pd.DataFrame) -> List[Dict]:
-        """Generate trading recommendations"""
-        recommendations = []
-        
-        # High funding rate with good volume
-        high_funding = df[
-            (df['current_funding_rate'] > df['current_funding_rate'].quantile(0.75)) & 
-            (df['volume_24h'] > df['volume_24h'].median())
-        ]
-        
-        for _, market in high_funding.iterrows():
-            recommendations.append({
-                "token": market['token'],
-                "type": "high_funding",
-                "current_rate": market['current_funding_rate'],
-                "predicted_rate": market['predicted_funding_rate'],
-                "confidence": "high" if market['volume_24h'] > df['volume_24h'].quantile(0.9) else "medium"
-            })
-
-        return recommendations
-
-    def _print_report(self, analysis: Dict):
-        """Print formatted analysis report"""
+    def _print_analysis_summary(self, analysis: Dict):
+        """Print formatted analysis summary"""
         print("\n" + "="*80)
-        print("🔍 FUNDING RATE ANALYSIS REPORT")
-        print("="*80 + "\n")
-
         print("📊 Market Summary:")
         print(f"Total Markets: {analysis['market_summary']['total_markets']}")
-        print(f"Average Funding Rate: {analysis['market_summary']['avg_funding_rate']:.4f}%")
-        print(f"Total 24h Volume: ${analysis['market_summary']['total_volume_24h']:,.2f}")
-        print(f"Total Open Interest: ${analysis['market_summary']['total_open_interest']:,.2f}\n")
-
-        print("💰 Top Opportunities:")
-        for opp in analysis['opportunities']['highest_current_rates'][:3]:
-            print(f"• {opp['token']}: Current Rate = {opp['current_funding_rate']*100:.4f}% "
-                  f"(Predicted: {opp['predicted_funding_rate']*100:.4f}%)")
-
-        print("\n⚠️ Risk Metrics:")
-        print(f"Volume Concentration (Top 5): {analysis['risk_metrics']['liquidity_metrics']['volume_concentration']:.1f}%")
+        print(f"Total Open Interest: ${analysis['market_summary']['total_open_interest']:,.2f}")
+        print(f"24h Volume: ${analysis['market_summary']['total_volume_24h']:,.2f}")
+        print(f"Weighted Funding Rate: {analysis['market_summary']['weighted_funding_rate']*100:.4f}%")
         
-        print("\n📈 Recommendations:")
-        for rec in analysis['recommendations'][:3]:
-            print(f"• {rec['token']}: {rec['type'].replace('_', ' ').title()} "
-                  f"(Confidence: {rec['confidence']})")
-
+        print("\n🔥 Top Opportunities:")
+        for opp in analysis['opportunities']['best_opportunities'][:3]:
+            print(f"• {opp['token']}: Current {opp['current_funding_rate']*100:.4f}% → "
+                  f"Predicted {opp['predicted_funding_rate']*100:.4f}% "
+                  f"(OI: ${opp['notional_open_interest']:,.2f})")
+        
+        print("\n⚠️ Risk Metrics:")
+        print(f"Market Concentration: {analysis['risk_metrics']['liquidity_metrics']['volume_concentration']:.1f}%")
+        print(f"Illiquid Markets: {analysis['risk_metrics']['liquidity_metrics']['illiquid_markets']}")
+        
         print("\n" + "="*80 + "\n")
 
 def main():

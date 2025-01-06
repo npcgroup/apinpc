@@ -29,6 +29,24 @@ class FundingPipeline:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
+    def serialize_datetime(self, obj):
+        """Helper method to serialize datetime objects"""
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        if isinstance(obj, timedelta):
+            return str(obj)
+        return str(obj)
+
+    def process_market_data(self, data):
+        """Process market data to ensure JSON serializable"""
+        if isinstance(data, dict):
+            return {k: self.process_market_data(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [self.process_market_data(item) for item in data]
+        elif isinstance(data, (datetime, timedelta)):
+            return self.serialize_datetime(data)
+        return data
+
     async def run_pipeline(self):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
@@ -94,15 +112,18 @@ class FundingPipeline:
                 if not results:
                     raise Exception("No funding data collected")
 
-                # Save raw data
+                # Process and save results
+                processed_results = [self.process_market_data(result) for result in results]
+
+                # Save raw data with proper serialization
                 raw_data_file = self.data_dir / f"funding_raw_{timestamp}.json"
                 with open(raw_data_file, 'w') as f:
-                    json.dump(results, f, indent=2)
+                    json.dump(processed_results, f, indent=2, default=self.serialize_datetime)
                 
                 progress.update(task1, completed=total_markets)
                 console.print(f"✅ Collected data for {len(results)} markets")
 
-                # Step 2: Sync to Supabase
+                # Step 2: Sync to Supabase with processed data
                 task2 = progress.add_task(
                     "[cyan]Syncing to Supabase...", 
                     total=len(results),
@@ -111,7 +132,7 @@ class FundingPipeline:
                 
                 await self.supabase_sync.sync_funding_rates({
                     'timestamp': datetime.now().isoformat(),
-                    'all_markets': results
+                    'all_markets': processed_results
                 })
                 progress.update(task2, completed=len(results))
                 console.print("✅ Data synced to Supabase")
@@ -126,18 +147,19 @@ class FundingPipeline:
                 analysis = self.analyzer.generate_analysis()
                 progress.update(task3, completed=100)
                 
-                # Save pipeline run summary
+                # Save pipeline run summary with proper serialization
                 summary = {
                     "timestamp": timestamp,
                     "markets_collected": len(results),
                     "analysis_generated": bool(analysis),
                     "sync_status": "completed",
-                    "raw_data_file": str(raw_data_file)
+                    "raw_data_file": str(raw_data_file),
+                    "completion_time": datetime.now().isoformat()
                 }
                 
                 summary_file = self.output_dir / f"pipeline_summary_{timestamp}.json"
                 with open(summary_file, 'w') as f:
-                    json.dump(summary, f, indent=2)
+                    json.dump(summary, f, indent=2, default=self.serialize_datetime)
 
                 console.print(Panel(
                     f"""✨ Pipeline completed successfully!
@@ -154,16 +176,17 @@ class FundingPipeline:
                 logger.error(error_msg)
                 console.print(Panel(error_msg, style="bold red"))
                 
-                # Save error summary
+                # Save error summary with proper serialization
                 error_summary = {
                     "timestamp": timestamp,
                     "error": str(e),
                     "stage": progress.tasks[-1].description if progress.tasks else "Unknown",
-                    "status": "failed"
+                    "status": "failed",
+                    "error_time": datetime.now().isoformat()
                 }
                 
                 with open(self.output_dir / f"pipeline_error_{timestamp}.json", 'w') as f:
-                    json.dump(error_summary, f, indent=2)
+                    json.dump(error_summary, f, indent=2, default=self.serialize_datetime)
                 
                 sys.exit(1)
 

@@ -5,70 +5,39 @@ import {
   trackBlockchainMetrics,
   formatNumber
 } from '../src/utils/metrics'
-import { handleNaturalLanguageQuery } from '../src/utils/naturalLanguageQuery'
+import { 
+  handleNaturalLanguageQuery,
+  type ExtendedQueryConfig,
+  type QueryResult
+} from '../src/utils/naturalLanguageQuery'
 import { validateConfig } from '../config/env'
 
 interface HistoryEntry {
-  type: 'system' | 'user' | 'error' | 'ascii' | 'success' | 'chart' | 'link' | 'metric' | 'analytics' | 'protocol' | 'defi' | 'database' | 'table' | 'warning';
-  content?: string;
+  type: 'system' | 'user' | 'error' | 'ascii' | 'success' | 'chart' | 'link' | 
+        'metric' | 'analytics' | 'protocol' | 'defi' | 'database' | 'table' | 
+        'warning' | 'info';
+  content: string;
   data?: any;
-  metrics?: Array<{
-    label: string;
-    value: string | number;
+  analytics?: Array<{
+    metric: string;
+    value: number;
     change?: string;
-    trend?: 'up' | 'down' | 'neutral';
-  }>;
-  links?: Array<{
-    url: string;
-    title: string;
   }>;
   tableData?: {
-    columns: string[];
+    columns: Array<{
+      name: string;
+      type: string;
+    }>;
     rows: any[];
     summary?: {
       total: number;
-      timestamp: string;
+      filtered: number;
     };
   };
-  analytics?: {
-    source: string;
-    metrics: Array<{
-      name: string;
-      value: {
-        // Spot Market Data
-        price: number;
-        volume: number;
-        liquidity: number;
-        change: number;
-        // Perpetual Market Data
-        mark_price: number;
-        funding_rate: number;
-        perp_volume_24h: number;
-        open_interest: number;
-        // Market Stats
-        market_cap: number;
-        txns_24h: number;
-        total_supply: number;
-      };
-      trend?: 'up' | 'down' | 'neutral';
-    }>;
-  };
-  protocol?: {
-    name: string;
-    tvl?: number;
-    volume24h?: number;
-    fees24h?: number;
-    users24h?: number;
-    chains?: string[];
-  };
-  defi?: {
-    type: 'lending' | 'dex' | 'derivatives';
-    metrics: any;
-    risks?: any[];
-  };
   metadata?: {
-    type: 'api-response' | 'nft_sales';
-    timestamp: string;
+    type: 'api-response' | 'nft_sales' | 'navigation';
+    timestamp?: string;
+    destination?: string;
   };
 }
 
@@ -104,47 +73,28 @@ interface CabalState {
 interface CommandContext {
   args: string[];
   options?: Record<string, any>;
-  state?: CabalState;
-  setState?: (state: CabalState) => void;
+  state: CabalState;
+  setState: (state: CabalState) => void;
   apiKeys?: {
     dune?: string;
     flipside?: string;
   };
 }
 
-// Add type definition for commands
-type CommandFunction = (context: CommandContext) => HistoryEntry | Promise<HistoryEntry> | undefined;
+type CommandResult = HistoryEntry;
 
-interface Commands {
-  [key: string]: CommandFunction;
-  help: () => HistoryEntry;
-  'create-cabal': () => HistoryEntry;
-  'list-cabals': () => HistoryEntry;
-  connect: (context: CommandContext) => HistoryEntry;
-  'create-proposal': () => HistoryEntry;
-  'view-agent': () => HistoryEntry;
-  'treasury': (context: CommandContext) => HistoryEntry;
-  'interact': () => HistoryEntry;
-  analyze: (context: CommandContext) => Promise<HistoryEntry>;
-  visualize: (context: CommandContext) => Promise<HistoryEntry>;
-  compare: (context: CommandContext) => Promise<HistoryEntry>;
-  track: (context: CommandContext) => Promise<HistoryEntry>;
-  alert: (context: CommandContext) => Promise<HistoryEntry>;
-  'query-defi': (context: CommandContext) => Promise<HistoryEntry>;
-  'analyze-protocol': (context: CommandContext) => Promise<HistoryEntry>;
-  'track-metrics': (context: CommandContext) => Promise<HistoryEntry>;
-  'api-docs': () => HistoryEntry;
-  ask: (context: CommandContext) => Promise<HistoryEntry>;
-  'test-api': (context: CommandContext) => Promise<HistoryEntry>;
-  'api-help': () => HistoryEntry;
-  'test-endpoint': (context: CommandContext) => Promise<HistoryEntry>;
-  'list-endpoints': () => HistoryEntry;
-  'ingest-api': () => Promise<HistoryEntry>;
-  curl: (context: CommandContext) => Promise<HistoryEntry>;
-  'get-my-perps': () => Promise<HistoryEntry>;
+interface CommandHandler {
+  description: string;
+  handler: (context: CommandContext) => Promise<CommandResult> | CommandResult;
 }
 
-// Add new interface for command suggestions
+type CommandFunction = CommandHandler['handler'];
+
+interface Commands {
+  [key: string]: CommandHandler;
+}
+
+// Add these type definitions at the top with other interfaces
 interface CommandSuggestion {
   command: string
   description: string
@@ -415,566 +365,227 @@ const CabalTerminal = () => {
 
 
   const commands: Commands = {
-    help: () => ({
-      type: 'system',
-      content: `Available commands:
-      create-cabal  - Create a new AI cabal
-      list-cabals   - List your existing cabals
-      connect       - Connect to specific cabal
-      agents        - List agents in current cabal
-      send          - Send message to an agent
-      propose       - Create governance proposal
-      balance       - Check token balances
-      clear         - Clear terminal
-      help          - Show this help message`
-    }),
-
-    'treasury': (context: CommandContext) => {
-      const treasury = context.state?.treasury
-      if (!treasury) {
-        return {
-          type: 'error',
-          content: 'Treasury data not available'
-        }
-      }
-      return {
-        type: 'system',
-        content: `
-╔═══�����������══════════════════════════════════╗
-║         TREASURY OVERVIEW            ║
-╚══════════════════════════════════════╝
-
-DAO Tokens: ${treasury.daoTokens}
-PUMP Tokens: ${treasury.pumpTokens}
-
-Use 'create-proposal' to suggest treasury actions.
-`
-      }
-    },
-
-    visualize: async (context: CommandContext) => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please specify what to visualize. Example: "visualize DEX volume comparison"'
-        };
-      }
-
-      const results = await handleNaturalLanguageQuery(query);
-      return {
-        type: 'chart',
-        content: results.data || 'No visualization could be generated'
-      };
-    },
-
-    compare: async (context: CommandContext) => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please specify what to compare. Example: "compare TVL between Uniswap and Curve"'
-        };
-      }
-
-      const results = await handleNaturalLanguageQuery(query);
-      return {
-        type: 'analytics',
-        content: results.data || 'No comparison could be generated'
-      };
-    },
-
-    track: async (context: CommandContext) => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please specify what to track. Example: "track daily volume for Aave"'
-        };
-      }
-
-      try {
-        const results = await handleNaturalLanguageQuery(query, {
-          type: 'track',
-          query,
-          parameters: {}
-        });
-
-        return {
-          type: 'metric',
-          content: results.data || 'No tracking data could be generated'
-        };
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to track data: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    alert: async (context: CommandContext) => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please specify alert conditions. Example: "alert when Ethereum TVL drops below 20B"'
-        };
-      }
-
-      const results = await handleNaturalLanguageQuery(query);
-      return {
-        type: 'system',
-        content: results.data || 'Could not set up alert'
-      };
-    },
-
-    'query-defi': async (context: CommandContext): Promise<HistoryEntry> => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please provide a query'
-        };
-      }
-
-      try {
-        // Fix metrics structure to match HistoryEntry interface
-        const defiData = [{
-          label: 'Total Value Locked', // Changed from 'name' to 'label'
-          value: 0,
-          change: '0%',
-          trend: 'neutral' as const
-        }];
-
-        return {
-          type: 'analytics',
-          content: `DeFi Metrics for "${query}"`,
-          metrics: defiData // Now matches the expected type
-        };
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to query DeFi data: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'analyze-protocol': async (context: CommandContext) => {
-      const query = context.args.join(' ');
-      if (!query) {
-        return {
-          type: 'error',
-          content: 'Please specify a protocol to analyze'
-        };
-      }
-
-      try {
-        const data = await aggregateProtocolData(query);
-        return {
-          type: 'protocol',
-          content: `Analysis for ${query}`,
-          protocol: {
-            name: query,
-            ...data
-          }
-        };
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to analyze protocol: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'track-metrics': async (context: CommandContext) => {
-      const [metric] = context.args;
-      if (!metric) {
-        return {
-          type: 'error',
-          content: 'Please specify metrics to track'
-        };
-      }
-
-      try {
-        const metricData = await trackBlockchainMetrics(metric, []);
-        return {
-          type: 'metric',
-          content: `Tracking ${metric}`,
-          metrics: metricData.map(m => ({
-            label: m.name,
-            value: String(m.value),
-            change: m.change,
-            trend: m.trend
-          }))
-        };
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to track metrics: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'api-docs': () => {
-      window.open('/api-docs', '_blank');
-      
-      return {
-        type: 'success',
-        content: 'Opening API documentation in new tab...',
-        links: [{
-          url: '/api-docs',
-          title: 'View API Documentation'
-        }]
-      };
-    },
-
-    ask: async (context: CommandContext) => {
-      const [service, ...questionParts] = context.args;
-      const question = questionParts.join(' ');
-
-      if (!service || !question) {
-        return {
-          type: 'error',
-          content: 'Usage: ask <service> <question>\nAvailable services: dune, flipside, defillama'
-        };
-      }
-
-      try {
-        const apiKeys = getApiKeysWithFallback();
-        const apiKey = apiKeys[service as keyof typeof apiKeys];
-        
-        const results = await handleNaturalLanguageQuery(question, {
-          query: question,
-          apiKey,
-          parameters: {}
-        });
-
-        return {
-          type: 'success',
-          content: results.data?.answer || 'No answer available',
-          data: results.data
-        };
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to process question: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'test-api': async (context: CommandContext) => {
-      const [endpoint, ...params] = context.args
-      
-      if (!endpoint) {
-        return {
-          type: 'error',
-          content: 'Usage: test-api <endpoint> [params...]'
-        }
-      }
-
-      try {
-        // Handle different API endpoints
-        const apiEndpoints = {
-          'defi/protocols': {
-            url: 'https://api.llama.fi/protocols',
-            method: 'GET'
-          },
-          'protocol': {
-            url: (protocol: string) => `https://api.llama.fi/protocol/${protocol}`,
-            method: 'GET'
-          },
-          // Add more endpoints as needed
-        }
-
-        const selectedEndpoint = endpoint.toLowerCase()
-        
-        if (!(selectedEndpoint in apiEndpoints)) {
+    'connect': {
+      description: 'Connect to a cabal',
+      handler: (context: CommandContext): CommandResult => {
+        const cabalName = context.args[0];
+        if (!cabalName) {
           return {
             type: 'error',
-            content: `Unknown endpoint: ${endpoint}\nAvailable endpoints: ${Object.keys(apiEndpoints).join(', ')}`
-          }
+            content: 'Please specify a cabal name'
+          };
         }
-
-        const config = apiEndpoints[selectedEndpoint as keyof typeof apiEndpoints]
-        const url = typeof config.url === 'function' ? config.url(params[0]) : config.url
-
-        const response = await fetch(url, {
-          method: config.method,
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        })
-
-        const data = await response.json()
-
-        // Format the response nicely
         return {
           type: 'system',
-          content: `API Response for ${endpoint}:`,
+          content: 'Connection functionality temporarily disabled'
+        };
+      }
+    },
+
+    'analyze-protocol': {
+      description: 'Analyze a protocol',
+      handler: async (context: CommandContext): Promise<CommandResult> => {
+        const query = context.args.join(' ');
+        if (!query) {
+          return {
+            type: 'error',
+            content: 'Please specify a protocol to analyze'
+          };
+        }
+
+        try {
+          const data = await aggregateProtocolData(query);
+          return {
+            type: 'protocol',
+            content: `Analysis for ${query}`,
+            protocol: {
+              name: query,
+              ...data
+            }
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Failed to analyze protocol: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
+        }
+      }
+    },
+
+    'track-metrics': {
+      description: 'Track blockchain metrics',
+      handler: async (context: CommandContext): Promise<CommandResult> => {
+        const [metric] = context.args;
+        if (!metric) {
+          return {
+            type: 'error',
+            content: 'Please specify metrics to track'
+          };
+        }
+
+        try {
+          const metricData = await trackBlockchainMetrics(metric, []);
+          return {
+            type: 'metric',
+            content: `Tracking ${metric}`,
+            metrics: metricData.map(m => ({
+              label: m.name,
+              value: String(m.value),
+              change: m.change,
+              trend: m.trend
+            }))
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Failed to track metrics: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
+        }
+      }
+    },
+
+    'help': {
+      description: 'Show available commands',
+      handler: (): CommandResult => {
+        const commandList = Object.entries(commands)
+          .map(([name, cmd]) => `  - ${name}: ${cmd.description}`)
+          .join('\n');
+
+        return {
+          type: 'system',
+          content: `Available commands:\n${commandList}`
+        };
+      }
+    },
+
+    'markets': {
+      description: 'View market updates and analytics',
+      handler: (): CommandResult => {
+        window.location.href = '/market-updates'
+        return {
+          type: 'success',
+          content: `
+            🚀 Redirecting to market updates dashboard...
+            
+            You'll find:
+            - Real-time market metrics
+            - Funding rate analysis
+            - Top market opportunities
+            - Volume and OI trends
+            
+            Type 'help' for more commands.
+          `,
           metadata: {
-            type: 'api-response',
-            timestamp: new Date().toISOString()
-          },
-          data: {
-            endpoint,
-            response: data,
-            status: response.status,
-            timestamp: new Date().toISOString()
+            type: 'navigation',
+            destination: 'market-updates'
           }
         }
+      }
+    },
 
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-        return {
-          type: 'error',
-          content: `API request failed: ${errorMessage}`
+    'analyze': {
+      description: 'Analyze market data',
+      handler: async (context: CommandContext): Promise<CommandResult> => {
+        const [metric] = context.args;
+        if (!metric) {
+          return {
+            type: 'error',
+            content: 'Please specify a metric to analyze'
+          };
+        }
+
+        try {
+          return {
+            type: 'chart',
+            content: `Analysis of ${metric}`
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Failed to analyze metric: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
         }
       }
     },
 
-    // Add API documentation command
-    'api-help': () => ({
-      type: 'system',
-      content: `
-Available API Commands:
-
-test-api defi/protocols
-  - Get all DeFi protocols data
-  Example: test-api defi/protocols
-
-test-api protocol <protocol-name>
-  - Get specific protocol data
-  Example: test-api protocol aave
-
-Usage Examples:
-  > test-api defi/protocols
-  > test-api protocol aave
-  > test-api protocol uniswap
-
-For more detailed documentation, use 'api-docs' command.
-`
-    }),
-
-    'list-endpoints': () => ({
-      type: 'system',
-      content: `Available API Endpoints:
-${API_ENDPOINTS.map(endpoint => `
-${endpoint.name} (${endpoint.method} ${endpoint.endpoint})
-  ${endpoint.description}
-  Example: test-endpoint ${endpoint.name}${endpoint.exampleParams ? ' ' + JSON.stringify(endpoint.exampleParams) : ''}
-`).join('\n')}
-
-Use 'test-endpoint <endpointName> [params]' to test an endpoint.
-Example: test-endpoint getProtocolMetrics {"name": "aave"}`
-    }),
-
-    'test-endpoint': async (context: CommandContext) => {
-      const [endpointName, ...paramParts] = context.args;
-      
-      if (!endpointName) {
-        return {
-          type: 'error',
-          content: 'Usage: test-endpoint <endpointName> [params]\nUse list-endpoints to see available endpoints'
-        };
-      }
-
-      const endpoint = API_ENDPOINTS.find(e => e.name === endpointName);
-      if (!endpoint) {
-        return {
-          type: 'error',
-          content: `Endpoint "${endpointName}" not found. Use list-endpoints to see available endpoints.`
-        };
-      }
-
-      try {
-        let params = {};
-        if (paramParts.length > 0) {
-          try {
-            params = JSON.parse(paramParts.join(' '));
-          } catch (e) {
-            return {
-              type: 'error',
-              content: 'Invalid JSON parameters. Example: test-endpoint getDuneQuery {"query_id": "1234567"}'
-            };
-          }
+    'query-defi': {
+      description: 'Query DeFi protocol data',
+      handler: async (context: CommandContext): Promise<CommandResult> => {
+        const query = context.args.join(' ');
+        if (!query) {
+          return {
+            type: 'error',
+            content: 'Please specify a query'
+          };
         }
 
-        // Get API configuration
-        const apiConfig = getApiConfig();
+        try {
+          const queryConfig: ExtendedQueryConfig = {
+            query,
+            ...context.apiKeys
+          };
+          const result = await handleNaturalLanguageQuery(query, queryConfig);
+          return {
+            type: 'defi',
+            content: result.response,
+            data: result.data
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Query failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
+        }
+      }
+    },
 
-        // Replace URL parameters
-        let url = endpoint.endpoint;
-        Object.entries(params).forEach(([key, value]) => {
-          url = url.replace(`:${key}`, encodeURIComponent(String(value)));
-        });
-
-        // Log request details for debugging
-        console.log('Making API request:', {
-          url: `${apiConfig.baseUrl}${url}`,
-          method: endpoint.method,
-          headers: apiConfig.headers
-        });
-
-        const response = await fetch(`${apiConfig.baseUrl}${url}`, {
-          method: endpoint.method,
-          headers: apiConfig.headers,
-          body: endpoint.method !== 'GET' ? JSON.stringify(params) : undefined
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`API request failed: ${response.status} ${errorText}`);
+    'test-endpoint': {
+      description: 'Test an API endpoint',
+      handler: async (context: CommandContext): Promise<CommandResult> => {
+        const [endpoint] = context.args;
+        if (!endpoint) {
+          return {
+            type: 'error',
+            content: 'Please specify an endpoint to test'
+          };
         }
 
-        const data = await response.json();
-
-        return {
-          type: 'success',
-          content: `API Response for ${endpointName}:`,
-          metadata: {
-            type: 'api-response',
-            timestamp: new Date().toISOString()
-          },
-          data: {
-            endpoint: endpoint.endpoint,
-            method: endpoint.method,
-            params,
-            response: data,
-            status: response.status
-          }
-        };
-      } catch (error) {
-        console.error('API request error:', error);
-        return {
-          type: 'error',
-          content: `API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'ingest-api': async () => {
-      return {
-        type: 'system',
-        content: 'API data ingestion logic not implemented yet'
-      };
-    },
-
-    // Add new command for handling curl requests
-    'curl': async (context: CommandContext) => {
-      const curlCommand = context.args.join(' ');
-      
-      if (!curlCommand) {
-        return {
-          type: 'error',
-          content: 'Please provide a curl command'
-        };
-      }
-
-      try {
-        const result = await processCurlCommand(curlCommand);
-        
-        if (!result.success) {
-          throw new Error(result.error);
+        try {
+          return {
+            type: 'success',
+            content: 'Endpoint test successful',
+            metadata: {
+              type: 'api-response',
+              timestamp: new Date().toISOString()
+            }
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Endpoint test failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
         }
-
-        // Format the data without database operations for now
-        const data = Array.isArray(result.data) ? result.data : [result.data];
-        
-        return {
-          type: 'database',
-          content: 'API Data Retrieved Successfully',
-          tableData: formatTableData(data)
-        };
-
-      } catch (error) {
-        return {
-          type: 'error',
-          content: `Failed to process curl command: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
       }
     },
 
-    'get-my-perps': async () => {
-      try {
-        // Navigate to the perp metrics page
-        window.open('/perp-metrics', '_blank')
-        
-        return {
-          type: 'success',
-          content: 'Opening perpetual metrics dashboard in new tab...'
-        };
-      } catch (error) {
-        console.error('Error in get-my-perps:', error);
-        return {
-          type: 'error',
-          content: `Failed to open perpetual metrics dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
+    'get-my-perps': {
+      description: 'View perpetual metrics dashboard',
+      handler: async (): Promise<CommandResult> => {
+        try {
+          window.open('/perp-metrics', '_blank')
+          return {
+            type: 'success',
+            content: 'Opening perpetual metrics dashboard in new tab...'
+          };
+        } catch (error) {
+          return {
+            type: 'error',
+            content: `Failed to open perpetual metrics dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+          };
+        }
       }
-    },
-
-    'get-my-memes': async () => {
-      try {
-        // Navigate to the perp metrics page
-        window.open('/perp-metrics/pagememe.tsx', '_blank')
-        
-        return {
-          type: 'success',
-          content: 'Opening perpetual metrics dashboard in new tab...'
-        };
-      } catch (error) {
-        console.error('Error in get-my-perps:', error);
-        return {
-          type: 'error',
-          content: `Failed to open perpetual metrics dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-      }
-    },
-
-    'create-cabal': () => ({
-      type: 'system',
-      content: 'Cabal creation functionality temporarily disabled'
-    }),
-
-    'list-cabals': () => ({
-      type: 'system',
-      content: 'Cabal listing functionality temporarily disabled'
-    }),
-
-    connect: (context: CommandContext) => {
-      const cabalName = context.args[0];
-      if (!cabalName) {
-        return {
-          type: 'error',
-          content: 'Please specify a cabal name'
-        };
-      }
-      return {
-        type: 'system',
-        content: 'Connection functionality temporarily disabled'
-      };
-    },
-
-    'create-proposal': () => ({
-      type: 'system',
-      content: 'Proposal creation functionality temporarily disabled'
-    }),
-
-    'view-agent': () => ({
-      type: 'system',
-      content: 'Agent view functionality temporarily disabled'
-    }),
-
-    'interact': () => ({
-      type: 'system',
-      content: 'Interaction functionality temporarily disabled'
-    }),
-
-    'analyze': async () => ({
-      type: 'system',
-      content: 'Analysis functionality temporarily disabled'
-    })
-  }
+    }
+  };
 
   // Add clear command to commands object
   const clearCommand = (): HistoryEntry => {
@@ -987,19 +598,17 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
 
   // Update handleCommand function
   const handleCommand = async (cmd: string) => {
-    const args = cmd.trim().split(' ');
-    const commandName = args[0].toLowerCase();
+    const args = cmd.trim().split(' ')
+    const commandName = args[0].toLowerCase()
     
-    setHistory(prev => [...prev, { type: 'user', content: cmd }]);
+    setHistory(prev => [...prev, { type: 'user', content: cmd }])
     
     if (commandName === 'clear') {
-      clearCommand();
-      return;
+      clearCommand()
+      return
     }
     
-    // Special handling for cabal creation steps
- 
-    const command = commands[commandName];
+    const command = commands[commandName]
     
     if (command) {
       const context: CommandContext = {
@@ -1007,32 +616,24 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
         state: cabalState,
         setState: setCabalState,
         apiKeys: getApiKeysWithFallback()
-      };
+      }
       
       try {
-        const result = await command(context);
-        if (result) {
-          // Handle both sync and async results
-          if (result instanceof Promise) {
-            const resolvedResult = await result;
-            setHistory(prev => [...prev, resolvedResult]);
-          } else {
-            setHistory(prev => [...prev, result]);
-          }
-        }
+        const result = await command.handler(context)
+        setHistory(prev => [...prev, result])
       } catch (error) {
         setHistory(prev => [...prev, {
           type: 'error',
           content: error instanceof Error ? error.message : 'An unknown error occurred'
-        }]);
+        }])
       }
     } else {
       setHistory(prev => [...prev, {
         type: 'error',
         content: `Command not found: ${args[0]}`
-      }]);
+      }])
     }
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -1081,23 +682,10 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
 
   // Add command suggestions logic
   const getCommandSuggestions = (input: string): CommandSuggestion[] => {
-    const commandList: CommandSuggestion[] = [
-      { command: 'create-cabal', description: 'Create a new AI cabal' },
-      { command: 'list-cabals', description: 'List your existing cabals' },
-      { command: 'connect', description: 'Connect to a specific cabal' },
-      { command: 'create-proposal', description: 'Create a new governance proposal' },
-      { command: 'view-agent', description: 'View agent details and metrics' },
-      { command: 'treasury', description: 'View treasury balances' },
-      { command: 'interact', description: 'Interact with a specific agent' },
-      { command: 'help', description: 'Show available commands' },
-      { command: 'clear', description: 'Clear terminal' },
-      { command: 'api-docs', description: 'View available API endpoints and documentation' },
-      { command: 'test-api', description: 'Test API endpoints directly in terminal' },
-      { command: 'api-help', description: 'Show API testing documentation and examples' },
-      { command: 'list-endpoints', description: 'List all available API endpoints with descriptions' },
-      { command: 'test-endpoint', description: 'Test a specific API endpoint' },
-      { command: 'get-my-perps', description: 'Get my perpetual metrics' }
-    ]
+    const commandList = Object.entries(commands).map(([name, cmd]) => ({
+      command: name,
+      description: typeof cmd === 'object' ? cmd.description : 'No description available'
+    }))
 
     if (!input) return commandList
     return commandList.filter(cmd => 
@@ -1122,7 +710,7 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
 
   // Update the renderHistoryEntry function
   const renderHistoryEntry = (entry: HistoryEntry): JSX.Element | undefined => {
-    switch(entry.type) {
+    switch (entry.type) {
       case 'chart':
         return (
           <div className="my-2 p-4 bg-gray-800/50 rounded-lg">
@@ -1341,15 +929,17 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
         );
 
       case 'database':
+        if (!entry.tableData) return undefined;
         return (
-          <div className="my-4 space-y-4">
-            <div className="bg-gray-800/50 rounded-lg p-4">
+          <div className="my-4">
+            <div className="bg-gray-800 rounded-lg p-4">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-purple-400">Database Operation</h3>
-                {entry.tableData?.summary && (
+                {entry.tableData.summary && (
                   <span className="text-sm text-gray-400">
                     {entry.tableData.summary.total} records • 
-                    {new Date(entry.tableData.summary.timestamp).toLocaleTimeString()}
+                    {entry.tableData.summary.timestamp && 
+                      new Date(entry.tableData.summary.timestamp).toLocaleTimeString()}
                   </span>
                 )}
               </div>
@@ -1358,21 +948,21 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
                 <table className="min-w-full divide-y divide-gray-700">
                   <thead>
                     <tr>
-                      {entry.tableData?.columns.map((col, i) => (
+                      {entry.tableData.columns.map((col, i) => (
                         <th key={i} className="px-4 py-2 text-left text-gray-400">
-                          {col}
+                          {col.name}
                         </th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700">
-                    {entry.tableData?.rows.map((row, i) => (
+                    {entry.tableData.rows.map((row, i) => (
                       <tr key={i}>
                         {Object.values(row).map((cell: any, j) => (
                           <td key={j} className="px-4 py-2 text-gray-300">
                             {typeof cell === 'number' ? 
                               new Intl.NumberFormat().format(cell) : 
-                              cell.toString()}
+                              String(cell)}
                           </td>
                         ))}
                       </tr>
@@ -1389,6 +979,79 @@ Example: test-endpoint getProtocolMetrics {"name": "aave"}`
     return undefined;
   };
 
+  // Update the table rendering function
+  const renderTable = (data: any[]): CommandResult => {
+    if (!Array.isArray(data) || !data.length) {
+      return {
+        type: 'error',
+        content: 'No data to display'
+      };
+    }
+
+    const tableData: TableData = {
+      columns: Object.keys(data[0]).map((col: string) => ({
+        name: col,
+        type: typeof data[0][col]
+      })),
+      rows: data,
+      summary: {
+        total: data.length,
+        filtered: data.length,
+        timestamp: new Date().toISOString()
+      }
+    };
+
+    return {
+      type: 'table',
+      content: 'Query Results:',
+      tableData
+    };
+  }
+
+  // Update the analytics rendering function
+  const renderAnalytics = (metrics: AnalyticsMetric[]): CommandResult => {
+    return {
+      type: 'analytics',
+      content: 'Analytics Results:',
+      analytics: metrics.map(metric => ({
+        metric: metric.metric,
+        value: metric.value,
+        change: metric.change
+      }))
+    };
+  }
+
+  // Add at the top with other interfaces
+  interface ExtendedQueryConfig {
+    query: string;
+    dune?: string;
+    flipside?: string;
+  }
+
+  interface QueryResult {
+    data: any;
+    response: string;
+  }
+
+  interface TableData {
+    columns: Array<{
+      name: string;
+      type: string;
+    }>;
+    rows: any[];
+    summary: {
+      total: number;
+      filtered: number;
+      timestamp?: string;
+    };
+  }
+
+  interface AnalyticsMetric {
+    metric: string;
+    value: number;
+    change?: string;
+    trend?: 'up' | 'down' | 'neutral';
+  }
 
   return (
     <div

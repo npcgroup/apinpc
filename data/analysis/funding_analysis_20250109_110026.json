@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-01-09T11:00:26.853394",
+  "market_summary": {
+    "total_markets": 170,
+    "total_open_interest": 169413336783.57483,
+    "total_volume_24h": 432583940809.94257,
+    "avg_funding_rate": 1.25e-05,
+    "weighted_funding_rate": 1.2500000000000002e-05,
+    "market_concentration": 2.9428949054329565
+  },
+  "opportunities": {
+    "highest_current_rates": [
+      {
+        "token": "BTC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 996976718.53088
+      },
+      {
+        "token": "ETH",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 996976718.53088
+      },
+      {
+        "token": "ATOM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -1.032e-05,
+        "notional_open_interest": 996976718.53088
+      },
+      {
+        "token": "MATIC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.0,
+        "notional_open_interest": 996987266.6515199
+      },
+      {
+        "token": "DYDX",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 997091234.56116
+      }
+    ],
+    "highest_predicted_rates": [
+      {
+        "token": "PURR",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00025354,
+        "notional_open_interest": 996416566.2297001
+      },
+      {
+        "token": "ZEREBRO",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 9.649e-05,
+        "notional_open_interest": 996414500.0239199
+      },
+      {
+        "token": "BADGER",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 7.651e-05,
+        "notional_open_interest": 996315643.4360999
+      },
+      {
+        "token": "FARTCOIN",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 4.324e-05,
+        "notional_open_interest": 996456684.33416
+      },
+      {
+        "token": "UNI",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 2.441e-05,
+        "notional_open_interest": 996572975.6911
+      }
+    ],
+    "best_opportunities": [
+      {
+        "token": "GAS",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00192299,
+        "opportunity_score": 0.14250022775779853,
+        "notional_open_interest": 996592066.8522
+      },
+      {
+        "token": "ARK",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00126382,
+        "opportunity_score": 0.09397223879052331,
+        "notional_open_interest": 996539235.27768
+      },
+      {
+        "token": "GRASS",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -4.203e-05,
+        "opportunity_score": 0.004015049555142167,
+        "notional_open_interest": 996542033.894
+      },
+      {
+        "token": "BLAST",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -2.934e-05,
+        "opportunity_score": 0.0030806756246962996,
+        "notional_open_interest": 996530667.63768
+      },
+      {
+        "token": "TRX",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -1.879e-05,
+        "opportunity_score": 0.002303658177221806,
+        "notional_open_interest": 996572867.9668
+      }
+    ]
+  },
+  "risk_metrics": {
+    "liquidity_metrics": {
+      "volume_concentration": 2.9428949054329565,
+      "illiquid_markets": 85
+    }
+  },
+  "recommendations": [
+    {
+      "token": "GAS",
+      "type": "short",
+      "confidence": 100.0
+    },
+    {
+      "token": "ARK",
+      "type": "short",
+      "confidence": 65.94532532975586
+    },
+    {
+      "token": "GRASS",
+      "type": "short",
+      "confidence": 2.8175741318577914
+    }
+  ]
+}

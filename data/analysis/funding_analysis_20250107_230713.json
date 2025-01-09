@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-01-07T23:07:13.928898",
+  "market_summary": {
+    "total_markets": 172,
+    "total_open_interest": 164718829950.67828,
+    "total_volume_24h": 392501712237.10876,
+    "avg_funding_rate": 2.4198720930232556e-05,
+    "weighted_funding_rate": 2.420164228674978e-05,
+    "market_concentration": 2.9305724520336676
+  },
+  "opportunities": {
+    "highest_current_rates": [
+      {
+        "token": "BTC",
+        "current_funding_rate": 2.549e-05,
+        "predicted_funding_rate": 2.584e-05,
+        "notional_open_interest": 965519121.0374999
+      },
+      {
+        "token": "ETH",
+        "current_funding_rate": 2.549e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 965361179.56416
+      },
+      {
+        "token": "ATOM",
+        "current_funding_rate": 2.539e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 965361179.56416
+      },
+      {
+        "token": "MATIC",
+        "current_funding_rate": 2.539e-05,
+        "predicted_funding_rate": 0.0,
+        "notional_open_interest": 965358746.78916
+      },
+      {
+        "token": "DYDX",
+        "current_funding_rate": 2.539e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 965188106.3876399
+      }
+    ],
+    "highest_predicted_rates": [
+      {
+        "token": "PURR",
+        "current_funding_rate": 2.33e-05,
+        "predicted_funding_rate": 0.00057202,
+        "notional_open_interest": 954681998.99184
+      },
+      {
+        "token": "ZEREBRO",
+        "current_funding_rate": 2.325e-05,
+        "predicted_funding_rate": 0.0002307,
+        "notional_open_interest": 954571665.074
+      },
+      {
+        "token": "GRIFFAIN",
+        "current_funding_rate": 2.324e-05,
+        "predicted_funding_rate": 0.00018311,
+        "notional_open_interest": 954571665.074
+      },
+      {
+        "token": "VIRTUAL",
+        "current_funding_rate": 2.326e-05,
+        "predicted_funding_rate": 0.0001445,
+        "notional_open_interest": 954868366.7688601
+      },
+      {
+        "token": "SPX",
+        "current_funding_rate": 2.324e-05,
+        "predicted_funding_rate": 0.0001243,
+        "notional_open_interest": 954561876.5329201
+      }
+    ],
+    "best_opportunities": [
+      {
+        "token": "FTT",
+        "current_funding_rate": 2.476e-05,
+        "predicted_funding_rate": 9.583e-05,
+        "opportunity_score": 0.004991567215090561,
+        "notional_open_interest": 960017260.93632
+      },
+      {
+        "token": "BADGER",
+        "current_funding_rate": 2.416e-05,
+        "predicted_funding_rate": 7.104e-05,
+        "opportunity_score": 0.003271364335365263,
+        "notional_open_interest": 956635786.9036801
+      },
+      {
+        "token": "MATIC",
+        "current_funding_rate": 2.539e-05,
+        "predicted_funding_rate": 0.0,
+        "opportunity_score": 0.001774469586710016,
+        "notional_open_interest": 965358746.78916
+      },
+      {
+        "token": "RNDR",
+        "current_funding_rate": 2.522e-05,
+        "predicted_funding_rate": 0.0,
+        "opportunity_score": 0.0017646363138944141,
+        "notional_open_interest": 964274122.8320199
+      },
+      {
+        "token": "UNIBOT",
+        "current_funding_rate": 2.503e-05,
+        "predicted_funding_rate": 0.0,
+        "opportunity_score": 0.001753403992994785,
+        "notional_open_interest": 962953595.676
+      }
+    ]
+  },
+  "risk_metrics": {
+    "liquidity_metrics": {
+      "volume_concentration": 2.9305724520336676,
+      "illiquid_markets": 86
+    }
+  },
+  "recommendations": [
+    {
+      "token": "FTT",
+      "type": "long",
+      "confidence": 12.995207333962188
+    },
+    {
+      "token": "BADGER",
+      "type": "long",
+      "confidence": 8.516775587931198
+    },
+    {
+      "token": "MATIC",
+      "type": "short",
+      "confidence": 4.619711444011575
+    }
+  ]
+}

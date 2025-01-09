@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-01-08T13:04:30.643026",
+  "market_summary": {
+    "total_markets": 172,
+    "total_open_interest": 162875983827.1634,
+    "total_volume_24h": 521795656769.4494,
+    "avg_funding_rate": 1.25e-05,
+    "weighted_funding_rate": 1.2499999999999997e-05,
+    "market_concentration": 2.913284687223147
+  },
+  "opportunities": {
+    "highest_current_rates": [
+      {
+        "token": "BTC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 946687567.5954
+      },
+      {
+        "token": "ETH",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 946717315.81686
+      },
+      {
+        "token": "ATOM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 2.76e-06,
+        "notional_open_interest": 946717315.81686
+      },
+      {
+        "token": "MATIC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.0,
+        "notional_open_interest": 946786728.3335999
+      },
+      {
+        "token": "DYDX",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 946786728.3335999
+      }
+    ],
+    "highest_predicted_rates": [
+      {
+        "token": "HPOS",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00043938,
+        "notional_open_interest": 946229518.21208
+      },
+      {
+        "token": "FTM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00027265,
+        "notional_open_interest": 946479847.19794
+      },
+      {
+        "token": "FARTCOIN",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00017786,
+        "notional_open_interest": 948631309.37
+      },
+      {
+        "token": "AI16Z",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00010099,
+        "notional_open_interest": 948631309.37
+      },
+      {
+        "token": "BADGER",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 6.693e-05,
+        "notional_open_interest": 946241016.7086
+      }
+    ],
+    "best_opportunities": [
+      {
+        "token": "FTM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00027265,
+        "opportunity_score": 0.0225994737446059,
+        "notional_open_interest": 946479847.19794
+      },
+      {
+        "token": "FARTCOIN",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00017786,
+        "opportunity_score": 0.014365352772722748,
+        "notional_open_interest": 948631309.37
+      },
+      {
+        "token": "USUAL",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00014877,
+        "opportunity_score": 0.014010040988341793,
+        "notional_open_interest": 948631309.37
+      },
+      {
+        "token": "MNT",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00010823,
+        "opportunity_score": 0.010489512389774846,
+        "notional_open_interest": 946631717.2741
+      },
+      {
+        "token": "AI16Z",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.00010099,
+        "opportunity_score": 0.0076874096931436615,
+        "notional_open_interest": 948631309.37
+      }
+    ]
+  },
+  "risk_metrics": {
+    "liquidity_metrics": {
+      "volume_concentration": 2.913284687223147,
+      "illiquid_markets": 84
+    }
+  },
+  "recommendations": [
+    {
+      "token": "FTM",
+      "type": "long",
+      "confidence": 60.93051941406233
+    },
+    {
+      "token": "FARTCOIN",
+      "type": "long",
+      "confidence": 38.730477350922996
+    },
+    {
+      "token": "USUAL",
+      "type": "short",
+      "confidence": 37.77252001877776
+    }
+  ]
+}

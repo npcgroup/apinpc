@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-01-10T00:04:48.482043",
+  "market_summary": {
+    "total_markets": 172,
+    "total_open_interest": 149236012608.62622,
+    "total_volume_24h": 499013726123.8073,
+    "avg_funding_rate": 1.25e-05,
+    "weighted_funding_rate": 1.2500000000000004e-05,
+    "market_concentration": 2.9118559744313597
+  },
+  "opportunities": {
+    "highest_current_rates": [
+      {
+        "token": "BTC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 866598269.2874401
+      },
+      {
+        "token": "ETH",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 866757228.6994401
+      },
+      {
+        "token": "ATOM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.3e-06,
+        "notional_open_interest": 866757228.6994401
+      },
+      {
+        "token": "MATIC",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 0.0,
+        "notional_open_interest": 866757228.6994401
+      },
+      {
+        "token": "DYDX",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "notional_open_interest": 866654292.80676
+      }
+    ],
+    "highest_predicted_rates": [
+      {
+        "token": "HYPE",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 8.336e-05,
+        "notional_open_interest": 868194775.9913999
+      },
+      {
+        "token": "FTM",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 8.123e-05,
+        "notional_open_interest": 866585328.5895201
+      },
+      {
+        "token": "AIXBT",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 4.935e-05,
+        "notional_open_interest": 868061043.7768
+      },
+      {
+        "token": "PENGU",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 3.721e-05,
+        "notional_open_interest": 868027683.6787599
+      },
+      {
+        "token": "GRIFFAIN",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 3.164e-05,
+        "notional_open_interest": 868177503.24906
+      }
+    ],
+    "best_opportunities": [
+      {
+        "token": "MOVE",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00023471,
+        "opportunity_score": 0.022109406170786043,
+        "notional_open_interest": 868251664.3306
+      },
+      {
+        "token": "ENA",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -0.00010719,
+        "opportunity_score": 0.010690422453786421,
+        "notional_open_interest": 868917746.50272
+      },
+      {
+        "token": "ONDO",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -9.123e-05,
+        "opportunity_score": 0.009266542146519154,
+        "notional_open_interest": 868662003.0964
+      },
+      {
+        "token": "BLAST",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": -6.198e-05,
+        "opportunity_score": 0.006651941003251783,
+        "notional_open_interest": 869035232.11014
+      },
+      {
+        "token": "HYPE",
+        "current_funding_rate": 1.25e-05,
+        "predicted_funding_rate": 8.336e-05,
+        "opportunity_score": 0.006337695997116164,
+        "notional_open_interest": 868194775.9913999
+      }
+    ]
+  },
+  "risk_metrics": {
+    "liquidity_metrics": {
+      "volume_concentration": 2.9118559744313597,
+      "illiquid_markets": 86
+    }
+  },
+  "recommendations": [
+    {
+      "token": "MOVE",
+      "type": "short",
+      "confidence": 44.97652875503868
+    },
+    {
+      "token": "ENA",
+      "type": "short",
+      "confidence": 21.74721877114721
+    },
+    {
+      "token": "ONDO",
+      "type": "short",
+      "confidence": 18.850660035519134
+    }
+  ]
+}

@@ -5,11 +5,7 @@ import {
   trackBlockchainMetrics,
   formatNumber
 } from '../src/utils/metrics'
-import { 
-  handleNaturalLanguageQuery,
-  type ExtendedQueryConfig,
-  type QueryResult
-} from '../src/utils/naturalLanguageQuery'
+
 import { validateConfig } from '../config/env'
 
 interface HistoryEntry {
@@ -88,7 +84,7 @@ interface CommandHandler {
   handler: (context: CommandContext) => Promise<CommandResult> | CommandResult;
 }
 
-type CommandFunction = CommandHandler['handler'];
+
 
 interface Commands {
   [key: string]: CommandHandler;
@@ -148,37 +144,6 @@ const getApiConfig = (): ApiConfig => {
   };
 };
 
-const API_ENDPOINTS: ApiEndpoint[] = [
-  {
-    name: 'getDuneQuery',
-    method: 'GET',
-    endpoint: '/query/:query_id/results',
-    description: 'Execute a Dune Analytics query',
-    exampleParams: {
-      query_id: '1234567'
-    },
-    exampleResponse: {
-      execution_id: "01GX0P4K3SN6NZV2QSNF4Q4AHH",
-      state: "QUERY_STATE_COMPLETED",
-      data: {
-        rows: [],
-        metadata: {}
-      }
-    }
-  },
-  {
-    name: 'getProtocols',
-    method: 'GET',
-    endpoint: '/protocols',
-    description: 'Get all DeFi protocols data',
-    exampleResponse: {
-      protocols: [
-        { name: 'Uniswap', tvl: 1000000000, volume24h: 500000000 }
-      ]
-    }
-  },
-  // ... other endpoints ...
-];
 
 const ASCII_LOGO = `
 :::= === :::====  :::===== :::==== :::===== :::====  :::======= 

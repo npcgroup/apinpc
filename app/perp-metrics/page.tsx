@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
-import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid } from 'recharts'
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, CartesianGrid, LineChart, Line } from 'recharts'
 import { format, parseISO } from 'date-fns'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
@@ -24,10 +24,19 @@ interface FundingSnapshot {
   };
 }
 
+// Add new interface for spot price data
+interface SpotPriceData {
+  token: string;
+  price: number;
+  source: string;
+  timestamp: string;
+}
+
 interface MarketMetrics {
   token: string;
   latest_snapshot: FundingSnapshot;
   historical_data: FundingSnapshot[];
+  spot_price?: SpotPriceData;
 }
 
 // Create Supabase client
@@ -53,6 +62,36 @@ const useDebounceValue = (value: string, delay: number) => {
   return debouncedValue;
 };
 
+// Add utility function for fetching spot prices
+const fetchSpotPrices = async (tokens: string[]): Promise<Record<string, SpotPriceData>> => {
+  try {
+    // Fetch from Birdeye API
+    const prices = await Promise.all(tokens.map(async (token) => {
+      const response = await fetch(`https://public-api.birdeye.so/public/price?address=${token}`);
+      const data = await response.json();
+      return {
+        token,
+        price: data.value,
+        source: 'birdeye',
+        timestamp: new Date().toISOString()
+      };
+    }));
+
+    return prices.reduce((acc, price) => {
+      acc[price.token] = price;
+      return acc;
+    }, {} as Record<string, SpotPriceData>);
+  } catch (error) {
+    console.error('Error fetching spot prices:', error);
+    return {};
+  }
+};
+
+// Add price impact calculation
+const calculatePriceImpact = (markPrice: number, spotPrice: number): number => {
+  return ((markPrice - spotPrice) / spotPrice) * 100;
+};
+
 export default function PerpMetricsPage() {
   const [markets, setMarkets] = useState<MarketMetrics[]>([])
   const [loading, setLoading] = useState(true)
@@ -63,6 +102,10 @@ export default function PerpMetricsPage() {
   const [showSearchHistory, setShowSearchHistory] = useState(false)
   const [inputValue, setInputValue] = useState('');
   const debouncedSearchQuery = useDebounceValue(inputValue, 300);
+
+  // Add new state for spot prices
+  const [spotPrices, setSpotPrices] = useState<Record<string, SpotPriceData>>({});
+  const [priceUpdateTime, setPriceUpdateTime] = useState<string>('');
 
   // Update useEffect to use debouncedSearchQuery
   useEffect(() => {
@@ -110,65 +153,65 @@ export default function PerpMetricsPage() {
     })
   }, [markets, searchQuery, sortBy])
 
+  // Modify the fetchMarketData function
   useEffect(() => {
     async function fetchMarketData() {
       try {
-        setLoading(true)
+        setLoading(true);
         
-        // Get the latest snapshot for each token
+        // Fetch funding rate data
         const { data: latestSnapshots, error: snapshotError } = await supabase
           .from('funding_rate_snapshots')
           .select('*')
           .order('timestamp', { ascending: false })
-          .limit(1000) // Adjust based on your needs
+          .limit(1000);
 
-        if (snapshotError) throw snapshotError
+        if (snapshotError) throw snapshotError;
 
-        // Group by token and get latest data
+        // Group by token and process data
         const tokenGroups = latestSnapshots.reduce((acc: { [key: string]: FundingSnapshot[] }, snapshot) => {
-          if (!acc[snapshot.token]) {
-            acc[snapshot.token] = []
-          }
-          acc[snapshot.token].push(snapshot)
-          return acc
-        }, {})
+          if (!acc[snapshot.token]) acc[snapshot.token] = [];
+          acc[snapshot.token].push(snapshot);
+          return acc;
+        }, {});
 
-        // Get historical data for each token (last 24 hours)
+        // Fetch spot prices for all tokens
+        const tokens = Object.keys(tokenGroups);
+        const spotPriceData = await fetchSpotPrices(tokens);
+        setSpotPrices(spotPriceData);
+        setPriceUpdateTime(new Date().toISOString());
+
+        // Process market metrics with spot prices
         const marketMetrics: MarketMetrics[] = await Promise.all(
           Object.entries(tokenGroups).map(async ([token, snapshots]) => {
-            const { data: historicalData, error: historyError } = await supabase
+            const { data: historicalData } = await supabase
               .from('funding_rate_snapshots')
               .select('*')
               .eq('token', token)
               .gte('timestamp', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-              .order('timestamp', { ascending: true })
-
-            if (historyError) throw historyError
+              .order('timestamp', { ascending: true });
 
             return {
               token,
               latest_snapshot: snapshots[0],
-              historical_data: historicalData
-            }
+              historical_data: historicalData || [],
+              spot_price: spotPriceData[token]
+            };
           })
-        )
+        );
 
-        // Sort markets by notional open interest
-        const sortedMarkets = marketMetrics.sort((a, b) => 
-          (b.latest_snapshot.notional_open_interest || 0) - (a.latest_snapshot.notional_open_interest || 0)
-        )
-
-        setMarkets(sortedMarkets)
-        setLoading(false)
-      } catch (err) {
-        console.error('Error fetching market data:', err)
-        setError(err instanceof Error ? err.message : 'Failed to fetch market data')
-        setLoading(false)
+        setMarkets(marketMetrics);
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'An error occurred');
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchMarketData()
-  }, [])
+    fetchMarketData();
+    const interval = setInterval(fetchMarketData, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
 
   // Update the filter buttons section
   const sortOptions = [
@@ -178,6 +221,88 @@ export default function PerpMetricsPage() {
     { value: 'predicted', label: '|Predicted Funding|' },
     { value: 'opportunity', label: 'Funding Opportunities' }
   ]
+
+  // Render market card with enhanced metrics
+  const renderMarketCard = (market: MarketMetrics) => {
+    const priceImpact = market.spot_price ? 
+      calculatePriceImpact(market.latest_snapshot.mark_price, market.spot_price.price) : 
+      null;
+
+    return (
+      <div className="bg-gray-800/50 rounded-lg p-6 hover:bg-gray-700/40 transition-all">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-xl font-bold text-white">{market.token}</h3>
+          <div className="text-right">
+            <div className="text-sm text-gray-400">Mark Price</div>
+            <div className="font-mono text-white">${market.latest_snapshot.mark_price.toFixed(3)}</div>
+            {market.spot_price && (
+              <>
+                <div className="text-sm text-gray-400 mt-2">Spot Price</div>
+                <div className="font-mono text-white">${market.spot_price.price.toFixed(3)}</div>
+                <div className={`text-sm ${priceImpact && Math.abs(priceImpact) > 1 ? 'text-red-400' : 'text-green-400'}`}>
+                  Impact: {priceImpact?.toFixed(2)}%
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <div className="text-sm text-gray-400">24h Volume</div>
+            <div className="font-mono text-white">
+              ${(market.latest_snapshot.volume_24h / 1e6).toFixed(2)}M
+            </div>
+          </div>
+          <div>
+            <div className="text-sm text-gray-400">Open Interest</div>
+            <div className="font-mono text-white">
+              ${(market.latest_snapshot.notional_open_interest / 1e6).toFixed(2)}M
+            </div>
+          </div>
+          <div>
+            <div className="text-sm text-gray-400">Current Funding</div>
+            <div className={`font-mono ${market.latest_snapshot.current_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {(market.latest_snapshot.current_funding_rate * 100).toFixed(4)}%
+            </div>
+          </div>
+          <div>
+            <div className="text-sm text-gray-400">Predicted Funding</div>
+            <div className={`font-mono ${market.latest_snapshot.predicted_funding_rate > 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {(market.latest_snapshot.predicted_funding_rate * 100).toFixed(4)}%
+            </div>
+          </div>
+        </div>
+
+        <ResponsiveContainer width="100%" height={120}>
+          <LineChart data={market.historical_data}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+            <XAxis 
+              dataKey="timestamp"
+              tickFormatter={(time) => format(new Date(time), 'HH:mm')}
+              stroke="#9CA3AF"
+            />
+            <YAxis 
+              domain={['auto', 'auto']}
+              stroke="#9CA3AF"
+              tickFormatter={(value) => `${(value * 100).toFixed(2)}%`}
+            />
+            <Tooltip
+              contentStyle={{ background: '#1F2937', border: 'none' }}
+              labelFormatter={(label) => format(new Date(label), 'HH:mm:ss')}
+              formatter={(value: number) => [`${(value * 100).toFixed(4)}%`, 'Funding Rate']}
+            />
+            <Line 
+              type="monotone"
+              dataKey="current_funding_rate"
+              stroke="#8B5CF6"
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  };
 
   if (loading) return <div className="p-4">Loading market data...</div>
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>

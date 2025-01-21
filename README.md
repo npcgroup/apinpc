@@ -1,6 +1,18 @@
-# NPC Onchain Data Ingestion Platform
+# Funding Rate Enhanced Arbitrage System
 
-A comprehensive enterprise-grade platform for aggregating, analyzing, and deriving insights from blockchain data across multiple protocols, chains, and data sources.
+A sophisticated arbitrage system that leverages funding rate data from multiple exchanges to optimize trading opportunities. This system integrates with Hummingbot and uses historical funding rate data to make intelligent trading decisions.
+
+## Features
+
+- Real-time funding rate data collection from multiple exchanges (Bybit, Gate.io)
+- Supabase integration for efficient data storage and retrieval
+- Dynamic strategy parameter adjustment based on funding rates
+- Automated arbitrage execution via Hummingbot
+- Comprehensive logging and monitoring
+- Backtesting capabilities
+- Error handling and retry mechanisms
+
+## System Architecture
 
 ```mermaid
 graph TB

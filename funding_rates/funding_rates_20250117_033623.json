@@ -1,0 +1,2933 @@
+{
+  "timestamp": "20250117_033623",
+  "datetime": "2025-01-17T03:36:23.737426",
+  "total_markets": 416,
+  "statistics": {
+    "highest_rate": {
+      "symbol": "ONDO/USDT:USDT",
+      "rate": -0.00095215,
+      "rate_pct": -0.09521500000000001
+    },
+    "lowest_rate": {
+      "symbol": "BTC/USDT:USDT-250627",
+      "rate": 0.0,
+      "rate_pct": 0.0
+    },
+    "mean_rate": 6.493151442307694e-05,
+    "median_rate": 5.797e-05
+  },
+  "rates": [
+    {
+      "symbol": "ONDO/USDT:USDT",
+      "funding_rate": -0.00095215,
+      "funding_rate_pct": -0.09521500000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FIO/USDT:USDT",
+      "funding_rate": -0.00081494,
+      "funding_rate_pct": -0.081494,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AGLD/USDT:USDT",
+      "funding_rate": -0.00072478,
+      "funding_rate_pct": -0.072478,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MORPHO/USDT:USDT",
+      "funding_rate": 0.00066402,
+      "funding_rate_pct": 0.066402,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "UXLINK/USDT:USDT",
+      "funding_rate": -0.00062293,
+      "funding_rate_pct": -0.062292999999999994,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LSK/USDT:USDT",
+      "funding_rate": -0.00054084,
+      "funding_rate_pct": -0.054084,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000RATS/USDT:USDT",
+      "funding_rate": 0.00050127,
+      "funding_rate_pct": 0.050127,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000WHY/USDT:USDT",
+      "funding_rate": 0.00045637,
+      "funding_rate_pct": 0.045637,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SPELL/USDT:USDT",
+      "funding_rate": -0.00043103,
+      "funding_rate_pct": -0.043103,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AI16Z/USDT:USDT",
+      "funding_rate": 0.00035819,
+      "funding_rate_pct": 0.035819,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALCH/USDT:USDT",
+      "funding_rate": 0.00033071,
+      "funding_rate_pct": 0.033071,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OMG/USDT:USDT",
+      "funding_rate": 0.0003136,
+      "funding_rate_pct": 0.03136,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KAS/USDT:USDT",
+      "funding_rate": 0.00024748,
+      "funding_rate_pct": 0.024748,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SUI/USDC:USDC",
+      "funding_rate": 0.00023032,
+      "funding_rate_pct": 0.023032,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MYRO/USDT:USDT",
+      "funding_rate": 0.00022845,
+      "funding_rate_pct": 0.022845,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IO/USDT:USDT",
+      "funding_rate": -0.00022471,
+      "funding_rate_pct": -0.022471,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VIDT/USDT:USDT",
+      "funding_rate": -0.00021466,
+      "funding_rate_pct": -0.021466000000000002,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ENA/USDT:USDT",
+      "funding_rate": -0.00020139,
+      "funding_rate_pct": -0.020139,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XMR/USDT:USDT",
+      "funding_rate": 0.00017508,
+      "funding_rate_pct": 0.017508000000000003,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GRIFFAIN/USDT:USDT",
+      "funding_rate": 0.00012483,
+      "funding_rate_pct": 0.012483000000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SEI/USDT:USDT",
+      "funding_rate": -0.00011463,
+      "funding_rate_pct": -0.011463000000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "JUP/USDT:USDT",
+      "funding_rate": -0.00010865,
+      "funding_rate_pct": -0.010865,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HIPPO/USDT:USDT",
+      "funding_rate": 0.00010768,
+      "funding_rate_pct": 0.010768,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "REEF/USDT:USDT",
+      "funding_rate": -0.00010028,
+      "funding_rate_pct": -0.010027999999999999,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COMP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000PEPE/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MKR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IOTA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DEFI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "T/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DOGE/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LINK/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ICP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTCST/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ENS/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GMX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OGN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XRP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AVAX/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "APE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALPHA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEO/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SUI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GLMR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEAR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HOT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ADA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTC/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VET/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KNC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "THETA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MANA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WLD/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "JASMY/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XLM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SUSHI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LUNA2/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "JOE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FLOW/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RAD/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LEVER/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ENJ/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ID/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FTT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LIT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AXS/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FIL/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ATOM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SOL/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "EGLD/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BAT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XVS/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XEM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PHB/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LINA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "UNI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CELR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FET/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MTL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BAND/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SNX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "APT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GTC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SSV/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RVN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "C98/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TRU/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZEN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000SHIB/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZEC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GALA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DGB/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FIL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ICX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LDO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BICO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AGIX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MAV/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SAND/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ROSE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "EDU/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PEOPLE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WAVES/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COMBO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CTSI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KSM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CHZ/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SXP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETH/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GRT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COTI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ONT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AAVE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OXT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BCH/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KAVA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STG/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BEL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DOT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FXS/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RUNE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RLC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RDNT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "QTUM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MATIC/USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ONE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ARKM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BAKE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZRX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FRONT/USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CRV/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000PEPE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PENDLE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ARB/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WOO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CTK/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "REN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IDEX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CELO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000XEC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MDT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000FLOKI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SOL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XRP/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ARB/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BLUR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEO/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BNT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BAL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SKL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LTC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DOGE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TRX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LTC/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CFX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WLD/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DAR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000LUNC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NKN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XTZ/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEAR/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AVAX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MASK/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DENT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HBAR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MATIC/USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ANKR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ACH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DYDX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TLM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IOTX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LINK/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LQTY/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ARPA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CKB/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1INCH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FTM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "EOS/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BCH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTCDOM/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MAGIC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HFT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KEY/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LRC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "INJ/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZIL/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CRV/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KLAY/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HIGH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STORJ/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CVX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DUSK/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "QNT/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ATA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DASH/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HOOK/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000SHIB/USDC:USDC",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MINA/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ASTR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CHR/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "YFI/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BNX/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALICE/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OCEAN/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SFP/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CVC/USDT:USDT",
+      "funding_rate": 0.0001,
+      "funding_rate_pct": 0.01,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ARK/USDT:USDT",
+      "funding_rate": 9.989e-05,
+      "funding_rate_pct": 0.009989,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SWARMS/USDT:USDT",
+      "funding_rate": 8.838e-05,
+      "funding_rate_pct": 0.008838,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GMT/USDT:USDT",
+      "funding_rate": 8.474e-05,
+      "funding_rate_pct": 0.008474,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CHILLGUY/USDT:USDT",
+      "funding_rate": 8.306e-05,
+      "funding_rate_pct": 0.008306,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XVG/USDT:USDT",
+      "funding_rate": 8.196e-05,
+      "funding_rate_pct": 0.008196,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTC/USDT:USDT",
+      "funding_rate": 7.375e-05,
+      "funding_rate_pct": 0.0073750000000000005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VANA/USDT:USDT",
+      "funding_rate": -6.923e-05,
+      "funding_rate_pct": -0.006923,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "S/USDT:USDT",
+      "funding_rate": 6.766e-05,
+      "funding_rate_pct": 0.006766,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETHW/USDT:USDT",
+      "funding_rate": 5.949e-05,
+      "funding_rate_pct": 0.005949,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KOMA/USDT:USDT",
+      "funding_rate": 5.645e-05,
+      "funding_rate_pct": 0.005645000000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MBOX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STRAX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ACE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TAO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VIRTUAL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BIGTIME/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WIF/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VANRY/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZEREBRO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RPL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HIFI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NFP/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETHFI/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FARTCOIN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GHST/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VELODROME/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PHA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEIRO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NULS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000BONK/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AVA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZETA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AEVO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SYN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DIA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETHFI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DOGS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NTRN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CYBER/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000SATS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SAGA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COW/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DEGEN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AERO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FLM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "G/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "EIGEN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GOAT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RARE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RENDER/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NMR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "USUAL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000CAT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LOKA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STMX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CAKE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "YGG/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "W/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STPT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "OMNI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BAN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TRB/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SLERF/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TURBO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AERGO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SUPER/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALPACA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MEME/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "POWR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NEIROETH/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TWT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CATI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000CHEEMS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PORTAL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "POPCAT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HMSTR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COOKIE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RAY/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KDA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BADGER/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STRK/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "POLYX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ORDI/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "REZ/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AKT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CGPT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PERP/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LOOM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AMB/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PROM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ACT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "JTO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TON/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SPX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000BONK/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DEGO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MAVIA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DYM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "UMA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ONG/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RONIN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BOND/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000X/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MOVE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BOME/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AXL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RAYSOL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DODOX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ACX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "METIS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ILV/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SYS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "POL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WAXP/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LPT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SCRT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "USTC/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BEAMX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IMX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1000000MOG/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GRASS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MOVR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BSV/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MEW/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ORDI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MOODENG/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GLM/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TOKEN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SUN/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "NOT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PYTH/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZK/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TNSR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KAIA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PNUT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SCR/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SONIC/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PIXEL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "QUICK/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TIA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "COS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ME/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "THE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "HIVE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MOCA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DEXE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ORCA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AIXBT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "XAI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BANANA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LISTA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BSW/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "KMNO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BRETT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PENGU/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SNT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SAFE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CHESS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ORBS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "WIF/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BLZ/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "API3/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BIO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DF/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "GAS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "D/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "AUCTION/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "LUMIA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SLP/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TIA/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BOME/USDC:USDC",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ZRO/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "UNFI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FLUX/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "VOXEL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SANTOS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "REI/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "DRIFT/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "PONKE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "MANTA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "FIDA/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "SWELL/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "1MBABYDOGE/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "CETUS/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "TROY/USDT:USDT",
+      "funding_rate": 5e-05,
+      "funding_rate_pct": 0.005,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BB/USDT:USDT",
+      "funding_rate": 4.22e-05,
+      "funding_rate_pct": 0.004220000000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "USDC/USDT:USDT",
+      "funding_rate": -4.158e-05,
+      "funding_rate_pct": -0.004158,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ALGO/USDT:USDT",
+      "funding_rate": 3.951e-05,
+      "funding_rate_pct": 0.003951,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RIF/USDT:USDT",
+      "funding_rate": -3.874e-05,
+      "funding_rate_pct": -0.003874,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "RSR/USDT:USDT",
+      "funding_rate": 3.718e-05,
+      "funding_rate_pct": 0.003718,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "IOST/USDT:USDT",
+      "funding_rate": -3.703e-05,
+      "funding_rate_pct": -0.003703,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "STEEM/USDT:USDT",
+      "funding_rate": -6.77e-06,
+      "funding_rate_pct": -0.0006770000000000001,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ENA/USDC:USDC",
+      "funding_rate": 3.58e-06,
+      "funding_rate_pct": 0.00035800000000000003,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BNB/USDC:USDC",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BNB/BTC",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BNB/USDT:USDT",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETH/USDT:USDT-250627",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTC/USDT:USDT-250328",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETH/USDT:USDT-250328",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "ETH/BTC:BTC",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    },
+    {
+      "symbol": "BTC/USDT:USDT-250627",
+      "funding_rate": 0.0,
+      "funding_rate_pct": 0.0,
+      "timestamp": 1737065181001,
+      "datetime": "2025-01-16T22:06:21.001Z"
+    }
+  ]
+}

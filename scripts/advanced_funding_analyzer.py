@@ -42,7 +42,7 @@ class AdvancedFundingAnalyzer:
             }
         })
 
-    async def get_binance_all_rates(self) -> List[Dict]:
+    def get_binance_all_rates(self) -> List[Dict]:
         """Fetch both current and predicted funding rates from Binance"""
         try:
             console.print("[cyan]Loading Binance markets...[/cyan]")
@@ -74,7 +74,7 @@ class AdvancedFundingAnalyzer:
                             'payment_interval': 8
                         })
                         progress.update(task, advance=1)
-                        await asyncio.sleep(self.binance.rateLimit / 1000)  # Respect rate limits
+                        time.sleep(self.binance.rateLimit / 1000)  # Respect rate limits
                         
                     except Exception as e:
                         logger.warning(f"Error processing Binance rate for {symbol}: {e}")
@@ -87,34 +87,40 @@ class AdvancedFundingAnalyzer:
             logger.error(f"Error fetching Binance rates: {e}")
             return []
 
-    async def get_hyperliquid_all_rates(self) -> List[Dict]:
+    def get_hyperliquid_all_rates(self) -> List[Dict]:
         """Fetch funding rates from Hyperliquid using CCXT"""
         try:
+            # Disable progress display for integration
             formatted_rates = []
             
-            # Load markets without progress display
-            markets = self.hyperliquid.load_markets()
-            
-            # Fetch funding rates directly
-            funding_rates = self.hyperliquid.fetch_funding_rates()
-            
-            for symbol, data in funding_rates.items():
-                try:
-                    base = symbol.split('/')[0]
-                    formatted_rates.append({
-                        'exchange': 'Hyperliquid',
-                        'symbol': base,
-                        'funding_rate': float(data['fundingRate']),
-                        'predicted_rate': float(data.get('predictedRate', 0)),
-                        'next_funding_time': datetime.fromtimestamp(data.get('fundingTimestamp', time.time()) / 1000),
-                        'mark_price': float(data.get('markPrice', 0)),
-                        'payment_interval': 1
-                    })
-                except Exception as e:
-                    logger.warning(f"Error processing Hyperliquid rate for {symbol}: {e}")
-                    continue
-            
-            return formatted_rates
+            try:
+                # Load markets without progress display
+                markets = self.hyperliquid.load_markets()
+                
+                # Fetch funding rates directly
+                funding_rates = self.hyperliquid.fetch_funding_rates()
+                
+                for symbol, data in funding_rates.items():
+                    try:
+                        base = symbol.split('/')[0]
+                        formatted_rates.append({
+                            'exchange': 'Hyperliquid',
+                            'symbol': base,
+                            'funding_rate': float(data['fundingRate']),
+                            'predicted_rate': float(data.get('predictedRate', 0)),
+                            'next_funding_time': datetime.fromtimestamp(data.get('fundingTimestamp', time.time()) / 1000),
+                            'mark_price': float(data.get('markPrice', 0)),
+                            'payment_interval': 1
+                        })
+                    except Exception as e:
+                        logger.warning(f"Error processing Hyperliquid rate for {symbol}: {e}")
+                        continue
+                
+                return formatted_rates
+
+            except Exception as e:
+                logger.error(f"Error fetching Hyperliquid rates: {str(e)}")
+                return []
 
         except Exception as e:
             logger.error(f"Error in Hyperliquid rate fetch: {str(e)}")
@@ -188,22 +194,33 @@ class AdvancedFundingAnalyzer:
             logger.error(f"Error in Coinalyze API call: {e}")
             return {}
 
-    async def analyze_funding_opportunities(self) -> pd.DataFrame:
+    def analyze_funding_opportunities(self) -> pd.DataFrame:
         """Analyze funding opportunities across exchanges"""
         try:
-            # Fetch rates concurrently
-            binance_rates, hl_rates = await asyncio.gather(
-                self.get_binance_all_rates(),
-                self.get_hyperliquid_all_rates()
-            )
+            # Get Hyperliquid rates first with debugging
+            console.print("\n[cyan]Fetching Hyperliquid rates first...[/cyan]")
+            hl_rates = self.get_hyperliquid_all_rates()
             
-            # Combine all rates
-            all_rates = binance_rates + hl_rates
-            
-            if not all_rates:
-                logger.warning("No funding rates available")
+            if not hl_rates:
+                console.print("[red]❌ No Hyperliquid rates available[/red]")
                 return pd.DataFrame()
             
+            # Debug output for Hyperliquid rates
+            console.print(f"\n[green]✓ Successfully fetched {len(hl_rates)} Hyperliquid rates[/green]")
+            console.print("\nSample Hyperliquid rates:")
+            for rate in hl_rates[:3]:
+                console.print(f"Symbol: {rate['symbol']}, Rate: {rate['funding_rate']}, Predicted: {rate['predicted_rate']}")
+            
+            # Get Binance rates
+            console.print("\n[cyan]Fetching Binance rates...[/cyan]")
+            binance_rates = self.get_binance_all_rates()
+
+            # Combine and process rates
+            all_rates = hl_rates + binance_rates
+            if not all_rates:
+                console.print("[red]❌ No funding rates data available[/red]")
+                return pd.DataFrame()
+
             df = pd.DataFrame(all_rates)
             df['annualized_rate'] = df.apply(
                 lambda x: float(x['funding_rate']) * (365 * 24 / x['payment_interval']) * 100,
@@ -213,7 +230,7 @@ class AdvancedFundingAnalyzer:
             return df
 
         except Exception as e:
-            logger.error(f"Error in funding analysis: {e}")
+            logger.error(f"Error analyzing funding opportunities: {e}")
             return pd.DataFrame()
 
     def analyze_arbitrage_opportunities(self, comparison_df: pd.DataFrame) -> List[Dict]:

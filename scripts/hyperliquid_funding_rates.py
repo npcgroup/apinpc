@@ -13,8 +13,8 @@ load_dotenv()
 
 # Initialize Supabase client
 supabase = create_client(
-    os.getenv('SUPABASE_URL'),
-    os.getenv('SUPABASE_KEY')
+    os.getenv('NEXT_PUBLIC_SUPABASE_URL'),
+    os.getenv('NEXT_PUBLIC_SUPABASE_KEY')
 )
 
 def push_to_supabase(df):

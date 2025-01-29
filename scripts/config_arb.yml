@@ -1,0 +1,17 @@
+markets: {}
+candles_config: []
+controllers_config: []
+config_update_interval: 60
+script_file_name: v2_funding_rate_arb.py
+leverage: 5
+min_funding_rate_profitability: 0.001
+connectors:
+- binance_perpetual
+- hyperliquid_perpetual
+tokens:
+- 'MOVE'
+- 'MOVE'
+position_size_quote: 100
+profitability_to_take_profit: 0.01
+funding_rate_diff_stop_loss: -0.001
+trade_profitability_condition_to_enter: false

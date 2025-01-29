@@ -10,7 +10,6 @@ import os
 from dotenv import load_dotenv
 import time
 import logging
-import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -346,69 +345,6 @@ def save_config_file(config: dict) -> str:
         logger.error(f"Error saving config: {e}")
         return ""
 
-def push_to_supabase(df: pd.DataFrame, stats: dict, viz_data: dict):
-    """Push analyzed data to Supabase tables"""
-    try:
-        load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
-        
-        # Push current market snapshot
-        market_data = df.apply(lambda x: {
-            'symbol': x['symbol'],
-            'exchange': x['exchange'],
-            'funding_rate': float(x['funding_rate']),
-            'predicted_rate': float(x['predicted_rate']),
-            'rate_diff': float(abs(x['predicted_rate'] - x['funding_rate'])),
-            'time_to_funding': float(x['time_to_funding']),
-            'direction': x['direction'],
-            'annualized_rate': float(x['annualized_rate']),
-            'opportunity_score': float(x['opportunity_score']),
-            'mark_price': float(x['mark_price']),
-            'suggested_position': "Long" if x['funding_rate'] < 0 else "Short",
-            'created_at': datetime.now().isoformat(),
-        }, axis=1).tolist()
-        
-        # Push market snapshot
-        response = supabase.table('funding_market_snapshots').insert(market_data).execute()
-        logger.info(f"Pushed {len(market_data)} market records")
-        
-        # Push statistics
-        stats_data = {
-            'total_markets': stats['total_markets'],
-            'binance_markets': stats['binance_markets'],
-            'hl_markets': stats['hl_markets'],
-            'hourly_rate': float(stats['hourly_rate']),
-            'eight_hour_rate': float(stats['eight_hour_rate']),
-            'daily_rate': float(stats['daily_rate']),
-            'created_at': datetime.now().isoformat()
-        }
-        
-        response = supabase.table('funding_statistics').insert(stats_data).execute()
-        logger.info("Pushed statistics")
-        
-        # Push top opportunities
-        if 'top_opportunities' in viz_data:
-            top_opps = viz_data['top_opportunities'].apply(lambda x: {
-                'symbol': x['symbol'],
-                'exchange': x['exchange'],
-                'funding_rate': float(x['funding_rate']),
-                'predicted_rate': float(x['predicted_rate']),
-                'opportunity_score': float(x['opportunity_score']),
-                'created_at': datetime.now().isoformat()
-            }, axis=1).tolist()
-            
-            response = supabase.table('funding_top_opportunities').insert(top_opps).execute()
-            logger.info(f"Pushed {len(top_opps)} top opportunities")
-        
-        return True
-        
-    except Exception as e:
-        logger.error(f"Error pushing to Supabase: {e}")
-        return False
-
 def main():
     st.set_page_config(page_title="Funding Rate Analysis", page_icon="📊", layout="wide")
 
@@ -427,18 +363,6 @@ def main():
             st.session_state.df = df
             st.session_state.last_update = datetime.now()
             st.session_state.stats = calculate_stats(df)
-            
-            # Create visualizations
-            viz_data = create_visualizations(df)
-            
-            # Push data to Supabase
-            with st.spinner("Pushing data to Supabase..."):
-                if push_to_supabase(df, st.session_state.stats, viz_data):
-                    st.success("Data successfully pushed to Supabase")
-                else:
-                    st.warning("Failed to push data to Supabase")
-            
-            st.session_state.viz_data = viz_data
         else:
             if st.button("Retry"):
                 st.rerun()

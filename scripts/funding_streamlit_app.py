@@ -66,94 +66,70 @@ def load_environment():
     return True
 
 def get_predicted_rates():
-    """Fetch predicted rates from Supabase for both exchanges"""
+    """Fetch predicted rates from Supabase with enhanced validation"""
     try:
         load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
         
-        # First, get the latest timestamp for each exchange to ensure fresh data
-        latest_timestamps = (supabase.table('predicted_funding_rates')
-            .select('exchange, created_at')
-            .in_('exchange', ['BinPerp', 'HLPerp'])
-            .order('created_at', desc=True)
-            .limit(2)
-            .execute())
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials")
+            return pd.DataFrame()
+            
+        supabase = create_client(supabase_url, supabase_key)
         
-        if not latest_timestamps.data:
-            logger.error("No recent predictions found in Supabase")
+        # Validate connection
+        try:
+            response = (supabase.table('predicted_funding_rates')
+                .select('*')
+                .limit(1)
+                .execute())
+        except Exception as e:
+            logger.error(f"Supabase connection test failed: {e}")
             return pd.DataFrame()
         
-        # Get predictions for both exchanges using the latest timestamps
+        # Fetch latest predictions
         response = (supabase.table('predicted_funding_rates')
-            .select('*')
-            .in_('exchange', ['BinPerp', 'HLPerp'])
+            .select('id,asset,predicted_rate,direction,exchange,next_funding_time,created_at')
             .order('created_at', desc=True)
             .execute())
         
         if not response.data:
-            logger.error("No predicted rates found in Supabase")
+            logger.warning("No predicted rates found")
             return pd.DataFrame()
             
         df = pd.DataFrame(response.data)
         
-        # Debug log raw data
-        logger.info(f"Raw predicted rates shape: {df.shape}")
-        logger.info(f"Unique exchanges: {df['exchange'].unique()}")
-        logger.info(f"Sample raw data:\n{df.head().to_dict('records')}")
+        # Validate required columns
+        required_cols = ['asset', 'predicted_rate', 'exchange', 'next_funding_time']
+        if not all(col in df.columns for col in required_cols):
+            logger.error(f"Missing columns in predicted rates. Found: {df.columns.tolist()}")
+            return pd.DataFrame()
         
-        # Map exchange names
-        exchange_map = {
-            'BinPerp': 'Binance',
-            'HLPerp': 'Hyperliquid'
-        }
-        df['exchange'] = df['exchange'].map(exchange_map)
+        # Clean and standardize data
+        df['symbol'] = df['asset'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        df['exchange'] = df['exchange'].str.strip()
+        df['predicted_rate'] = pd.to_numeric(df['predicted_rate'], errors='coerce')
         
-        # Convert timestamps
-        for col in ['next_funding_time', 'created_at', 'timestamp']:
+        # Drop rows with invalid rates
+        df = df.dropna(subset=['predicted_rate'])
+        
+        # Normalize timestamps
+        for col in ['next_funding_time', 'created_at']:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], utc=True)
         
-        # Get latest prediction for each asset AND exchange combination
-        latest_df = (df.sort_values('created_at', ascending=False)
-                      .groupby(['asset', 'exchange'])
-                      .first()
-                      .reset_index())
+        # Get latest prediction for each asset/exchange pair
+        df = (df.sort_values('created_at', ascending=False)
+               .groupby(['symbol', 'exchange'])
+               .first()
+               .reset_index())
         
-        # Handle rate conversions based on exchange
-        latest_df['predicted_rate'] = latest_df.apply(
-            lambda x: float(x['predicted_rate']) if pd.notnull(x['predicted_rate']) else 0.0,
-            axis=1
-        )
-        
-        # Prepare result DataFrame with proper rate handling
-        result_df = pd.DataFrame({
-            'symbol': latest_df['asset'].str.upper(),
-            'exchange': latest_df['exchange'],
-            'predicted_rate': latest_df['predicted_rate'],
-            'next_funding_time': latest_df['next_funding_time'],
-            'direction': latest_df['direction'],
-            'created_at': latest_df['created_at']
-        })
-        
-        # Detailed debug logging
-        logger.info("\n=== Predicted Rates Summary ===")
-        logger.info(f"Total predictions: {len(result_df)}")
-        for exchange in ['Binance', 'Hyperliquid']:
-            exchange_data = result_df[result_df['exchange'] == exchange]
-            logger.info(f"\n{exchange} Summary:")
-            logger.info(f"Number of pairs: {len(exchange_data)}")
-            logger.info(f"Latest timestamp: {exchange_data['created_at'].max()}")
-            logger.info(f"Sample pairs:\n{exchange_data[['symbol', 'predicted_rate']].head(3).to_dict('records')}")
-            logger.info(f"Rate range: {exchange_data['predicted_rate'].min():.6f} to {exchange_data['predicted_rate'].max():.6f}")
-        
-        return result_df
+        logger.info(f"Successfully fetched {len(df)} predicted rates")
+        return df
         
     except Exception as e:
-        logger.error(f"Error fetching predicted rates: {e}")
-        logger.error("Error details:", exc_info=True)
+        logger.error(f"Error in get_predicted_rates: {e}")
         return pd.DataFrame()
 
 def check_supabase_connection():
@@ -178,85 +154,60 @@ def check_supabase_connection():
         return False
 
 def fetch_data():
-    """Fetch and combine current and predicted rates"""
+    """Fetch and combine current and predicted rates with enhanced validation"""
     try:
-        # Get predicted rates first
         predicted_df = get_predicted_rates()
-        logger.info(f"Predicted rates shape: {predicted_df.shape if not predicted_df.empty else 'Empty'}")
+        logger.info(f"Predicted rates shape: {predicted_df.shape}")
         
-        # Get current rates
         analyzer = AdvancedFundingAnalyzer()
         df = analyzer.analyze_funding_opportunities()
         
-        if isinstance(df, pd.DataFrame) and not df.empty:
-            # Standardize symbols for matching
-            df['symbol'] = df['symbol'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
-            
-            # Fix decimal places and normalize rates based on exchange
-            df['funding_rate'] = df.apply(
-                lambda x: (x['funding_rate'] * 100) if x['exchange'] == 'Hyperliquid' 
-                else (x['funding_rate'] * 10),  # Binance rate normalization
-                axis=1
+        if not isinstance(df, pd.DataFrame) or df.empty:
+            logger.error("No current funding rates available")
+            return pd.DataFrame()
+        
+        # Standardize and clean current rates
+        df['symbol'] = df['symbol'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        df['exchange'] = df['exchange'].str.strip()
+        df['funding_rate'] = pd.to_numeric(df['funding_rate'], errors='coerce')
+        df = df.dropna(subset=['funding_rate'])
+        
+        # Normalize rates based on exchange
+        df['funding_rate'] = df.apply(
+            lambda x: x['funding_rate'] * (100 if x['exchange'] == 'Hyperliquid' else 10),
+            axis=1
+        )
+        
+        if not predicted_df.empty:
+            # Merge with validation
+            df = df.merge(
+                predicted_df[['symbol', 'exchange', 'predicted_rate', 'direction', 'next_funding_time']],
+                on=['symbol', 'exchange'],
+                how='left',
+                validate='1:1'  # Ensure one-to-one merge
             )
             
-            # Set payment intervals first
-            df['payment_interval'] = df.apply(
-                lambda x: 1 if x['exchange'] == 'Hyperliquid' else 8,
-                axis=1
-            )
+            # Fill missing predictions with current rates
+            df['predicted_rate'] = df['predicted_rate'].fillna(df['funding_rate'])
+            df['direction'] = df['direction'].fillna('neutral')
             
-            # Normalize Binance rates to hourly for comparison
-            df['normalized_rate'] = df.apply(
-                lambda x: x['funding_rate'] if x['exchange'] == 'Hyperliquid'
-                else x['funding_rate'] / 8,  # Convert Binance 8h rate to hourly
-                axis=1
-            )
+            # Calculate metrics
+            df['rate_diff'] = (df['predicted_rate'] - df['funding_rate']).abs()
+            df['annualized_rate'] = df['funding_rate'] * 365 * 24 / df['payment_interval']
+            df['opportunity_score'] = df.apply(calculate_opportunity_score, axis=1)
             
-            if not predicted_df.empty:
-                # Merge with predicted rates matching on both symbol and exchange
-                df = df.merge(
-                    predicted_df,
-                    on=['symbol', 'exchange'],
-                    how='left',
-                    suffixes=('', '_pred')
-                )
-                
-                # Log merge results
-                logger.info(f"After merge - rows with predictions: {df['predicted_rate'].notna().sum()}")
-                logger.info(f"Sample after merge:\n{df[['symbol', 'exchange', 'funding_rate', 'predicted_rate']].head()}")
-                
-                # Calculate proper rates and differences
-                df['rate_diff'] = abs(df['predicted_rate'] - df['normalized_rate'])
-                df['annualized_rate'] = df.apply(
-                    lambda x: x['normalized_rate'] * 365 * 24,  # Already normalized to hourly
-                    axis=1
-                )
-                
-                # Handle missing predictions
-                df['predicted_rate'] = df['predicted_rate'].fillna(df['normalized_rate'])
-                df['direction'] = df['direction'].fillna('neutral')
-                df['time_to_funding'] = df['payment_interval']
-                
-                # Calculate opportunity score using normalized rates
-                df['opportunity_score'] = df.apply(
-                    lambda x: calculate_opportunity_score(x, normalized=True),
-                    axis=1
-                )
+            # Validate final dataframe
+            if df['opportunity_score'].isna().any():
+                logger.warning("Some opportunity scores are NaN - fixing...")
+                df['opportunity_score'] = df['opportunity_score'].fillna(0)
             
-            logger.info(f"Final shape: {df.shape}")
-            logger.info("Sample rates by exchange:")
-            for exchange in ['Binance', 'Hyperliquid']:
-                sample = df[df['exchange'] == exchange].head(3)
-                logger.info(f"\n{exchange} samples:\n{sample[['symbol', 'funding_rate', 'normalized_rate', 'annualized_rate']].to_dict('records')}")
-            
+            logger.info("Data processing completed successfully")
             return df.sort_values('opportunity_score', ascending=False)
             
-        return pd.DataFrame()
+        return df
         
     except Exception as e:
         logger.error(f"Error in fetch_data: {e}")
-        if 'df' in locals():
-            logger.error(f"DataFrame columns: {df.columns.tolist() if not df.empty else 'Empty DataFrame'}")
         return pd.DataFrame()
 
 def calculate_opportunity_score(row, normalized=False):
@@ -402,16 +353,16 @@ def create_arbitrage_visualization(df):
 
 def create_visualizations(df):
     """Create visualization objects for the dashboard"""
-    viz_data = {}
-    
     try:
+        viz_data = {}
+        
         # Current vs Predicted scatter plot
         viz_data['opportunity_scatter'] = px.scatter(
             df,
             x='funding_rate',
             y='predicted_rate',
             color='exchange',
-            hover_data=['symbol', 'annualized_rate', 'opportunity_score'],
+            hover_data=['symbol', 'annualized_rate'],
             title='Current vs Predicted Funding Rates',
             template='plotly_dark'
         ).update_layout(
@@ -427,6 +378,7 @@ def create_visualizations(df):
         viz_data['top_opportunities'] = df.copy()
         
         return viz_data
+        
     except Exception as e:
         logger.error(f"Error creating visualizations: {e}")
         return {}
@@ -538,69 +490,46 @@ def create_exchange_comparison(df):
         logger.error(f"Error creating exchange comparison: {e}")
         return None
 
-def generate_hummingbot_config(df: pd.DataFrame) -> dict:
-    """Generate simple Hummingbot config for top opportunities"""
+def generate_hummingbot_config(df):
+    """Generate Hummingbot configuration file"""
     try:
-        # Get top 10 opportunities
-        top_opps = df.nlargest(10, 'opportunity_score')
+        # Filter and sort opportunities
+        top_opportunities = df.nlargest(10, 'opportunity_score')
         
-        # Get best token with highest opportunity score
-        best_token = top_opps.iloc[0]['symbol']
-        
-        # Calculate optimal parameters based on the selected token
-        token_data = top_opps[top_opps['symbol'] == best_token].iloc[0]
-        
-        # Simple config structure
         config = {
-            'markets': {},
-            'candles_config': [],
-            'controllers_config': [],
-            'config_update_interval': 60,
-            'script_file_name': 'v2_funding_rate_arb.py',
-            'leverage': 5,
-            'min_funding_rate_profitability': abs(float(token_data['funding_rate'])),
-            'connectors': [
-                'binance_perpetual',
-                'hyperliquid_perpetual'
-            ],
-            'tokens': [
-                best_token,
-                best_token
-            ],
-            'position_size_quote': 100,
-            'profitability_to_take_profit': max(0.01, abs(float(token_data['funding_rate'])) * 10),
-            'funding_rate_diff_stop_loss': -abs(float(token_data['funding_rate'])),
-            'trade_profitability_condition_to_enter': False
+            'template_version': 1,
+            'strategy': 'perpetual_market_making',
+            'exchange': 'hyperliquid_perpetual',
+            'markets': [],
+            'execution_timeframe': '8h',
+            'position_mode': 'ONEWAY'
         }
         
-        # Display the config in Streamlit
-        st.code(f"""
-markets: {{}}
-candles_config: []
-controllers_config: []
-config_update_interval: 60
-script_file_name: v2_funding_rate_arb.py
-leverage: 5
-min_funding_rate_profitability: {config['min_funding_rate_profitability']:.6f}
-connectors:
-- binance_perpetual
-- hyperliquid_perpetual
-tokens:
-- '{best_token}'
-- '{best_token}'
-position_size_quote: 100
-profitability_to_take_profit: {config['profitability_to_take_profit']:.6f}
-funding_rate_diff_stop_loss: {config['funding_rate_diff_stop_loss']:.6f}
-trade_profitability_condition_to_enter: false
-        """, language='yaml')
+        for _, token_data in top_opportunities.iterrows():
+            market_config = {
+                'market': f"{token_data['symbol']}-USDT",
+                'leverage': 2,
+                'position_size_quote': 100,
+                'profitability_to_take_profit': max(0.01, abs(float(token_data['funding_rate'])) * 10),
+                'funding_rate_diff_stop_loss': -abs(float(token_data['funding_rate'])),
+                'trade_profitability_condition_to_enter': False
+            }
+            config['markets'].append(market_config)
         
-        st.success(f"✅ Generated config for {best_token} with opportunity score: {token_data['opportunity_score']:.2f}")
+        # Save config to file
+        config_path = Path('generated_config.yml')
+        with open(config_path, 'w') as f:
+            yaml.dump(config, f, default_flow_style=False)
         
-        return config
+        st.success(f"Config generated and saved to {config_path}")
         
+        # Display config preview
+        with st.expander("Preview Config"):
+            st.code(yaml.dump(config, default_flow_style=False), language='yaml')
+            
     except Exception as e:
         logger.error(f"Error generating config: {e}")
-        return {}
+        st.error(f"Failed to generate config: {str(e)}")
 
 def save_config_file(config: dict) -> str:
     """Save config to YAML file"""
@@ -679,37 +608,41 @@ def push_to_supabase(df: pd.DataFrame, stats: dict, viz_data: dict):
         logger.error(f"Error pushing to Supabase: {e}")
         return False
 
+def test_supabase_query():
+    """Test direct SQL query to Supabase"""
+    try:
+        load_dotenv()
+        supabase = create_client(
+            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        )
+        
+        # Direct SQL query
+        query = """
+        select 
+            asset,
+            exchange,
+            predicted_rate,
+            created_at,
+            direction
+        from predicted_funding_rates
+        where created_at > now() - interval '1 hour'
+        order by created_at desc
+        limit 10;
+        """
+        
+        response = supabase.table('predicted_funding_rates').select("*").execute()
+        return pd.DataFrame(response.data)
+    except Exception as e:
+        logger.error(f"SQL query test failed: {e}")
+        return pd.DataFrame()
+
 def main():
     # Add auto-refresh meta tag at the top of the app
     st.set_page_config(
         page_title="Funding Rate Dashboard",
         page_icon="📊",
         layout="wide"
-    )
-    
-    # Add HTML meta refresh tag (10 minutes = 600 seconds)
-    st.markdown(
-        """
-        <meta http-equiv="refresh" content="600">
-        <style>
-        .last-update {
-            color: #666;
-            font-size: 14px;
-            position: fixed;
-            top: 60px;
-            right: 10px;
-            z-index: 1000;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Display last update time
-    current_time = datetime.now().strftime("%H:%M:%S")
-    st.markdown(
-        f'<div class="last-update">Last updated: {current_time}</div>',
-        unsafe_allow_html=True
     )
     
     # Initialize session state
@@ -748,10 +681,6 @@ def main():
                     st.warning("Failed to push data to Supabase")
             
             st.session_state.viz_data = viz_data
-            
-            # Force rerun if this was an auto-refresh
-            if should_refresh:
-                st.rerun()
         else:
             if st.button("Retry", key="retry_fetch"):
                 st.rerun()
@@ -831,7 +760,7 @@ def main():
         except Exception as e:
             st.error(f"Error displaying data: {str(e)}")
             logger.error(f"Display error: {str(e)}", exc_info=True)
-            if st.button("Retry Display"):
+            if st.button("Retry Display", key="retry_display"):
                 st.rerun()
     else:
         st.info("Waiting for data... Click Refresh Data to start.")
@@ -843,6 +772,40 @@ def main():
                 generate_hummingbot_config(st.session_state.df)
         else:
             st.warning("Please fetch funding rates data first")
+
+    # Add debug section with expander
+    with st.expander("🔍 Debug Predicted Rates"):
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("Test API Connection", key="test_api"):
+                predicted_df = get_predicted_rates()
+                if not predicted_df.empty:
+                    st.success(f"Successfully fetched {len(predicted_df)} predicted rates")
+                    
+                    # Display raw data
+                    st.subheader("Raw Predicted Rates")
+                    st.dataframe(predicted_df)
+                    
+                    # Show summary by exchange
+                    st.subheader("Summary by Exchange")
+                    for exchange in ['Binance', 'Hyperliquid']:
+                        exchange_data = predicted_df[predicted_df['exchange'] == exchange]
+                        st.write(f"\n{exchange}:")
+                        st.write(f"- Number of pairs: {len(exchange_data)}")
+                        st.write(f"- Latest timestamp: {exchange_data['created_at'].max()}")
+                        st.write("- Sample pairs:")
+                        st.dataframe(exchange_data[['symbol', 'predicted_rate', 'direction']].head())
+                else:
+                    st.error("No predicted rates found in Supabase")
+        
+        with col2:
+            if st.button("Test SQL Query", key="test_sql"):
+                sql_df = test_supabase_query()
+                if not sql_df.empty:
+                    st.success("SQL query successful")
+                    st.dataframe(sql_df)
+                else:
+                    st.error("SQL query returned no data")
 
 def display_top_opportunities(top_opps):
     """Display both directional and cross-exchange funding opportunities side by side"""
@@ -994,52 +957,56 @@ def display_cross_exchange_opportunities(df):
 
 def display_detailed_view(df):
     """Display enhanced detailed view of all data"""
-    if not df.empty:
-        # Prepare display dataframe
-        display_df = df.copy()
-        
-        # Add formatted columns
-        display_df['rate_diff'] = (display_df['predicted_rate'] - display_df['funding_rate']).abs()
-        display_df['next_funding'] = display_df['time_to_funding'].apply(
-            lambda x: f"{x:.1f}h" if pd.notnull(x) else "8h"
-        )
-        display_df['suggested_position'] = display_df.apply(
-            lambda x: "Long" if x['funding_rate'] < 0 else "Short", 
-            axis=1
-        )
-        
-        # Sort by opportunity score
-        display_df = display_df.sort_values('opportunity_score', ascending=False)
-        
-        # Display with formatting
-        st.dataframe(
-            display_df[[
-                'symbol',
-                'exchange',
-                'funding_rate',
-                'predicted_rate',
-                'rate_diff',
-                'next_funding',
-                'direction',
-                'suggested_position',
-                'annualized_rate',
-                'opportunity_score',
-                'mark_price'
-            ]].style.format({
-                'funding_rate': '{:.6f}',
-                'predicted_rate': '{:.6f}',
-                'rate_diff': '{:.6f}',
-                'annualized_rate': '{:.2f}%',
-                'opportunity_score': '{:.2f}',
-                'mark_price': '${:,.2f}'
-            }).background_gradient(
-                subset=['opportunity_score'],
-                cmap='RdYlGn'
-            ).background_gradient(
-                subset=['rate_diff'],
-                cmap='YlOrRd'
+    try:
+        if not df.empty:
+            # Prepare display dataframe
+            display_df = df.copy()
+            
+            # Add formatted columns
+            display_df['rate_diff'] = (display_df['predicted_rate'] - display_df['funding_rate']).abs()
+            display_df['next_funding'] = display_df['time_to_funding'].apply(
+                lambda x: f"{x:.1f}h" if pd.notnull(x) else "8h"
             )
-        )
+            display_df['suggested_position'] = display_df.apply(
+                lambda x: "Long" if x['funding_rate'] < 0 else "Short", 
+                axis=1
+            )
+            
+            # Sort by opportunity score
+            display_df = display_df.sort_values('opportunity_score', ascending=False)
+            
+            # Display with formatting
+            st.dataframe(
+                display_df[[
+                    'symbol',
+                    'exchange',
+                    'funding_rate',
+                    'predicted_rate',
+                    'rate_diff',
+                    'next_funding',
+                    'direction',
+                    'suggested_position',
+                    'annualized_rate',
+                    'opportunity_score',
+                    'mark_price'
+                ]].style.format({
+                    'funding_rate': '{:.6f}',
+                    'predicted_rate': '{:.6f}',
+                    'rate_diff': '{:.6f}',
+                    'annualized_rate': '{:.2f}%',
+                    'opportunity_score': '{:.2f}',
+                    'mark_price': '${:,.2f}'
+                }).background_gradient(
+                    subset=['opportunity_score'],
+                    cmap='RdYlGn'
+                ).background_gradient(
+                    subset=['rate_diff'],
+                    cmap='YlOrRd'
+                )
+            )
+    except Exception as e:
+        logger.error(f"Error in detailed view: {e}")
+        st.error("Error displaying detailed view")
 
 if __name__ == "__main__":
     main() 

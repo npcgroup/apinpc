@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-01-29T10:56:43.383Z",
+  "analysis": {
+    "topOpportunities": [
+      {
+        "asset": "USUAL",
+        "predicted": -0.00008552,
+        "timestamp": 1738148203382
+      },
+      {
+        "asset": "HYPE",
+        "predicted": 0.00005457,
+        "timestamp": 1738148203382
+      },
+      {
+        "asset": "BADGER",
+        "predicted": 0.00005119,
+        "timestamp": 1738148203381
+      },
+      {
+        "asset": "XLM",
+        "predicted": -0.00004039,
+        "timestamp": 1738148203382
+      },
+      {
+        "asset": "PIXEL",
+        "predicted": -0.00003431,
+        "timestamp": 1738148203382
+      }
+    ],
+    "statistics": {
+      "totalPairs": 166,
+      "pairsWithFunding": 166,
+      "positiveRates": 153,
+      "negativeRates": 13,
+      "highestRate": {
+        "asset": "USUAL",
+        "predicted": -0.00008552,
+        "timestamp": 1738148203382
+      },
+      "averageRate": 0.000010008855421686729
+    }
+  }
+}

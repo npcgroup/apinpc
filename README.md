@@ -286,3 +286,20 @@ MIT License - see [LICENSE](LICENSE) for details
 - [ ] Advanced Analytics Dashboard
 - [ ] Cross-Chain Arbitrage
 - [ ] Automated Trading Strategies
+
+# Funding Rate Analysis App
+
+## Setup
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Create `.env` file with required variables:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_KEY=your_supabase_key
+   ```
+4. Run the app: `streamlit run scripts/funding_streamlit_app.py`
+
+## Deployment
+- Follow platform-specific deployment instructions
+- Ensure environment variables are set
+- Use the Procfile for Heroku-like platforms

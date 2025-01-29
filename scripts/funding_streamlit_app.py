@@ -11,11 +11,62 @@ from dotenv import load_dotenv
 import time
 import logging
 import yaml
+from pathlib import Path
+import sys
+import logging.config
+
+# Configure logging
+logging.config.dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'level': 'INFO',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'app.log',
+            'formatter': 'default',
+            'level': 'INFO',
+        }
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    }
+})
 
 logger = logging.getLogger(__name__)
 
+# Add the project root to the Python path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# Environment variables
+def load_environment():
+    """Load environment variables from .env file or environment"""
+    load_dotenv()
+    
+    required_vars = [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_KEY"
+    ]
+    
+    missing_vars = [var for var in required_vars if not os.getenv(var)]
+    if missing_vars:
+        st.error(f"Missing required environment variables: {', '.join(missing_vars)}")
+        return False
+    return True
+
 def get_predicted_rates():
-    """Fetch predicted rates from Supabase with proper column handling"""
+    """Fetch predicted rates from Supabase for both exchanges"""
     try:
         load_dotenv()
         supabase = create_client(
@@ -23,50 +74,86 @@ def get_predicted_rates():
             os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
         )
         
-        # Early validation of Supabase connection
-        if not supabase:
-            logger.error("Failed to initialize Supabase client")
+        # First, get the latest timestamp for each exchange to ensure fresh data
+        latest_timestamps = (supabase.table('predicted_funding_rates')
+            .select('exchange, created_at')
+            .in_('exchange', ['BinPerp', 'HLPerp'])
+            .order('created_at', desc=True)
+            .limit(2)
+            .execute())
+        
+        if not latest_timestamps.data:
+            logger.error("No recent predictions found in Supabase")
             return pd.DataFrame()
         
-        # Get most recent predictions for each asset
+        # Get predictions for both exchanges using the latest timestamps
         response = (supabase.table('predicted_funding_rates')
             .select('*')
+            .in_('exchange', ['BinPerp', 'HLPerp'])
             .order('created_at', desc=True)
             .execute())
         
         if not response.data:
+            logger.error("No predicted rates found in Supabase")
             return pd.DataFrame()
             
         df = pd.DataFrame(response.data)
+        
+        # Debug log raw data
+        logger.info(f"Raw predicted rates shape: {df.shape}")
+        logger.info(f"Unique exchanges: {df['exchange'].unique()}")
+        logger.info(f"Sample raw data:\n{df.head().to_dict('records')}")
+        
+        # Map exchange names
+        exchange_map = {
+            'BinPerp': 'Binance',
+            'HLPerp': 'Hyperliquid'
+        }
+        df['exchange'] = df['exchange'].map(exchange_map)
         
         # Convert timestamps
         for col in ['next_funding_time', 'created_at', 'timestamp']:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], utc=True)
         
-        # Get latest prediction for each asset
+        # Get latest prediction for each asset AND exchange combination
         latest_df = (df.sort_values('created_at', ascending=False)
-                      .groupby('asset')
+                      .groupby(['asset', 'exchange'])
                       .first()
                       .reset_index())
         
-        # Prepare result DataFrame with standardized columns
+        # Handle rate conversions based on exchange
+        latest_df['predicted_rate'] = latest_df.apply(
+            lambda x: float(x['predicted_rate']) if pd.notnull(x['predicted_rate']) else 0.0,
+            axis=1
+        )
+        
+        # Prepare result DataFrame with proper rate handling
         result_df = pd.DataFrame({
             'symbol': latest_df['asset'].str.upper(),
-            'predicted_rate': pd.to_numeric(latest_df['predicted_rate'], errors='coerce'),
-            'next_funding_time': latest_df['next_funding_time'],
             'exchange': latest_df['exchange'],
+            'predicted_rate': latest_df['predicted_rate'],
+            'next_funding_time': latest_df['next_funding_time'],
             'direction': latest_df['direction'],
-            'annualized_rate': pd.to_numeric(latest_df['annualized_rate'], errors='coerce')
+            'created_at': latest_df['created_at']
         })
         
-        logger.info(f"Fetched {len(result_df)} predicted rates")
-        logger.info(f"Sample predictions: {result_df[['symbol', 'predicted_rate']].head().to_dict('records')}")
+        # Detailed debug logging
+        logger.info("\n=== Predicted Rates Summary ===")
+        logger.info(f"Total predictions: {len(result_df)}")
+        for exchange in ['Binance', 'Hyperliquid']:
+            exchange_data = result_df[result_df['exchange'] == exchange]
+            logger.info(f"\n{exchange} Summary:")
+            logger.info(f"Number of pairs: {len(exchange_data)}")
+            logger.info(f"Latest timestamp: {exchange_data['created_at'].max()}")
+            logger.info(f"Sample pairs:\n{exchange_data[['symbol', 'predicted_rate']].head(3).to_dict('records')}")
+            logger.info(f"Rate range: {exchange_data['predicted_rate'].min():.6f} to {exchange_data['predicted_rate'].max():.6f}")
         
         return result_df
         
     except Exception as e:
         logger.error(f"Error fetching predicted rates: {e}")
+        logger.error("Error details:", exc_info=True)
         return pd.DataFrame()
 
 def check_supabase_connection():
@@ -103,69 +190,64 @@ def fetch_data():
         
         if isinstance(df, pd.DataFrame) and not df.empty:
             # Standardize symbols for matching
-            df['symbol'] = df['symbol'].str.upper()
+            df['symbol'] = df['symbol'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
+            
+            # Fix decimal places and normalize rates based on exchange
+            df['funding_rate'] = df.apply(
+                lambda x: (x['funding_rate'] * 100) if x['exchange'] == 'Hyperliquid' 
+                else (x['funding_rate'] * 10),  # Binance rate normalization
+                axis=1
+            )
+            
+            # Set payment intervals first
+            df['payment_interval'] = df.apply(
+                lambda x: 1 if x['exchange'] == 'Hyperliquid' else 8,
+                axis=1
+            )
+            
+            # Normalize Binance rates to hourly for comparison
+            df['normalized_rate'] = df.apply(
+                lambda x: x['funding_rate'] if x['exchange'] == 'Hyperliquid'
+                else x['funding_rate'] / 8,  # Convert Binance 8h rate to hourly
+                axis=1
+            )
             
             if not predicted_df.empty:
-                # Ensure predicted_df has correct column names before merge
-                predicted_df = predicted_df.rename(columns={
-                    'asset': 'symbol',
-                    'predicted_rate': 'predicted_rate_pred',
-                    'annualized_rate': 'annualized_rate_pred'
-                })
-                
-                # Log before merge
-                logger.info(f"Predicted rates before merge: {predicted_df[['symbol', 'predicted_rate_pred']].head().to_dict('records')}")
-                
-                # Merge with predicted rates
+                # Merge with predicted rates matching on both symbol and exchange
                 df = df.merge(
-                    predicted_df[[
-                        'symbol',
-                        'predicted_rate_pred',
-                        'direction',
-                        'annualized_rate_pred'
-                    ]],
-                    on='symbol',
-                    how='left'
+                    predicted_df,
+                    on=['symbol', 'exchange'],
+                    how='left',
+                    suffixes=('', '_pred')
                 )
                 
-                # Handle the merged columns
-                df['predicted_rate'] = df['predicted_rate_pred'].fillna(df['funding_rate'])
-                df['annualized_rate'] = df['annualized_rate_pred'].fillna(
-                    df['funding_rate'] * 365 * 24 / df['payment_interval']
+                # Log merge results
+                logger.info(f"After merge - rows with predictions: {df['predicted_rate'].notna().sum()}")
+                logger.info(f"Sample after merge:\n{df[['symbol', 'exchange', 'funding_rate', 'predicted_rate']].head()}")
+                
+                # Calculate proper rates and differences
+                df['rate_diff'] = abs(df['predicted_rate'] - df['normalized_rate'])
+                df['annualized_rate'] = df.apply(
+                    lambda x: x['normalized_rate'] * 365 * 24,  # Already normalized to hourly
+                    axis=1
                 )
                 
-                # Clean up temporary columns
-                df = df.drop(columns=[
-                    'predicted_rate_pred', 
-                    'annualized_rate_pred'
-                ], errors='ignore')
-                
-                # Set default values
+                # Handle missing predictions
+                df['predicted_rate'] = df['predicted_rate'].fillna(df['normalized_rate'])
                 df['direction'] = df['direction'].fillna('neutral')
-                df['time_to_funding'] = 8.0  # Default to 8 hours
-            else:
-                df['predicted_rate'] = df['funding_rate']
-                df['direction'] = 'neutral'
-                df['time_to_funding'] = 8.0
-                df['annualized_rate'] = df['funding_rate'] * 365 * 24 / df['payment_interval']
-            
-            # Calculate scores
-            df['opportunity_score'] = df.apply(calculate_opportunity_score, axis=1)
+                df['time_to_funding'] = df['payment_interval']
+                
+                # Calculate opportunity score using normalized rates
+                df['opportunity_score'] = df.apply(
+                    lambda x: calculate_opportunity_score(x, normalized=True),
+                    axis=1
+                )
             
             logger.info(f"Final shape: {df.shape}")
-            logger.info(f"Final columns: {df.columns.tolist()}")
-            
-            # Ensure all required columns exist
-            required_cols = [
-                'symbol', 'exchange', 'funding_rate', 'predicted_rate',
-                'time_to_funding', 'direction', 'annualized_rate',
-                'opportunity_score', 'mark_price'
-            ]
-            
-            for col in required_cols:
-                if col not in df.columns:
-                    logger.error(f"Missing required column: {col}")
-                    return pd.DataFrame()
+            logger.info("Sample rates by exchange:")
+            for exchange in ['Binance', 'Hyperliquid']:
+                sample = df[df['exchange'] == exchange].head(3)
+                logger.info(f"\n{exchange} samples:\n{sample[['symbol', 'funding_rate', 'normalized_rate', 'annualized_rate']].to_dict('records')}")
             
             return df.sort_values('opportunity_score', ascending=False)
             
@@ -177,10 +259,11 @@ def fetch_data():
             logger.error(f"DataFrame columns: {df.columns.tolist() if not df.empty else 'Empty DataFrame'}")
         return pd.DataFrame()
 
-def calculate_opportunity_score(row):
-    """Enhanced opportunity score calculation"""
+def calculate_opportunity_score(row, normalized=False):
+    """Enhanced opportunity score calculation using normalized rates"""
     try:
-        current_rate = abs(float(row['funding_rate']))
+        rate_to_use = row['normalized_rate'] if normalized else row['funding_rate']
+        current_rate = abs(float(rate_to_use))
         predicted_rate = abs(float(row.get('predicted_rate', current_rate)))
         time_to_funding = float(row.get('time_to_funding', 8))
         
@@ -190,22 +273,14 @@ def calculate_opportunity_score(row):
         # Time factor (higher score for closer funding times)
         time_factor = max(0, min(1, (8 - time_to_funding) / 8))
         
-        # Exchange factor (weight opportunities differently by exchange)
-        exchange_factor = 1.1 if row['exchange'] == 'Binance' else 1.0
-        
-        # Direction factor (higher score if prediction matches current direction)
-        direction_match = 1.2 if (
-            (current_rate > 0 and predicted_rate > 0) or 
-            (current_rate < 0 and predicted_rate < 0)
-        ) else 1.0
-        
-        # Combine all factors
+        # Base score using normalized rates
         base_score = (rate_diff * 0.7 + abs(current_rate) * 0.3)
-        score = base_score * (1 + time_factor) * exchange_factor * direction_match
+        score = base_score * (1 + time_factor)
         
         # Annualize the score
-        return score * (365 * 24 / row['payment_interval']) * 100
+        return score * 365 * 24  # Already using hourly rates
     except Exception as e:
+        logger.error(f"Error calculating opportunity score: {e}")
         return 0
 
 def calculate_stats(df: pd.DataFrame) -> dict:
@@ -240,33 +315,228 @@ def calculate_stats(df: pd.DataFrame) -> dict:
         logger.error(f"Error calculating stats: {e}")
         return {}
 
-def create_visualizations(df: pd.DataFrame) -> dict:
-    """Create visualization data for Streamlit"""
+def create_arbitrage_visualization(df):
+    """Create visualization for cross-exchange arbitrage opportunities"""
     try:
-        return {
-            'funding_distribution': px.box(
-                df, x='exchange', y='funding_rate',
-                title='Funding Rate Distribution by Exchange'
-            ),
-            'opportunity_scatter': px.scatter(
-                df,
-                x='funding_rate',
-                y='predicted_rate',  # Changed from predicted_funding_rate
-                color='exchange',
-                hover_data=['symbol', 'annualized_rate', 'opportunity_score'],
-                title='Current vs Predicted Funding Rates'
-            ),
-            'top_opportunities': df.nlargest(10, 'opportunity_score'),
-            'funding_heatmap': px.density_heatmap(
-                df,
-                x='funding_rate',
-                y='predicted_rate',  # Changed from predicted_funding_rate
-                title='Funding Rate Density'
+        # Prepare data for arbitrage visualization
+        binance_df = df[df['exchange'] == 'Binance'].copy()
+        hl_df = df[df['exchange'] == 'Hyperliquid'].copy()
+        
+        # Standardize symbols
+        binance_df['symbol'] = binance_df['symbol'].str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        hl_df['symbol'] = hl_df['symbol'].str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        
+        # Find common symbols and create arbitrage data
+        common_symbols = set(binance_df['symbol']) & set(hl_df['symbol'])
+        arb_data = []
+        
+        for symbol in common_symbols:
+            b_rate = float(binance_df[binance_df['symbol'] == symbol]['funding_rate'].iloc[0])
+            h_rate = float(hl_df[hl_df['symbol'] == symbol]['funding_rate'].iloc[0])
+            spread = b_rate - h_rate
+            
+            arb_data.append({
+                'symbol': symbol,
+                'binance_rate': b_rate,
+                'hl_rate': h_rate,
+                'spread': spread,
+                'abs_spread': abs(spread)
+            })
+        
+        if arb_data:
+            arb_df = pd.DataFrame(arb_data)
+            
+            # Create scatter plot
+            fig = go.Figure()
+            
+            # Add diagonal line for reference
+            fig.add_trace(go.Scatter(
+                x=[-0.1, 0.1],
+                y=[-0.1, 0.1],
+                mode='lines',
+                name='Equal Rates',
+                line=dict(color='rgba(128,128,128,0.5)', dash='dash'),
+                showlegend=True
+            ))
+            
+            # Add points
+            fig.add_trace(go.Scatter(
+                x=arb_df['binance_rate'],
+                y=arb_df['hl_rate'],
+                mode='markers+text',
+                name='Trading Pairs',
+                text=arb_df['symbol'],
+                textposition="top center",
+                marker=dict(
+                    size=10,
+                    color=arb_df['abs_spread'],
+                    colorscale='RdYlGn',
+                    showscale=True,
+                    colorbar=dict(title='Spread %')
+                ),
+                hovertemplate=
+                "<b>%{text}</b><br>" +
+                "Binance Rate: %{x:.4f}%<br>" +
+                "HL Rate: %{y:.4f}%<br>" +
+                "Spread: %{marker.color:.4f}%<br>" +
+                "<extra></extra>"
+            ))
+            
+            fig.update_layout(
+                title='Cross-Exchange Arbitrage Opportunities',
+                title_x=0.5,
+                xaxis_title='Binance Funding Rate (%)',
+                yaxis_title='Hyperliquid Funding Rate (%)',
+                template='plotly_dark',
+                height=400,
+                showlegend=True,
+                plot_bgcolor='rgba(0,0,0,0)',
+                paper_bgcolor='rgba(0,0,0,0)'
             )
-        }
+            
+            return fig
+            
+    except Exception as e:
+        logger.error(f"Error creating arbitrage visualization: {e}")
+        return None
+
+def create_visualizations(df):
+    """Create visualization objects for the dashboard"""
+    viz_data = {}
+    
+    try:
+        # Current vs Predicted scatter plot
+        viz_data['opportunity_scatter'] = px.scatter(
+            df,
+            x='funding_rate',
+            y='predicted_rate',
+            color='exchange',
+            hover_data=['symbol', 'annualized_rate', 'opportunity_score'],
+            title='Current vs Predicted Funding Rates',
+            template='plotly_dark'
+        ).update_layout(
+            height=400,
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)'
+        )
+        
+        # Create arbitrage visualization
+        viz_data['arb_scatter'] = create_arbitrage_visualization(df)
+        
+        # Store top opportunities
+        viz_data['top_opportunities'] = df.copy()
+        
+        return viz_data
     except Exception as e:
         logger.error(f"Error creating visualizations: {e}")
         return {}
+
+def create_exchange_comparison(df):
+    """Create comparative visualization of funding rates between exchanges"""
+    try:
+        # Separate data by exchange
+        binance_data = df[df['exchange'] == 'Binance']
+        hl_data = df[df['exchange'] == 'Hyperliquid']
+        
+        # Create figure with secondary y-axis
+        fig = go.Figure()
+        
+        # Add Hyperliquid distribution
+        fig.add_trace(go.Violin(
+            x=['Hyperliquid'] * len(hl_data),
+            y=hl_data['funding_rate'],
+            name='Hyperliquid',
+            side='positive',
+            line_color='rgba(0,128,255,0.7)',
+            fillcolor='rgba(0,128,255,0.3)',
+            points='all',
+            jitter=0.05,
+            box_visible=True,
+            meanline_visible=True
+        ))
+        
+        # Add Binance distribution
+        fig.add_trace(go.Violin(
+            x=['Binance'] * len(binance_data),
+            y=binance_data['funding_rate'],
+            name='Binance',
+            side='positive',
+            line_color='rgba(240,128,0,0.7)',
+            fillcolor='rgba(240,128,0,0.3)',
+            points='all',
+            jitter=0.05,
+            box_visible=True,
+            meanline_visible=True
+        ))
+        
+        # Add scatter points for actual values
+        fig.add_trace(go.Scatter(
+            x=['Hyperliquid'] * len(hl_data),
+            y=hl_data['funding_rate'],
+            mode='markers',
+            name='HL Points',
+            marker=dict(
+                color='rgba(0,128,255,0.5)',
+                size=4
+            ),
+            showlegend=False
+        ))
+        
+        fig.add_trace(go.Scatter(
+            x=['Binance'] * len(binance_data),
+            y=binance_data['funding_rate'],
+            mode='markers',
+            name='Binance Points',
+            marker=dict(
+                color='rgba(240,128,0,0.5)',
+                size=4
+            ),
+            showlegend=False
+        ))
+        
+        # Update layout
+        fig.update_layout(
+            title='Funding Rate Distribution by Exchange',
+            title_x=0.5,
+            xaxis_title='Exchange',
+            yaxis_title='Funding Rate (%)',
+            template='plotly_dark',
+            showlegend=True,
+            height=500,
+            violingap=0.2,
+            violinmode='overlay',
+            xaxis=dict(showgrid=False),
+            yaxis=dict(
+                gridcolor='rgba(128,128,128,0.2)',
+                zerolinecolor='rgba(128,128,128,0.5)'
+            ),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)'
+        )
+        
+        # Add mean lines and annotations
+        hl_mean = hl_data['funding_rate'].mean()
+        binance_mean = binance_data['funding_rate'].mean()
+        
+        fig.add_hline(
+            y=hl_mean,
+            line_dash="dash",
+            line_color="rgba(0,128,255,0.5)",
+            annotation_text=f"HL Mean: {hl_mean:.4f}%"
+        )
+        
+        fig.add_hline(
+            y=binance_mean,
+            line_dash="dash",
+            line_color="rgba(240,128,0,0.5)",
+            annotation_text=f"Binance Mean: {binance_mean:.4f}%"
+        )
+        
+        return fig
+        
+    except Exception as e:
+        logger.error(f"Error creating exchange comparison: {e}")
+        return None
 
 def generate_hummingbot_config(df: pd.DataFrame) -> dict:
     """Generate simple Hummingbot config for top opportunities"""
@@ -361,7 +631,7 @@ def push_to_supabase(df: pd.DataFrame, stats: dict, viz_data: dict):
             'exchange': x['exchange'],
             'funding_rate': float(x['funding_rate']),
             'predicted_rate': float(x['predicted_rate']),
-            'rate_diff': float(abs(x['predicted_rate'] - x['funding_rate'])),
+            'rate_diff': float(x['rate_diff']),
             'time_to_funding': float(x['time_to_funding']),
             'direction': x['direction'],
             'annualized_rate': float(x['annualized_rate']),
@@ -410,23 +680,62 @@ def push_to_supabase(df: pd.DataFrame, stats: dict, viz_data: dict):
         return False
 
 def main():
-    st.set_page_config(page_title="Funding Rate Analysis", page_icon="📊", layout="wide")
-
-    # Add refresh button and status
-    col1, col2 = st.columns([1, 5])
-    with col1:
-        refresh = st.button("🔄 Refresh Data")
-    with col2:
-        if 'last_update' in st.session_state:
-            st.write(f"Last updated: {st.session_state.last_update.strftime('%H:%M:%S')}")
-
+    # Add auto-refresh meta tag at the top of the app
+    st.set_page_config(
+        page_title="Funding Rate Dashboard",
+        page_icon="📊",
+        layout="wide"
+    )
+    
+    # Add HTML meta refresh tag (10 minutes = 600 seconds)
+    st.markdown(
+        """
+        <meta http-equiv="refresh" content="600">
+        <style>
+        .last-update {
+            color: #666;
+            font-size: 14px;
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            z-index: 1000;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Display last update time
+    current_time = datetime.now().strftime("%H:%M:%S")
+    st.markdown(
+        f'<div class="last-update">Last updated: {current_time}</div>',
+        unsafe_allow_html=True
+    )
+    
+    # Initialize session state
+    if 'last_refresh' not in st.session_state:
+        st.session_state.last_refresh = time.time()
+    
+    if not load_environment():
+        st.stop()
+    
+    # Check if it's time to auto-refresh (every 10 minutes)
+    time_since_refresh = time.time() - st.session_state.last_refresh
+    should_refresh = time_since_refresh >= 600  # 600 seconds = 10 minutes
+    
     # Run analysis with progress and error handling
-    if 'df' not in st.session_state or refresh:
+    if ('df' not in st.session_state or 
+        st.button("🔄 Refresh Data", key="auto_refresh") or 
+        should_refresh):
+        
+        # Update last refresh time
+        st.session_state.last_refresh = time.time()
+        
         df = fetch_data()
         if not df.empty:
             st.session_state.df = df
-            st.session_state.last_update = datetime.now()
             st.session_state.stats = calculate_stats(df)
+            st.session_state.last_update = datetime.now()
             
             # Create visualizations
             viz_data = create_visualizations(df)
@@ -439,8 +748,12 @@ def main():
                     st.warning("Failed to push data to Supabase")
             
             st.session_state.viz_data = viz_data
+            
+            # Force rerun if this was an auto-refresh
+            if should_refresh:
+                st.rerun()
         else:
-            if st.button("Retry"):
+            if st.button("Retry", key="retry_fetch"):
                 st.rerun()
             return
 
@@ -488,8 +801,16 @@ def main():
 
             # Display tabs content
             with tab1:
-                if 'opportunity_scatter' in viz_data:
-                    st.plotly_chart(viz_data['opportunity_scatter'], use_container_width=True)
+                # First row: Graphs
+                col1, col2 = st.columns(2)
+                with col1:
+                    if 'opportunity_scatter' in viz_data:
+                        st.plotly_chart(viz_data['opportunity_scatter'], use_container_width=True)
+                with col2:
+                    if 'arb_scatter' in viz_data:
+                        st.plotly_chart(viz_data['arb_scatter'], use_container_width=True)
+                
+                # Second row: Opportunities tables
                 if 'top_opportunities' in viz_data:
                     display_top_opportunities(viz_data['top_opportunities'])
 
@@ -498,6 +819,8 @@ def main():
                 with col1:
                     if 'funding_distribution' in viz_data:
                         st.plotly_chart(viz_data['funding_distribution'], use_container_width=True)
+                    if 'exchange_comparison' in viz_data:
+                        st.plotly_chart(viz_data['exchange_comparison'], use_container_width=True)
                 with col2:
                     if 'funding_heatmap' in viz_data:
                         st.plotly_chart(viz_data['funding_heatmap'], use_container_width=True)
@@ -514,7 +837,7 @@ def main():
         st.info("Waiting for data... Click Refresh Data to start.")
 
     # Simplified config generation
-    if st.button("Generate Hummingbot Config"):
+    if st.button("Generate Hummingbot Config", key="generate_config"):
         if 'df' in st.session_state and not st.session_state.df.empty:
             with st.spinner("Generating Hummingbot config..."):
                 generate_hummingbot_config(st.session_state.df)
@@ -522,45 +845,152 @@ def main():
             st.warning("Please fetch funding rates data first")
 
 def display_top_opportunities(top_opps):
-    """Display top opportunities table with enhanced formatting"""
+    """Display both directional and cross-exchange funding opportunities side by side"""
     if not top_opps.empty:
-        display_df = top_opps.copy()
+        st.subheader("💰 Top Funding Rate Opportunities")
         
-        # Ensure all required columns exist
-        display_df['predicted_rate'] = display_df['predicted_rate'].fillna(display_df['funding_rate'])
-        display_df['rate_diff'] = (display_df['predicted_rate'] - display_df['funding_rate']).abs()
-        display_df['next_funding'] = display_df['time_to_funding'].apply(
-            lambda x: f"{x:.1f}h" if pd.notnull(x) else "8h"
-        )
-        display_df['suggested_position'] = display_df.apply(
-            lambda x: "Long" if x['funding_rate'] < 0 else "Short", 
-            axis=1
-        )
+        # Create two columns for side-by-side display
+        col1, col2 = st.columns(2)
         
-        # Display with enhanced formatting
-        st.dataframe(
-            display_df[[
+        with col1:
+            st.markdown("#### 🎯 Directional Opportunities")
+            display_directional_opportunities(top_opps)
+            
+        with col2:
+            st.markdown("#### 🔄 Cross-Exchange Arbitrage")
+            display_cross_exchange_opportunities(top_opps)
+
+def display_directional_opportunities(df):
+    """Display best single-direction funding rate opportunities"""
+    directional_df = df.copy()
+    
+    # Calculate absolute funding rate for sorting
+    directional_df['abs_funding_rate'] = directional_df['funding_rate'].abs()
+    
+    # Sort by absolute funding rate and get top 25
+    directional_df = directional_df.nlargest(25, 'abs_funding_rate')
+    
+    # Format for display
+    display_df = directional_df[[
+        'symbol',
+        'exchange',
+        'funding_rate',
+        'predicted_rate',
+        'time_to_funding',
+        'annualized_rate'
+    ]].copy()
+    
+    # Add suggested position
+    display_df['position'] = display_df.apply(
+        lambda x: "🟢 Long" if x['funding_rate'] < 0 else "🔴 Short", 
+        axis=1
+    )
+    
+    # Reorder columns for better display
+    display_df = display_df[[
+        'symbol',
+        'position',
+        'funding_rate',
+        'predicted_rate',
+        'annualized_rate',
+        'exchange',
+        'time_to_funding'
+    ]]
+    
+    st.dataframe(
+        display_df.style.format({
+            'funding_rate': '{:.4f}%',
+            'predicted_rate': '{:.4f}%',
+            'annualized_rate': '{:.2f}%',
+            'time_to_funding': '{:.1f}h'
+        }).background_gradient(
+            subset=['funding_rate', 'annualized_rate'],
+            cmap='RdYlGn'
+        ).set_properties(**{
+            'text-align': 'center'
+        }).set_table_styles([
+            {'selector': 'th', 'props': [('text-align', 'center')]},
+            {'selector': 'td', 'props': [('text-align', 'center')]}
+        ]),
+        use_container_width=True,
+        height=600  # Increased height for 25 rows
+    )
+
+def display_cross_exchange_opportunities(df):
+    """Display cross-exchange funding rate arbitrage opportunities"""
+    try:
+        # Prepare data
+        binance_df = df[df['exchange'] == 'Binance'].copy()
+        hl_df = df[df['exchange'] == 'Hyperliquid'].copy()
+        
+        # Standardize symbols
+        binance_df['symbol'] = binance_df['symbol'].str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        hl_df['symbol'] = hl_df['symbol'].str.replace('USDT', '').str.replace('PERP', '').str.strip()
+        
+        common_symbols = set(binance_df['symbol']) & set(hl_df['symbol'])
+        
+        arb_opportunities = []
+        
+        for symbol in common_symbols:
+            try:
+                b_data = binance_df[binance_df['symbol'] == symbol].iloc[0]
+                h_data = hl_df[hl_df['symbol'] == symbol].iloc[0]
+                
+                # Calculate spread
+                spread = float(b_data['funding_rate']) - float(h_data['funding_rate'])
+                
+                if abs(spread) > 0.0001:  # Only include meaningful spreads
+                    arb_opportunities.append({
+                        'symbol': symbol,
+                        'spread': spread,
+                        'binance': b_data['funding_rate'],
+                        'hyperliquid': h_data['funding_rate'],
+                        'strategy': "🟢 Long Bin/Short HL" if spread < 0 else "🔴 Short Bin/Long HL",
+                        'annual_return': abs(spread) * 365 * 24
+                    })
+                
+            except Exception as e:
+                logger.error(f"Error processing {symbol}: {e}")
+                continue
+        
+        if arb_opportunities:
+            arb_df = pd.DataFrame(arb_opportunities)
+            arb_df = arb_df.sort_values('annual_return', ascending=False).head(25)  # Show top 25
+            
+            # Reorder columns for better display
+            arb_df = arb_df[[
                 'symbol',
-                'exchange',
-                'funding_rate',
-                'predicted_rate',
-                'rate_diff',
-                'next_funding',
-                'direction',
-                'suggested_position',
-                'annualized_rate',
-                'opportunity_score'
-            ]].style.format({
-                'funding_rate': '{:.6f}',
-                'predicted_rate': '{:.6f}',
-                'rate_diff': '{:.6f}',
-                'annualized_rate': '{:.2f}%',
-                'opportunity_score': '{:.2f}'
-            }).background_gradient(
-                subset=['opportunity_score', 'rate_diff'],
-                cmap='RdYlGn'
+                'strategy',
+                'spread',
+                'binance',
+                'hyperliquid',
+                'annual_return'
+            ]]
+            
+            st.dataframe(
+                arb_df.style.format({
+                    'spread': '{:.4f}%',
+                    'binance': '{:.4f}%',
+                    'hyperliquid': '{:.4f}%',
+                    'annual_return': '{:.2f}%'
+                }).background_gradient(
+                    subset=['spread', 'annual_return'],
+                    cmap='RdYlGn'
+                ).set_properties(**{
+                    'text-align': 'center'
+                }).set_table_styles([
+                    {'selector': 'th', 'props': [('text-align', 'center')]},
+                    {'selector': 'td', 'props': [('text-align', 'center')]}
+                ]),
+                use_container_width=True,
+                height=600  # Increased height for 25 rows
             )
-        )
+        else:
+            st.info("No significant cross-exchange opportunities found")
+            
+    except Exception as e:
+        logger.error(f"Error in cross-exchange opportunities: {e}")
+        st.error("Error calculating cross-exchange opportunities")
 
 def display_detailed_view(df):
     """Display enhanced detailed view of all data"""

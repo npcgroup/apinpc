@@ -41,3 +41,596 @@ Hyperliquid samples:
 2025-01-30 02:00:19,471 - __main__ - INFO - Pushed 570 market records
 2025-01-30 02:00:19,748 - __main__ - INFO - Pushed statistics
 2025-01-30 02:00:20,384 - __main__ - INFO - Pushed 570 top opportunities
+2025-01-30 14:28:08,152 - __main__ - INFO - Successfully fetched 494 predicted rates
+2025-01-30 14:28:08,152 - __main__ - INFO - Predicted rates shape: (494, 8)
+2025-01-30 14:30:45,423 - __main__ - ERROR - Error in fetch_data: 'predicted_rate'
+2025-01-30 14:49:38,152 - __main__ - INFO - Raw predicted rates fetched: 1000
+2025-01-30 14:49:38,162 - __main__ - INFO - Processed predicted rates: 158 rows
+2025-01-30 14:54:53,388 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 14:54:53,388 - __main__ - INFO - Total records: 1000
+2025-01-30 14:54:53,389 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 14:54:53,392 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 14:54:53,413 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 14:54:53,413 - __main__ - INFO - Total predictions: 158
+2025-01-30 14:54:53,413 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 14:54:53,413 - __main__ - INFO - Number of pairs: 158
+2025-01-30 14:54:53,414 - __main__ - INFO - Latest timestamp: 2025-01-29 11:24:52.437000+00:00
+2025-01-30 14:54:53,415 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 14:54:53,415 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 14:54:53,415 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 14:54:53,415 - __main__ - INFO - Number of pairs: 0
+2025-01-30 14:54:53,415 - __main__ - INFO - Latest timestamp: NaT
+2025-01-30 14:54:53,415 - __main__ - INFO - Sample pairs:
+[]
+2025-01-30 14:54:53,416 - __main__ - INFO - Rate range: nan to nan
+2025-01-30 14:54:53,416 - __main__ - INFO - Predicted rates shape: (158, 6)
+2025-01-30 14:59:01,097 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 14:59:01,098 - __main__ - INFO - Total records: 1000
+2025-01-30 14:59:01,098 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 14:59:01,099 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 14:59:01,113 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 14:59:01,113 - __main__ - INFO - Total predictions: 158
+2025-01-30 14:59:01,113 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 14:59:01,113 - __main__ - INFO - Number of pairs: 158
+2025-01-30 14:59:01,113 - __main__ - INFO - Latest timestamp: 2025-01-29 11:24:52.437000+00:00
+2025-01-30 14:59:01,113 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 14:59:01,113 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 14:59:01,114 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 14:59:01,114 - __main__ - INFO - Number of pairs: 0
+2025-01-30 14:59:01,114 - __main__ - INFO - Latest timestamp: NaT
+2025-01-30 14:59:01,114 - __main__ - INFO - Sample pairs:
+[]
+2025-01-30 14:59:01,114 - __main__ - INFO - Rate range: nan to nan
+2025-01-30 14:59:01,114 - __main__ - INFO - Predicted rates shape: (158, 6)
+2025-01-30 14:59:01,114 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:01:02,053 - __main__ - INFO - ✅ Successfully fetched 571 Hyperliquid pairs
+2025-01-30 15:01:02,059 - __main__ - INFO - After merge - rows with predictions: 571
+2025-01-30 15:01:02,061 - __main__ - INFO - Sample after merge:
+  symbol     exchange  funding_rate  predicted_rate
+0    BTC  Hyperliquid       0.00125             0.0
+1    ETH  Hyperliquid       0.00125             0.0
+2   ATOM  Hyperliquid       0.00125             0.0
+3  MATIC  Hyperliquid       0.00000             0.0
+4   DYDX  Hyperliquid       0.00125             0.0
+2025-01-30 15:01:02,065 - __main__ - INFO - Final shape: (571, 15)
+2025-01-30 15:01:02,065 - __main__ - INFO - Sample rates by exchange:
+2025-01-30 15:01:02,066 - __main__ - INFO - 
+Binance samples:
+[{'symbol': '1000000MOG', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}, {'symbol': '1000BONK', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}, {'symbol': '1000CAT', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}]
+2025-01-30 15:01:02,066 - __main__ - INFO - 
+Hyperliquid samples:
+[{'symbol': 'BTC', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}, {'symbol': 'ETH', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}, {'symbol': 'ATOM', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}]
+2025-01-30 15:01:08,967 - __main__ - INFO - Pushed 571 market records
+2025-01-30 15:01:09,267 - __main__ - INFO - Pushed statistics
+2025-01-30 15:01:09,942 - __main__ - INFO - Pushed 571 top opportunities
+2025-01-30 15:09:52,979 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 15:09:52,981 - __main__ - INFO - Total records: 1000
+2025-01-30 15:09:52,981 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 15:09:52,985 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 15:09:52,997 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 15:09:52,997 - __main__ - INFO - Total predictions: 494
+2025-01-30 15:09:52,997 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 15:09:52,998 - __main__ - INFO - Number of pairs: 158
+2025-01-30 15:09:52,998 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 15:09:52,998 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 15:09:52,998 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 15:09:52,999 - __main__ - INFO - Number of pairs: 179
+2025-01-30 15:09:52,999 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 1.25e-05}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05}, {'symbol': 'ADA', 'predicted_rate': 1.25e-05}]
+2025-01-30 15:09:52,999 - __main__ - INFO - Rate range: -0.000083 to 0.000055
+2025-01-30 15:09:52,999 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:09:52,999 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:11:30,727 - __main__ - INFO - ✅ Successfully fetched 571 Hyperliquid pairs
+2025-01-30 15:11:30,737 - __main__ - INFO - After merge - rows with predictions: 571
+2025-01-30 15:11:30,740 - __main__ - INFO - Sample after merge:
+  symbol     exchange  funding_rate  predicted_rate
+0    BTC  Hyperliquid       0.00125             0.0
+1    ETH  Hyperliquid       0.00125             0.0
+2   ATOM  Hyperliquid       0.00125             0.0
+3  MATIC  Hyperliquid       0.00000             0.0
+4   DYDX  Hyperliquid       0.00125             0.0
+2025-01-30 15:11:30,746 - __main__ - INFO - Final shape: (571, 14)
+2025-01-30 15:11:30,746 - __main__ - INFO - Sample rates by exchange:
+2025-01-30 15:11:30,746 - __main__ - INFO - 
+Binance samples:
+[{'symbol': '1000000MOG', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}, {'symbol': '1000BONK', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}, {'symbol': '1000CAT', 'funding_rate': 0.0005, 'predicted_rate': 0.0, 'annualized_rate': 0.5475}]
+2025-01-30 15:11:30,747 - __main__ - INFO - 
+Hyperliquid samples:
+[{'symbol': 'BTC', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}, {'symbol': 'ETH', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}, {'symbol': 'ATOM', 'funding_rate': 0.00125, 'predicted_rate': 0.0, 'annualized_rate': 10.950000000000001}]
+2025-01-30 15:11:32,726 - __main__ - INFO - Pushed 571 market records
+2025-01-30 15:11:33,004 - __main__ - INFO - Pushed statistics
+2025-01-30 15:11:33,667 - __main__ - INFO - Pushed 571 top opportunities
+2025-01-30 15:25:23,304 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 15:25:23,304 - __main__ - INFO - Total records: 1000
+2025-01-30 15:25:23,304 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 15:25:23,308 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 15:25:23,318 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 15:25:23,318 - __main__ - INFO - Total predictions: 494
+2025-01-30 15:25:23,319 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 15:25:23,319 - __main__ - INFO - Number of pairs: 158
+2025-01-30 15:25:23,319 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 15:25:23,320 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 15:25:23,320 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 15:25:23,320 - __main__ - INFO - Number of pairs: 179
+2025-01-30 15:25:23,321 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 1.25e-05}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05}, {'symbol': 'ADA', 'predicted_rate': 1.25e-05}]
+2025-01-30 15:25:23,321 - __main__ - INFO - Rate range: -0.000083 to 0.000055
+2025-01-30 15:25:23,321 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:25:23,321 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:27:05,443 - __main__ - INFO - ✅ Successfully fetched 571 Hyperliquid pairs
+2025-01-30 15:27:05,453 - __main__ - INFO - Before merge:
+2025-01-30 15:27:05,453 - __main__ - INFO - Current rates shape: (571, 8)
+2025-01-30 15:27:05,453 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:27:05,457 - __main__ - INFO - After merge - shape: (571, 11)
+2025-01-30 15:27:05,458 - __main__ - INFO - Sample merged data:
+2025-01-30 15:27:05,458 - __main__ - ERROR - Error in fetch_data: "['predicted_rate'] not in index"
+2025-01-30 15:27:05,458 - __main__ - ERROR - DataFrame columns: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate']
+2025-01-30 15:29:30,132 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 15:29:30,132 - __main__ - INFO - Total records: 1000
+2025-01-30 15:29:30,133 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 15:29:30,136 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 15:29:30,148 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 15:29:30,148 - __main__ - INFO - Total predictions: 494
+2025-01-30 15:29:30,148 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 15:29:30,148 - __main__ - INFO - Number of pairs: 158
+2025-01-30 15:29:30,149 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 15:29:30,149 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 15:29:30,149 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 15:29:30,150 - __main__ - INFO - Number of pairs: 179
+2025-01-30 15:29:30,150 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 1.25e-05}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05}, {'symbol': 'ADA', 'predicted_rate': 1.25e-05}]
+2025-01-30 15:29:30,150 - __main__ - INFO - Rate range: -0.000083 to 0.000055
+2025-01-30 15:29:30,150 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:29:30,150 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:42:20,572 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 15:42:20,572 - __main__ - INFO - Total records: 1000
+2025-01-30 15:42:20,572 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 15:42:20,575 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 15:42:20,585 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 15:42:20,585 - __main__ - INFO - Total predictions: 494
+2025-01-30 15:42:20,585 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 15:42:20,585 - __main__ - INFO - Number of pairs: 158
+2025-01-30 15:42:20,585 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 15:42:20,585 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 15:42:20,585 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 15:42:20,585 - __main__ - INFO - Number of pairs: 179
+2025-01-30 15:42:20,585 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 1.25e-05}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05}, {'symbol': 'ADA', 'predicted_rate': 1.25e-05}]
+2025-01-30 15:42:20,586 - __main__ - INFO - Rate range: -0.000083 to 0.000055
+2025-01-30 15:42:20,586 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:42:20,586 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:42:45,261 - __main__ - INFO - 
+=== Raw Supabase Data ===
+2025-01-30 15:42:45,261 - __main__ - INFO - Total records: 1000
+2025-01-30 15:42:45,261 - __main__ - INFO - Columns: ['id', 'timestamp', 'asset', 'predicted_rate', 'annualized_rate', 'direction', 'exchange', 'next_funding_time', 'created_at']
+2025-01-30 15:42:45,264 - __main__ - INFO - Sample raw data:
+[{'id': 4, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 5, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 6, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ACE', 'predicted_rate': 5e-05, 'annualized_rate': 0.01825, 'direction': 'LONGS_PAY', 'exchange': 'BybitPerp', 'next_funding_time': '2025-01-29T12:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 7, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 0.0001, 'annualized_rate': 0.0365, 'direction': 'LONGS_PAY', 'exchange': 'BinPerp', 'next_funding_time': '2025-01-29T16:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}, {'id': 8, 'timestamp': '2025-01-29T11:21:54.138+00:00', 'asset': 'ADA', 'predicted_rate': 1.25e-05, 'annualized_rate': 0.0045625, 'direction': 'LONGS_PAY', 'exchange': 'HlPerp', 'next_funding_time': '2025-01-29T11:00:00+00:00', 'created_at': '2025-01-29T11:21:54.138+00:00'}]
+2025-01-30 15:42:45,268 - __main__ - INFO - 
+=== Processed Predicted Rates ===
+2025-01-30 15:42:45,268 - __main__ - INFO - Total predictions: 494
+2025-01-30 15:42:45,269 - __main__ - INFO - 
+Binance Summary:
+2025-01-30 15:42:45,269 - __main__ - INFO - Number of pairs: 158
+2025-01-30 15:42:45,269 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 0.0001}, {'symbol': 'ACE', 'predicted_rate': 5e-05}, {'symbol': 'ADA', 'predicted_rate': 0.0001}]
+2025-01-30 15:42:45,270 - __main__ - INFO - Rate range: -0.000686 to 0.000384
+2025-01-30 15:42:45,270 - __main__ - INFO - 
+Hyperliquid Summary:
+2025-01-30 15:42:45,270 - __main__ - INFO - Number of pairs: 179
+2025-01-30 15:42:45,270 - __main__ - INFO - Sample pairs:
+[{'symbol': 'AAVE', 'predicted_rate': 1.25e-05}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05}, {'symbol': 'ADA', 'predicted_rate': 1.25e-05}]
+2025-01-30 15:42:45,270 - __main__ - INFO - Rate range: -0.000083 to 0.000055
+2025-01-30 15:42:45,270 - __main__ - INFO - Predicted rates shape: (494, 5)
+2025-01-30 15:42:45,270 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:49:10,082 - __main__ - INFO - 
+=== Prediction Time Analysis ===
+2025-01-30 15:49:10,082 - __main__ - INFO - Current UTC: 2025-01-30 10:19:09.618229+00:00
+2025-01-30 15:49:10,082 - __main__ - INFO - Time window start: 2025-01-30 09:19:09.618229+00:00
+2025-01-30 15:49:10,082 - __main__ - INFO - Found predictions: 0
+2025-01-30 15:49:10,082 - __main__ - INFO - Time range: NaT to NaT
+2025-01-30 15:49:10,083 - __main__ - INFO - 
+=== Final Predictions ===
+2025-01-30 15:49:10,083 - __main__ - INFO - Total valid predictions: 0
+2025-01-30 15:49:10,083 - __main__ - INFO - 
+Binance predictions: 0
+2025-01-30 15:49:10,083 - __main__ - INFO - 
+Hyperliquid predictions: 0
+2025-01-30 15:49:10,083 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 15:49:10,083 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 15:57:31,953 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 15:57:31,955 - __main__ - INFO - Total records: 1000
+2025-01-30 15:57:31,961 - __main__ - INFO - Unique assets: 180
+2025-01-30 15:57:31,962 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-01-30 15:57:31,979 - __main__ - INFO - 
+=== Final Predictions ===
+2025-01-30 15:57:31,979 - __main__ - INFO - Total predictions: 338
+2025-01-30 15:57:31,980 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 15:57:31,980 - __main__ - INFO - Sample Binance predictions:
+2025-01-30 15:57:31,981 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.0001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 5e-05, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.0001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 5e-05, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00012745, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 15:57:31,981 - __main__ - INFO - Rate range: -0.008064 to 0.000363
+2025-01-30 15:57:31,982 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 15:57:31,982 - __main__ - INFO - Sample Hyperliquid predictions:
+2025-01-30 15:57:31,982 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 6.402e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 1.25e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 3.94e-06, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 1.25e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 4.657e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 15:57:31,982 - __main__ - INFO - Rate range: -0.000769 to 0.000434
+2025-01-30 15:57:31,983 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 15:57:31,983 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:02:31,754 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:02:31,754 - __main__ - INFO - Total records: 1000
+2025-01-30 16:02:31,758 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:02:31,760 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 16:02:31,775 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:02:31,775 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:02:31,776 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:02:31,776 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:02:31,777 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00145, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:02:31,777 - __main__ - INFO - Normalized rate range: -0.079207 to 0.003494
+2025-01-30 16:02:31,778 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:02:31,778 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:02:31,778 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.005853, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.000325, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.004327, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 16:02:31,779 - __main__ - INFO - Normalized rate range: -0.077330 to 0.040564
+2025-01-30 16:02:31,779 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 16:02:31,779 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:04:46,171 - __main__ - ERROR - Error in fetch_data: 'predicted_rate'
+2025-01-30 16:09:35,895 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:09:35,895 - __main__ - INFO - Total records: 1000
+2025-01-30 16:09:35,897 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:09:35,898 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 16:09:35,913 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:09:35,913 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:09:35,913 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:09:35,913 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:09:35,915 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0013061, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:09:35,915 - __main__ - INFO - Normalized rate range: -0.076985 to 0.003146
+2025-01-30 16:09:35,915 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:09:35,915 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:09:35,916 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.005208, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.00026000000000000003, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.003715, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 16:09:35,916 - __main__ - INFO - Normalized rate range: -0.077379 to 0.031507
+2025-01-30 16:09:35,916 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 16:09:35,916 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:11:04,494 - __main__ - ERROR - Error in fetch_data: 'predicted_rate'
+2025-01-30 16:13:44,063 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:13:44,063 - __main__ - INFO - Total records: 1000
+2025-01-30 16:13:44,070 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:13:44,071 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 16:13:44,090 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:13:44,090 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:13:44,091 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:13:44,091 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:13:44,092 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0008235, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:13:44,092 - __main__ - INFO - Normalized rate range: -0.073710 to 0.002903
+2025-01-30 16:13:44,092 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:13:44,092 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:13:44,093 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.0054540000000000005, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 5.6000000000000006e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.003147, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 16:13:44,093 - __main__ - INFO - Normalized rate range: -0.074316 to 0.029614
+2025-01-30 16:13:44,093 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 16:13:44,093 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:15:12,093 - __main__ - INFO - Successfully processed 571 rows
+2025-01-30 16:15:12,094 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff']
+2025-01-30 16:15:12,326 - __main__ - ERROR - Error pushing to Supabase: 'time_to_funding'
+2025-01-30 16:15:12,330 - __main__ - ERROR - Display error: "['time_to_funding'] not in index"
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 799, in main
+    display_top_opportunities(viz_data['top_opportunities'])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 839, in display_top_opportunities
+    display_directional_opportunities(top_opps)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 856, in display_directional_opportunities
+    display_df = directional_df[[
+                 ~~~~~~~~~~~~~~^^
+        'symbol',
+        ^^^^^^^^^
+    ...<4 lines>...
+        'annualized_rate'
+        ^^^^^^^^^^^^^^^^^
+    ]].copy()
+    ^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4108, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 6200, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 6252, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['time_to_funding'] not in index"
+2025-01-30 16:19:18,562 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:19:18,563 - __main__ - INFO - Total records: 1000
+2025-01-30 16:19:18,564 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:19:18,564 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-01-30 16:19:18,578 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:19:18,578 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:19:18,579 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:19:18,579 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:19:18,580 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0006881, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:19:18,580 - __main__ - INFO - Normalized rate range: -0.071468 to 0.003079
+2025-01-30 16:19:18,580 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:19:18,580 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:19:18,581 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.005696, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -1.9999999999999998e-05, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0032410000000000004, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 16:19:18,581 - __main__ - INFO - Normalized rate range: -0.073710 to 0.027141
+2025-01-30 16:19:18,581 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 16:19:18,581 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:20:49,571 - __main__ - INFO - Successfully processed 571 rows
+2025-01-30 16:20:49,571 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding']
+2025-01-30 16:20:49,799 - __main__ - ERROR - Error pushing to Supabase: 'opportunity_score'
+2025-01-30 16:20:50,036 - __main__ - ERROR - Error in detailed view: 'opportunity_score'
+2025-01-30 16:24:10,136 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:24:10,137 - __main__ - INFO - Total records: 1000
+2025-01-30 16:24:10,142 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:24:10,143 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-01-30 16:24:10,159 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:24:10,159 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:24:10,159 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:24:10,159 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:24:10,161 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0009848, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:24:10,161 - __main__ - INFO - Normalized rate range: -0.067727 to 0.003359
+2025-01-30 16:24:10,161 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:24:10,161 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:24:10,162 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.0060149999999999995, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.000205, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.003358, 'next_funding_time': Timestamp('2025-01-30 10:00:00+0000', tz='UTC')}]
+2025-01-30 16:24:10,162 - __main__ - INFO - Normalized rate range: -0.072442 to 0.022860
+2025-01-30 16:24:10,162 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 16:24:10,162 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:25:57,822 - __main__ - INFO - Successfully processed 571 rows
+2025-01-30 16:25:57,822 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-01-30 16:25:59,200 - __main__ - INFO - Pushed 571 market records
+2025-01-30 16:25:59,501 - __main__ - INFO - Pushed statistics
+2025-01-30 16:25:59,966 - __main__ - INFO - Pushed 571 top opportunities
+2025-01-30 16:35:50,362 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 16:35:50,362 - __main__ - INFO - Total records: 1000
+2025-01-30 16:35:50,363 - __main__ - INFO - Unique assets: 180
+2025-01-30 16:35:50,363 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 16:35:50,378 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 16:35:50,378 - __main__ - INFO - Total predictions: 338
+2025-01-30 16:35:50,378 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 16:35:50,378 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 16:35:50,380 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0013955, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 16:35:50,380 - __main__ - INFO - Normalized rate range: -0.061502 to 0.003043
+2025-01-30 16:35:50,380 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 16:35:50,380 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 16:35:50,381 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.0077280000000000005, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.000381, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0047420000000000006, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}]
+2025-01-30 16:35:50,381 - __main__ - INFO - Normalized rate range: -0.057604 to 0.007850
+2025-01-30 16:35:50,381 - __main__ - ERROR - Error fetching predicted rates: name 'get_historical_funding_rates' is not defined
+2025-01-30 16:35:50,381 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 259, in get_predicted_rates
+    historical_data = get_historical_funding_rates()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'get_historical_funding_rates' is not defined
+2025-01-30 16:35:50,382 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 16:35:50,382 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 16:37:22,295 - __main__ - INFO - Successfully processed 571 rows
+2025-01-30 16:37:22,295 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-01-30 16:37:23,769 - __main__ - INFO - Pushed 571 market records
+2025-01-30 16:37:24,054 - __main__ - INFO - Pushed statistics
+2025-01-30 16:37:24,489 - __main__ - INFO - Pushed 571 top opportunities
+2025-01-30 17:00:09,204 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 17:00:09,205 - __main__ - INFO - Total records: 1000
+2025-01-30 17:00:09,209 - __main__ - INFO - Unique assets: 180
+2025-01-30 17:00:09,209 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 17:00:09,228 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 17:00:09,229 - __main__ - INFO - Total predictions: 338
+2025-01-30 17:00:09,229 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 17:00:09,229 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 17:00:09,231 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0016504, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 17:00:09,231 - __main__ - INFO - Normalized rate range: -0.043383 to 0.002656
+2025-01-30 17:00:09,231 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 17:00:09,231 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 17:00:09,232 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.004593, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.000128, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00249, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}]
+2025-01-30 17:00:09,232 - __main__ - INFO - Normalized rate range: -0.018916 to 0.005573
+2025-01-30 17:00:09,232 - __main__ - ERROR - Error fetching predicted rates: name 'get_historical_funding_rates' is not defined
+2025-01-30 17:00:09,232 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 326, in get_predicted_rates
+    historical_data = get_historical_funding_rates()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'get_historical_funding_rates' is not defined
+2025-01-30 17:00:09,234 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 17:00:09,234 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 17:05:04,219 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 17:05:04,219 - __main__ - INFO - Total records: 1000
+2025-01-30 17:05:04,223 - __main__ - INFO - Unique assets: 180
+2025-01-30 17:05:04,223 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-01-30 17:05:04,238 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 17:05:04,238 - __main__ - INFO - Total predictions: 338
+2025-01-30 17:05:04,238 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 17:05:04,238 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 17:05:04,240 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0014683, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 17:05:04,240 - __main__ - INFO - Normalized rate range: -0.041416 to 0.002610
+2025-01-30 17:05:04,240 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 17:05:04,240 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 17:05:04,240 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.004436, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -7.3e-05, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.002364, 'next_funding_time': Timestamp('2025-01-30 11:00:00+0000', tz='UTC')}]
+2025-01-30 17:05:04,240 - __main__ - INFO - Normalized rate range: -0.016995 to 0.005573
+2025-01-30 17:05:07,212 - __main__ - ERROR - Error fetching historical rates: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.funding_arbitrage_opportunities" does not exist'}
+2025-01-30 17:05:07,214 - __main__ - ERROR - Error in enhanced prediction: 'funding_rate'
+2025-01-30 17:05:07,214 - __main__ - ERROR - Error fetching predicted rates: cannot access local variable 'current_rate' where it is not associated with a value
+2025-01-30 17:05:07,214 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'funding_rate'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 73, in calculate_enhanced_prediction
+    current_rate = float(row['funding_rate'])
+                         ~~~^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'funding_rate'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 329, in get_predicted_rates
+    result_df['enhanced_prediction'] = result_df.apply(
+                                       ~~~~~~~~~~~~~~~^
+        lambda x: calculate_enhanced_prediction(x, historical_data),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        axis=1
+        ^^^^^^
+    )
+    ^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 10374, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ~~~~~~~~^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/apply.py", line 916, in apply
+    return self.apply_standard()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/apply.py", line 1063, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/pandas/core/apply.py", line 1081, in apply_series_generator
+    results[i] = self.func(v, *self.args, **self.kwargs)
+                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 330, in <lambda>
+    lambda x: calculate_enhanced_prediction(x, historical_data),
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 105, in calculate_enhanced_prediction
+    return current_rate
+           ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'current_rate' where it is not associated with a value
+2025-01-30 17:05:07,225 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 17:05:07,226 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 17:23:17,463 - __main__ - INFO - Successfully processed 349 rows
+2025-01-30 17:23:17,463 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-01-30 17:31:48,810 - __main__ - ERROR - Error fetching historical rates: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.funding_arbitrage_opportunities" does not exist'}
+2025-01-30 17:31:48,815 - __main__ - ERROR - Error fetching predicted rates: name 'supabase' is not defined
+2025-01-30 17:31:48,815 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 280, in get_predicted_rates
+    response = supabase.table('predicted_funding_rates').select("*").order('created_at', desc=True).limit(1000).execute()
+               ^^^^^^^^
+NameError: name 'supabase' is not defined
+2025-01-30 17:31:48,818 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 17:31:48,818 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 17:33:16,800 - __main__ - WARNING - Table creation warning (can ignore if tables exist): 'SyncClient' object has no attribute 'rest'
+2025-01-30 17:33:16,801 - __main__ - WARNING - Table creation warning (can ignore if tables exist): 'SyncClient' object has no attribute 'rest'
+2025-01-30 18:08:32,447 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 18:08:32,449 - __main__ - INFO - Total records: 1000
+2025-01-30 18:08:32,454 - __main__ - INFO - Unique assets: 180
+2025-01-30 18:08:32,455 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BybitPerp', 'BinPerp']
+2025-01-30 18:08:32,479 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 18:08:32,479 - __main__ - INFO - Total predictions: 338
+2025-01-30 18:08:32,479 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 18:08:32,480 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 18:08:32,481 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 5.52e-05, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0007114, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}]
+2025-01-30 18:08:32,481 - __main__ - INFO - Normalized rate range: -0.013763 to 0.003074
+2025-01-30 18:08:32,481 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 18:08:32,481 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 18:08:32,482 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.002405, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.001091, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 18:08:32,482 - __main__ - INFO - Normalized rate range: -0.021570 to 0.009011
+2025-01-30 18:08:32,482 - __main__ - ERROR - Error fetching predicted rates: name 'get_historical_funding_rates' is not defined
+2025-01-30 18:08:32,482 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/scripts/funding_streamlit_app.py", line 259, in get_predicted_rates
+    historical_data = get_historical_funding_rates()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'get_historical_funding_rates' is not defined
+2025-01-30 18:08:32,483 - __main__ - INFO - Predicted rates shape: Empty
+2025-01-30 18:08:32,483 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-01-30 18:12:27,404 - __main__ - INFO - 
+=== Raw Data ===
+2025-01-30 18:12:27,404 - __main__ - INFO - Total records: 1000
+2025-01-30 18:12:27,406 - __main__ - INFO - Unique assets: 180
+2025-01-30 18:12:27,407 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-01-30 18:12:27,422 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-01-30 18:12:27,422 - __main__ - INFO - Total predictions: 338
+2025-01-30 18:12:27,422 - __main__ - INFO - 
+Binance predictions: 158
+2025-01-30 18:12:27,422 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-01-30 18:12:27,424 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.0002137, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0010165, 'next_funding_time': Timestamp('2025-01-30 16:00:00+0000', tz='UTC')}]
+2025-01-30 18:12:27,424 - __main__ - INFO - Normalized rate range: -0.014212 to 0.003032
+2025-01-30 18:12:27,424 - __main__ - INFO - 
+Hyperliquid predictions: 180
+2025-01-30 18:12:27,424 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-01-30 18:12:27,424 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.0018050000000000002, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.001082, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-01-30 12:00:00+0000', tz='UTC')}]
+2025-01-30 18:12:27,424 - __main__ - INFO - Normalized rate range: -0.023455 to 0.011042
+2025-01-30 18:12:27,425 - __main__ - INFO - Predicted rates shape: (338, 6)
+2025-01-30 18:12:27,425 - __main__ - INFO - Fetching Hyperliquid rates first...

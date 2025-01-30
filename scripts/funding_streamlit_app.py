@@ -14,6 +14,7 @@ import yaml
 from pathlib import Path
 import sys
 import logging.config
+import math
 
 # Configure logging
 logging.config.dictConfig({
@@ -66,70 +67,93 @@ def load_environment():
     return True
 
 def get_predicted_rates():
-    """Fetch predicted rates from Supabase with enhanced validation"""
+    """Fetch predicted rates from Supabase with proper rate normalization"""
     try:
         load_dotenv()
-        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
-        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        supabase = create_client(
+            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        )
         
-        if not supabase_url or not supabase_key:
-            logger.error("Missing Supabase credentials")
-            return pd.DataFrame()
-            
-        supabase = create_client(supabase_url, supabase_key)
+        # Get current UTC time
+        current_utc = pd.Timestamp.now(tz='UTC')
         
-        # Validate connection
-        try:
-            response = (supabase.table('predicted_funding_rates')
-                .select('*')
-                .limit(1)
-                .execute())
-        except Exception as e:
-            logger.error(f"Supabase connection test failed: {e}")
-            return pd.DataFrame()
-        
-        # Fetch latest predictions
+        # First get all recent predictions
         response = (supabase.table('predicted_funding_rates')
-            .select('id,asset,predicted_rate,direction,exchange,next_funding_time,created_at')
+            .select("*")
             .order('created_at', desc=True)
+            .limit(1000)  # Get enough data to find matches
             .execute())
         
         if not response.data:
-            logger.warning("No predicted rates found")
+            logger.error("No predicted rates found in Supabase")
             return pd.DataFrame()
             
         df = pd.DataFrame(response.data)
         
-        # Validate required columns
-        required_cols = ['asset', 'predicted_rate', 'exchange', 'next_funding_time']
-        if not all(col in df.columns for col in required_cols):
-            logger.error(f"Missing columns in predicted rates. Found: {df.columns.tolist()}")
-            return pd.DataFrame()
+        # Debug initial data
+        logger.info(f"\n=== Raw Data ===")
+        logger.info(f"Total records: {len(df)}")
+        logger.info(f"Unique assets: {df['asset'].nunique()}")
+        logger.info(f"Unique exchanges: {df['exchange'].unique().tolist()}")
         
-        # Clean and standardize data
-        df['symbol'] = df['asset'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
-        df['exchange'] = df['exchange'].str.strip()
-        df['predicted_rate'] = pd.to_numeric(df['predicted_rate'], errors='coerce')
-        
-        # Drop rows with invalid rates
-        df = df.dropna(subset=['predicted_rate'])
-        
-        # Normalize timestamps
-        for col in ['next_funding_time', 'created_at']:
+        # Convert timestamps to UTC
+        for col in ['next_funding_time', 'created_at', 'timestamp']:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], utc=True)
         
-        # Get latest prediction for each asset/exchange pair
-        df = (df.sort_values('created_at', ascending=False)
-               .groupby(['symbol', 'exchange'])
-               .first()
-               .reset_index())
+        # Map exchange names first
+        exchange_map = {
+            'BinPerp': 'Binance',
+            'HlPerp': 'Hyperliquid',
+            'Binance': 'Binance',
+            'Hyperliquid': 'Hyperliquid'
+        }
+        df['exchange'] = df['exchange'].map(exchange_map)
         
-        logger.info(f"Successfully fetched {len(df)} predicted rates")
-        return df
+        # Get latest prediction for each asset/exchange combination
+        latest_df = (df.sort_values('created_at', ascending=False)
+                      .groupby(['asset', 'exchange'])
+                      .first()
+                      .reset_index())
+        
+        # Convert rates to proper format and normalize
+        latest_df['predicted_rate'] = latest_df.apply(
+            lambda x: float(x['predicted_rate']) * (100 if x['exchange'] == 'Hyperliquid' else 10),
+            axis=1
+        )
+        latest_df['annualized_rate'] = latest_df.apply(
+            lambda x: float(x['annualized_rate']) * (100 if x['exchange'] == 'Hyperliquid' else 10),
+            axis=1
+        )
+        
+        # Prepare final DataFrame with normalized rates
+        result_df = pd.DataFrame({
+            'symbol': latest_df['asset'].str.upper(),
+            'exchange': latest_df['exchange'],
+            'predicted_rate': latest_df['predicted_rate'],  # Already normalized above
+            'direction': latest_df['direction'],
+            'annualized_rate': latest_df['annualized_rate'],
+            'next_funding_time': latest_df['next_funding_time']
+        })
+        
+        # Debug final results with normalized rates
+        logger.info("\n=== Final Predictions (Normalized) ===")
+        logger.info(f"Total predictions: {len(result_df)}")
+        for ex in ['Binance', 'Hyperliquid']:
+            ex_df = result_df[result_df['exchange'] == ex]
+            logger.info(f"\n{ex} predictions: {len(ex_df)}")
+            if not ex_df.empty:
+                logger.info(f"Sample {ex} predictions (normalized):")
+                sample = ex_df[['symbol', 'predicted_rate', 'next_funding_time']].head()
+                logger.info(f"{sample.to_dict('records')}")
+                logger.info(f"Normalized rate range: {ex_df['predicted_rate'].min():.6f} to {ex_df['predicted_rate'].max():.6f}")
+        
+        return result_df
         
     except Exception as e:
-        logger.error(f"Error in get_predicted_rates: {e}")
+        logger.error(f"Error fetching predicted rates: {e}")
+        logger.error("Error details:", exc_info=True)
         return pd.DataFrame()
 
 def check_supabase_connection():
@@ -153,86 +177,119 @@ def check_supabase_connection():
         logger.error(f"Supabase connection check failed: {e}")
         return False
 
-def fetch_data():
-    """Fetch and combine current and predicted rates with enhanced validation"""
+def calculate_opportunity_score(row):
+    """Calculate opportunity score based on rate difference and market factors"""
     try:
-        predicted_df = get_predicted_rates()
-        logger.info(f"Predicted rates shape: {predicted_df.shape}")
+        # Base score from rate difference
+        score = abs(row['rate_diff']) * 100
         
+        # Adjust based on time to funding
+        time_factor = 1.0 if row['time_to_funding'] <= 1.0 else (8.0 / row['time_to_funding'])
+        score *= time_factor
+        
+        # Adjust based on mark price (if available)
+        if 'mark_price' in row and pd.notnull(row['mark_price']) and row['mark_price'] > 0:
+            price_factor = min(1.0, math.log10(row['mark_price']) / 4)
+            score *= (1 + price_factor)
+            
+        return round(score, 2)
+    except Exception as e:
+        logger.error(f"Error calculating opportunity score: {e}")
+        return 0.0
+
+def fetch_data():
+    """Fetch and combine current and predicted rates with proper rate matching"""
+    try:
+        # Get predicted rates first
+        predicted_df = get_predicted_rates()
+        logger.info(f"Predicted rates shape: {predicted_df.shape if not predicted_df.empty else 'Empty'}")
+        
+        # Get current rates
+        logger.info("Fetching Hyperliquid rates first...")
         analyzer = AdvancedFundingAnalyzer()
         df = analyzer.analyze_funding_opportunities()
         
-        if not isinstance(df, pd.DataFrame) or df.empty:
-            logger.error("No current funding rates available")
-            return pd.DataFrame()
-        
-        # Standardize and clean current rates
-        df['symbol'] = df['symbol'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
-        df['exchange'] = df['exchange'].str.strip()
-        df['funding_rate'] = pd.to_numeric(df['funding_rate'], errors='coerce')
-        df = df.dropna(subset=['funding_rate'])
-        
-        # Normalize rates based on exchange
-        df['funding_rate'] = df.apply(
-            lambda x: x['funding_rate'] * (100 if x['exchange'] == 'Hyperliquid' else 10),
-            axis=1
-        )
-        
-        if not predicted_df.empty:
-            # Merge with validation
-            df = df.merge(
-                predicted_df[['symbol', 'exchange', 'predicted_rate', 'direction', 'next_funding_time']],
-                on=['symbol', 'exchange'],
-                how='left',
-                validate='1:1'  # Ensure one-to-one merge
+        if isinstance(df, pd.DataFrame) and not df.empty:
+            # Create a copy to avoid modifying original
+            df = df.copy()
+            
+            # Initialize required columns with defaults
+            required_columns = ['predicted_rate', 'direction', 'rate_diff']
+            for col in required_columns:
+                if col not in df.columns:
+                    df[col] = None
+            
+            # Standardize symbols for matching
+            df['symbol'] = df['symbol'].str.upper().str.replace('USDT', '').str.replace('PERP', '').str.strip()
+            
+            # Fix decimal places and normalize rates based on exchange
+            df['funding_rate'] = df.apply(
+                lambda x: (x['funding_rate'] * 100) if x['exchange'] == 'Hyperliquid' 
+                else (x['funding_rate'] * 10),  # Binance rate normalization
+                axis=1
             )
             
-            # Fill missing predictions with current rates
-            df['predicted_rate'] = df['predicted_rate'].fillna(df['funding_rate'])
-            df['direction'] = df['direction'].fillna('neutral')
+            try:
+                if not predicted_df.empty:
+                    # Ensure predicted_df has required columns
+                    required_pred_columns = ['symbol', 'exchange', 'predicted_rate', 'direction']
+                    if all(col in predicted_df.columns for col in required_pred_columns):
+                        # Merge with predicted rates matching on both symbol and exchange
+                        merged_df = df.merge(
+                            predicted_df,
+                            on=['symbol', 'exchange'],
+                            how='left',
+                            suffixes=('', '_pred')
+                        )
+                        
+                        # Update original df with merged data
+                        if 'predicted_rate_pred' in merged_df.columns:
+                            df['predicted_rate'] = merged_df['predicted_rate_pred'].fillna(merged_df['funding_rate'])
+                        else:
+                            df['predicted_rate'] = df['funding_rate']
+                            
+                        if 'direction_pred' in merged_df.columns:
+                            df['direction'] = merged_df['direction_pred'].fillna('neutral')
+                        else:
+                            df['direction'] = 'neutral'
+                    else:
+                        logger.warning("Missing required columns in predicted_df")
+                        df['predicted_rate'] = df['funding_rate']
+                        df['direction'] = 'neutral'
+                else:
+                    df['predicted_rate'] = df['funding_rate']
+                    df['direction'] = 'neutral'
+                
+                # Calculate rate differences
+                df['rate_diff'] = abs(df['predicted_rate'] - df['funding_rate'])
+                
+                # Set time_to_funding
+                df['time_to_funding'] = df.apply(
+                    lambda x: 1.0 if x['exchange'] == 'Hyperliquid' else 8.0,
+                    axis=1
+                )
+                
+                # Calculate opportunity score
+                df['opportunity_score'] = df.apply(calculate_opportunity_score, axis=1)
+                
+                # Log successful processing
+                logger.info(f"Successfully processed {len(df)} rows")
+                logger.info(f"Columns after processing: {df.columns.tolist()}")
+                
+            except Exception as merge_error:
+                logger.error(f"Error during merge/processing: {merge_error}")
+                # Fallback to using funding rates as predictions
+                df['predicted_rate'] = df['funding_rate']
+                df['direction'] = 'neutral'
+                df['rate_diff'] = 0.0
             
-            # Calculate metrics
-            df['rate_diff'] = (df['predicted_rate'] - df['funding_rate']).abs()
-            df['annualized_rate'] = df['funding_rate'] * 365 * 24 / df['payment_interval']
-            df['opportunity_score'] = df.apply(calculate_opportunity_score, axis=1)
-            
-            # Validate final dataframe
-            if df['opportunity_score'].isna().any():
-                logger.warning("Some opportunity scores are NaN - fixing...")
-                df['opportunity_score'] = df['opportunity_score'].fillna(0)
-            
-            logger.info("Data processing completed successfully")
             return df.sort_values('opportunity_score', ascending=False)
-            
-        return df
+        
+        return pd.DataFrame()
         
     except Exception as e:
         logger.error(f"Error in fetch_data: {e}")
         return pd.DataFrame()
-
-def calculate_opportunity_score(row, normalized=False):
-    """Enhanced opportunity score calculation using normalized rates"""
-    try:
-        rate_to_use = row['normalized_rate'] if normalized else row['funding_rate']
-        current_rate = abs(float(rate_to_use))
-        predicted_rate = abs(float(row.get('predicted_rate', current_rate)))
-        time_to_funding = float(row.get('time_to_funding', 8))
-        
-        # Calculate rate difference
-        rate_diff = abs(current_rate - predicted_rate)
-        
-        # Time factor (higher score for closer funding times)
-        time_factor = max(0, min(1, (8 - time_to_funding) / 8))
-        
-        # Base score using normalized rates
-        base_score = (rate_diff * 0.7 + abs(current_rate) * 0.3)
-        score = base_score * (1 + time_factor)
-        
-        # Annualize the score
-        return score * 365 * 24  # Already using hourly rates
-    except Exception as e:
-        logger.error(f"Error calculating opportunity score: {e}")
-        return 0
 
 def calculate_stats(df: pd.DataFrame) -> dict:
     """Calculate statistics from the funding data with multiple timeframes"""
@@ -638,174 +695,142 @@ def test_supabase_query():
         return pd.DataFrame()
 
 def main():
-    # Add auto-refresh meta tag at the top of the app
-    st.set_page_config(
-        page_title="Funding Rate Dashboard",
-        page_icon="📊",
-        layout="wide"
-    )
-    
-    # Initialize session state
-    if 'last_refresh' not in st.session_state:
-        st.session_state.last_refresh = time.time()
-    
-    if not load_environment():
-        st.stop()
-    
-    # Check if it's time to auto-refresh (every 10 minutes)
-    time_since_refresh = time.time() - st.session_state.last_refresh
-    should_refresh = time_since_refresh >= 600  # 600 seconds = 10 minutes
-    
-    # Run analysis with progress and error handling
-    if ('df' not in st.session_state or 
-        st.button("🔄 Refresh Data", key="auto_refresh") or 
-        should_refresh):
+    try:
+        # Add auto-refresh meta tag at the top of the app
+        st.set_page_config(
+            page_title="Funding Rate Dashboard",
+            page_icon="📊",
+            layout="wide"
+        )
         
-        # Update last refresh time
-        st.session_state.last_refresh = time.time()
+        # Initialize session state
+        if 'last_refresh' not in st.session_state:
+            st.session_state.last_refresh = time.time()
         
-        df = fetch_data()
-        if not df.empty:
-            st.session_state.df = df
-            st.session_state.stats = calculate_stats(df)
-            st.session_state.last_update = datetime.now()
+        if not load_environment():
+            st.stop()
+        
+        # Check if it's time to auto-refresh (every 10 minutes)
+        time_since_refresh = time.time() - st.session_state.last_refresh
+        should_refresh = time_since_refresh >= 600  # 600 seconds = 10 minutes
+        
+        # Run analysis with progress and error handling
+        if ('df' not in st.session_state or 
+            st.button("🔄 Refresh Data", key="auto_refresh") or 
+            should_refresh):
             
-            # Create visualizations
-            viz_data = create_visualizations(df)
+            # Update last refresh time
+            st.session_state.last_refresh = time.time()
             
-            # Push data to Supabase
-            with st.spinner("Pushing data to Supabase..."):
-                if push_to_supabase(df, st.session_state.stats, viz_data):
-                    st.success("Data successfully pushed to Supabase")
+            try:
+                df = fetch_data()
+                if not df.empty:
+                    st.session_state.df = df
+                    st.session_state.stats = calculate_stats(df)
+                    st.session_state.last_update = datetime.now()
+                    
+                    # Create visualizations
+                    viz_data = create_visualizations(df)
+                    
+                    # Push data to Supabase
+                    with st.spinner("Pushing data to Supabase..."):
+                        if push_to_supabase(df, st.session_state.stats, viz_data):
+                            st.success("Data successfully pushed to Supabase")
+                        else:
+                            st.warning("Failed to push data to Supabase")
+                    
+                    st.session_state.viz_data = viz_data
                 else:
-                    st.warning("Failed to push data to Supabase")
-            
-            st.session_state.viz_data = viz_data
-        else:
-            if st.button("Retry", key="retry_fetch"):
-                st.rerun()
-            return
+                    if st.button("Retry", key="retry_fetch"):
+                        st.rerun()
+                    return
+            except Exception as e:
+                logger.error(f"Error fetching data: {e}")
+                st.error(f"Error fetching data: {str(e)}")
+                return
 
-    # Display data if available
-    if 'df' in st.session_state and not st.session_state.df.empty:
-        try:
-            # Display metrics
-            stats = st.session_state.stats
-            col1, col2, col3, col4 = st.columns(4)
-            
-            with col1:
-                st.metric(
-                    "Total Markets",
-                    f"{stats['total_markets']}",
-                    f"{stats['binance_markets']} Binance / {stats['hl_markets']} HL"
-                )
-            with col2:
-                st.metric(
-                    "1H Rate",
-                    f"{stats['hourly_rate']:.4f}%",
-                    f"{stats['hourly_rate']*365*24:.1f}% APR"
-                )
-            with col3:
-                st.metric(
-                    "8H Rate",
-                    f"{stats['eight_hour_rate']:.4f}%",
-                    f"{stats['eight_hour_rate']*365/8:.1f}% APR"
-                )
-            with col4:
-                st.metric(
-                    "24H Rate",
-                    f"{stats['daily_rate']:.4f}%",
-                    f"{stats['daily_rate']*365/24:.1f}% APR"
-                )
-
-            # Create tabs
-            tab1, tab2, tab3 = st.tabs([
-                "🎯 Top Opportunities",
-                "📊 Market Analysis",
-                "🔍 Detailed View"
-            ])
-
-            # Get visualization data
-            viz_data = create_visualizations(st.session_state.df)
-
-            # Display tabs content
-            with tab1:
-                # First row: Graphs
-                col1, col2 = st.columns(2)
-                with col1:
-                    if 'opportunity_scatter' in viz_data:
-                        st.plotly_chart(viz_data['opportunity_scatter'], use_container_width=True)
-                with col2:
-                    if 'arb_scatter' in viz_data:
-                        st.plotly_chart(viz_data['arb_scatter'], use_container_width=True)
-                
-                # Second row: Opportunities tables
-                if 'top_opportunities' in viz_data:
-                    display_top_opportunities(viz_data['top_opportunities'])
-
-            with tab2:
-                col1, col2 = st.columns(2)
-                with col1:
-                    if 'funding_distribution' in viz_data:
-                        st.plotly_chart(viz_data['funding_distribution'], use_container_width=True)
-                    if 'exchange_comparison' in viz_data:
-                        st.plotly_chart(viz_data['exchange_comparison'], use_container_width=True)
-                with col2:
-                    if 'funding_heatmap' in viz_data:
-                        st.plotly_chart(viz_data['funding_heatmap'], use_container_width=True)
-
-            with tab3:
-                display_detailed_view(st.session_state.df)
-
-        except Exception as e:
-            st.error(f"Error displaying data: {str(e)}")
-            logger.error(f"Display error: {str(e)}", exc_info=True)
-            if st.button("Retry Display", key="retry_display"):
-                st.rerun()
-    else:
-        st.info("Waiting for data... Click Refresh Data to start.")
-
-    # Simplified config generation
-    if st.button("Generate Hummingbot Config", key="generate_config"):
+        # Display data if available
         if 'df' in st.session_state and not st.session_state.df.empty:
-            with st.spinner("Generating Hummingbot config..."):
-                generate_hummingbot_config(st.session_state.df)
-        else:
-            st.warning("Please fetch funding rates data first")
+            try:
+                # Display metrics
+                stats = st.session_state.stats
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    st.metric(
+                        "Total Markets", 
+                        f"{stats['total_markets']}",
+                        f"{stats['binance_markets']} Binance / {stats['hl_markets']} HL"
+                    )
+                with col2:
+                    st.metric(
+                        "1H Rate",
+                        f"{stats['hourly_rate']:.4f}%",
+                        f"{stats['hourly_rate']*365*24:.1f}% APR"
+                    )
+                with col3:
+                    st.metric(
+                        "8H Rate",
+                        f"{stats['eight_hour_rate']:.4f}%",
+                        f"{stats['eight_hour_rate']*365/8:.1f}% APR"
+                    )
+                with col4:
+                    st.metric(
+                        "24H Rate",
+                        f"{stats['daily_rate']:.4f}%",
+                        f"{stats['daily_rate']*365/24:.1f}% APR"
+                    )
 
-    # Add debug section with expander
-    with st.expander("🔍 Debug Predicted Rates"):
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Test API Connection", key="test_api"):
-                predicted_df = get_predicted_rates()
-                if not predicted_df.empty:
-                    st.success(f"Successfully fetched {len(predicted_df)} predicted rates")
+                # Create tabs
+                tab1, tab2, tab3 = st.tabs([
+                    "🎯 Top Opportunities",
+                    "📊 Market Analysis",
+                    "🔍 Detailed View"
+                ])
+
+                # Get visualization data
+                viz_data = st.session_state.viz_data
+
+                # Display tabs content
+                with tab1:
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        if 'opportunity_scatter' in viz_data:
+                            st.plotly_chart(viz_data['opportunity_scatter'], use_container_width=True)
+                    with col2:
+                        if 'arb_scatter' in viz_data:
+                            st.plotly_chart(viz_data['arb_scatter'], use_container_width=True)
                     
-                    # Display raw data
-                    st.subheader("Raw Predicted Rates")
-                    st.dataframe(predicted_df)
-                    
-                    # Show summary by exchange
-                    st.subheader("Summary by Exchange")
-                    for exchange in ['Binance', 'Hyperliquid']:
-                        exchange_data = predicted_df[predicted_df['exchange'] == exchange]
-                        st.write(f"\n{exchange}:")
-                        st.write(f"- Number of pairs: {len(exchange_data)}")
-                        st.write(f"- Latest timestamp: {exchange_data['created_at'].max()}")
-                        st.write("- Sample pairs:")
-                        st.dataframe(exchange_data[['symbol', 'predicted_rate', 'direction']].head())
-                else:
-                    st.error("No predicted rates found in Supabase")
-        
-        with col2:
-            if st.button("Test SQL Query", key="test_sql"):
-                sql_df = test_supabase_query()
-                if not sql_df.empty:
-                    st.success("SQL query successful")
-                    st.dataframe(sql_df)
-                else:
-                    st.error("SQL query returned no data")
+                    if 'top_opportunities' in viz_data:
+                        display_top_opportunities(viz_data['top_opportunities'])
+
+                with tab2:
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        if 'funding_distribution' in viz_data:
+                            st.plotly_chart(viz_data['funding_distribution'], use_container_width=True)
+                        if 'exchange_comparison' in viz_data:
+                            st.plotly_chart(viz_data['exchange_comparison'], use_container_width=True)
+                    with col2:
+                        if 'funding_heatmap' in viz_data:
+                            st.plotly_chart(viz_data['funding_heatmap'], use_container_width=True)
+
+                with tab3:
+                    display_detailed_view(st.session_state.df)
+
+            except Exception as e:
+                st.error(f"Error displaying data: {str(e)}")
+                logger.error(f"Display error: {str(e)}", exc_info=True)
+                if st.button("Retry Display", key="retry_display"):
+                    st.rerun()
+        else:
+            st.info("Waiting for data... Click Refresh Data to start.")
+            
+    except Exception as e:
+        logger.error(f"Main function error: {e}")
+        st.error(f"An error occurred: {str(e)}")
+        if st.button("Restart App", key="restart_app"):
+            st.rerun()
 
 def display_top_opportunities(top_opps):
     """Display both directional and cross-exchange funding opportunities side by side"""

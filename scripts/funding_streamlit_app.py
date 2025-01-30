@@ -1177,7 +1177,6 @@ def display_cross_exchange_opportunities(df):
         if arb_opportunities:
             arb_df = pd.DataFrame(arb_opportunities)
             arb_df = arb_df.sort_values('annual_return', ascending=False).head(25)  # Show top 25
-            
             # Reorder columns for better display
             arb_df = arb_df[[
                 'symbol',

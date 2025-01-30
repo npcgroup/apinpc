@@ -13,7 +13,7 @@ class HistoricalParams:
     convert_to_usd: bool = False
 
 
- 
+
 class CoinAlyzeAPI:
     def __init__(
         self,

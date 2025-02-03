@@ -124,7 +124,7 @@ class REST,WS2,GQL api
 
 graph TD
     A[Test Ingestion] --> B1[Birdeye API]
-    A --> B2[DexScreener API]
+    A --> B2[CCXT API]
     A --> B3[HyperLiquid API]
     B1 & B2 & B3 --> C[Combine Data]
     C --> D[Supabase DB]

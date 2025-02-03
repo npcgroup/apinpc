@@ -121,6 +121,7 @@ class REST,WS2,GQL api
 ## 🚀 Quick Start
 
 ```mermaid
+
 graph TD
     A[Test Ingestion] --> B1[Birdeye API]
     A --> B2[DexScreener API]
@@ -128,7 +129,8 @@ graph TD
     B1 & B2 & B3 --> C[Combine Data]
     C --> D[Supabase DB]
     D --> E[Page Component]
-    E --> F[Display Data]`
+    E --> F[Display Data]
+
 ```
 
 ```bash

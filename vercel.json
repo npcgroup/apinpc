@@ -1,0 +1,6 @@
+{
+  "crons": [{
+    "path": "/api/update-perp-metrics",
+    "schedule": "*/5 * * * *"
+  }]
+} 

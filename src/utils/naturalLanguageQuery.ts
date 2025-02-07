@@ -1,39 +1,33 @@
-import { createClient } from '@supabase/supabase-js';
-import { PerpetualMetrics } from '../types/perpetuals';
-import { formatNumber } from './metrics';
+import type { QueryConfig } from '@/types'
 
-interface QueryResult {
-  answer: string;
-  data?: PerpetualMetrics;
-  error?: string;
+export interface ExtendedQueryConfig extends QueryConfig {
+  type?: 'track' | 'analyze' | 'visualize';
+  apiKey?: string;
 }
 
-export async function handleNaturalLanguageQuery(
-  service: 'dune' | 'flipside' | 'defillama',
-  query: string,
-  config: { apiKey?: string; chain?: string }
-): Promise<QueryResult> {
-  try {
-    switch (service) {
-      case 'dune':
-        // Handle Dune Analytics query
-        break;
-      case 'flipside':
-        // Handle Flipside query
-        break;
-      case 'defillama':
-        // Handle DeFiLlama query
-        break;
-    }
-
-    return {
-      answer: "Query processed successfully",
-      data: undefined
-    };
-  } catch (error) {
-    return {
-      answer: 'Error processing query',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    };
+export interface QueryResult {
+  data: any
+  metadata: {
+    timestamp: string
+    source: string
   }
+}
+
+export function handleNaturalLanguageQuery(
+  query: string,
+  config?: ExtendedQueryConfig
+): Promise<QueryResult> {
+  const fullConfig: ExtendedQueryConfig = {
+    query,
+    parameters: {},
+    ...config
+  }
+  
+  return Promise.resolve({
+    data: {},
+    metadata: {
+      timestamp: new Date().toISOString(),
+      source: 'default'
+    }
+  })
 } 

@@ -4,18 +4,14 @@
     "module": "commonjs",
     "outDir": "dist",
     "noEmit": false,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "isolatedModules": false
   },
   "include": [
-    "scripts/**/*.ts",
-    "src/**/*.ts"
+    "scripts/**/*",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "app"
+    "dist"
   ]
 } 

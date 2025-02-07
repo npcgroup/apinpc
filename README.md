@@ -1,6 +1,18 @@
-# NPC Onchain Data Ingestion Platform
+# Funding Rate Enhanced Arbitrage System
 
-A comprehensive enterprise-grade platform for aggregating, analyzing, and deriving insights from blockchain data across multiple protocols, chains, and data sources.
+A sophisticated arbitrage system that leverages funding rate data from multiple exchanges to optimize trading opportunities. This system integrates with Hummingbot and uses historical funding rate data to make intelligent trading decisions.
+
+## Features
+
+- Real-time funding rate data collection from multiple exchanges (Bybit, Gate.io)
+- Supabase integration for efficient data storage and retrieval
+- Dynamic strategy parameter adjustment based on funding rates
+- Automated arbitrage execution via Hummingbot
+- Comprehensive logging and monitoring
+- Backtesting capabilities
+- Error handling and retry mechanisms
+
+## System Architecture
 
 ```mermaid
 graph TB
@@ -107,6 +119,19 @@ class REST,WS2,GQL api
   - Automated failover
 
 ## 🚀 Quick Start
+
+```mermaid
+
+graph TD
+    A[Test Ingestion] --> B1[Birdeye API]
+    A --> B2[CCXT API]
+    A --> B3[HyperLiquid API]
+    B1 & B2 & B3 --> C[Combine Data]
+    C --> D[Supabase DB]
+    D --> E[Page Component]
+    E --> F[Display Data]
+
+```
 
 ```bash
 # Install dependencies
@@ -263,3 +288,20 @@ MIT License - see [LICENSE](LICENSE) for details
 - [ ] Advanced Analytics Dashboard
 - [ ] Cross-Chain Arbitrage
 - [ ] Automated Trading Strategies
+
+# Funding Rate Analysis App
+
+## Setup
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Create `.env` file with required variables:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_KEY=your_supabase_key
+   ```
+4. Run the app: `streamlit run scripts/funding_streamlit_app.py`
+
+## Deployment
+- Follow platform-specific deployment instructions
+- Ensure environment variables are set
+- Use the Procfile for Heroku-like platforms

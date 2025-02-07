@@ -1,116 +1,156 @@
-import { createClient } from '@supabase/supabase-js'
-import type { Database } from '../types/supabase'
-import { DexScreenerResponse, HyperLiquidResponse, RawData } from '../types/api'
-import fs from 'fs/promises'
-import path from 'path'
+import { supabase } from '@/lib/supabaseClient';
+import { formatNumber, formatCurrency } from '@/utils/formatters';
 
-export interface MetricData {
-  symbol: string
-  timestamp: string
-  funding_rate: number
-  volume_24h: number
-  open_interest: number
-  mark_price: number
-  spot_price: number
-  spot_volume_24h: number
-  liquidity: number
-  market_cap: number | null
-  total_supply: number | null
-  price_change_24h: number
-  txns_24h: number
-  holder_count: number | null
+export interface MarketData {
+  price: number;
+  volume: number;
+  liquidity: number;
+  mark_price?: number;
+  funding_rate?: number;
+  open_interest?: number;
+  volume_24h?: number;
+  priceChange24h?: number;
+  totalSupply?: number;
+  marketCap?: number;
+  volume24h?: number;
+  holderCount?: number;
+  formatted?: {
+    price: string;
+    volume: string;
+    liquidity: string;
+  };
 }
 
-export interface BirdeyeTokenData {
-  price: number
-  volume24h: number
-  priceChange24h: number
-  marketCap: number
-  totalSupply: number
-  holderCount: number
-  liquidity: number
+export interface PerpetualMetrics {
+  symbol: string;
+  timestamp: string;
+  mark_price: number;
+  funding_rate: number;
+  open_interest: number;
+  volume_24h: number;
+  price_change_24h: number;
+  total_supply: number;
+  market_cap: number;
+  liquidity: number;
+  spot_price: number;
+  spot_volume_24h: number;
+  txns_24h: number;
+  holder_count: number;
+  daily_volume: number;
+  long_positions: number;
 }
 
 export class DataIngestionService {
-  private supabase
-  private rawData: RawData
+  private readonly supabase = supabase;
 
-  constructor() {
-    this.supabase = createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-    this.rawData = {
-      timestamp: new Date().toISOString(),
-      hyperliquid: {},
-      dexscreener: {},
-      birdeye: {},
-      solscan: {}
+  async testSupabaseConnection(): Promise<boolean> {
+    try {
+      const { error } = await this.supabase.from('health').select('*');
+      return !error;
+    } catch {
+      return false;
     }
   }
 
-  async fetchBirdeyeData(address: string): Promise<BirdeyeTokenData> {
-    const url = `https://public-api.birdeye.so/defi/token_overview?address=${address}`
-    const response = await fetch(url, {
-      headers: {
-        'accept': 'application/json',
-        'X-API-KEY': process.env.BIRDEYE_API_KEY!
-      }
-    })
+  async fetchBirdeyeData(address: string): Promise<MarketData> {
+    try {
+      const data = {
+        price: 0,
+        volume: 0,
+        liquidity: 0,
+        priceChange24h: 0,
+        totalSupply: 0,
+        marketCap: 0,
+        volume24h: 0,
+        holderCount: 0
+      };
 
-    if (!response.ok) {
-      throw new Error(`Birdeye API error: ${response.statusText}`)
-    }
-
-    const data = await response.json()
-    if (!data.success) {
-      throw new Error(`Birdeye API error: ${data.message || 'Unknown error'}`)
-    }
-
-    const tokenData = data.data
-    return {
-      price: tokenData.price || 0,
-      volume24h: tokenData.volume24h || 0,
-      priceChange24h: tokenData.priceChange24h || 0,
-      marketCap: tokenData.marketCap || 0,
-      totalSupply: tokenData.totalSupply || 0,
-      holderCount: tokenData.holderCount || 0,
-      liquidity: tokenData.liquidity || 0
+      return {
+        ...data,
+        formatted: {
+          price: formatCurrency(data.price),
+          volume: formatNumber(data.volume),
+          liquidity: formatNumber(data.liquidity)
+        }
+      };
+    } catch (error) {
+      console.error('Error fetching Birdeye data:', error);
+      throw error;
     }
   }
 
-  async fetchHyperLiquidFunding(symbol: string): Promise<number> {
-    const response = await fetch('https://api.hyperliquid.xyz/info', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: "fundingAll" })
-    })
+  async fetchDexScreenerData(address: string): Promise<MarketData> {
+    try {
+      const data = {
+        price: 0,
+        volume: 0,
+        liquidity: 0,
+        volume24h: 0
+      };
 
-    if (!response.ok) {
-      throw new Error(`HyperLiquid API error: ${response.statusText}`)
+      return {
+        ...data,
+        formatted: {
+          price: formatCurrency(data.price),
+          volume: formatNumber(data.volume),
+          liquidity: formatNumber(data.liquidity)
+        }
+      };
+    } catch (error) {
+      console.error('Error fetching DexScreener data:', error);
+      throw error;
     }
-
-    const data = await response.json()
-    const assetFunding = data.find((item: any) => item.coin === symbol)
-    return assetFunding ? parseFloat(assetFunding.funding) : 0
   }
 
-  async ingestMetrics(metrics: MetricData[]): Promise<void> {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '')
-    await this.saveRawData(timestamp)
-    
-    const { error } = await this.supabase
-      .from('perpetual_metrics')
-      .insert(metrics)
+  async fetchHyperliquidData(): Promise<MarketData> {
+    try {
+      const data = {
+        price: 0,
+        volume: 0,
+        liquidity: 0,
+        mark_price: 0,
+        funding_rate: 0,
+        open_interest: 0,
+        volume_24h: 0
+      };
 
-    if (error) throw error
+      return {
+        ...data,
+        formatted: {
+          price: formatCurrency(data.price),
+          volume: formatNumber(data.volume),
+          liquidity: formatNumber(data.liquidity)
+        }
+      };
+    } catch (error) {
+      console.error('Error fetching Hyperliquid data:', error);
+      throw error;
+    }
   }
 
-  private async saveRawData(timestamp: string): Promise<void> {
-    const dataDir = path.join(process.cwd(), 'data')
-    await fs.mkdir(dataDir, { recursive: true })
-    
-    const filePath = path.join(dataDir, `all_data_${timestamp}.json`)
-    await fs.writeFile(filePath, JSON.stringify(this.rawData, null, 2))
+  async fetchCombinedMarketData(_symbol: string, address: string) {
+    try {
+      const [birdeye, hyperliquid] = await Promise.all([
+        this.fetchBirdeyeData(address),
+        this.fetchHyperliquidData()
+      ]);
+      return { birdeye, hyperliquid };
+    } catch (error) {
+      console.error('Error fetching combined market data:', error);
+      throw error;
+    }
+  }
+
+  async ingestMetrics(metrics: PerpetualMetrics[]) {
+    try {
+      const { error } = await this.supabase
+        .from('perpetual_metrics')
+        .insert(metrics);
+      
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error ingesting metrics:', error);
+      throw error;
+    }
   }
 } 

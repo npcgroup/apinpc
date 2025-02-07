@@ -1,0 +1,193 @@
+{
+  "timestamp": "2025-01-06T23:22:07.995758",
+  "market_summary": {
+    "total_markets": 168,
+    "total_volume_24h": 132794394272.42896,
+    "total_open_interest": 1503046.1192199998,
+    "avg_funding_rate": 0.0038015476190476193,
+    "median_funding_rate": 0.0037979999999999997,
+    "highest_funding_rate": 0.0038309999999999998,
+    "lowest_funding_rate": 0.003756,
+    "positive_funding_markets": 168,
+    "negative_funding_markets": 0
+  },
+  "opportunities": {
+    "highest_current_rates": [
+      {
+        "token": "CRV",
+        "current_funding_rate": 3.831e-05,
+        "predicted_funding_rate": -1.451e-05,
+        "annualized_funding": 1.398315
+      },
+      {
+        "token": "LDO",
+        "current_funding_rate": 3.831e-05,
+        "predicted_funding_rate": 4.547e-05,
+        "annualized_funding": 1.398315
+      },
+      {
+        "token": "FTM",
+        "current_funding_rate": 3.831e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "annualized_funding": 1.398315
+      },
+      {
+        "token": "GMX",
+        "current_funding_rate": 3.831e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "annualized_funding": 1.398315
+      },
+      {
+        "token": "SNX",
+        "current_funding_rate": 3.831e-05,
+        "predicted_funding_rate": 1.25e-05,
+        "annualized_funding": 1.398315
+      }
+    ],
+    "largest_predicted_changes": [
+      {
+        "token": "PURR",
+        "current_funding_rate": 3.768e-05,
+        "predicted_funding_rate": 0.00040692,
+        "funding_difference": 0.00036924
+      },
+      {
+        "token": "kBONK",
+        "current_funding_rate": 3.793e-05,
+        "predicted_funding_rate": 0.00031446,
+        "funding_difference": 0.00027653000000000004
+      },
+      {
+        "token": "FARTCOIN",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.0003134,
+        "funding_difference": 0.00027583999999999996
+      },
+      {
+        "token": "VIRTUAL",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.00023841,
+        "funding_difference": 0.00020084999999999998
+      },
+      {
+        "token": "AI16Z",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.00023574,
+        "funding_difference": 0.00019818
+      }
+    ],
+    "high_volume_opportunities": [
+      {
+        "token": "PURR",
+        "current_funding_rate": 3.768e-05,
+        "predicted_funding_rate": 0.00040692,
+        "volume_24h": 790933072.3443394,
+        "funding_difference": 0.00036924
+      },
+      {
+        "token": "FARTCOIN",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.0003134,
+        "volume_24h": 790953191.9838394,
+        "funding_difference": 0.00027583999999999996
+      },
+      {
+        "token": "VIRTUAL",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.00023841,
+        "volume_24h": 790946037.1618594,
+        "funding_difference": 0.00020084999999999998
+      },
+      {
+        "token": "AI16Z",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.00023574,
+        "volume_24h": 790953685.0229194,
+        "funding_difference": 0.00019818
+      },
+      {
+        "token": "PENGU",
+        "current_funding_rate": 3.756e-05,
+        "predicted_funding_rate": 0.00013826,
+        "volume_24h": 790951191.0509194,
+        "funding_difference": 0.0001007
+      }
+    ]
+  },
+  "risk_metrics": {
+    "high_risk_markets": [
+      "LTC",
+      "ARB",
+      "DOGE",
+      "INJ",
+      "SUI",
+      "kPEPE",
+      "CRV",
+      "LDO",
+      "LINK",
+      "STX",
+      "RNDR",
+      "CFX",
+      "FTM",
+      "GMX",
+      "SNX",
+      "XRP",
+      "BCH",
+      "APT",
+      "AAVE",
+      "COMP",
+      "MKR",
+      "WLD",
+      "FXS",
+      "HPOS",
+      "RLB",
+      "UNIBOT",
+      "YGG",
+      "TRX",
+      "kSHIB",
+      "UNI",
+      "SEI",
+      "RUNE"
+    ],
+    "liquidity_metrics": {
+      "avg_volume_per_market": 790442823.0501723,
+      "median_open_interest": 8945.036629999999,
+      "volume_concentration": 2.978111004579064
+    }
+  },
+  "volume_analysis": {
+    "top_volume_markets": [
+      {
+        "token": "AIXBT",
+        "volume_24h": 790954209.7162594,
+        "open_interest": 8950.18086
+      },
+      {
+        "token": "AI16Z",
+        "volume_24h": 790953685.0229194,
+        "open_interest": 8950.18086
+      },
+      {
+        "token": "FARTCOIN",
+        "volume_24h": 790953191.9838394,
+        "open_interest": 8950.17058
+      },
+      {
+        "token": "USUAL",
+        "volume_24h": 790952191.5173794,
+        "open_interest": 8950.19144
+      },
+      {
+        "token": "PENGU",
+        "volume_24h": 790951191.0509194,
+        "open_interest": 8950.2123
+      }
+    ],
+    "volume_distribution": {
+      "low_volume": 42,
+      "medium_volume": 83,
+      "high_volume": 43
+    }
+  },
+  "recommendations": []
+}

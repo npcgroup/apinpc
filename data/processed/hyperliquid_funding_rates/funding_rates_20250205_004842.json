@@ -1,0 +1,1349 @@
+{
+  "timestamp": "20250205_004842",
+  "datetime": "2025-02-05T00:48:42.465410",
+  "total_markets": 166,
+  "statistics": {
+    "highest_rate": {
+      "symbol": "VINE/USDC:USDC",
+      "rate": 0.00017009,
+      "rate_pct": 0.017009
+    },
+    "lowest_rate": {
+      "symbol": "GMT/USDC:USDC",
+      "rate": -2.4e-07,
+      "rate_pct": -2.3999999999999997e-05
+    },
+    "mean_rate": 3.6656626506024287e-07,
+    "median_rate": 1.25e-05
+  },
+  "rates": [
+    {
+      "symbol": "VINE/USDC:USDC",
+      "funding_rate": 0.00017009,
+      "funding_rate_pct": 0.017009,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00253993
+    },
+    {
+      "symbol": "USUAL/USDC:USDC",
+      "funding_rate": -0.00013806,
+      "funding_rate_pct": -0.013805999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00344353
+    },
+    {
+      "symbol": "ILV/USDC:USDC",
+      "funding_rate": -0.00010952,
+      "funding_rate_pct": -0.010952,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00082173
+    },
+    {
+      "symbol": "ETHFI/USDC:USDC",
+      "funding_rate": -9.138e-05,
+      "funding_rate_pct": -0.009138,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ZETA/USDC:USDC",
+      "funding_rate": -8.681e-05,
+      "funding_rate_pct": -0.008681000000000001,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00094053
+    },
+    {
+      "symbol": "BRETT/USDC:USDC",
+      "funding_rate": -7.641e-05,
+      "funding_rate_pct": -0.007640999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "IMX/USDC:USDC",
+      "funding_rate": -7.385e-05,
+      "funding_rate_pct": -0.007385000000000001,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00083236
+    },
+    {
+      "symbol": "RUNE/USDC:USDC",
+      "funding_rate": -7.235e-05,
+      "funding_rate_pct": -0.007235,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00290163
+    },
+    {
+      "symbol": "GRASS/USDC:USDC",
+      "funding_rate": -7.122e-05,
+      "funding_rate_pct": -0.007122,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00081615
+    },
+    {
+      "symbol": "ARB/USDC:USDC",
+      "funding_rate": -7.003e-05,
+      "funding_rate_pct": -0.0070030000000000005,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00058491
+    },
+    {
+      "symbol": "XLM/USDC:USDC",
+      "funding_rate": -6.573e-05,
+      "funding_rate_pct": -0.006573,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00111971
+    },
+    {
+      "symbol": "ALT/USDC:USDC",
+      "funding_rate": -6.095e-05,
+      "funding_rate_pct": -0.006095,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0005302
+    },
+    {
+      "symbol": "POL/USDC:USDC",
+      "funding_rate": -5.901e-05,
+      "funding_rate_pct": -0.005901,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00030931
+    },
+    {
+      "symbol": "MAVIA/USDC:USDC",
+      "funding_rate": -5.871e-05,
+      "funding_rate_pct": -0.0058709999999999995,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "VIRTUAL/USDC:USDC",
+      "funding_rate": 5.492e-05,
+      "funding_rate_pct": 0.005492,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00173978
+    },
+    {
+      "symbol": "AI/USDC:USDC",
+      "funding_rate": -5.377e-05,
+      "funding_rate_pct": -0.005377,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00142495
+    },
+    {
+      "symbol": "MOVE/USDC:USDC",
+      "funding_rate": -5.148e-05,
+      "funding_rate_pct": -0.005148,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00111721
+    },
+    {
+      "symbol": "REQ/USDC:USDC",
+      "funding_rate": -4.931e-05,
+      "funding_rate_pct": -0.004931,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00039678
+    },
+    {
+      "symbol": "CAKE/USDC:USDC",
+      "funding_rate": -4.813e-05,
+      "funding_rate_pct": -0.0048130000000000004,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00095554
+    },
+    {
+      "symbol": "PYTH/USDC:USDC",
+      "funding_rate": -4.653e-05,
+      "funding_rate_pct": -0.004653,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00065771
+    },
+    {
+      "symbol": "POPCAT/USDC:USDC",
+      "funding_rate": 4.483e-05,
+      "funding_rate_pct": 0.004483,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "BADGER/USDC:USDC",
+      "funding_rate": 4.397e-05,
+      "funding_rate_pct": 0.004397,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "EIGEN/USDC:USDC",
+      "funding_rate": -4.289e-05,
+      "funding_rate_pct": -0.004288999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00098377
+    },
+    {
+      "symbol": "ATOM/USDC:USDC",
+      "funding_rate": -4.201e-05,
+      "funding_rate_pct": -0.004201,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00111181
+    },
+    {
+      "symbol": "AAVE/USDC:USDC",
+      "funding_rate": 4.198e-05,
+      "funding_rate_pct": 0.004198,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00095012
+    },
+    {
+      "symbol": "APT/USDC:USDC",
+      "funding_rate": -4.163e-05,
+      "funding_rate_pct": -0.004163,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 7.871e-05
+    },
+    {
+      "symbol": "W/USDC:USDC",
+      "funding_rate": -3.695e-05,
+      "funding_rate_pct": -0.0036949999999999995,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00037086
+    },
+    {
+      "symbol": "TRUMP/USDC:USDC",
+      "funding_rate": 3.563e-05,
+      "funding_rate_pct": 0.003563,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00079205
+    },
+    {
+      "symbol": "kFLOKI/USDC:USDC",
+      "funding_rate": -3.337e-05,
+      "funding_rate_pct": -0.003337,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00062415
+    },
+    {
+      "symbol": "LISTA/USDC:USDC",
+      "funding_rate": -3.275e-05,
+      "funding_rate_pct": -0.003275,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00121571
+    },
+    {
+      "symbol": "KAS/USDC:USDC",
+      "funding_rate": 2.673e-05,
+      "funding_rate_pct": 0.002673,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00032714
+    },
+    {
+      "symbol": "OMNI/USDC:USDC",
+      "funding_rate": -2.585e-05,
+      "funding_rate_pct": -0.002585,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00064953
+    },
+    {
+      "symbol": "SEI/USDC:USDC",
+      "funding_rate": -2.568e-05,
+      "funding_rate_pct": -0.002568,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00034755
+    },
+    {
+      "symbol": "MELANIA/USDC:USDC",
+      "funding_rate": -2.541e-05,
+      "funding_rate_pct": -0.002541,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00046493
+    },
+    {
+      "symbol": "BTC/USDC:USDC",
+      "funding_rate": 2.411e-05,
+      "funding_rate_pct": 0.002411,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0004426
+    },
+    {
+      "symbol": "VVV/USDC:USDC",
+      "funding_rate": -2.252e-05,
+      "funding_rate_pct": -0.002252,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00326087
+    },
+    {
+      "symbol": "ORBS/USDC:USDC",
+      "funding_rate": -2.199e-05,
+      "funding_rate_pct": -0.002199,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "CELO/USDC:USDC",
+      "funding_rate": -2.104e-05,
+      "funding_rate_pct": -0.002104,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00015027
+    },
+    {
+      "symbol": "BIGTIME/USDC:USDC",
+      "funding_rate": -1.913e-05,
+      "funding_rate_pct": -0.0019130000000000002,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00171321
+    },
+    {
+      "symbol": "BLAST/USDC:USDC",
+      "funding_rate": -1.863e-05,
+      "funding_rate_pct": -0.0018629999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00023175
+    },
+    {
+      "symbol": "ALGO/USDC:USDC",
+      "funding_rate": -1.304e-05,
+      "funding_rate_pct": -0.001304,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0005947
+    },
+    {
+      "symbol": "AI16Z/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00115567
+    },
+    {
+      "symbol": "AR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00082065
+    },
+    {
+      "symbol": "TAO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00048477
+    },
+    {
+      "symbol": "AIXBT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ZEREBRO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0002926
+    },
+    {
+      "symbol": "STRK/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "GRIFFAIN/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00037333
+    },
+    {
+      "symbol": "SPX/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00079523
+    },
+    {
+      "symbol": "S/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "SCR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MORPHO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "FARTCOIN/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00010097
+    },
+    {
+      "symbol": "DYM/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -6.206e-05
+    },
+    {
+      "symbol": "ANIME/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ONDO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00126593
+    },
+    {
+      "symbol": "UMA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MANTA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00063183
+    },
+    {
+      "symbol": "XAI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ETC/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ENS/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0001594
+    },
+    {
+      "symbol": "MYRO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ENA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00025488
+    },
+    {
+      "symbol": "BOME/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "PENGU/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00116831
+    },
+    {
+      "symbol": "CATI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00017444
+    },
+    {
+      "symbol": "kNEIRO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00141698
+    },
+    {
+      "symbol": "RENDER/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MEW/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "GOAT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ZK/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "IO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MOODENG/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0011091
+    },
+    {
+      "symbol": "PURR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0013739
+    },
+    {
+      "symbol": "CHILLGUY/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "TURBO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "IOTA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00011157
+    },
+    {
+      "symbol": "ME/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "HBAR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MERL/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "SAGA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "TNSR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MNT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0004894
+    },
+    {
+      "symbol": "NEIROETH/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "PEOPLE/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00024307
+    },
+    {
+      "symbol": "ACE/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00051099
+    },
+    {
+      "symbol": "WIF/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "COMP/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00032188
+    },
+    {
+      "symbol": "ARK/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "OGN/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "FTT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "TRB/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MAV/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "DOT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00068076
+    },
+    {
+      "symbol": "ZRO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00094755
+    },
+    {
+      "symbol": "UNI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00109965
+    },
+    {
+      "symbol": "YGG/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -8.63e-05
+    },
+    {
+      "symbol": "RLB/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "HPOS/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "FXS/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "WLD/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00042151
+    },
+    {
+      "symbol": "MKR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00054054
+    },
+    {
+      "symbol": "XRP/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00046421
+    },
+    {
+      "symbol": "BLUR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "GMX/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00013046
+    },
+    {
+      "symbol": "CFX/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00047674
+    },
+    {
+      "symbol": "STX/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00017068
+    },
+    {
+      "symbol": "LINK/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00133238
+    },
+    {
+      "symbol": "LDO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "CRV/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "kPEPE/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00103823
+    },
+    {
+      "symbol": "SUI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "INJ/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "DOGE/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00018243
+    },
+    {
+      "symbol": "LTC/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "BNB/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "AVAX/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00047016
+    },
+    {
+      "symbol": "SOL/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00064457
+    },
+    {
+      "symbol": "BNT/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -9.655e-05
+    },
+    {
+      "symbol": "BANANA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "NEO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00068103
+    },
+    {
+      "symbol": "USTC/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ORDI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00047299
+    },
+    {
+      "symbol": "ZEN/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00040356
+    },
+    {
+      "symbol": "FIL/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00014608
+    },
+    {
+      "symbol": "SUSHI/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00034802
+    },
+    {
+      "symbol": "kBONK/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "SUPER/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "JUP/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00059414
+    },
+    {
+      "symbol": "NEAR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00052718
+    },
+    {
+      "symbol": "kLUNC/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00018078
+    },
+    {
+      "symbol": "RSR/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00021311
+    },
+    {
+      "symbol": "GALA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "JTO/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00032115
+    },
+    {
+      "symbol": "NTRN/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ETH/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.00017663
+    },
+    {
+      "symbol": "MEME/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "JELLY/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "FET/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00041996
+    },
+    {
+      "symbol": "GAS/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "STG/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00071479
+    },
+    {
+      "symbol": "PENDLE/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -6.298e-05
+    },
+    {
+      "symbol": "BSV/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "ADA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00016628
+    },
+    {
+      "symbol": "TON/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "MINA/USDC:USDC",
+      "funding_rate": 1.25e-05,
+      "funding_rate_pct": 0.00125,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -7.722e-05
+    },
+    {
+      "symbol": "BIO/USDC:USDC",
+      "funding_rate": -1.166e-05,
+      "funding_rate_pct": -0.001166,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00049968
+    },
+    {
+      "symbol": "NOT/USDC:USDC",
+      "funding_rate": 1.083e-05,
+      "funding_rate_pct": 0.001083,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00067981
+    },
+    {
+      "symbol": "POLYX/USDC:USDC",
+      "funding_rate": -1.053e-05,
+      "funding_rate_pct": -0.0010530000000000001,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00136487
+    },
+    {
+      "symbol": "REZ/USDC:USDC",
+      "funding_rate": 8.87e-06,
+      "funding_rate_pct": 0.000887,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00017158
+    },
+    {
+      "symbol": "RDNT/USDC:USDC",
+      "funding_rate": 8.2e-06,
+      "funding_rate_pct": 0.00082,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00068585
+    },
+    {
+      "symbol": "kSHIB/USDC:USDC",
+      "funding_rate": -7.64e-06,
+      "funding_rate_pct": -0.0007639999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00018434
+    },
+    {
+      "symbol": "kDOGS/USDC:USDC",
+      "funding_rate": -7.25e-06,
+      "funding_rate_pct": -0.000725,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "SNX/USDC:USDC",
+      "funding_rate": 7.01e-06,
+      "funding_rate_pct": 0.000701,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00053603
+    },
+    {
+      "symbol": "APE/USDC:USDC",
+      "funding_rate": -6.95e-06,
+      "funding_rate_pct": -0.0006950000000000001,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -5.463e-05
+    },
+    {
+      "symbol": "TIA/USDC:USDC",
+      "funding_rate": 6.56e-06,
+      "funding_rate_pct": 0.000656,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00111046
+    },
+    {
+      "symbol": "HMSTR/USDC:USDC",
+      "funding_rate": 5.7e-06,
+      "funding_rate_pct": 0.00057,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00053419
+    },
+    {
+      "symbol": "PNUT/USDC:USDC",
+      "funding_rate": 5.66e-06,
+      "funding_rate_pct": 0.000566,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00076104
+    },
+    {
+      "symbol": "BCH/USDC:USDC",
+      "funding_rate": 5.46e-06,
+      "funding_rate_pct": 0.000546,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "PIXEL/USDC:USDC",
+      "funding_rate": -5.24e-06,
+      "funding_rate_pct": -0.0005239999999999999,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00111224
+    },
+    {
+      "symbol": "SAND/USDC:USDC",
+      "funding_rate": 3.21e-06,
+      "funding_rate_pct": 0.000321,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00061629
+    },
+    {
+      "symbol": "HYPE/USDC:USDC",
+      "funding_rate": -2.61e-06,
+      "funding_rate_pct": -0.000261,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00056106
+    },
+    {
+      "symbol": "TRX/USDC:USDC",
+      "funding_rate": 1.3e-06,
+      "funding_rate_pct": 0.00013000000000000002,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.00038529
+    },
+    {
+      "symbol": "OP/USDC:USDC",
+      "funding_rate": 8.9e-07,
+      "funding_rate_pct": 8.9e-05,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": 0.0
+    },
+    {
+      "symbol": "CYBER/USDC:USDC",
+      "funding_rate": 6.6e-07,
+      "funding_rate_pct": 6.6e-05,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -1.063e-05
+    },
+    {
+      "symbol": "GMT/USDC:USDC",
+      "funding_rate": -2.4e-07,
+      "funding_rate_pct": -2.3999999999999997e-05,
+      "datetime": null,
+      "timestamp": 1738695514807,
+      "prediction_price": -0.0004608
+    }
+  ]
+}

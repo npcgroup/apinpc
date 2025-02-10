@@ -1,5 +1,5 @@
 import { FundingPipeline, PipelineOptions } from './funding-pipeline';
-import { supabase } from './utils/supabase-client';
+import { supabase } from '../utils/supabase-client';
 
 interface PredictedFundingRate {
     timestamp: string;
@@ -40,7 +40,7 @@ class SupabaseFundingPipeline extends FundingPipeline {
         }
     }
 
-    async runOnce() {
+    async runOnce(): Promise<void> {
         try {
             const response = await fetch('https://api.hyperliquid.xyz/info', {
                 method: 'POST',
@@ -94,21 +94,6 @@ class SupabaseFundingPipeline extends FundingPipeline {
                 this.log(`Found ${allRates.length} rates across all exchanges`, 'normal');
                 await this.insertPredictedRates(allRates);
             }
-
-            // Return FundingAnalysis object to satisfy the base class requirement
-            return {
-                topOpportunities: validRates,
-                statistics: {
-                    totalPairs: rawData.length,
-                    pairsWithFunding: validRates.length,
-                    positiveRates: validRates.filter(r => r.predicted > 0).length,
-                    negativeRates: validRates.filter(r => r.predicted < 0).length,
-                    highestRate: validRates.length > 0 ? validRates.reduce((max, curr) => 
-                        Math.abs(curr.predicted) > Math.abs(max.predicted) ? curr : max
-                    ) : null,
-                    averageRate: validRates.reduce((sum, rate) => sum + rate.predicted, 0) / validRates.length || 0
-                }
-            };
 
         } catch (error) {
             this.log(`Pipeline error: ${error instanceof Error ? error.message : String(error)}`, 'minimal');

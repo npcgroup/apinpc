@@ -1,5 +1,5 @@
-import { supabase } from '@/lib/supabaseClient';
-import { formatNumber, formatCurrency } from '@/utils/formatters';
+import { supabase } from '../lib/supabaseClient';  
+import { formatNumber, formatCurrency } from '../utils/formatters';
 
 export interface MarketData {
   price: number;

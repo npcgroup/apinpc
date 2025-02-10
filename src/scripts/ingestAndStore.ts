@@ -1,6 +1,6 @@
-import { DataIngestionService } from '../src/services/dataIngestion';
-import type { PerpetualMetrics } from '../src/services/dataIngestion';
-import { TOKEN_ADDRESSES } from '../src/config/tokens';
+import { DataIngestionService } from '../../src/services/dataIngestion';
+import type { PerpetualMetrics } from '../../src/services/dataIngestion';
+import { TOKEN_ADDRESSES } from '../../src/config/tokens';
 
 const DEFAULT_METRIC_VALUES = {
   funding_rate: 0,
@@ -11,7 +11,7 @@ const DEFAULT_METRIC_VALUES = {
   market_cap: 0,
   txns_24h: 0,
   holder_count: 0,
-  daily_volume: 0,
+  daily_volume: 0,  
   long_positions: 0
 };
 

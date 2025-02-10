@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
-import { TokenMetrics, DexPair } from '@/types/metrics'
-import type { Database } from '@/types/supabase'
-import { TOKEN_ADDRESSES } from '@/config/tokens'
-import { withRetry } from '@/utils/retryUtils'
+import { TokenMetrics, DexPair } from '../types/metrics'
+import type { Database } from '../types/supabase'
+import { TOKEN_ADDRESSES } from '../config/tokens'
+import { withRetry } from '../utils/retryUtils'
 
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

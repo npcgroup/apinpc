@@ -1,4 +1,4 @@
-import type { QueryConfig } from '@/types'
+import type { QueryConfig } from '../types'
 
 export interface ExtendedQueryConfig extends QueryConfig {
   type?: 'track' | 'analyze' | 'visualize';
@@ -9,7 +9,7 @@ export interface QueryResult {
   data: any
   metadata: {
     timestamp: string
-    source: string
+    source: string  
   }
 }
 

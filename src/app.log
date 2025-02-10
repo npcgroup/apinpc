@@ -1,0 +1,88 @@
+2025-02-10 19:25:00,721 - __main__ - ERROR - Error fetching predicted rates: Invalid URL
+2025-02-10 19:25:00,721 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+        os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+        os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+    )
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 335, in create_client
+    return SyncClient.create(
+           ~~~~~~~~~~~~~~~~~^
+        supabase_url=supabase_url, supabase_key=supabase_key, options=options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 58, in __init__
+    raise SupabaseException("Invalid URL")
+supabase._sync.client.SupabaseException: Invalid URL
+2025-02-10 19:25:00,723 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-10 19:25:00,723 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-10 19:26:24,790 - __main__ - ERROR - Error fetching predicted rates: Invalid URL
+2025-02-10 19:26:24,790 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+        os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+        os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+    )
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 335, in create_client
+    return SyncClient.create(
+           ~~~~~~~~~~~~~~~~~^
+        supabase_url=supabase_url, supabase_key=supabase_key, options=options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 58, in __init__
+    raise SupabaseException("Invalid URL")
+supabase._sync.client.SupabaseException: Invalid URL
+2025-02-10 19:26:24,792 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-10 19:26:24,792 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-10 19:31:07,122 - __main__ - ERROR - Error fetching predicted rates: Invalid URL
+2025-02-10 19:31:07,122 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+        os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+        os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+    )
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 335, in create_client
+    return SyncClient.create(
+           ~~~~~~~~~~~~~~~~~^
+        supabase_url=supabase_url, supabase_key=supabase_key, options=options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 58, in __init__
+    raise SupabaseException("Invalid URL")
+supabase._sync.client.SupabaseException: Invalid URL
+2025-02-10 19:31:07,123 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-10 19:31:07,123 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-10 19:35:04,782 - __main__ - ERROR - Error fetching predicted rates: Invalid URL
+2025-02-10 19:35:04,783 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+        os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
+        os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+    )
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 335, in create_client
+    return SyncClient.create(
+           ~~~~~~~~~~~~~~~~~^
+        supabase_url=supabase_url, supabase_key=supabase_key, options=options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.13/site-packages/supabase/_sync/client.py", line 58, in __init__
+    raise SupabaseException("Invalid URL")
+supabase._sync.client.SupabaseException: Invalid URL
+2025-02-10 19:35:04,785 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-10 19:35:04,785 - __main__ - INFO - Fetching Hyperliquid rates first...

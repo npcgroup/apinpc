@@ -1,4 +1,4 @@
-import type { StrategyConfig, PerpetualMetrics } from '@/types'
+import type { StrategyConfig, PerpetualMetrics } from '../../types'
 
 export interface ArbitrageOpportunity {
   symbol: string

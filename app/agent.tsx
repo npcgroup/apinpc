@@ -6,7 +6,27 @@ import {
   formatNumber
 } from '../src/utils/metrics'
 
-import { validateConfig } from '../config/env'
+// Add proper DOM type imports
+declare global {
+  interface Window {
+    getSelection(): Selection | null;
+    location: Location;
+    open(url: string, target?: string): Window | null;
+  }
+}
+
+// Add DOM type augmentation
+type DOMElement = {
+  scrollTop: number;
+  scrollHeight: number;
+  contains(node: Node | null): boolean;
+  focus(): void;
+  closest(selector: string): Element | null;
+}
+
+// Update ref types
+type EnhancedDivElement = HTMLDivElement & DOMElement;
+type EnhancedInputElement = HTMLInputElement & DOMElement;
 
 interface HistoryEntry {
   type: 'system' | 'user' | 'error' | 'ascii' | 'success' | 'chart' | 'link' | 
@@ -19,15 +39,34 @@ interface HistoryEntry {
     value: number;
     change?: string;
   }>;
+  metrics?: Array<{
+    label: string;
+    value: string;
+    change?: string;
+    trend?: 'up' | 'down' | 'neutral';
+  }>;
+  protocol?: {
+    name: string;
+    tvl: number;
+    volume24h: number;
+    fees24h: number;
+    users24h: number;
+    chains?: string[];
+  };
+  links?: Array<{
+    url: string;
+    title: string;
+  }>;
   tableData?: {
     columns: Array<{
       name: string;
       type: string;
     }>;
     rows: any[];
-    summary?: {
+    summary: {
       total: number;
       filtered: number;
+      timestamp?: string;
     };
   };
   metadata?: {
@@ -274,8 +313,8 @@ const CabalTerminal = () => {
   const [suggestions, setSuggestions] = useState<CommandSuggestion[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   
-  const terminalRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const terminalRef = useRef<EnhancedDivElement>(null)
+  const inputRef = useRef<EnhancedInputElement>(null)
 
   // Initialize the terminal with startup sequence
   useEffect(() => {
@@ -549,6 +588,27 @@ const CabalTerminal = () => {
           };
         }
       }
+    },
+
+    'funding': {
+      description: 'Open funding rate analysis dashboard',
+      handler: async (context: CommandContext) => {
+        try {
+          // Use window.location instead of router
+          window.location.href = '/funding'
+          
+          return {
+            type: 'success',
+            content: 'Opening funding rate analysis dashboard...'
+          }
+        } catch (error) {
+          return {
+            type: 'error',
+            content: 'Failed to open funding dashboard: ' + 
+              (error instanceof Error ? error.message : 'Unknown error')
+          }
+        }
+      }
     }
   };
 
@@ -617,28 +677,23 @@ const CabalTerminal = () => {
   // Update click handler to be more selective
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      // Only focus if clicking inside the terminal container
-      if (terminalRef.current?.contains(e.target as Node)) {
-        inputRef.current?.focus()
+      const target = e.target as Node;
+      if (terminalRef.current?.contains(target)) {
+        inputRef.current?.focus();
       }
-    }
+    };
 
-    // Add click handler to terminal container only
-    terminalRef.current?.addEventListener('click', handleClick)
-    
-    return () => {
-      terminalRef.current?.removeEventListener('click', handleClick)
-    }
-  }, [])
+    window.document.addEventListener('click', handleClick);
+    return () => window.document.removeEventListener('click', handleClick);
+  }, []);
 
-  // Add new handler for terminal container clicks
-  const handleTerminalClick = (e: React.MouseEvent) => {
-    // Prevent losing focus when selecting text
-    if (window.getSelection()?.toString()) {
+  // Update the terminal click handler
+  const handleTerminalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const selection = window?.getSelection?.()?.toString();
+    if (selection) {
       return;
     }
     
-    // Keep focus on input unless clicking on a specific interactive element
     const target = e.target as HTMLElement;
     if (!target.closest('button') && !target.closest('a')) {
       inputRef.current?.focus();
@@ -649,29 +704,30 @@ const CabalTerminal = () => {
   const getCommandSuggestions = (input: string): CommandSuggestion[] => {
     const commandList = Object.entries(commands).map(([name, cmd]) => ({
       command: name,
-      description: typeof cmd === 'object' ? cmd.description : 'No description available'
-    }))
+      description: cmd.description
+    }));
 
-    if (!input) return commandList
+    if (!input) return commandList;
     return commandList.filter(cmd => 
       cmd.command.toLowerCase().startsWith(input.toLowerCase())
-    )
-  }
+    );
+  };
 
   // Update input handling
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setInput(value)
-    setSuggestions(getCommandSuggestions(value))
-    setShowSuggestions(true)
-  }
+    const value = e.currentTarget.value;
+    setInput(value);
+    setSuggestions(getCommandSuggestions(value));
+    setShowSuggestions(true);
+  };
 
-  // Add suggestion selection
+  // Update suggestion click handler
   const handleSuggestionClick = (command: string) => {
-    setInput(command)
-    setShowSuggestions(false)
-    inputRef.current?.focus()
-  }
+    setInput(command);
+    setShowSuggestions(false);
+    // Use optional chaining for safer access
+    inputRef.current?.focus();
+  };
 
   // Update the renderHistoryEntry function
   const renderHistoryEntry = (entry: HistoryEntry): JSX.Element | undefined => {
@@ -974,15 +1030,17 @@ const CabalTerminal = () => {
   }
 
   // Update the analytics rendering function
-  const renderAnalytics = (metrics: AnalyticsMetric[]): CommandResult => {
+  const renderAnalytics = (analyticsMetrics: AnalyticsMetric[]): CommandResult => {
     return {
       type: 'analytics',
       content: 'Analytics Results:',
-      analytics: metrics.map(metric => ({
-        metric: metric.metric,
-        value: metric.value,
-        change: metric.change
-      }))
+      analytics: {
+        metrics: analyticsMetrics.map((metric: AnalyticsMetric) => ({
+          metric: metric.metric,
+          value: metric.value,
+          change: metric.change
+        }))
+      }
     };
   }
 
@@ -1017,6 +1075,39 @@ const CabalTerminal = () => {
     change?: string;
     trend?: 'up' | 'down' | 'neutral';
   }
+
+  // Add after the API configuration functions
+  const validateConfig = (): boolean => {
+    const requiredEnvVars = [
+      'NEXT_PUBLIC_DUNE_API_KEY',
+      'NEXT_PUBLIC_FLIPSIDE_API_KEY'
+    ];
+    
+    return requiredEnvVars.every(varName => {
+      const exists = !!process.env[varName];
+      if (!exists) {
+        console.warn(`Missing environment variable: ${varName}`);
+      }
+      return exists;
+    });
+  };
+
+  // Add after other utility functions
+  const handleNaturalLanguageQuery = async (
+    query: string, 
+    config: ExtendedQueryConfig
+  ): Promise<QueryResult> => {
+    try {
+      // Implement your natural language query processing here
+      // This is a placeholder implementation
+      return {
+        data: {},
+        response: `Query processed: ${query}`
+      };
+    } catch (error) {
+      throw new Error(`Failed to process query: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  };
 
   return (
     <div
@@ -1062,9 +1153,9 @@ const CabalTerminal = () => {
       <div
         ref={terminalRef}
         className="h-[calc(100%-8rem)] overflow-y-auto p-4 font-mono text-sm select-text"
-        onMouseDown={(e) => {
-          // Allow text selection while preventing focus loss
-          if (e.target !== inputRef.current) {
+        onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
+          const target = e.target as Node;
+          if (target !== inputRef.current) {
             e.preventDefault();
           }
         }}

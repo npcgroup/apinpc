@@ -2,7 +2,7 @@ export const DOCUMENTATION_SECTIONS = [
   {
     id: 'overview',
     title: 'Overview',
-    icon: Book,
+    icon: 'Book',
   },
   // Add other sections...
 ]

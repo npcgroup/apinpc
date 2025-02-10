@@ -7,7 +7,7 @@ async function main() {
         console.log('Fetching HyperLiquid predicted funding rates...');
         
         // Get all funding rates and save them
-        const rates = await api.getPredictedFundingRates(true);
+        const rates = await api.getPredictedFundingRates();
         
         // Filter out zero rates and sort by absolute funding rate value
         const validRates = rates.filter(rate => !isNaN(rate.predicted) && rate.predicted !== 0);

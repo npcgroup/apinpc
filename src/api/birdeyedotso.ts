@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { env } from '@/config/env';
+import { env } from '../config/env';
 
 const birdeyedotso = axios.create({
   baseURL: 'https://public-api.birdeye.so/v1',

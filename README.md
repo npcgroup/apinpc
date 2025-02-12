@@ -1,13 +1,8 @@
-# Funding Rate Enhanced Arbitrage System
-
-A sophisticated arbitrage system that leverages funding rate data from multiple exchanges to optimize trading opportunities. This system integrates with Hummingbot and uses historical funding rate data to make intelligent trading decisions.
-
 ## Features
 
-- Real-time funding rate data collection from multiple exchanges (Bybit, Gate.io)
+- Real-time funding data collection from multiple exchanges (Hyperliquid, Binance)
 - Supabase integration for efficient data storage and retrieval
 - Dynamic strategy parameter adjustment based on funding rates
-- Automated arbitrage execution via Hummingbot
 - Comprehensive logging and monitoring
 - Backtesting capabilities
 - Error handling and retry mechanisms
@@ -84,6 +79,7 @@ class REST,WS2,GQL api
   - Dune Analytics: On-chain analytics
   - Bitquery: Cross-chain data
   - Hyperliquid: Perpetual markets
+  - CCXT: OHLCV and Rate metrics
   - The Graph: Protocol-specific metrics
   - Footprint Analytics: NFT and GameFi data
 
@@ -248,14 +244,14 @@ yarn test:integration
 # Test data ingestion
 yarn test-ingest
 ```
-
+<!--
 ## 📚 Documentation
 
 - [API Reference](./docs/API.md)
 - [Schema Documentation](./docs/SCHEMA.md)
 - [Development Guide](./docs/DEVELOPMENT.md)
 - [Deployment Guide](./docs/DEPLOYMENT.md)
-
+-->
 ## 🤝 Contributing
 
 1. Fork the repository

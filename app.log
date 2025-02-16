@@ -1,0 +1,32 @@
+2025-02-15 17:11:57,665 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-15 17:11:57,666 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_00.py", line 72, in get_predicted_rates
+    supabase = create_client(
+               ^^^^^^^^^^^^^^
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/home/naitik/npc/apinpc/.venv/lib/python3.12/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+                                       ^^^^^^^^^^^
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-15 17:11:57,669 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-15 17:11:57,669 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-15 17:13:48,004 - __main__ - INFO - Successfully processed 581 rows
+2025-02-15 17:13:48,006 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-02-15 17:13:48,608 - __main__ - ERROR - Error pushing to Supabase: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-15 17:13:49,025 - matplotlib.font_manager - INFO - generated new fontManager

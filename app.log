@@ -1,0 +1,104 @@
+2025-02-19 16:41:45,170 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-19 16:41:45,171 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+               ^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/home/naitik/.local/lib/python3.12/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/home/naitik/.local/lib/python3.12/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+                                       ^^^^^^^^^^^
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-19 16:41:45,175 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-19 16:41:45,176 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-19 16:43:32,732 - __main__ - INFO - Successfully processed 584 rows
+2025-02-19 16:43:32,733 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-02-19 16:43:33,151 - __main__ - ERROR - Error pushing to Supabase: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-19 16:43:33,193 - __main__ - ERROR - Display error: Pandas requires version '3.1.2' or newer of 'jinja2' (version '3.0.3' currently installed).
+Traceback (most recent call last):
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_stable.py", line 805, in main
+    display_top_opportunities(viz_data['top_opportunities'])
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_stable.py", line 845, in display_top_opportunities
+    display_directional_opportunities(top_opps)
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_stable.py", line 889, in display_directional_opportunities
+    display_df.style.format({
+    ^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/pandas/core/frame.py", line 1442, in style
+    from pandas.io.formats.style import Styler
+  File "/home/naitik/.local/lib/python3.12/site-packages/pandas/io/formats/style.py", line 44, in <module>
+    jinja2 = import_optional_dependency("jinja2", extra="DataFrame.style requires jinja2.")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/pandas/compat/_optional.py", line 164, in import_optional_dependency
+    raise ImportError(msg)
+ImportError: Pandas requires version '3.1.2' or newer of 'jinja2' (version '3.0.3' currently installed).
+2025-02-19 16:46:42,633 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-19 16:46:42,634 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/home/naitik/npc/apinpc/src/scripts/funding_streamlit_app_stable.py", line 73, in get_predicted_rates
+    supabase = create_client(
+               ^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/naitik/.local/lib/python3.12/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/home/naitik/.local/lib/python3.12/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/home/naitik/.local/lib/python3.12/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+                                       ^^^^^^^^^^^
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-19 16:46:42,639 - __main__ - INFO - Predicted rates shape: Empty
+2025-02-19 16:46:42,640 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-19 16:48:35,863 - __main__ - INFO - Successfully processed 584 rows
+2025-02-19 16:48:35,863 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-02-19 16:48:36,248 - __main__ - ERROR - Error pushing to Supabase: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-02-20 21:00:53,366 - __main__ - INFO - 
+=== Raw Data ===
+2025-02-20 21:00:53,367 - __main__ - INFO - Total records: 1000
+2025-02-20 21:00:53,369 - __main__ - INFO - Unique assets: 185
+2025-02-20 21:00:53,369 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-02-20 21:00:53,395 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-02-20 21:00:53,396 - __main__ - INFO - Total predictions: 348
+2025-02-20 21:00:53,396 - __main__ - INFO - 
+Binance predictions: 163
+2025-02-20 21:00:53,397 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-02-20 21:00:53,399 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.00041180000000000003, 'next_funding_time': Timestamp('2025-02-18 00:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': -6.489999999999999e-05, 'next_funding_time': Timestamp('2025-02-17 20:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.001, 'next_funding_time': Timestamp('2025-02-18 00:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': -0.00040080000000000004, 'next_funding_time': Timestamp('2025-02-17 20:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-02-17 20:00:00+0000', tz='UTC')}]
+2025-02-20 21:00:53,399 - __main__ - INFO - Normalized rate range: -0.295541 to 0.001000
+2025-02-20 21:00:53,400 - __main__ - INFO - 
+Hyperliquid predictions: 185
+2025-02-20 21:00:53,400 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-02-20 21:00:53,400 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-02-17 18:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0007700000000000001, 'next_funding_time': Timestamp('2025-02-17 18:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-02-17 18:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-02-17 18:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-02-17 18:00:00+0000', tz='UTC')}]
+2025-02-20 21:00:53,401 - __main__ - INFO - Normalized rate range: -0.425157 to 0.004198
+2025-02-20 21:00:53,401 - __main__ - INFO - Predicted rates shape: (348, 6)
+2025-02-20 21:00:53,401 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-02-20 21:02:48,596 - __main__ - INFO - Successfully processed 586 rows
+2025-02-20 21:02:48,597 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-02-20 21:02:52,056 - __main__ - INFO - Pushed 586 market records
+2025-02-20 21:02:52,877 - __main__ - INFO - Pushed statistics
+2025-02-20 21:02:54,298 - __main__ - INFO - Pushed 586 top opportunities

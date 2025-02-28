@@ -46,10 +46,24 @@ class FundingAnalyzer:
         # Print ccxt version
         logger.info(f"Using ccxt version: {ccxt.__version__}")
         
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        
+        # If environment variables are not set, try to use Streamlit secrets (for cloud execution)
+        if not supabase_url or not supabase_key:
+            try:
+                supabase_url = st.secrets["NEXT_PUBLIC_SUPABASE_URL"]
+                supabase_key = st.secrets["SUPABASE_SERVICE_ROLE_KEY"]
+            except FileNotFoundError:
+                raise RuntimeError(
+                    "Missing Supabase credentials! Ensure environment variables are set locally, "
+                    "or add them to Streamlit Secrets when deploying."
+                )
+        
         logger.info("Connecting to Supabase...")
         self.supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+            supabase_url,
+            supabase_key
         )
         
         # Hard-coded list of pairs available on both exchanges (based on the provided list)

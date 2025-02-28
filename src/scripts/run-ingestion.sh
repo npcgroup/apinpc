@@ -24,7 +24,7 @@ python -m pip install --upgrade pip || handle_error "Failed to upgrade pip"
 
 # Install Python dependencies
 echo "Installing Python dependencies..."
-pip install -r requirements.txt || handle_error "Failed to install Python dependencies"
+pip install -r src/scripts/requirements.txt || handle_error "Failed to install Python dependencies"
 
 # Run the Node.js ingestion script
 echo "Starting data ingestion..."

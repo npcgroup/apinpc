@@ -1,307 +1,225 @@
-# Funding Rate Enhanced Arbitrage System
+# Advanced Protocol Intelligence and Analytics
 
-A sophisticated arbitrage system that leverages funding rate data from multiple exchanges to optimize trading opportunities. This system integrates with Hummingbot and uses historical funding rate data to make intelligent trading decisions.
+A sophisticated suite of trading strategies and analytics tools for cryptocurrency protocols, focusing on market microstructure, risk management, and protocol optimization.
 
-## Features
+## Overview
 
-- Real-time funding rate data collection from multiple exchanges (Bybit, Gate.io)
-- Supabase integration for efficient data storage and retrieval
-- Dynamic strategy parameter adjustment based on funding rates
-- Automated arbitrage execution via Hummingbot
-- Comprehensive logging and monitoring
-- Backtesting capabilities
-- Error handling and retry mechanisms
+This system implements a collection of advanced trading strategies and analysis tools designed to:
+- Monitor and analyze market microstructure
+- Detect trading opportunities and risks
+- Optimize protocol parameters
+- Provide real-time market intelligence
+- Generate actionable trading signals
 
-## System Architecture
+## Core Components
 
-```mermaid
-graph TB
-subgraph Data Sources
-DL[DeFi Llama]
-DA[Dune Analytics]
-BQ[Bitquery]
-HL[Hyperliquid]
-TG[The Graph]
-FA[Footprint Analytics]
-end
-subgraph Ingestion Layer
-WS[WebSocket Service]
-DI[Data Ingestion Service]
-RL[Rate Limiter]
-end
-subgraph Processing Layer
-VP[Validation Pipeline]
-NP[Normalization Pipeline]
-QS[Quality Scoring]
-AD[Anomaly Detection]
-end
-subgraph Storage Layer
-RC[Redis Cache]
-TS[Time Series DB]
-SB[Supabase]
-end
-subgraph Analytics Engine
-MA[Market Analysis]
-FA2[Funding Arbitrage]
-LM[Liquidity Monitoring]
-VM[Volume Metrics]
-end
-subgraph API Layer
-REST[REST API]
-WS2[WebSocket API]
-GQL[GraphQL API]
-end
-%% Data flow connections
-DL & DA & BQ & HL & TG & FA --> WS & DI
-WS & DI --> RL
-RL --> VP
-VP --> NP
-NP --> QS
-QS --> AD
-AD --> RC
-RC --> TS
-TS --> SB
-SB --> MA & FA2 & LM & VM
-MA & FA2 & LM & VM --> REST & WS2 & GQL
-%% Styling
-classDef source fill:#f9f,stroke:#333,stroke-width:2px
-classDef service fill:#bbf,stroke:#333,stroke-width:2px
-classDef storage fill:#bfb,stroke:#333,stroke-width:2px
-classDef analytics fill:#ffb,stroke:#333,stroke-width:2px
-classDef api fill:#fbb,stroke:#333,stroke-width:2px
-class DL,DA,BQ,HL,TG,FA source
-class WS,DI,RL,VP,NP,QS,AD service
-class RC,TS,SB storage
-class MA,FA2,LM,VM analytics
-class REST,WS2,GQL api
-```
+### Base Strategy Framework
+The system is built on an extensible base strategy framework (`BaseStrategy`) that provides:
+- Standardized initialization and execution flows
+- Consistent data access patterns
+- Unified logging and monitoring
+- Configurable parameters and settings
+- Result persistence and analysis
 
-## Features
+### Strategy Runner
+A robust execution engine (`StrategyRunner`) that:
+- Manages concurrent strategy execution
+- Handles error recovery and retries
+- Provides graceful shutdown mechanisms
+- Monitors strategy performance
+- Coordinates data flow between strategies
 
-### Data Collection & Processing
-- **Multi-Source Integration**
-  - DeFi Llama: Protocol TVL and metrics
-  - Dune Analytics: On-chain analytics
-  - Bitquery: Cross-chain data
-  - Hyperliquid: Perpetual markets
-  - The Graph: Protocol-specific metrics
-  - Footprint Analytics: NFT and GameFi data
+## Implemented Strategies
 
-- **Real-Time Processing**
-  - WebSocket streaming for market data
-  - Redis-based caching layer
-  - Efficient data normalization pipeline
+### 1. Markov Regime Funding Strategy
+Analyzes funding rate regimes using Markov chain models.
 
-### Analytics & Insights
-- **Market Analysis**
-  - Funding rate arbitrage detection
-  - Liquidity imbalance monitoring
-  - Cross-exchange opportunities
-  - Volume profile analysis
+**Key Features:**
+- Regime state identification
+- Transition probability calculation
+- Confidence-based predictions
+- Historical pattern analysis
+- Regime stability metrics
 
-- **Data Quality**
-  - Automated validation pipelines
-  - Cross-source verification
-  - Anomaly detection
-  - Data completeness scoring
+**Configuration Parameters:**
+- `lookbackPeriodDays`: Historical data window 
+- `minSampleSize`: Minimum required data points
+- `regimeCount`: Number of distinct regimes
+- `confidenceThreshold`: Minimum prediction confidence
+- `assets`: Target trading pairs
 
-### Infrastructure
-- **Storage & Database**
-  - Supabase for structured data
-  - Time-series optimized tables
-  - Efficient indexing strategies
-  - Version-controlled schemas
+### 2. Liquidity Impact Strategy
+Analyzes market impact and liquidity conditions.
 
-- **Performance**
-  - High-throughput ingestion
-  - Sub-second query response
-  - Horizontal scalability
-  - Automated failover
+**Key Features:**
+- Trade size analysis by quintiles
+- Price impact calculation
+- Liquidity scoring
+- Market impact regime detection
+- Volume-price impact correlation
 
-## 🚀 Quick Start
+**Configuration Parameters:**
+- `tradeQuintiles`: Size-based trade categories
+- `impactWindowMinutes`: Analysis timeframe
+- `minTradeCount`: Minimum sample size
+- `significanceLevel`: Impact threshold
+- `assets`: Monitored assets
 
-```mermaid
+### 3. Cross-Exchange Arbitrage Strategy
+Identifies and analyzes funding rate arbitrage opportunities across exchanges.
 
-graph TD
-    A[Test Ingestion] --> B1[Birdeye API]
-    A --> B2[CCXT API]
-    A --> B3[HyperLiquid API]
-    B1 & B2 & B3 --> C[Combine Data]
-    C --> D[Supabase DB]
-    D --> E[Page Component]
-    E --> F[Display Data]
+**Key Features:**
+- Multi-exchange rate comparison
+- Liquidity-adjusted profitability
+- Risk-adjusted opportunity scoring
+- Market efficiency metrics
+- Real-time opportunity detection
 
-```
+**Configuration Parameters:**
+- `assets`: Tradeable assets
+- `exchanges`: Target exchanges
+- `minProfitThreshold`: Minimum profitable spread
+- `maxSlippageTolerance`: Maximum acceptable slippage
+- `minLiquidityRequired`: Minimum required liquidity
+- `rebalanceThreshold`: Position adjustment trigger
 
-```bash
-# Install dependencies
-yarn install
+### 4. Funding Volatility Strategy
+Analyzes volatility clustering in funding rates.
 
-# Set up environment variables
-cp .env.example .env
+**Key Features:**
+- Volatility cluster identification
+- Stress event detection
+- Pattern persistence analysis
+- Risk level assessment
+- Early warning signals
 
-# Run development server
-yarn dev
+**Configuration Parameters:**
+- `lookbackDays`: Historical window
+- `volatilityThreshold`: Cluster detection threshold
+- `clusterMinSize`: Minimum cluster size
+- `stressEventThreshold`: Stress level indicator
+- `assets`: Monitored assets
 
-# Start data ingestion
-yarn ingest
+### 5. Basis Trading Strategy
+Analyzes and optimizes basis trading opportunities.
 
-# Run tests
-yarn test
-```
+**Key Features:**
+- Historical basis analysis
+- Market efficiency scoring
+- Liquidity-adjusted signals
+- Risk-reward optimization
+- Cross-venue basis comparison
 
-## 📊 Data Models
+**Configuration Parameters:**
+- `assets`: Tradeable assets
+- `exchanges`: Target venues
+- `minBasisThreshold`: Minimum basis spread
+- `lookbackPeriodHours`: Analysis window
+- `minSpotLiquidity`: Minimum spot market depth
+- `minPerpLiquidity`: Minimum perpetual market depth
+- `rebalanceThreshold`: Position adjustment trigger
 
-### Core Metrics
+### 6. Liquidation Cascade Strategy
+Predicts and analyzes potential liquidation cascades.
+
+**Key Features:**
+- Historical cascade pattern recognition
+- Risk position monitoring
+- Cascade probability calculation
+- Impact estimation
+- Early warning system
+
+**Configuration Parameters:**
+- `lookbackPeriodHours`: Historical window
+- `minCascadeSize`: Minimum cascade events
+- `priceImpactThreshold`: Impact significance level
+- `liquidationThreshold`: Risk position trigger
+- `riskWindowMinutes`: Forward-looking window
+
+### 7. Margin Health Strategy
+Analyzes and forecasts margin health metrics.
+
+**Key Features:**
+- Position health scoring
+- Margin ratio forecasting
+- Volatility risk assessment
+- Early warning indicators
+- Portfolio risk analysis
+
+**Configuration Parameters:**
+- `lookbackPeriodHours`: Analysis window
+- `marginThresholds`: Health level definitions
+- `volatilityWindowSize`: Volatility calculation period
+- `forecastHorizonMinutes`: Prediction timeframe
+- `confidenceLevel`: Forecast confidence threshold
+
+### 8. Cross-Margin Efficiency Strategy
+Optimizes margin utilization across assets and positions.
+
+**Key Features:**
+- Correlation-based risk analysis
+- Dynamic margin optimization
+- Portfolio rebalancing recommendations
+- Efficiency scoring
+- Risk-adjusted position sizing
+
+**Configuration Parameters:**
+- `minMarginRatio`: Minimum required margin
+- `targetMarginRatio`: Optimal margin level
+- `rebalanceThreshold`: Rebalancing trigger
+- `correlationWindow`: Correlation calculation period
+- `riskLimits`: Position and portfolio constraints
+
+## Usage
+
+1. Configure strategy parameters in the environment file
+2. Initialize the StrategyRunner with desired strategies
+3. Start the runner to begin real-time analysis
+4. Monitor signals and metrics through the logging system
+5. Act on strategy recommendations as needed
+
 ```typescript
-interface TokenMetrics {
-  price: number;
-  volume_24h: number;
-  market_cap: number;
-  holder_count: number;
-  // ... more fields
-}
-
-interface PerpetualMetrics {
-  funding_rate: number;
-  open_interest: number;
-  volume_24h: number;
-  long_positions: number;
-  // ... more fields
-}
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-```env
-# API Keys
-DEFILLAMA_API_KEY=your_key
-DUNE_API_KEY=your_key
-BITQUERY_API_KEY=your_key
-
-# Database
-SUPABASE_URL=your_url
-SUPABASE_KEY=your_key
-
-# Cache
-REDIS_URL=your_url
-```
-
-## 📈 Usage Examples
-
-### Token Analytics
-```typescript
-import { BlockchainAnalyticsService } from 'blockchain-analytics';
-
-const analytics = new BlockchainAnalyticsService({
-  supabaseUrl: process.env.SUPABASE_URL,
-  supabaseKey: process.env.SUPABASE_KEY
+const runner = new StrategyRunner({
+  supabaseUrl: process.env.SUPABASE_URL!,
+  supabaseKey: process.env.SUPABASE_KEY!,
+  strategies: [
+    new MarkovRegimeFundingStrategy(config1, supabaseClient),
+    new LiquidityImpactStrategy(config2, supabaseClient),
+    // Add other strategies as needed
+  ],
+  executionIntervalMs: 5 * 60 * 1000, // Run every 5 minutes
+  errorRetryCount: 3,
+  errorRetryDelayMs: 30 * 1000
 });
 
-// Fetch token metrics
-const metrics = await analytics.ingestTokenMetrics({
-  symbol: 'ETH',
-  chain: 'ethereum'
-});
+await runner.start();
 ```
 
-### Real-Time Data Streaming
-```typescript
-import { WebSocketService } from 'blockchain-analytics';
+## Data Requirements
 
-const ws = new WebSocketService(cache);
+The system requires access to the following data:
+- Real-time and historical price data
+- Order book snapshots and updates
+- Trading volume and liquidity metrics
+- Funding rates and basis data
+- Position and margin information
+- Market impact and slippage data
 
-ws.on('data', ({ provider, data }) => {
-  console.log(`New data from ${provider}:`, data);
-});
+## Dependencies
 
-await ws.connect(DataProvider.HYPERLIQUID);
-```
+- Node.js 16+
+- TypeScript 4.5+
+- Supabase for data persistence
+- Various market data APIs
 
-## 🏗️ Architecture
-
-### Data Flow
-1. Multi-source data ingestion
-2. Real-time processing & validation
-3. Quality scoring & normalization
-4. Storage & indexing
-5. API exposure & streaming
-
-### Components
-- Data Ingestion Services
-- WebSocket Streaming
-- Redis Cache Layer
-- Supabase Database
-- Analytics Engine
-- API Layer
-
-## 🧪 Testing
-
-```bash
-# Run unit tests
-yarn test
-
-# Run integration tests
-yarn test:integration
-
-# Test data ingestion
-yarn test-ingest
-```
-
-## 📚 Documentation
-
-- [API Reference](./docs/API.md)
-- [Schema Documentation](./docs/SCHEMA.md)
-- [Development Guide](./docs/DEVELOPMENT.md)
-- [Deployment Guide](./docs/DEPLOYMENT.md)
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create your feature branch
-3. Run tests and linting
-4. Submit a pull request
+2. Create a feature branch
+3. Implement your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-## 📄 License
+## License
 
-MIT License - see [LICENSE](LICENSE) for details
-
-<!--
-## 🔗 Related Projects
-
-- [Trading Strategies](https://github.com/yourusername/trading-strategies)
-- [Market Making Bot](https://github.com/yourusername/market-maker)
-- [Analytics Dashboard](https://github.com/yourusername/analytics-dashboard)
--->
-
-## 📊 Performance Metrics
-
-- Data freshness: < 1 second
-- Query response time: < 100ms
-- Data accuracy: > 99.9%
-- System uptime: > 99.99%
-
-## 🌟 Roadmap
-
-- [ ] Machine Learning Models
-- [ ] Advanced Analytics Dashboard
-- [ ] Cross-Chain Arbitrage
-- [ ] Automated Trading Strategies
-
-# Funding Rate Analysis App
-
-## Setup
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Create `.env` file with required variables:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_KEY=your_supabase_key
-   ```
-4. Run the app: `streamlit run scripts/funding_streamlit_app.py`
-
-## Deployment
-- Follow platform-specific deployment instructions
-- Ensure environment variables are set
-- Use the Procfile for Heroku-like platforms
+MIT License - See LICENSE file for details

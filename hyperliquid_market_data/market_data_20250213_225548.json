@@ -1,0 +1,29 @@
+{
+  "timestamp": "20250213_225548",
+  "datetime": "2025-02-13T22:55:48.281837",
+  "total_markets": 171,
+  "statistics": {
+    "total_oi_usd": 0.0,
+    "total_volume_24h": 6282192941.678818,
+    "mean_funding_rate": -1.0738362573099417e-05,
+    "mean_oi_usd": 0.0,
+    "median_oi_usd": 0.0,
+    "largest_oi": {
+      "symbol": "BTC/USDC:USDC",
+      "open_interest_usd": 0.0
+    }
+  },
+  "markets": [
+    {
+      "symbol": "BTC/USDC:USDC",
+      "base": "BTC",
+      "quote": "USDC",
+      "open_interest": 0.0,
+      "open_interest_usd": 0.0,
+      "mark_price": 95553.5,
+      "index_price": 95553.5,
+      "volume_24h": 2244852515.4285746,
+      "volume_base_24h": 0.0,
+      "price_change_24h": 0.0,
+      "funding_rate": 1.25e-05,
+      "next_funding_time": 

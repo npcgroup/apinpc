@@ -1,0 +1,4053 @@
+ Object
+Response: "Success"
+Message: ""
+HasWarning: false
+Type: 100
+ RateLimit: Object
+ Data: Object
+ 0XBTC: Object
+id: 877383
+symbol: "0XBTC"
+partner_symbol: "0XBTC"
+data_available_from: 1517961600
+ 1ST: Object
+id: 28328
+symbol: "1ST"
+partner_symbol: "1ST"
+data_available_from: 1481241600
+ 1WO: Object
+id: 925200
+symbol: "1WO"
+partner_symbol: "1WO"
+data_available_from: 1512000000
+ AAC: Object
+id: 925291
+symbol: "AAC"
+partner_symbol: "AAC"
+data_available_from: 1514505600
+ ABCC: Object
+id: 925864
+symbol: "ABCC"
+partner_symbol: "AT"
+data_available_from: 1531008000
+ ABT: Object
+id: 758055
+symbol: "ABT"
+partner_symbol: "ABT"
+data_available_from: 1519344000
+ ABYSS: Object
+id: 419711
+symbol: "ABYSS"
+partner_symbol: "ABYSS"
+data_available_from: 1524009600
+ ACCN: Object
+id: 716854
+symbol: "ACCN"
+partner_symbol: "ACC"
+data_available_from: 1507248000
+ ACE: Object
+id: 294364
+symbol: "ACE"
+partner_symbol: "ACE"
+data_available_from: 1510012800
+ ADA: Object
+id: 321992
+symbol: "ADA"
+partner_symbol: "ADA"
+data_available_from: 1506124800
+ ADB: Object
+id: 468052
+symbol: "ADB"
+partner_symbol: "ADB"
+data_available_from: 1513123200
+ ADH: Object
+id: 866454
+symbol: "ADH"
+partner_symbol: "ADH"
+data_available_from: 1523318400
+ ADI: Object
+id: 780883
+symbol: "ADI"
+partner_symbol: "ADI"
+data_available_from: 1514419200
+ ADL: Object
+id: 127738
+symbol: "ADL"
+partner_symbol: "ADL"
+data_available_from: 1516752000
+ ADT: Object
+id: 188858
+symbol: "ADT"
+partner_symbol: "ADT"
+data_available_from: 1497830400
+ ADX: Object
+id: 170452
+symbol: "ADX"
+partner_symbol: "ADX"
+data_available_from: 1498780800
+ AE: Object
+id: 190978
+symbol: "AE"
+partner_symbol: "AE"
+data_available_from: 1504310400
+ AEN: Object
+id: 924988
+symbol: "AEN"
+partner_symbol: "AEN"
+data_available_from: 1525046400
+ AERGO: Object
+id: 928382
+symbol: "AERGO"
+partner_symbol: "AERGO"
+data_available_from: 1542844800
+ AGI: Object
+id: 710156
+symbol: "AGI"
+partner_symbol: "AGI"
+data_available_from: 1513814400
+ AGVC: Object
+id: 928332
+symbol: "AGVC"
+partner_symbol: "AGVC"
+data_available_from: 1551657600
+ AID: Object
+id: 368770
+symbol: "AID"
+partner_symbol: "AID"
+data_available_from: 1511136000
+ AIDOC: Object
+id: 684818
+symbol: "AIDOC"
+partner_symbol: "AIDOC"
+data_available_from: 1513468800
+ AIT: Object
+id: 777027
+symbol: "AIT"
+partner_symbol: "AIT"
+data_available_from: 1515110400
+ AIX: Object
+id: 187030
+symbol: "AIX"
+partner_symbol: "AIX"
+data_available_from: 1510617600
+ ALIS: Object
+id: 331603
+symbol: "ALIS"
+partner_symbol: "ALIS"
+data_available_from: 1503619200
+ ALX: Object
+id: 787696
+symbol: "ALX"
+partner_symbol: "ALX"
+data_available_from: 1525305600
+ AMB: Object
+id: 238733
+symbol: "AMB"
+partner_symbol: "AMB"
+data_available_from: 1508630400
+ AMLT: Object
+id: 925145
+symbol: "AMLT"
+partner_symbol: "AMLT"
+data_available_from: 1510272000
+ AMM: Object
+id: 589881
+symbol: "AMM"
+partner_symbol: "AMM"
+data_available_from: 1505260800
+ AMN: Object
+id: 890663
+symbol: "AMN"
+partner_symbol: "AMN"
+data_available_from: 1519430400
+ AMO: Object
+id: 889900
+symbol: "AMO"
+partner_symbol: "AMO"
+data_available_from: 1524528000
+ ANKR: Object
+id: 929313
+symbol: "ANKR"
+partner_symbol: "ANKR"
+data_available_from: 1550707200
+ ANT: Object
+id: 78152
+symbol: "ANT"
+partner_symbol: "ANT"
+data_available_from: 1494806400
+ AOA: Object
+id: 918501
+symbol: "AOA"
+partner_symbol: "AOA"
+data_available_from: 1526601600
+ APIS: Object
+id: 906171
+symbol: "APIS"
+partner_symbol: "APIS"
+data_available_from: 1520121600
+ APPC: Object
+id: 346812
+symbol: "APPC"
+partner_symbol: "APPC"
+data_available_from: 1509926400
+ ARAW: Object
+id: 925945
+symbol: "ARAW"
+partner_symbol: "ARAW"
+data_available_from: 1529452800
+ ARBT: Object
+id: 924926
+symbol: "ARBT"
+partner_symbol: "ARB"
+data_available_from: 1520467200
+ ARCT: Object
+id: 707530
+symbol: "ARCT"
+partner_symbol: "ARCT"
+data_available_from: 1510099200
+ ARN: Object
+id: 335127
+symbol: "ARN"
+partner_symbol: "ARN"
+data_available_from: 1509667200
+ ART: Object
+id: 311558
+symbol: "ART"
+partner_symbol: "ART"
+data_available_from: 1504569600
+ ARY: Object
+id: 769416
+symbol: "ARY"
+partner_symbol: "ARY"
+data_available_from: 1513987200
+ AST: Object
+id: 337162
+symbol: "AST"
+partner_symbol: "AST"
+data_available_from: 1507593600
+ ASTO: Object
+id: 924963
+symbol: "ASTO"
+partner_symbol: "ATX"
+data_available_from: 1519344000
+ ATL: Object
+id: 235213
+symbol: "ATL"
+partner_symbol: "ATL"
+data_available_from: 1504137600
+ ATM: Object
+id: 368694
+symbol: "ATM"
+partner_symbol: "ATM"
+data_available_from: 1505692800
+ ATMI: Object
+id: 920748
+symbol: "ATMI"
+partner_symbol: "ATMI"
+data_available_from: 1527033600
+ ATS: Object
+id: 345017
+symbol: "ATS"
+partner_symbol: "ATS"
+data_available_from: 1505347200
+ AUC: Object
+id: 792023
+symbol: "AUC"
+partner_symbol: "AUC"
+data_available_from: 1522022400
+ AVH: Object
+id: 922140
+symbol: "AVH"
+partner_symbol: "AVH"
+data_available_from: 1516406400
+ AVT: Object
+id: 138642
+symbol: "AVT"
+partner_symbol: "AVT"
+data_available_from: 1504396800
+ AWC: Object
+id: 929381
+symbol: "AWC"
+partner_symbol: "AWC"
+data_available_from: 1529280000
+ AXPR: Object
+id: 727769
+symbol: "AXPR"
+partner_symbol: "AXPR"
+data_available_from: 1532217600
+ B2B: Object
+id: 517795
+symbol: "B2B"
+partner_symbol: "B2B"
+data_available_from: 1505260800
+ BAAS: Object
+id: 925550
+symbol: "BAAS"
+partner_symbol: "BAAS"
+data_available_from: 1528761600
+ BANCA: Object
+id: 757568
+symbol: "BANCA"
+partner_symbol: "BANCA"
+data_available_from: 1517529600
+ BAT: Object
+id: 107672
+symbol: "BAT"
+partner_symbol: "BAT"
+data_available_from: 1496016000
+ BAX: Object
+id: 784595
+symbol: "BAX"
+partner_symbol: "BAX"
+data_available_from: 1517788800
+ BBC: Object
+id: 856119
+symbol: "BBC"
+partner_symbol: "BBC"
+data_available_from: 1521504000
+ BBO: Object
+id: 921530
+symbol: "BBO"
+partner_symbol: "BBO"
+data_available_from: 1522800000
+ BCAP: Object
+id: 72955
+symbol: "BCAP"
+partner_symbol: "BCAP"
+data_available_from: 1540166400
+ BCDN: Object
+id: 732197
+symbol: "BCDN"
+partner_symbol: "BCDN"
+data_available_from: 1478649600
+ BCDT: Object
+id: 926186
+symbol: "BCDT"
+partner_symbol: "BCDT"
+data_available_from: 1513814400
+ BCH: Object
+id: 202330
+symbol: "BCH"
+partner_symbol: "BCH"
+data_available_from: 1230940800
+ BCPT: Object
+id: 374281
+symbol: "BCPT"
+partner_symbol: "BCPT"
+data_available_from: 1506643200
+ BDG: Object
+id: 423754
+symbol: "BDG"
+partner_symbol: "BDG"
+data_available_from: 1511827200
+ BEAT: Object
+id: 926112
+symbol: "BEAT"
+partner_symbol: "BEAT"
+data_available_from: 1521763200
+ BEE: Object
+id: 764334
+symbol: "BEE"
+partner_symbol: "BEE"
+data_available_from: 1517270400
+ BELA: Object
+id: 21239
+symbol: "BELA"
+partner_symbol: "BELA"
+data_available_from: 1522195200
+ BERRY: Object
+id: 784762
+symbol: "BERRY"
+partner_symbol: "BERRY"
+data_available_from: 1521417600
+ BETHER: Object
+id: 926307
+symbol: "BETHER"
+partner_symbol: "BETHER"
+data_available_from: 1529798400
+ BETR: Object
+id: 749857
+symbol: "BETR"
+partner_symbol: "BETR"
+data_available_from: 1515024000
+ BEZ: Object
+id: 811575
+symbol: "BEZ"
+partner_symbol: "BEZ"
+data_available_from: 1513209600
+ BFT: Object
+id: 710240
+symbol: "BFT"
+partner_symbol: "BFT"
+data_available_from: 1517875200
+ BGG: Object
+id: 928742
+symbol: "BGG"
+partner_symbol: "BGG"
+data_available_from: 1529884800
+ BIO: Object
+id: 484355
+symbol: "BIO"
+partner_symbol: "BIO"
+data_available_from: 1537315200
+ BITX: Object
+id: 909956
+symbol: "BITX"
+partner_symbol: "BITX"
+data_available_from: 1530489600
+ BIX: Object
+id: 757969
+symbol: "BIX"
+partner_symbol: "BIX"
+data_available_from: 1506556800
+ BKX: Object
+id: 241757
+symbol: "BKX"
+partner_symbol: "BKX"
+data_available_from: 1511827200
+ BLNM: Object
+id: 694303
+symbol: "BLNM"
+partner_symbol: "BLN"
+data_available_from: 1497830400
+ BLOC: Object
+id: 930149
+symbol: "BLOC"
+partner_symbol: "BLOC"
+data_available_from: 1554681600
+ BLT: Object
+id: 638634
+symbol: "BLT"
+partner_symbol: "BLT"
+data_available_from: 1511913600
+ BLZ: Object
+id: 752710
+symbol: "BLZ"
+partner_symbol: "BLZ"
+data_available_from: 1515974400
+ BMC: Object
+id: 304184
+symbol: "BMC"
+partner_symbol: "BMC"
+data_available_from: 1505779200
+ BMH: Object
+id: 843515
+symbol: "BMH"
+partner_symbol: "BMH"
+data_available_from: 1519344000
+ BMX: Object
+id: 901906
+symbol: "BMX"
+partner_symbol: "BMX"
+data_available_from: 1514419200
+ BNK: Object
+id: 384605
+symbol: "BNK"
+partner_symbol: "BNK"
+data_available_from: 1526515200
+ BNN: Object
+id: 847177
+symbol: "BNN"
+partner_symbol: "BBN"
+data_available_from: 1516406400
+ BNT: Object
+id: 22327
+symbol: "BNT"
+partner_symbol: "BNT"
+data_available_from: 1497052800
+ BNTY: Object
+id: 543363
+symbol: "BNTY"
+partner_symbol: "BNTY"
+data_available_from: 1513296000
+ BOB: Object
+id: 7635
+symbol: "BOB"
+partner_symbol: "BOB"
+data_available_from: 1522540800
+ BOE: Object
+id: 918968
+symbol: "BOE"
+partner_symbol: "BOE"
+data_available_from: 1527465600
+ BOLT: Object
+id: 930147
+symbol: "BOLT"
+partner_symbol: "BOLT"
+data_available_from: 1537142400
+ BOLTT: Object
+id: 929196
+symbol: "BOLTT"
+partner_symbol: "BOLTT"
+data_available_from: 1531872000
+ BON: Object
+id: 346775
+symbol: "BON"
+partner_symbol: "BON"
+data_available_from: 1512432000
+ BOT: Object
+id: 660947
+symbol: "BOT"
+partner_symbol: "BOT"
+data_available_from: 1527465600
+ BOUTS: Object
+id: 925212
+symbol: "BOUTS"
+partner_symbol: "BOUTS"
+data_available_from: 1520640000
+ BOX: Object
+id: 925271
+symbol: "BOX"
+partner_symbol: "BOX"
+data_available_from: 1526428800
+ BPT: Object
+id: 715749
+symbol: "BPT"
+partner_symbol: "BPT"
+data_available_from: 1514937600
+ BPX: Object
+id: 848148
+symbol: "BPX"
+partner_symbol: "XBP"
+data_available_from: 1521590400
+ BQ: Object
+id: 340125
+symbol: "BQ"
+partner_symbol: "BQ"
+data_available_from: 1493596800
+ BQTX: Object
+id: 927409
+symbol: "BQTX"
+partner_symbol: "BQTX"
+data_available_from: 1533254400
+ BRAT: Object
+id: 357734
+symbol: "BRAT"
+partner_symbol: "BRAT"
+data_available_from: 1500163200
+ BRD: Object
+id: 543502
+symbol: "BRD"
+partner_symbol: "BRD"
+data_available_from: 1513382400
+ BSTN: Object
+id: 922258
+symbol: "BSTN"
+partner_symbol: "BSTN"
+data_available_from: 1520726400
+ BSV: Object
+id: 926591
+symbol: "BSV"
+partner_symbol: "BSV"
+data_available_from: 1230940800
+ BTC: Object
+id: 1182
+symbol: "BTC"
+partner_symbol: "BTC"
+data_available_from: 1230940800
+ BTCL: Object
+id: 486837
+symbol: "BTCL"
+partner_symbol: "BTCL"
+data_available_from: 1510876800
+ BTCM: Object
+id: 429400
+symbol: "BTCM"
+partner_symbol: "BTCM"
+data_available_from: 1507248000
+ BTCRED: Object
+id: 371064
+symbol: "BTCRED"
+partner_symbol: "BTCRED"
+data_available_from: 1508457600
+ BTM: Object
+id: 218008
+symbol: "BTM"
+partner_symbol: "BTM"
+data_available_from: 1499904000
+ BTMX: Object
+id: 928919
+symbol: "BTMX"
+partner_symbol: "BTMX"
+data_available_from: 1541808000
+ BTO: Object
+id: 707507
+symbol: "BTO"
+partner_symbol: "BTO"
+data_available_from: 1514246400
+ BTRN: Object
+id: 921356
+symbol: "BTRN"
+partner_symbol: "BTRN"
+data_available_from: 1522972800
+ BTU: Object
+id: 928781
+symbol: "BTU"
+partner_symbol: "BTU"
+data_available_from: 1525910400
+ BUBO: Object
+id: 844325
+symbol: "BUBO"
+partner_symbol: "BUBO"
+data_available_from: 1520899200
+ BUD: Object
+id: 924779
+symbol: "BUD"
+partner_symbol: "BUD"
+data_available_from: 1532563200
+ BWT: Object
+id: 920817
+symbol: "BWT"
+partner_symbol: "BWT"
+data_available_from: 1523318400
+ BZ: Object
+id: 925154
+symbol: "BZ"
+partner_symbol: "BZ"
+data_available_from: 1529539200
+ BZKY: Object
+id: 926756
+symbol: "BZKY"
+partner_symbol: "BZKY"
+data_available_from: 1536019200
+ BZNT: Object
+id: 901815
+symbol: "BZNT"
+partner_symbol: "BZNT"
+data_available_from: 1525132800
+ C20: Object
+id: 339632
+symbol: "C20"
+partner_symbol: "C20"
+data_available_from: 1515974400
+ CAG: Object
+id: 341422
+symbol: "CAG"
+partner_symbol: "CAG"
+data_available_from: 1504915200
+ CAN: Object
+id: 327632
+symbol: "CAN"
+partner_symbol: "CAN"
+data_available_from: 1506988800
+ CANDY: Object
+id: 909733
+symbol: "CANDY"
+partner_symbol: "CANDY"
+data_available_from: 1516924800
+ CAPP: Object
+id: 306304
+symbol: "CAPP"
+partner_symbol: "CAPP"
+data_available_from: 1512345600
+ CAR: Object
+id: 918989
+symbol: "CAR"
+partner_symbol: "CAR"
+data_available_from: 1530144000
+ CARAT: Object
+id: 926758
+symbol: "CARAT"
+partner_symbol: "CARAT"
+data_available_from: 1536192000
+ CARD: Object
+id: 922018
+symbol: "CARD"
+partner_symbol: "CARD"
+data_available_from: 1529884800
+ CBC: Object
+id: 903690
+symbol: "CBC"
+partner_symbol: "CBC"
+data_available_from: 1521590400
+ CBT: Object
+id: 709053
+symbol: "CBT"
+partner_symbol: "CBT"
+data_available_from: 1513814400
+ CCCX: Object
+id: 924982
+symbol: "CCCX"
+partner_symbol: "CCCX"
+data_available_from: 1524700800
+ CCL: Object
+id: 925566
+symbol: "CCL"
+partner_symbol: "CCL"
+data_available_from: 1523232000
+ CCO: Object
+id: 920734
+symbol: "CCO"
+partner_symbol: "CCO"
+data_available_from: 1511827200
+ CCRB: Object
+id: 35818
+symbol: "CCRB"
+partner_symbol: "CCRB"
+data_available_from: 1471305600
+ CCT: Object
+id: 301191
+symbol: "CCT"
+partner_symbol: "CCT"
+data_available_from: 1504396800
+ CDT: Object
+id: 177139
+symbol: "CDT"
+partner_symbol: "CDT"
+data_available_from: 1500940800
+ CDX: Object
+id: 412267
+symbol: "CDX"
+partner_symbol: "CDX"
+data_available_from: 1503705600
+ CEDEX: Object
+id: 797331
+symbol: "CEDEX"
+partner_symbol: "CEDEX"
+data_available_from: 1525305600
+ CEEK: Object
+id: 853825
+symbol: "CEEK"
+partner_symbol: "CEEK"
+data_available_from: 1527811200
+ CEL: Object
+id: 799472
+symbol: "CEL"
+partner_symbol: "CEL"
+data_available_from: 1523404800
+ CELR: Object
+id: 929546
+symbol: "CELR"
+partner_symbol: "CELR"
+data_available_from: 1552953600
+ CEN: Object
+id: 928394
+symbol: "CEN"
+partner_symbol: "CEN"
+data_available_from: 1531353600
+ CENNZ: Object
+id: 922616
+symbol: "CENNZ"
+partner_symbol: "CENNZ"
+data_available_from: 1515456000
+ CET: Object
+id: 916813
+symbol: "CET"
+partner_symbol: "CET"
+data_available_from: 1521676800
+ CHAT: Object
+id: 52008
+symbol: "CHAT"
+partner_symbol: "CHAT"
+data_available_from: 1512604800
+ CHP: Object
+id: 819737
+symbol: "CHP"
+partner_symbol: "CHP"
+data_available_from: 1516233600
+ CHSB: Object
+id: 752993
+symbol: "CHSB"
+partner_symbol: "CHSB"
+data_available_from: 1509494400
+ CHT: Object
+id: 860166
+symbol: "CHT"
+partner_symbol: "CHT"
+data_available_from: 1522713600
+ CHX: Object
+id: 877236
+symbol: "CHX"
+partner_symbol: "CHX"
+data_available_from: 1521936000
+ CJT: Object
+id: 382617
+symbol: "CJT"
+partner_symbol: "CJT"
+data_available_from: 1518566400
+ CL: Object
+id: 659393
+symbol: "CL"
+partner_symbol: "CL"
+data_available_from: 1508716800
+ CLN: Object
+id: 789504
+symbol: "CLN"
+partner_symbol: "CLN"
+data_available_from: 1518307200
+ CMCT: Object
+id: 793021
+symbol: "CMCT"
+partner_symbol: "CMCT"
+data_available_from: 1524700800
+ CMS: Object
+id: 374358
+symbol: "CMS"
+partner_symbol: "CMS"
+data_available_from: 1512000000
+ CMT: Object
+id: 439963
+symbol: "CMT"
+partner_symbol: "CMT"
+data_available_from: 1512432000
+ CND: Object
+id: 338070
+symbol: "CND"
+partner_symbol: "CND"
+data_available_from: 1504915200
+ CNN: Object
+id: 890069
+symbol: "CNN"
+partner_symbol: "CNN"
+data_available_from: 1519776000
+ CNX: Object
+id: 289715
+symbol: "CNX"
+partner_symbol: "CNX"
+data_available_from: 1504569600
+ COB: Object
+id: 234811
+symbol: "COB"
+partner_symbol: "COB"
+data_available_from: 1505088000
+ COFI: Object
+id: 436320
+symbol: "COFI"
+partner_symbol: "COFI"
+data_available_from: 1516924800
+ COIN: Object
+id: 384859
+symbol: "COIN"
+partner_symbol: "COIN"
+data_available_from: 1526342400
+ CONI: Object
+id: 920245
+symbol: "CONI"
+partner_symbol: "CONI"
+data_available_from: 1527638400
+ COSM: Object
+id: 925380
+symbol: "COSM"
+partner_symbol: "COSM"
+data_available_from: 1523145600
+ COT: Object
+id: 924916
+symbol: "COT"
+partner_symbol: "COT"
+data_available_from: 1541030400
+ COU: Object
+id: 912904
+symbol: "COU"
+partner_symbol: "COU"
+data_available_from: 1526428800
+ COV: Object
+id: 338426
+symbol: "COV"
+partner_symbol: "COV"
+data_available_from: 1508025600
+ COVA: Object
+id: 930305
+symbol: "COVA"
+partner_symbol: "COVA"
+data_available_from: 1544918400
+ CPAY: Object
+id: 345674
+symbol: "CPAY"
+partner_symbol: "CPAY"
+data_available_from: 1511913600
+ CPCH: Object
+id: 730988
+symbol: "CPCH"
+partner_symbol: "CPC"
+data_available_from: 1516147200
+ CPT: Object
+id: 918997
+symbol: "CPT"
+partner_symbol: "CPT"
+data_available_from: 1516320000
+ CPY: Object
+id: 692869
+symbol: "CPY"
+partner_symbol: "CPY"
+data_available_from: 1513641600
+ CRB: Object
+id: 17547
+symbol: "CRB"
+partner_symbol: "CRB"
+data_available_from: 1489363200
+ CRDS: Object
+id: 392253
+symbol: "CRDS"
+partner_symbol: "CS"
+data_available_from: 1518825600
+ CRED: Object
+id: 502301
+symbol: "CRED"
+partner_symbol: "LBA"
+data_available_from: 1512432000
+ CREDO: Object
+id: 382450
+symbol: "CREDO"
+partner_symbol: "CREDO"
+data_available_from: 1496361600
+ CRO: Object
+id: 929418
+symbol: "CRO"
+partner_symbol: "CRO"
+data_available_from: 1542153600
+ CRPT: Object
+id: 710597
+symbol: "CRPT"
+partner_symbol: "CRPT"
+data_available_from: 1510012800
+ CRYC: Object
+id: 737393
+symbol: "CRYC"
+partner_symbol: "CRC"
+data_available_from: 1513209600
+ CSEN: Object
+id: 889350
+symbol: "CSEN"
+partner_symbol: "SEN"
+data_available_from: 1522108800
+ CSM: Object
+id: 930028
+symbol: "CSM"
+partner_symbol: "CSM"
+data_available_from: 1517616000
+ CSNO: Object
+id: 202714
+symbol: "CSNO"
+partner_symbol: "CSNO"
+data_available_from: 1505865600
+ CSP: Object
+id: 925807
+symbol: "CSP"
+partner_symbol: "CSP"
+data_available_from: 1537401600
+ CTXC: Object
+id: 856139
+symbol: "CTXC"
+partner_symbol: "CTXC"
+data_available_from: 1520640000
+ CUBE: Object
+id: 20688
+symbol: "CUBE"
+partner_symbol: "AUTO"
+data_available_from: 1519084800
+ CV: Object
+id: 713925
+symbol: "CV"
+partner_symbol: "CV"
+data_available_from: 1513123200
+ CVC: Object
+id: 139467
+symbol: "CVC"
+partner_symbol: "CVC"
+data_available_from: 1499817600
+ CVT: Object
+id: 879044
+symbol: "CVT"
+partner_symbol: "CVT"
+data_available_from: 1520121600
+ CXO: Object
+id: 745054
+symbol: "CXO"
+partner_symbol: "CXO"
+data_available_from: 1516233600
+ DACC: Object
+id: 925578
+symbol: "DACC"
+partner_symbol: "DACC"
+data_available_from: 1527724800
+ DADI: Object
+id: 778953
+symbol: "DADI"
+partner_symbol: "DADI"
+data_available_from: 1511136000
+ DAG: Object
+id: 925129
+symbol: "DAG"
+partner_symbol: "DAG"
+data_available_from: 1527120000
+ DAGT: Object
+id: 929176
+symbol: "DAGT"
+partner_symbol: "DAGT"
+data_available_from: 1523404800
+ DAI: Object
+id: 769546
+symbol: "DAI"
+partner_symbol: "DAI"
+data_available_from: 1513555200
+ DAN: Object
+id: 889339
+symbol: "DAN"
+partner_symbol: "DAN"
+data_available_from: 1512086400
+ DAOC: Object
+id: 177831
+symbol: "DAOC"
+partner_symbol: "BET"
+data_available_from: 1500940800
+ DAPS: Object
+id: 925707
+symbol: "DAPS"
+partner_symbol: "DAPS"
+data_available_from: 1530230400
+ DASH: Object
+id: 3807
+symbol: "DASH"
+partner_symbol: "DASH"
+data_available_from: 1390089600
+ DAT: Object
+id: 335505
+symbol: "DAT"
+partner_symbol: "DAT"
+data_available_from: 1512777600
+ DATA: Object
+id: 369151
+symbol: "DATA"
+partner_symbol: "DATA"
+data_available_from: 1500854400
+ DATX: Object
+id: 814081
+symbol: "DATX"
+partner_symbol: "DATX"
+data_available_from: 1517616000
+ DAV: Object
+id: 925662
+symbol: "DAV"
+partner_symbol: "DAV"
+data_available_from: 1528502400
+ DAX: Object
+id: 925586
+symbol: "DAX"
+partner_symbol: "DAX"
+data_available_from: 1518220800
+ DAY: Object
+id: 336705
+symbol: "DAY"
+partner_symbol: "DAY"
+data_available_from: 1505692800
+ DBET: Object
+id: 380712
+symbol: "DBET"
+partner_symbol: "DBET"
+data_available_from: 1508976000
+ DCN: Object
+id: 218906
+symbol: "DCN"
+partner_symbol: "DCN"
+data_available_from: 1487030400
+ DDD: Object
+id: 729809
+symbol: "DDD"
+partner_symbol: "DDD"
+data_available_from: 1516579200
+ DEB: Object
+id: 408765
+symbol: "DEB"
+partner_symbol: "DEB"
+data_available_from: 1512604800
+ DEC: Object
+id: 417510
+symbol: "DEC"
+partner_symbol: "DEC"
+data_available_from: 1527638400
+ DENT: Object
+id: 141331
+symbol: "DENT"
+partner_symbol: "DENT"
+data_available_from: 1499817600
+ DFXT: Object
+id: 926176
+symbol: "DFXT"
+partner_symbol: "DFT"
+data_available_from: 1521158400
+ DGD: Object
+id: 18907
+symbol: "DGD"
+partner_symbol: "DGD"
+data_available_from: 1461888000
+ DGTX: Object
+id: 925440
+symbol: "DGTX"
+partner_symbol: "DGTX"
+data_available_from: 1515974400
+ DGX: Object
+id: 917414
+symbol: "DGX"
+partner_symbol: "DGX"
+data_available_from: 1521763200
+ DICE: Object
+id: 89572
+symbol: "DICE"
+partner_symbol: "DICE"
+data_available_from: 1486944000
+ DIG: Object
+id: 800121
+symbol: "DIG"
+partner_symbol: "DIG"
+data_available_from: 1519171200
+ DIO: Object
+id: 929433
+symbol: "DIO"
+partner_symbol: "DIO"
+data_available_from: 1551830400
+ DLT: Object
+id: 220204
+symbol: "DLT"
+partner_symbol: "DLT"
+data_available_from: 1504656000
+ DML: Object
+id: 869896
+symbol: "DML"
+partner_symbol: "DML"
+data_available_from: 1524441600
+ DMT: Object
+id: 192400
+symbol: "DMT"
+partner_symbol: "DMT"
+data_available_from: 1513209600
+ DNA: Object
+id: 180804
+symbol: "DNA"
+partner_symbol: "DNA"
+data_available_from: 1510963200
+ DNT: Object
+id: 177175
+symbol: "DNT"
+partner_symbol: "DNT"
+data_available_from: 1500249600
+ DOCK: Object
+id: 866363
+symbol: "DOCK"
+partner_symbol: "DOCK"
+data_available_from: 1519171200
+ DOGE: Object
+id: 4432
+symbol: "DOGE"
+partner_symbol: "DOGE"
+data_available_from: 1386288000
+ DOOH: Object
+id: 927402
+symbol: "DOOH"
+partner_symbol: "DOOH"
+data_available_from: 1534204800
+ DOV: Object
+id: 360827
+symbol: "DOV"
+partner_symbol: "DOV"
+data_available_from: 1506988800
+ DOW: Object
+id: 913722
+symbol: "DOW"
+partner_symbol: "DOW"
+data_available_from: 1519776000
+ DPY: Object
+id: 925525
+symbol: "DPY"
+partner_symbol: "DPY"
+data_available_from: 1504051200
+ DRG: Object
+id: 683927
+symbol: "DRG"
+partner_symbol: "DRG"
+data_available_from: 1512691200
+ DRGN: Object
+id: 355702
+symbol: "DRGN"
+partner_symbol: "DRGN"
+data_available_from: 1512086400
+ DROP: Object
+id: 820902
+symbol: "DROP"
+partner_symbol: "DROP"
+data_available_from: 1516320000
+ DRPU: Object
+id: 763535
+symbol: "DRPU"
+partner_symbol: "DRPU"
+data_available_from: 1511827200
+ DRT: Object
+id: 311829
+symbol: "DRT"
+partner_symbol: "DRT"
+data_available_from: 1508284800
+ DTH: Object
+id: 788387
+symbol: "DTH"
+partner_symbol: "DTH"
+data_available_from: 1517875200
+ DTR: Object
+id: 360063
+symbol: "DTR"
+partner_symbol: "DTR"
+data_available_from: 1512000000
+ DTRC: Object
+id: 764096
+symbol: "DTRC"
+partner_symbol: "DTRC"
+data_available_from: 1517529600
+ DTX: Object
+id: 713947
+symbol: "DTX"
+partner_symbol: "DTX"
+data_available_from: 1521331200
+ DXT: Object
+id: 765943
+symbol: "DXT"
+partner_symbol: "DXT"
+data_available_from: 1517788800
+ EARTH: Object
+id: 324012
+symbol: "EARTH"
+partner_symbol: "EARTH"
+data_available_from: 1521158400
+ EBC: Object
+id: 692707
+symbol: "EBC"
+partner_symbol: "EBC"
+data_available_from: 1528070400
+ EBTC: Object
+id: 321189
+symbol: "EBTC"
+partner_symbol: "EBTC"
+data_available_from: 1509235200
+ ECASH: Object
+id: 355117
+symbol: "ECASH"
+partner_symbol: "ECASH"
+data_available_from: 1507593600
+ ECHT: Object
+id: 344337
+symbol: "ECHT"
+partner_symbol: "ECHT"
+data_available_from: 1521590400
+ ECOM: Object
+id: 925260
+symbol: "ECOM"
+partner_symbol: "ECOM"
+data_available_from: 1519344000
+ ECTE: Object
+id: 929289
+symbol: "ECTE"
+partner_symbol: "ECTE"
+data_available_from: 1546905600
+ EDG: Object
+id: 55676
+symbol: "EDG"
+partner_symbol: "EDG"
+data_available_from: 1488240000
+ EDN: Object
+id: 927930
+symbol: "EDN"
+partner_symbol: "EDN"
+data_available_from: 1537056000
+ EDO: Object
+id: 310297
+symbol: "EDO"
+partner_symbol: "EDO"
+data_available_from: 1506902400
+ EDU: Object
+id: 878068
+symbol: "EDU"
+partner_symbol: "EDU"
+data_available_from: 1527206400
+ EGCC: Object
+id: 918374
+symbol: "EGCC"
+partner_symbol: "EGCC"
+data_available_from: 1517443200
+ EGT: Object
+id: 916728
+symbol: "EGT"
+partner_symbol: "EGT"
+data_available_from: 1527292800
+ EKO: Object
+id: 704135
+symbol: "EKO"
+partner_symbol: "EKO"
+data_available_from: 1511222400
+ EKT: Object
+id: 930837
+symbol: "EKT"
+partner_symbol: "EKT"
+data_available_from: 1513987200
+ ELEC: Object
+id: 836445
+symbol: "ELEC"
+partner_symbol: "ELEC"
+data_available_from: 1519084800
+ ELF: Object
+id: 571314
+symbol: "ELF"
+partner_symbol: "ELF"
+data_available_from: 1513555200
+ ELI: Object
+id: 801531
+symbol: "ELI"
+partner_symbol: "ELI"
+data_available_from: 1523836800
+ ELITE: Object
+id: 360657
+symbol: "ELITE"
+partner_symbol: "ELITE"
+data_available_from: 1507248000
+ ELIX: Object
+id: 321177
+symbol: "ELIX"
+partner_symbol: "ELIX"
+data_available_from: 1504310400
+ ELTCOIN: Object
+id: 438867
+symbol: "ELTCOIN"
+partner_symbol: "ELTCOIN"
+data_available_from: 1507507200
+ ELY: Object
+id: 897502
+symbol: "ELY"
+partner_symbol: "ELY"
+data_available_from: 1524528000
+ EMPH: Object
+id: 388076
+symbol: "EMPH"
+partner_symbol: "EPY"
+data_available_from: 1509321600
+ ENGT: Object
+id: 927975
+symbol: "ENGT"
+partner_symbol: "ENGT"
+data_available_from: 1524096000
+ ENJ: Object
+id: 283116
+symbol: "ENJ"
+partner_symbol: "ENJ"
+data_available_from: 1506902400
+ ENTER: Object
+id: 24307
+symbol: "ENTER"
+partner_symbol: "ENTRC"
+data_available_from: 1535846400
+ EOSDAC: Object
+id: 855289
+symbol: "EOSDAC"
+partner_symbol: "EOSDAC"
+data_available_from: 1520035200
+ EQUAL: Object
+id: 30883
+symbol: "EQUAL"
+partner_symbol: "EQL"
+data_available_from: 1513641600
+ ERC20: Object
+id: 597540
+symbol: "ERC20"
+partner_symbol: "ERC20"
+data_available_from: 1521676800
+ ERIS: Object
+id: 771092
+symbol: "ERIS"
+partner_symbol: "ERT"
+data_available_from: 1512604800
+ ERO: Object
+id: 439579
+symbol: "ERO"
+partner_symbol: "ERO"
+data_available_from: 1507507200
+ ESS: Object
+id: 842171
+symbol: "ESS"
+partner_symbol: "ESS"
+data_available_from: 1529798400
+ EST: Object
+id: 925216
+symbol: "EST"
+partner_symbol: "EST"
+data_available_from: 1516924800
+ ESZ: Object
+id: 920927
+symbol: "ESZ"
+partner_symbol: "ESZ"
+data_available_from: 1516060800
+ ETBS: Object
+id: 188394
+symbol: "ETBS"
+partner_symbol: "ETBS"
+data_available_from: 1503360000
+ ETC: Object
+id: 5324
+symbol: "ETC"
+partner_symbol: "ETC"
+data_available_from: 1438905600
+ ETG: Object
+id: 347450
+symbol: "ETG"
+partner_symbol: "ETG"
+data_available_from: 1507680000
+ ETGP: Object
+id: 929734
+symbol: "ETGP"
+partner_symbol: "ETGP"
+data_available_from: 1541376000
+ ETH: Object
+id: 7605
+symbol: "ETH"
+partner_symbol: "ETH"
+data_available_from: 1438905600
+ ETHM: Object
+id: 860990
+symbol: "ETHM"
+partner_symbol: "ETHM"
+data_available_from: 1514332800
+ ETHOS: Object
+id: 141464
+symbol: "ETHOS"
+partner_symbol: "ETHOS"
+data_available_from: 1498521600
+ ETK: Object
+id: 385960
+symbol: "ETK"
+partner_symbol: "ETK"
+data_available_from: 1511481600
+ ETN: Object
+id: 361881
+symbol: "ETN"
+partner_symbol: "ETN"
+data_available_from: 1510444800
+ EURS: Object
+id: 925249
+symbol: "EURS"
+partner_symbol: "EURS"
+data_available_from: 1529625600
+ EVC: Object
+id: 308072
+symbol: "EVC"
+partner_symbol: "EVC"
+data_available_from: 1504051200
+ EVE: Object
+id: 719223
+symbol: "EVE"
+partner_symbol: "EVE"
+data_available_from: 1516233600
+ EVED: Object
+id: 929820
+symbol: "EVED"
+partner_symbol: "EVED"
+data_available_from: 1535414400
+ EVR: Object
+id: 340966
+symbol: "EVR"
+partner_symbol: "EVR"
+data_available_from: 1503964800
+ EVX: Object
+id: 194883
+symbol: "EVX"
+partner_symbol: "EVX"
+data_available_from: 1506643200
+ EXC: Object
+id: 899574
+symbol: "EXC"
+partner_symbol: "EXC"
+data_available_from: 1524355200
+ EXMR: Object
+id: 767755
+symbol: "EXMR"
+partner_symbol: "EXMR"
+data_available_from: 1507852800
+ EXRN: Object
+id: 710098
+symbol: "EXRN"
+partner_symbol: "EXRN"
+data_available_from: 1507507200
+ EXY: Object
+id: 388493
+symbol: "EXY"
+partner_symbol: "EXY"
+data_available_from: 1519430400
+ FACE: Object
+id: 892684
+symbol: "FACE"
+partner_symbol: "FACE"
+data_available_from: 1522972800
+ FAIRG: Object
+id: 732098
+symbol: "FAIRG"
+partner_symbol: "FAIR"
+data_available_from: 1514419200
+ FAT: Object
+id: 929891
+symbol: "FAT"
+partner_symbol: "FAT"
+data_available_from: 1522627200
+ FDX: Object
+id: 777557
+symbol: "FDX"
+partner_symbol: "FDX"
+data_available_from: 1509321600
+ FDZ: Object
+id: 848819
+symbol: "FDZ"
+partner_symbol: "FDZ"
+data_available_from: 1518566400
+ FET: Object
+id: 929174
+symbol: "FET"
+partner_symbol: "FET"
+data_available_from: 1538956800
+ FLIK: Object
+id: 329562
+symbol: "FLIK"
+partner_symbol: "FLIK"
+data_available_from: 1502928000
+ FLIXX: Object
+id: 408849
+symbol: "FLIXX"
+partner_symbol: "FLIXX"
+data_available_from: 1508803200
+ FLOT: Object
+id: 654118
+symbol: "FLOT"
+partner_symbol: "FLOT"
+data_available_from: 1512950400
+ FLUZ: Object
+id: 844476
+symbol: "FLUZ"
+partner_symbol: "FLUZ"
+data_available_from: 1517443200
+ FND: Object
+id: 180840
+symbol: "FND"
+partner_symbol: "FND"
+data_available_from: 1518048000
+ FNTB: Object
+id: 453943
+symbol: "FNTB"
+partner_symbol: "FNTB"
+data_available_from: 1517788800
+ FOAM: Object
+id: 927955
+symbol: "FOAM"
+partner_symbol: "FOAM"
+data_available_from: 1532736000
+ FOTA: Object
+id: 729627
+symbol: "FOTA"
+partner_symbol: "FOTA"
+data_available_from: 1516492800
+ FOXT: Object
+id: 832078
+symbol: "FOXT"
+partner_symbol: "FOXT"
+data_available_from: 1520812800
+ FREC: Object
+id: 918380
+symbol: "FREC"
+partner_symbol: "FREC"
+data_available_from: 1519603200
+ FREE: Object
+id: 922632
+symbol: "FREE"
+partner_symbol: "FREE"
+data_available_from: 1522886400
+ FSN: Object
+id: 768219
+symbol: "FSN"
+partner_symbol: "FSN"
+data_available_from: 1517356800
+ FT: Object
+id: 901870
+symbol: "FT"
+partner_symbol: "FT"
+data_available_from: 1518652800
+ FTM: Object
+id: 928158
+symbol: "FTM"
+partner_symbol: "FTM"
+data_available_from: 1529020800
+ FTT: Object
+id: 927948
+symbol: "FTT"
+partner_symbol: "FTT"
+data_available_from: 1533859200
+ FTX: Object
+id: 856962
+symbol: "FTX"
+partner_symbol: "FTX"
+data_available_from: 1521072000
+ FUEL: Object
+id: 292748
+symbol: "FUEL"
+partner_symbol: "FUEL"
+data_available_from: 1506038400
+ FUN: Object
+id: 178978
+symbol: "FUN"
+partner_symbol: "FUN"
+data_available_from: 1499385600
+ FUNDZ: Object
+id: 925527
+symbol: "FUNDZ"
+partner_symbol: "FUNDZ"
+data_available_from: 1519430400
+ FXT: Object
+id: 888262
+symbol: "FXT"
+partner_symbol: "FXT"
+data_available_from: 1515801600
+ FYP: Object
+id: 464920
+symbol: "FYP"
+partner_symbol: "FYP"
+data_available_from: 1506556800
+ GAMB: Object
+id: 924800
+symbol: "GAMB"
+partner_symbol: "GMB"
+data_available_from: 1542585600
+ GARD: Object
+id: 928399
+symbol: "GARD"
+partner_symbol: "GARD"
+data_available_from: 1525392000
+ GEM: Object
+id: 870119
+symbol: "GEM"
+partner_symbol: "GEM"
+data_available_from: 1518739200
+ GENE: Object
+id: 600395
+symbol: "GENE"
+partner_symbol: "GENE"
+data_available_from: 1516060800
+ GENS: Object
+id: 843576
+symbol: "GENS"
+partner_symbol: "GEN"
+data_available_from: 1525219200
+ GETX: Object
+id: 920794
+symbol: "GETX"
+partner_symbol: "GETX"
+data_available_from: 1507852800
+ GNO: Object
+id: 66193
+symbol: "GNO"
+partner_symbol: "GNO"
+data_available_from: 1492473600
+ GNT: Object
+id: 33022
+symbol: "GNT"
+partner_symbol: "GNT"
+data_available_from: 1478822400
+ GNX: Object
+id: 619375
+symbol: "GNX"
+partner_symbol: "GNX"
+data_available_from: 1506470400
+ GOOD: Object
+id: 787620
+symbol: "GOOD"
+partner_symbol: "GOOD"
+data_available_from: 1498003200
+ GRID: Object
+id: 385907
+symbol: "GRID"
+partner_symbol: "GRID"
+data_available_from: 1508630400
+ GRMD: Object
+id: 902463
+symbol: "GRMD"
+partner_symbol: "GRMD"
+data_available_from: 1508889600
+ GRX: Object
+id: 439136
+symbol: "GRX"
+partner_symbol: "GRX"
+data_available_from: 1507852800
+ GSC: Object
+id: 884902
+symbol: "GSC"
+partner_symbol: "GSC"
+data_available_from: 1519776000
+ GST: Object
+id: 929241
+symbol: "GST"
+partner_symbol: "GST"
+data_available_from: 1525305600
+ GTC: Object
+id: 667239
+symbol: "GTC"
+partner_symbol: "GTC"
+data_available_from: 1508976000
+ GTO: Object
+id: 517477
+symbol: "GTO"
+partner_symbol: "GTO"
+data_available_from: 1513123200
+ GUESS: Object
+id: 327608
+symbol: "GUESS"
+partner_symbol: "GUESS"
+data_available_from: 1512864000
+ GUP: Object
+id: 67096
+symbol: "GUP"
+partner_symbol: "GUP"
+data_available_from: 1493510400
+ GUSD: Object
+id: 925563
+symbol: "GUSD"
+partner_symbol: "GUSD"
+data_available_from: 1536451200
+ GVE: Object
+id: 929178
+symbol: "GVE"
+partner_symbol: "GVE"
+data_available_from: 1514246400
+ GVT: Object
+id: 385952
+symbol: "GVT"
+partner_symbol: "GVT"
+data_available_from: 1508025600
+ HAND: Object
+id: 925834
+symbol: "HAND"
+partner_symbol: "HAND"
+data_available_from: 1516406400
+ HB: Object
+id: 911095
+symbol: "HB"
+partner_symbol: "HB"
+data_available_from: 1521763200
+ HBT: Object
+id: 247391
+symbol: "HBT"
+partner_symbol: "HBT"
+data_available_from: 1504915200
+ HBZ: Object
+id: 758066
+symbol: "HBZ"
+partner_symbol: "HBZ"
+data_available_from: 1516924800
+ HEDG: Object
+id: 928755
+symbol: "HEDG"
+partner_symbol: "HEDG"
+data_available_from: 1544140800
+ HER: Object
+id: 897513
+symbol: "HER"
+partner_symbol: "HER"
+data_available_from: 1523923200
+ HERO: Object
+id: 905744
+symbol: "HERO"
+partner_symbol: "HERO"
+data_available_from: 1520467200
+ HGT: Object
+id: 234508
+symbol: "HGT"
+partner_symbol: "HGT"
+data_available_from: 1503619200
+ HIT: Object
+id: 925358
+symbol: "HIT"
+partner_symbol: "HIT"
+data_available_from: 1531872000
+ HKN: Object
+id: 517775
+symbol: "HKN"
+partner_symbol: "HKN"
+data_available_from: 1505433600
+ HMC: Object
+id: 836331
+symbol: "HMC"
+partner_symbol: "HMC"
+data_available_from: 1504051200
+ HMQ: Object
+id: 72438
+symbol: "HMQ"
+partner_symbol: "HMQ"
+data_available_from: 1494201600
+ HORSE: Object
+id: 716736
+symbol: "HORSE"
+partner_symbol: "HORSE"
+data_available_from: 1515456000
+ HPB: Object
+id: 675053
+symbol: "HPB"
+partner_symbol: "HPB"
+data_available_from: 1503532800
+ HPT: Object
+id: 930104
+symbol: "HPT"
+partner_symbol: "HPT"
+data_available_from: 1534896000
+ HQT: Object
+id: 926034
+symbol: "HQT"
+partner_symbol: "HQT"
+data_available_from: 1531785600
+ HQX: Object
+id: 535054
+symbol: "HQX"
+partner_symbol: "HQX"
+data_available_from: 1505347200
+ HSC: Object
+id: 919094
+symbol: "HSC"
+partner_symbol: "HSC"
+data_available_from: 1522713600
+ HST: Object
+id: 374246
+symbol: "HST"
+partner_symbol: "HST"
+data_available_from: 1507161600
+ HT: Object
+id: 771595
+symbol: "HT"
+partner_symbol: "HT"
+data_available_from: 1517356800
+ HUR: Object
+id: 849743
+symbol: "HUR"
+partner_symbol: "HUR"
+data_available_from: 1513123200
+ HVN: Object
+id: 179329
+symbol: "HVN"
+partner_symbol: "HVN"
+data_available_from: 1504137600
+ HYDRO: Object
+id: 930816
+symbol: "HYDRO"
+partner_symbol: "HYDRO"
+data_available_from: 1521072000
+ HYT: Object
+id: 901980
+symbol: "HYT"
+partner_symbol: "HYT"
+data_available_from: 1535587200
+ ICHX: Object
+id: 928902
+symbol: "ICHX"
+partner_symbol: "ICHX"
+data_available_from: 1542240000
+ ICN: Object
+id: 25921
+symbol: "ICN"
+partner_symbol: "ICN"
+data_available_from: 1477267200
+ ICON: Object
+id: 35825
+symbol: "ICON"
+partner_symbol: "ICX"
+data_available_from: 1505779200
+ IDEX: Object
+id: 708404
+symbol: "IDEX"
+partner_symbol: "IDEX"
+data_available_from: 1516233600
+ IDH: Object
+id: 708873
+symbol: "IDH"
+partner_symbol: "IDH"
+data_available_from: 1510099200
+ IDT: Object
+id: 929180
+symbol: "IDT"
+partner_symbol: "IDT"
+data_available_from: 1515801600
+ IDXM: Object
+id: 920342
+symbol: "IDXM"
+partner_symbol: "IDXM"
+data_available_from: 1516233600
+ IETH: Object
+id: 667344
+symbol: "IETH"
+partner_symbol: "IETH"
+data_available_from: 1507852800
+ IFT: Object
+id: 185669
+symbol: "IFT"
+partner_symbol: "IFT"
+data_available_from: 1499990400
+ IG: Object
+id: 925318
+symbol: "IG"
+partner_symbol: "IG"
+data_available_from: 1532131200
+ IHF: Object
+id: 925618
+symbol: "IHF"
+partner_symbol: "IHF"
+data_available_from: 1526342400
+ IHT: Object
+id: 831814
+symbol: "IHT"
+partner_symbol: "IHT"
+data_available_from: 1517356800
+ IMT: Object
+id: 925671
+symbol: "IMT"
+partner_symbol: "IMT"
+data_available_from: 1529712000
+ IND: Object
+id: 185953
+symbol: "IND"
+partner_symbol: "IND"
+data_available_from: 1502150400
+ ING: Object
+id: 750134
+symbol: "ING"
+partner_symbol: "ING"
+data_available_from: 1517443200
+ INS: Object
+id: 370973
+symbol: "INS"
+partner_symbol: "INS"
+data_available_from: 1514246400
+ INSTAR: Object
+id: 819702
+symbol: "INSTAR"
+partner_symbol: "INSTAR"
+data_available_from: 1519776000
+ INT: Object
+id: 692839
+symbol: "INT"
+partner_symbol: "INT"
+data_available_from: 1503792000
+ INVC: Object
+id: 819601
+symbol: "INVC"
+partner_symbol: "INV"
+data_available_from: 1525737600
+ INX: Object
+id: 929389
+symbol: "INX"
+partner_symbol: "INX"
+data_available_from: 1539388800
+ INXT: Object
+id: 344988
+symbol: "INXT"
+partner_symbol: "INXT"
+data_available_from: 1504742400
+ IOST: Object
+id: 716522
+symbol: "IOST"
+partner_symbol: "IOST"
+data_available_from: 1515628800
+ IOTX: Object
+id: 893122
+symbol: "IOTX"
+partner_symbol: "IOTX"
+data_available_from: 1526860800
+ IPC: Object
+id: 776863
+symbol: "IPC"
+partner_symbol: "IPC"
+data_available_from: 1502582400
+ IPSX: Object
+id: 844540
+symbol: "IPSX"
+partner_symbol: "IPSX"
+data_available_from: 1519776000
+ IQN: Object
+id: 911125
+symbol: "IQN"
+partner_symbol: "IQN"
+data_available_from: 1513382400
+ ISR: Object
+id: 925093
+symbol: "ISR"
+partner_symbol: "ISR"
+data_available_from: 1529884800
+ ITC: Object
+id: 597629
+symbol: "ITC"
+partner_symbol: "ITC"
+data_available_from: 1511481600
+ ITL: Object
+id: 893326
+symbol: "ITL"
+partner_symbol: "ITL"
+data_available_from: 1509235200
+ ITT: Object
+id: 232678
+symbol: "ITT"
+partner_symbol: "ITT"
+data_available_from: 1506038400
+ IVY: Object
+id: 890611
+symbol: "IVY"
+partner_symbol: "IVY"
+data_available_from: 1523750400
+ IXT: Object
+id: 141171
+symbol: "IXT"
+partner_symbol: "IXT"
+data_available_from: 1499731200
+ J8T: Object
+id: 819799
+symbol: "J8T"
+partner_symbol: "J8T"
+data_available_from: 1519603200
+ JC: Object
+id: 770043
+symbol: "JC"
+partner_symbol: "JC"
+data_available_from: 1513814400
+ JET: Object
+id: 666891
+symbol: "JET"
+partner_symbol: "JET"
+data_available_from: 1505174400
+ JNT: Object
+id: 400702
+symbol: "JNT"
+partner_symbol: "JNT"
+data_available_from: 1517443200
+ JOINT: Object
+id: 920327
+symbol: "JOINT"
+partner_symbol: "JOINT"
+data_available_from: 1522972800
+ JSE: Object
+id: 924231
+symbol: "JSE"
+partner_symbol: "JSE"
+data_available_from: 1531180800
+ KAN: Object
+id: 925339
+symbol: "KAN"
+partner_symbol: "KAN"
+data_available_from: 1519862400
+ KBC: Object
+id: 916868
+symbol: "KBC"
+partner_symbol: "KBC"
+data_available_from: 1518480000
+ KCASH: Object
+id: 925195
+symbol: "KCASH"
+partner_symbol: "KCASH"
+data_available_from: 1530403200
+ KCS: Object
+id: 348628
+symbol: "KCS"
+partner_symbol: "KCS"
+data_available_from: 1503360000
+ KEY: Object
+id: 360299
+symbol: "KEY"
+partner_symbol: "KEY"
+data_available_from: 1515628800
+ KICK: Object
+id: 202849
+symbol: "KICK"
+partner_symbol: "KICK"
+data_available_from: 1506297600
+ KIN: Object
+id: 177918
+symbol: "KIN"
+partner_symbol: "KIN"
+data_available_from: 1505174400
+ KIND: Object
+id: 810794
+symbol: "KIND"
+partner_symbol: "KIND"
+data_available_from: 1529107200
+ KNC: Object
+id: 310497
+symbol: "KNC"
+partner_symbol: "KNC"
+data_available_from: 1505174400
+ KRL: Object
+id: 877048
+symbol: "KRL"
+partner_symbol: "KRL"
+data_available_from: 1525046400
+ KUE: Object
+id: 926296
+symbol: "KUE"
+partner_symbol: "KUE"
+data_available_from: 1533772800
+ KWH: Object
+id: 856128
+symbol: "KWH"
+partner_symbol: "KWH"
+data_available_from: 1513814400
+ LA: Object
+id: 184163
+symbol: "LA"
+partner_symbol: "LA"
+data_available_from: 1508284800
+ LALA: Object
+id: 831848
+symbol: "LALA"
+partner_symbol: "LALA"
+data_available_from: 1515715200
+ LAMB: Object
+id: 930306
+symbol: "LAMB"
+partner_symbol: "LAMB"
+data_available_from: 1537228800
+ LATX: Object
+id: 849939
+symbol: "LATX"
+partner_symbol: "LATX"
+data_available_from: 1506988800
+ LCS: Object
+id: 831841
+symbol: "LCS"
+partner_symbol: "LCS"
+data_available_from: 1520985600
+ LDC: Object
+id: 732021
+symbol: "LDC"
+partner_symbol: "LDC"
+data_available_from: 1519862400
+ LEDU: Object
+id: 831932
+symbol: "LEDU"
+partner_symbol: "LEDU"
+data_available_from: 1518048000
+ LEND: Object
+id: 418778
+symbol: "LEND"
+partner_symbol: "LEND"
+data_available_from: 1512000000
+ LEV: Object
+id: 332804
+symbol: "LEV"
+partner_symbol: "LEV"
+data_available_from: 1509840000
+ LGO: Object
+id: 710370
+symbol: "LGO"
+partner_symbol: "LGO"
+data_available_from: 1520035200
+ LIF: Object
+id: 866491
+symbol: "LIF"
+partner_symbol: "LIF"
+data_available_from: 1517270400
+ LIFE: Object
+id: 381189
+symbol: "LIFE"
+partner_symbol: "LIFE"
+data_available_from: 1499558400
+ LIKE: Object
+id: 922038
+symbol: "LIKE"
+partner_symbol: "LIKE"
+data_available_from: 1518048000
+ LINA: Object
+id: 930883
+symbol: "LINA"
+partner_symbol: "LINA"
+data_available_from: 1522627200
+ LINK: Object
+id: 309621
+symbol: "LINK"
+partner_symbol: "LINK"
+data_available_from: 1505520000
+ LION: Object
+id: 848906
+symbol: "LION"
+partner_symbol: "LION"
+data_available_from: 1511827200
+ LNC: Object
+id: 676288
+symbol: "LNC"
+partner_symbol: "LNC"
+data_available_from: 1504656000
+ LND: Object
+id: 866546
+symbol: "LND"
+partner_symbol: "LND"
+data_available_from: 1520208000
+ LOCI: Object
+id: 404890
+symbol: "LOCI"
+partner_symbol: "LOCI"
+data_available_from: 1512345600
+ LOCK: Object
+id: 517896
+symbol: "LOCK"
+partner_symbol: "LOC"
+data_available_from: 1506384000
+ LOOM: Object
+id: 836492
+symbol: "LOOM"
+partner_symbol: "LOOM"
+data_available_from: 1520035200
+ LPT: Object
+id: 926589
+symbol: "LPT"
+partner_symbol: "LPT"
+data_available_from: 1525046400
+ LQDN: Object
+id: 926393
+symbol: "LQDN"
+partner_symbol: "LQD"
+data_available_from: 1539820800
+ LRC: Object
+id: 318169
+symbol: "LRC"
+partner_symbol: "LRC"
+data_available_from: 1501545600
+ LST: Object
+id: 920896
+symbol: "LST"
+partner_symbol: "LST"
+data_available_from: 1520553600
+ LTC: Object
+id: 3808
+symbol: "LTC"
+partner_symbol: "LTC"
+data_available_from: 1317945600
+ LTO: Object
+id: 928921
+symbol: "LTO"
+partner_symbol: "LTO"
+data_available_from: 1547337600
+ LUC: Object
+id: 694313
+symbol: "LUC"
+partner_symbol: "LUC"
+data_available_from: 1520899200
+ LUN: Object
+id: 67447
+symbol: "LUN"
+partner_symbol: "LUN"
+data_available_from: 1490745600
+ LYM: Object
+id: 767260
+symbol: "LYM"
+partner_symbol: "LYM"
+data_available_from: 1551052800
+ M2O: Object
+id: 926091
+symbol: "M2O"
+partner_symbol: "M2O"
+data_available_from: 1536019200
+ MANA: Object
+id: 199148
+symbol: "MANA"
+partner_symbol: "MANA"
+data_available_from: 1504656000
+ MATIC: Object
+id: 930246
+symbol: "MATIC"
+partner_symbol: "MATIC"
+data_available_from: 1555718400
+ MBTX: Object
+id: 929583
+symbol: "MBTX"
+partner_symbol: "MBTX"
+data_available_from: 1549929600
+ MCO: Object
+id: 166548
+symbol: "MCO"
+partner_symbol: "MCO"
+data_available_from: 1498435200
+ MDA: Object
+id: 341279
+symbol: "MDA"
+partner_symbol: "MDA"
+data_available_from: 1503792000
+ MDCL: Object
+id: 755707
+symbol: "MDCL"
+partner_symbol: "MTN"
+data_available_from: 1517356800
+ MDS: Object
+id: 667050
+symbol: "MDS"
+partner_symbol: "MDS"
+data_available_from: 1511568000
+ MEDX: Object
+id: 916795
+symbol: "MEDX"
+partner_symbol: "MEDX"
+data_available_from: 1527465600
+ MEE: Object
+id: 836124
+symbol: "MEE"
+partner_symbol: "MEET"
+data_available_from: 1522627200
+ MENLO: Object
+id: 925909
+symbol: "MENLO"
+partner_symbol: "ONE"
+data_available_from: 1537056000
+ META: Object
+id: 927515
+symbol: "META"
+partner_symbol: "META"
+data_available_from: 1534896000
+ METAL: Object
+id: 5373
+symbol: "METAL"
+partner_symbol: "MTL"
+data_available_from: 1498694400
+ METM: Object
+id: 925936
+symbol: "METM"
+partner_symbol: "METM"
+data_available_from: 1523750400
+ MFG: Object
+id: 683500
+symbol: "MFG"
+partner_symbol: "MFG"
+data_available_from: 1519084800
+ MFT: Object
+id: 917211
+symbol: "MFT"
+partner_symbol: "MFT"
+data_available_from: 1530662400
+ MGO: Object
+id: 531426
+symbol: "MGO"
+partner_symbol: "MGO"
+data_available_from: 1496620800
+ MIC: Object
+id: 915386
+symbol: "MIC"
+partner_symbol: "MIC"
+data_available_from: 1516233600
+ MITH: Object
+id: 847172
+symbol: "MITH"
+partner_symbol: "MITH"
+data_available_from: 1518048000
+ MITX: Object
+id: 879004
+symbol: "MITX"
+partner_symbol: "MITX"
+data_available_from: 1518652800
+ MIXI: Object
+id: 918566
+symbol: "MIXI"
+partner_symbol: "XIN"
+data_available_from: 1511481600
+ MKR: Object
+id: 41192
+symbol: "MKR"
+partner_symbol: "MKR"
+data_available_from: 1511568000
+ MLN: Object
+id: 45253
+symbol: "MLN"
+partner_symbol: "MLN"
+data_available_from: 1548460800
+ MNC: Object
+id: 929223
+symbol: "MNC"
+partner_symbol: "MNC"
+data_available_from: 1536364800
+ MNE: Object
+id: 84831
+symbol: "MNE"
+partner_symbol: "MNE"
+data_available_from: 1492819200
+ MNTP: Object
+id: 240322
+symbol: "MNTP"
+partner_symbol: "MNTP"
+data_available_from: 1505779200
+ MOAC: Object
+id: 925799
+symbol: "MOAC"
+partner_symbol: "MOAC"
+data_available_from: 1529193600
+ MOF: Object
+id: 925268
+symbol: "MOF"
+partner_symbol: "MOF"
+data_available_from: 1513728000
+ MOLK: Object
+id: 926114
+symbol: "MOLK"
+partner_symbol: "MOLK"
+data_available_from: 1526256000
+ MOT: Object
+id: 716659
+symbol: "MOT"
+partner_symbol: "MOT"
+data_available_from: 1513555200
+ MRK: Object
+id: 887531
+symbol: "MRK"
+partner_symbol: "MRK"
+data_available_from: 1508457600
+ MRPH: Object
+id: 892731
+symbol: "MRPH"
+partner_symbol: "MRPH"
+data_available_from: 1529712000
+ MTC: Object
+id: 885599
+symbol: "MTC"
+partner_symbol: "MTC"
+data_available_from: 1517702400
+ MTH: Object
+id: 208914
+symbol: "MTH"
+partner_symbol: "MTH"
+data_available_from: 1504137600
+ MTKN: Object
+id: 885623
+symbol: "MTKN"
+partner_symbol: "MT"
+data_available_from: 1520726400
+ MTRC: Object
+id: 484742
+symbol: "MTRC"
+partner_symbol: "MTRC"
+data_available_from: 1512950400
+ MTX: Object
+id: 257110
+symbol: "MTX"
+partner_symbol: "MTX"
+data_available_from: 1504656000
+ MVL: Object
+id: 928103
+symbol: "MVL"
+partner_symbol: "MVL"
+data_available_from: 1527724800
+ MWAT: Object
+id: 770254
+symbol: "MWAT"
+partner_symbol: "MWAT"
+data_available_from: 1515974400
+ MXAI: Object
+id: 732161
+symbol: "MXAI"
+partner_symbol: "MAN"
+data_available_from: 1516147200
+ MXM: Object
+id: 929811
+symbol: "MXM"
+partner_symbol: "MXM"
+data_available_from: 1553644800
+ MYB: Object
+id: 179345
+symbol: "MYB"
+partner_symbol: "MYB"
+data_available_from: 1525651200
+ MYST: Object
+id: 136190
+symbol: "MYST"
+partner_symbol: "MYST"
+data_available_from: 1497312000
+ NANJ: Object
+id: 922271
+symbol: "NANJ"
+partner_symbol: "NANJ"
+data_available_from: 1517875200
+ NAS: Object
+id: 619555
+symbol: "NAS"
+partner_symbol: "NAS"
+data_available_from: 1500854400
+ NAVI: Object
+id: 780767
+symbol: "NAVI"
+partner_symbol: "NAVI"
+data_available_from: 1522713600
+ NBAI: Object
+id: 879035
+symbol: "NBAI"
+partner_symbol: "NBAI"
+data_available_from: 1522281600
+ NBC: Object
+id: 903748
+symbol: "NBC"
+partner_symbol: "NBC"
+data_available_from: 1512086400
+ NCASH: Object
+id: 792548
+symbol: "NCASH"
+partner_symbol: "NCASH"
+data_available_from: 1519516800
+ NCC: Object
+id: 929933
+symbol: "NCC"
+partner_symbol: "NCC"
+data_available_from: 1521158400
+ NCT: Object
+id: 864038
+symbol: "NCT"
+partner_symbol: "NCT"
+data_available_from: 1518739200
+ NEC: Object
+id: 777007
+symbol: "NEC"
+partner_symbol: "NEC"
+data_available_from: 1518307200
+ NEU: Object
+id: 372377
+symbol: "NEU"
+partner_symbol: "NEU"
+data_available_from: 1510444800
+ NEXO: Object
+id: 877073
+symbol: "NEXO"
+partner_symbol: "NEXO"
+data_available_from: 1524960000
+ NEXT: Object
+id: 848051
+symbol: "NEXT"
+partner_symbol: "NEXT"
+data_available_from: 1509840000
+ NGC: Object
+id: 466339
+symbol: "NGC"
+partner_symbol: "NGC"
+data_available_from: 1513641600
+ NIO: Object
+id: 412112
+symbol: "NIO"
+partner_symbol: "NIO"
+data_available_from: 1509494400
+ NMR: Object
+id: 166594
+symbol: "NMR"
+partner_symbol: "NMR"
+data_available_from: 1497916800
+ NOAH: Object
+id: 882302
+symbol: "NOAH"
+partner_symbol: "NOAH"
+data_available_from: 1508457600
+ NOBS: Object
+id: 922838
+symbol: "NOBS"
+partner_symbol: "NOBS"
+data_available_from: 1525392000
+ NOKU: Object
+id: 861276
+symbol: "NOKU"
+partner_symbol: "NOKU"
+data_available_from: 1513728000
+ NOX: Object
+id: 779335
+symbol: "NOX"
+partner_symbol: "NOX"
+data_available_from: 1510963200
+ NPER: Object
+id: 925242
+symbol: "NPER"
+partner_symbol: "NPER"
+data_available_from: 1518480000
+ NPX: Object
+id: 187015
+symbol: "NPX"
+partner_symbol: "NPX"
+data_available_from: 1520380800
+ NPXS: Object
+id: 731516
+symbol: "NPXS"
+partner_symbol: "NPXS"
+data_available_from: 1520467200
+ NRG: Object
+id: 927360
+symbol: "NRG"
+partner_symbol: "NRG"
+data_available_from: 1524614400
+ NRP: Object
+id: 928390
+symbol: "NRP"
+partner_symbol: "NRP"
+data_available_from: 1534809600
+ NTK: Object
+id: 439180
+symbol: "NTK"
+partner_symbol: "NTK"
+data_available_from: 1514937600
+ NULS: Object
+id: 377792
+symbol: "NULS"
+partner_symbol: "NULS"
+data_available_from: 1506643200
+ NXC: Object
+id: 35678
+symbol: "NXC"
+partner_symbol: "NXC"
+data_available_from: 1463529600
+ OAX: Object
+id: 180013
+symbol: "OAX"
+partner_symbol: "OAX"
+data_available_from: 1498089600
+ OCN: Object
+id: 714255
+symbol: "OCN"
+partner_symbol: "OCN"
+data_available_from: 1515974400
+ ODE: Object
+id: 890624
+symbol: "ODE"
+partner_symbol: "ODE"
+data_available_from: 1517616000
+ OIO: Object
+id: 898898
+symbol: "OIO"
+partner_symbol: "OIO"
+data_available_from: 1534377600
+ OKB: Object
+id: 925144
+symbol: "OKB"
+partner_symbol: "OKB"
+data_available_from: 1556236800
+ OLE: Object
+id: 925133
+symbol: "OLE"
+partner_symbol: "OLE"
+data_available_from: 1521244800
+ OLT: Object
+id: 920779
+symbol: "OLT"
+partner_symbol: "OLT"
+data_available_from: 1528848000
+ OMG: Object
+id: 187440
+symbol: "OMG"
+partner_symbol: "OMG"
+data_available_from: 1499299200
+ OMX: Object
+id: 815543
+symbol: "OMX"
+partner_symbol: "OMX"
+data_available_from: 1525996800
+ ONG: Object
+id: 428300
+symbol: "ONG"
+partner_symbol: "ONG"
+data_available_from: 1510704000
+ ONL: Object
+id: 684364
+symbol: "ONL"
+partner_symbol: "ONL"
+data_available_from: 1516579200
+ OPEN: Object
+id: 892524
+symbol: "OPEN"
+partner_symbol: "OPEN"
+data_available_from: 1550966400
+ OPT: Object
+id: 197054
+symbol: "OPT"
+partner_symbol: "OPT"
+data_available_from: 1500076800
+ ORBS: Object
+id: 929872
+symbol: "ORBS"
+partner_symbol: "ORBS"
+data_available_from: 1527724800
+ ORI: Object
+id: 766681
+symbol: "ORI"
+partner_symbol: "ORI"
+data_available_from: 1518134400
+ ORME: Object
+id: 301112
+symbol: "ORME"
+partner_symbol: "ORME"
+data_available_from: 1503446400
+ ORS: Object
+id: 863174
+symbol: "ORS"
+partner_symbol: "ORS"
+data_available_from: 1526169600
+ OSA: Object
+id: 899568
+symbol: "OSA"
+partner_symbol: "OSA"
+data_available_from: 1539216000
+ OST: Object
+id: 369132
+symbol: "OST"
+partner_symbol: "OST"
+data_available_from: 1510272000
+ PAL: Object
+id: 883061
+symbol: "PAL"
+partner_symbol: "PAL"
+data_available_from: 1519862400
+ PARETO: Object
+id: 763768
+symbol: "PARETO"
+partner_symbol: "PARETO"
+data_available_from: 1516579200
+ PASS: Object
+id: 925433
+symbol: "PASS"
+partner_symbol: "PASS"
+data_available_from: 1526428800
+ PAT: Object
+id: 862146
+symbol: "PAT"
+partner_symbol: "PAT"
+data_available_from: 1526515200
+ PAX: Object
+id: 925939
+symbol: "PAX"
+partner_symbol: "PAX"
+data_available_from: 1536537600
+ PAY: Object
+id: 45260
+symbol: "PAY"
+partner_symbol: "PAY"
+data_available_from: 1499385600
+ PCH: Object
+id: 925256
+symbol: "PCH"
+partner_symbol: "PCH"
+data_available_from: 1525132800
+ PCL: Object
+id: 878206
+symbol: "PCL"
+partner_symbol: "PCL"
+data_available_from: 1518566400
+ PCO: Object
+id: 919014
+symbol: "PCO"
+partner_symbol: "PCO"
+data_available_from: 1525046400
+ PFR: Object
+id: 409155
+symbol: "PFR"
+partner_symbol: "PFR"
+data_available_from: 1507680000
+ PHI: Object
+id: 901929
+symbol: "PHI"
+partner_symbol: "PHI"
+data_available_from: 1519776000
+ PIX: Object
+id: 223283
+symbol: "PIX"
+partner_symbol: "PIX"
+data_available_from: 1505779200
+ PKT: Object
+id: 344086
+symbol: "PKT"
+partner_symbol: "PKT"
+data_available_from: 1509408000
+ PLA: Object
+id: 925240
+symbol: "PLA"
+partner_symbol: "PLA"
+data_available_from: 1544486400
+ PLAY: Object
+id: 369251
+symbol: "PLAY"
+partner_symbol: "PLAY"
+data_available_from: 1508112000
+ PLBT: Object
+id: 171884
+symbol: "PLBT"
+partner_symbol: "PLBT"
+data_available_from: 1495497600
+ PLR: Object
+id: 184298
+symbol: "PLR"
+partner_symbol: "PLR"
+data_available_from: 1499990400
+ PLU: Object
+id: 42837
+symbol: "PLU"
+partner_symbol: "PLU"
+data_available_from: 1472947200
+ PMA: Object
+id: 661398
+symbol: "PMA"
+partner_symbol: "PMA"
+data_available_from: 1525737600
+ PMNT: Object
+id: 901954
+symbol: "PMNT"
+partner_symbol: "PMNT"
+data_available_from: 1517529600
+ PNT: Object
+id: 876093
+symbol: "PNT"
+partner_symbol: "PNT"
+data_available_from: 1519516800
+ POE: Object
+id: 188811
+symbol: "POE"
+partner_symbol: "POE"
+data_available_from: 1503360000
+ POLL: Object
+id: 319130
+symbol: "POLL"
+partner_symbol: "POLL"
+data_available_from: 1508457600
+ POLY: Object
+id: 744820
+symbol: "POLY"
+partner_symbol: "POLY"
+data_available_from: 1517184000
+ POWR: Object
+id: 339617
+symbol: "POWR"
+partner_symbol: "POWR"
+data_available_from: 1496448000
+ PPP: Object
+id: 327500
+symbol: "PPP"
+partner_symbol: "PPP"
+data_available_from: 1507593600
+ PPT: Object
+id: 179896
+symbol: "PPT"
+partner_symbol: "PPT"
+data_available_from: 1499558400
+ PRA: Object
+id: 925159
+symbol: "PRA"
+partner_symbol: "PRA"
+data_available_from: 1511913600
+ PRG: Object
+id: 225764
+symbol: "PRG"
+partner_symbol: "PRG"
+data_available_from: 1508716800
+ PRIX: Object
+id: 257772
+symbol: "PRIX"
+partner_symbol: "PRIX"
+data_available_from: 1508198400
+ PRO: Object
+id: 185695
+symbol: "PRO"
+partner_symbol: "PRO"
+data_available_from: 1500249600
+ PSM: Object
+id: 925326
+symbol: "PSM"
+partner_symbol: "PSM"
+data_available_from: 1528156800
+ PST: Object
+id: 255777
+symbol: "PST"
+partner_symbol: "PST"
+data_available_from: 1528243200
+ PTOY: Object
+id: 129035
+symbol: "PTOY"
+partner_symbol: "PTOY"
+data_available_from: 1496102400
+ PXG: Object
+id: 928354
+symbol: "PXG"
+partner_symbol: "PXG"
+data_available_from: 1530748800
+ PYLNT: Object
+id: 718673
+symbol: "PYLNT"
+partner_symbol: "PYLNT"
+data_available_from: 1506384000
+ PYN: Object
+id: 304833
+symbol: "PYN"
+partner_symbol: "PYN"
+data_available_from: 1509840000
+ QASH: Object
+id: 402714
+symbol: "QASH"
+partner_symbol: "QASH"
+data_available_from: 1507593600
+ QBIT: Object
+id: 930549
+symbol: "QBIT"
+partner_symbol: "QBIT"
+data_available_from: 1543881600
+ QCX: Object
+id: 925042
+symbol: "QCX"
+partner_symbol: "QCX"
+data_available_from: 1548115200
+ QKC: Object
+id: 899553
+symbol: "QKC"
+partner_symbol: "QKC"
+data_available_from: 1527897600
+ QNTU: Object
+id: 925316
+symbol: "QNTU"
+partner_symbol: "QNTU"
+data_available_from: 1522886400
+ QSP: Object
+id: 397757
+symbol: "QSP"
+partner_symbol: "QSP"
+data_available_from: 1510876800
+ QUANT: Object
+id: 925881
+symbol: "QUANT"
+partner_symbol: "QNT"
+data_available_from: 1529884800
+ QUN: Object
+id: 716767
+symbol: "QUN"
+partner_symbol: "QUN"
+data_available_from: 1515110400
+ QUSD: Object
+id: 928960
+symbol: "QUSD"
+partner_symbol: "QUSD"
+data_available_from: 1547683200
+ R: Object
+id: 345420
+symbol: "R"
+partner_symbol: "R"
+data_available_from: 1504569600
+ RCN: Object
+id: 307219
+symbol: "RCN"
+partner_symbol: "RCN"
+data_available_from: 1508803200
+ RCT: Object
+id: 749006
+symbol: "RCT"
+partner_symbol: "RCT"
+data_available_from: 1514937600
+ RDC: Object
+id: 922623
+symbol: "RDC"
+partner_symbol: "RDC"
+data_available_from: 1522713600
+ RDD: Object
+id: 4592
+symbol: "RDD"
+partner_symbol: "RDD"
+data_available_from: 1551571200
+ REAL: Object
+id: 198490
+symbol: "REAL"
+partner_symbol: "REAL"
+data_available_from: 1504137600
+ REBL: Object
+id: 370889
+symbol: "REBL"
+partner_symbol: "REBL"
+data_available_from: 1509753600
+ REF: Object
+id: 731629
+symbol: "REF"
+partner_symbol: "REF"
+data_available_from: 1506643200
+ REM: Object
+id: 625010
+symbol: "REM"
+partner_symbol: "REM"
+data_available_from: 1512086400
+ REP: Object
+id: 17778
+symbol: "REP"
+partner_symbol: "REP"
+data_available_from: 1531094400
+ REQ: Object
+id: 335059
+symbol: "REQ"
+partner_symbol: "REQ"
+data_available_from: 1507334400
+ REX: Object
+id: 310589
+symbol: "REX"
+partner_symbol: "REX"
+data_available_from: 1503878400
+ RFR: Object
+id: 795662
+symbol: "RFR"
+partner_symbol: "RFR"
+data_available_from: 1506384000
+ RHOC: Object
+id: 434666
+symbol: "RHOC"
+partner_symbol: "RHOC"
+data_available_from: 1489968000
+ RIYA: Object
+id: 238571
+symbol: "RIYA"
+partner_symbol: "RIYA"
+data_available_from: 1497830400
+ RLC: Object
+id: 61877
+symbol: "RLC"
+partner_symbol: "RLC"
+data_available_from: 1492473600
+ RLX: Object
+id: 441616
+symbol: "RLX"
+partner_symbol: "RLX"
+data_available_from: 1501200000
+ RMESH: Object
+id: 925830
+symbol: "RMESH"
+partner_symbol: "RMESH"
+data_available_from: 1527638400
+ RNT: Object
+id: 921526
+symbol: "RNT"
+partner_symbol: "RNT"
+data_available_from: 1511827200
+ RNTB: Object
+id: 848115
+symbol: "RNTB"
+partner_symbol: "RNTB"
+data_available_from: 1515801600
+ ROBET: Object
+id: 925693
+symbol: "ROBET"
+partner_symbol: "ROBET"
+data_available_from: 1534464000
+ ROCK: Object
+id: 384950
+symbol: "ROCK"
+partner_symbol: "ROCK"
+data_available_from: 1521590400
+ ROX: Object
+id: 832783
+symbol: "ROX"
+partner_symbol: "ROX"
+data_available_from: 1525046400
+ RRC: Object
+id: 925305
+symbol: "RRC"
+partner_symbol: "RRC"
+data_available_from: 1526947200
+ RTE: Object
+id: 918974
+symbol: "RTE"
+partner_symbol: "RTE"
+data_available_from: 1523232000
+ RUFF: Object
+id: 744910
+symbol: "RUFF"
+partner_symbol: "RUFF"
+data_available_from: 1515628800
+ RVT: Object
+id: 176280
+symbol: "RVT"
+partner_symbol: "RVT"
+data_available_from: 1502236800
+ SAL: Object
+id: 921680
+symbol: "SAL"
+partner_symbol: "SAL"
+data_available_from: 1515369600
+ SALT: Object
+id: 314580
+symbol: "SALT"
+partner_symbol: "SALT"
+data_available_from: 1501545600
+ SAN: Object
+id: 177863
+symbol: "SAN"
+partner_symbol: "SAN"
+data_available_from: 1499817600
+ SCC: Object
+id: 922214
+symbol: "SCC"
+partner_symbol: "SCC"
+data_available_from: 1520899200
+ SCL: Object
+id: 255254
+symbol: "SCL"
+partner_symbol: "SCL"
+data_available_from: 1501200000
+ SCRL: Object
+id: 920190
+symbol: "SCRL"
+partner_symbol: "SCRL"
+data_available_from: 1523923200
+ SEAL: Object
+id: 926128
+symbol: "SEAL"
+partner_symbol: "SEAL"
+data_available_from: 1523750400
+ SEELE: Object
+id: 905749
+symbol: "SEELE"
+partner_symbol: "SEELE"
+data_available_from: 1526774400
+ SENC: Object
+id: 861348
+symbol: "SENC"
+partner_symbol: "SENC"
+data_available_from: 1520208000
+ SENT: Object
+id: 718363
+symbol: "SENT"
+partner_symbol: "SENT"
+data_available_from: 1514937600
+ SETH: Object
+id: 419209
+symbol: "SETH"
+partner_symbol: "SETH"
+data_available_from: 1511481600
+ SGN: Object
+id: 715817
+symbol: "SGN"
+partner_symbol: "SGN"
+data_available_from: 1520812800
+ SGR: Object
+id: 661777
+symbol: "SGR"
+partner_symbol: "SGR"
+data_available_from: 1510617600
+ SHE: Object
+id: 925643
+symbol: "SHE"
+partner_symbol: "SHE"
+data_available_from: 1515542400
+ SHIP: Object
+id: 830983
+symbol: "SHIP"
+partner_symbol: "SHIP"
+data_available_from: 1519862400
+ SHOW: Object
+id: 776896
+symbol: "SHOW"
+partner_symbol: "SHOW"
+data_available_from: 1515369600
+ SHP: Object
+id: 364472
+symbol: "SHP"
+partner_symbol: "SHP"
+data_available_from: 1509926400
+ SHPING: Object
+id: 782954
+symbol: "SHPING"
+partner_symbol: "SHPING"
+data_available_from: 1516406400
+ SKIN: Object
+id: 198369
+symbol: "SKIN"
+partner_symbol: "SKIN"
+data_available_from: 1498003200
+ SKM: Object
+id: 890130
+symbol: "SKM"
+partner_symbol: "SKM"
+data_available_from: 1523059200
+ SKRB: Object
+id: 910472
+symbol: "SKRB"
+partner_symbol: "SKB"
+data_available_from: 1516233600
+ SLT: Object
+id: 924971
+symbol: "SLT"
+partner_symbol: "SLT"
+data_available_from: 1531440000
+ SMT: Object
+id: 524113
+symbol: "SMT"
+partner_symbol: "SMT"
+data_available_from: 1512777600
+ SNC: Object
+id: 179926
+symbol: "SNC"
+partner_symbol: "SNC"
+data_available_from: 1498608000
+ SNGLS: Object
+id: 24926
+symbol: "SNGLS"
+partner_symbol: "SNGLS"
+data_available_from: 1475366400
+ SNIP: Object
+id: 921575
+symbol: "SNIP"
+partner_symbol: "SNIP"
+data_available_from: 1506643200
+ SNM: Object
+id: 136244
+symbol: "SNM"
+partner_symbol: "SNM"
+data_available_from: 1497484800
+ SNOV: Object
+id: 311853
+symbol: "SNOV"
+partner_symbol: "SNOV"
+data_available_from: 1505433600
+ SNPC: Object
+id: 927421
+symbol: "SNPC"
+partner_symbol: "SNPC"
+data_available_from: 1541030400
+ SNS: Object
+id: 28027
+symbol: "SNS"
+partner_symbol: "SENSE"
+data_available_from: 1513728000
+ SNT: Object
+id: 137013
+symbol: "SNT"
+partner_symbol: "SNT"
+data_available_from: 1497830400
+ SNTR: Object
+id: 895370
+symbol: "SNTR"
+partner_symbol: "SNTR"
+data_available_from: 1510185600
+ SNTVT: Object
+id: 928392
+symbol: "SNTVT"
+partner_symbol: "SNTVT"
+data_available_from: 1531526400
+ SNX: Object
+id: 816635
+symbol: "SNX"
+partner_symbol: "SNX"
+data_available_from: 1528675200
+ SOAR: Object
+id: 388145
+symbol: "SOAR"
+partner_symbol: "SOAR"
+data_available_from: 1504310400
+ SOC: Object
+id: 788409
+symbol: "SOC"
+partner_symbol: "SOC"
+data_available_from: 1516233600
+ SOLVE: Object
+id: 930126
+symbol: "SOLVE"
+partner_symbol: "SOLVE"
+data_available_from: 1528934400
+ SOMA: Object
+id: 348278
+symbol: "SOMA"
+partner_symbol: "SCT"
+data_available_from: 1506297600
+ SPANK: Object
+id: 411496
+symbol: "SPANK"
+partner_symbol: "SPANK"
+data_available_from: 1511136000
+ SPF: Object
+id: 639943
+symbol: "SPF"
+partner_symbol: "SPF"
+data_available_from: 1511136000
+ SPHTX: Object
+id: 379248
+symbol: "SPHTX"
+partner_symbol: "SPHTX"
+data_available_from: 1513641600
+ SPT: Object
+id: 930153
+symbol: "SPT"
+partner_symbol: "SPT"
+data_available_from: 1543017600
+ SPX: Object
+id: 683963
+symbol: "SPX"
+partner_symbol: "SPX"
+data_available_from: 1518048000
+ SRCH: Object
+id: 186331
+symbol: "SRCH"
+partner_symbol: "PRE"
+data_available_from: 1508803200
+ SRCOIN: Object
+id: 925404
+symbol: "SRCOIN"
+partner_symbol: "SRCOIN"
+data_available_from: 1514246400
+ SRN: Object
+id: 380641
+symbol: "SRN"
+partner_symbol: "SRN"
+data_available_from: 1513036800
+ SS: Object
+id: 877303
+symbol: "SS"
+partner_symbol: "SS"
+data_available_from: 1520985600
+ STAC: Object
+id: 396716
+symbol: "STAC"
+partner_symbol: "STAC"
+data_available_from: 1515110400
+ STACS: Object
+id: 927950
+symbol: "STACS"
+partner_symbol: "STACS"
+data_available_from: 1542758400
+ STAR: Object
+id: 179947
+symbol: "STAR"
+partner_symbol: "STAR"
+data_available_from: 1493596800
+ STASH: Object
+id: 928108
+symbol: "STASH"
+partner_symbol: "STASH"
+data_available_from: 1547856000
+ STC: Object
+id: 776935
+symbol: "STC"
+partner_symbol: "STC"
+data_available_from: 1515456000
+ STK: Object
+id: 734584
+symbol: "STK"
+partner_symbol: "STK"
+data_available_from: 1517270400
+ STORJ: Object
+id: 187347
+symbol: "STORJ"
+partner_symbol: "STORJ"
+data_available_from: 1497830400
+ STORM: Object
+id: 186875
+symbol: "STORM"
+partner_symbol: "STORM"
+data_available_from: 1509926400
+ STQ: Object
+id: 777187
+symbol: "STQ"
+partner_symbol: "STQ"
+data_available_from: 1506988800
+ STU: Object
+id: 184237
+symbol: "STU"
+partner_symbol: "STU"
+data_available_from: 1505174400
+ STX: Object
+id: 204716
+symbol: "STX"
+partner_symbol: "STX"
+data_available_from: 1501545600
+ SUB: Object
+id: 221463
+symbol: "SUB"
+partner_symbol: "SUB"
+data_available_from: 1545004800
+ SUR: Object
+id: 177462
+symbol: "SUR"
+partner_symbol: "SUR"
+data_available_from: 1502582400
+ SUSD: Object
+id: 928087
+symbol: "SUSD"
+partner_symbol: "SUSD"
+data_available_from: 1528675200
+ SVD: Object
+id: 791282
+symbol: "SVD"
+partner_symbol: "SVD"
+data_available_from: 1517184000
+ SWARM: Object
+id: 5342
+symbol: "SWARM"
+partner_symbol: "SWM"
+data_available_from: 1508371200
+ SWC: Object
+id: 863074
+symbol: "SWC"
+partner_symbol: "SWC"
+data_available_from: 1531008000
+ SWFTC: Object
+id: 718353
+symbol: "SWFTC"
+partner_symbol: "SWFTC"
+data_available_from: 1501891200
+ SWT: Object
+id: 50741
+symbol: "SWT"
+partner_symbol: "SWT"
+data_available_from: 1485216000
+ SXDT: Object
+id: 731917
+symbol: "SXDT"
+partner_symbol: "SXDT"
+data_available_from: 1512950400
+ SXUT: Object
+id: 731943
+symbol: "SXUT"
+partner_symbol: "SXUT"
+data_available_from: 1512950400
+ TAAS: Object
+id: 66270
+symbol: "TAAS"
+partner_symbol: "TAAS"
+data_available_from: 1490140800
+ TBX: Object
+id: 876072
+symbol: "TBX"
+partner_symbol: "TBX"
+data_available_from: 1512259200
+ TCH: Object
+id: 925903
+symbol: "TCH"
+partner_symbol: "TCH"
+data_available_from: 1523318400
+ TCT: Object
+id: 716574
+symbol: "TCT"
+partner_symbol: "TCT"
+data_available_from: 1514160000
+ TDP: Object
+id: 913585
+symbol: "TDP"
+partner_symbol: "TDP"
+data_available_from: 1536019200
+ TDS: Object
+id: 640916
+symbol: "TDS"
+partner_symbol: "TDS"
+data_available_from: 1514073600
+ TEL: Object
+id: 683827
+symbol: "TEL"
+partner_symbol: "TEL"
+data_available_from: 1512950400
+ TEN: Object
+id: 780891
+symbol: "TEN"
+partner_symbol: "TEN"
+data_available_from: 1516406400
+ TFD: Object
+id: 784553
+symbol: "TFD"
+partner_symbol: "TFD"
+data_available_from: 1519257600
+ TFL: Object
+id: 150545
+symbol: "TFL"
+partner_symbol: "TFL"
+data_available_from: 1498608000
+ TFUEL: Object
+id: 929751
+symbol: "TFUEL"
+partner_symbol: "TFUEL"
+data_available_from: 1513209600
+ TGAME: Object
+id: 916828
+symbol: "TGAME"
+partner_symbol: "TGAME"
+data_available_from: 1525996800
+ TGT: Object
+id: 472769
+symbol: "TGT"
+partner_symbol: "TGT"
+data_available_from: 1499904000
+ THETA: Object
+id: 714811
+symbol: "THETA"
+partner_symbol: "THETA"
+data_available_from: 1513209600
+ THR: Object
+id: 930244
+symbol: "THR"
+partner_symbol: "THR"
+data_available_from: 1517270400
+ THRT: Object
+id: 922054
+symbol: "THRT"
+partner_symbol: "THRT"
+data_available_from: 1523491200
+ TIE: Object
+id: 205991
+symbol: "TIE"
+partner_symbol: "TIE"
+data_available_from: 1505779200
+ TIG: Object
+id: 765383
+symbol: "TIG"
+partner_symbol: "TIG"
+data_available_from: 1512691200
+ TIOX: Object
+id: 372812
+symbol: "TIOX"
+partner_symbol: "TIOX"
+data_available_from: 1540339200
+ TIX: Object
+id: 175671
+symbol: "TIX"
+partner_symbol: "TIX"
+data_available_from: 1499558400
+ TKN: Object
+id: 71077
+symbol: "TKN"
+partner_symbol: "TKN"
+data_available_from: 1494028800
+ TMT: Object
+id: 877052
+symbol: "TMT"
+partner_symbol: "TMT"
+data_available_from: 1527984000
+ TMTG: Object
+id: 925371
+symbol: "TMTG"
+partner_symbol: "TMTG"
+data_available_from: 1532217600
+ TNB: Object
+id: 517483
+symbol: "TNB"
+partner_symbol: "TNB"
+data_available_from: 1508630400
+ TNT: Object
+id: 186309
+symbol: "TNT"
+partner_symbol: "TNT"
+data_available_from: 1503619200
+ TOMO: Object
+id: 816702
+symbol: "TOMO"
+partner_symbol: "TOMO"
+data_available_from: 1519776000
+ TOPC: Object
+id: 925484
+symbol: "TOPC"
+partner_symbol: "TOPC"
+data_available_from: 1514419200
+ TRAC: Object
+id: 716641
+symbol: "TRAC"
+partner_symbol: "TRAC"
+data_available_from: 1516752000
+ TRAK: Object
+id: 920939
+symbol: "TRAK"
+partner_symbol: "TRAK"
+data_available_from: 1513296000
+ TRCT: Object
+id: 371004
+symbol: "TRCT"
+partner_symbol: "TRCT"
+data_available_from: 1505174400
+ TRDT: Object
+id: 769862
+symbol: "TRDT"
+partner_symbol: "TRDT"
+data_available_from: 1511395200
+ TRIO: Object
+id: 925516
+symbol: "TRIO"
+partner_symbol: "TRIO"
+data_available_from: 1518480000
+ TRST: Object
+id: 37040
+symbol: "TRST"
+partner_symbol: "TRST"
+data_available_from: 1492473600
+ TRUE: Object
+id: 887527
+symbol: "TRUE"
+partner_symbol: "TRUE"
+data_available_from: 1515024000
+ TSL: Object
+id: 659973
+symbol: "TSL"
+partner_symbol: "TSL"
+data_available_from: 1501545600
+ TTC: Object
+id: 929813
+symbol: "TTC"
+partner_symbol: "TTC"
+data_available_from: 1529884800
+ TTV: Object
+id: 925078
+symbol: "TTV"
+partner_symbol: "TTV"
+data_available_from: 1526515200
+ TUSD: Object
+id: 844139
+symbol: "TUSD"
+partner_symbol: "TUSD"
+data_available_from: 1546560000
+ UBC: Object
+id: 861115
+symbol: "UBC"
+partner_symbol: "UBC"
+data_available_from: 1520899200
+ UBEX: Object
+id: 890593
+symbol: "UBEX"
+partner_symbol: "UBEX"
+data_available_from: 1526774400
+ UBT: Object
+id: 889870
+symbol: "UBT"
+partner_symbol: "UBT"
+data_available_from: 1515628800
+ UCT: Object
+id: 894138
+symbol: "UCT"
+partner_symbol: "UCT"
+data_available_from: 1517270400
+ UDOO: Object
+id: 929888
+symbol: "UDOO"
+partner_symbol: "UDOO"
+data_available_from: 1532649600
+ UFR: Object
+id: 404806
+symbol: "UFR"
+partner_symbol: "UFR"
+data_available_from: 1506988800
+ UGAS: Object
+id: 929793
+symbol: "UGAS"
+partner_symbol: "UGAS"
+data_available_from: 1534896000
+ UGC: Object
+id: 369179
+symbol: "UGC"
+partner_symbol: "UGC"
+data_available_from: 1514332800
+ UKG: Object
+id: 371005
+symbol: "UKG"
+partner_symbol: "UKG"
+data_available_from: 1509753600
+ UP: Object
+id: 347247
+symbol: "UP"
+partner_symbol: "UP"
+data_available_from: 1511222400
+ UPP: Object
+id: 906271
+symbol: "UPP"
+partner_symbol: "UPP"
+data_available_from: 1526947200
+ UQC: Object
+id: 418694
+symbol: "UQC"
+partner_symbol: "UQC"
+data_available_from: 1506988800
+ USDC: Object
+id: 925809
+symbol: "USDC"
+partner_symbol: "USDC"
+data_available_from: 1536537600
+ USDS: Object
+id: 929229
+symbol: "USDS"
+partner_symbol: "USDS"
+data_available_from: 1534291200
+ USDT: Object
+id: 171986
+symbol: "USDT"
+partner_symbol: "USDT"
+data_available_from: 1511827200
+ USE: Object
+id: 928014
+symbol: "USE"
+partner_symbol: "USE"
+data_available_from: 1535500800
+ UTK: Object
+id: 236358
+symbol: "UTK"
+partner_symbol: "UTK"
+data_available_from: 1514246400
+ UTNP: Object
+id: 466492
+symbol: "UTNP"
+partner_symbol: "UTNP"
+data_available_from: 1516579200
+ UTT: Object
+id: 587261
+symbol: "UTT"
+partner_symbol: "UTT"
+data_available_from: 1511222400
+ UUU: Object
+id: 866334
+symbol: "UUU"
+partner_symbol: "UUU"
+data_available_from: 1518048000
+ VEE: Object
+id: 306482
+symbol: "VEE"
+partner_symbol: "VEE"
+data_available_from: 1511395200
+ VERI: Object
+id: 136211
+symbol: "VERI"
+partner_symbol: "VERI"
+data_available_from: 1493078400
+ VEST: Object
+id: 925893
+symbol: "VEST"
+partner_symbol: "VEST"
+data_available_from: 1531094400
+ VET: Object
+id: 236131
+symbol: "VET"
+partner_symbol: "VET"
+data_available_from: 1502755200
+ VIBE: Object
+id: 336538
+symbol: "VIBE"
+partner_symbol: "VIB"
+data_available_from: 1500422400
+ VIDT: Object
+id: 914830
+symbol: "VIDT"
+partner_symbol: "VIDT"
+data_available_from: 1534550400
+ VIN: Object
+id: 782929
+symbol: "VIN"
+partner_symbol: "VIN"
+data_available_from: 1511395200
+ VIT: Object
+id: 842430
+symbol: "VIT"
+partner_symbol: "VIT"
+data_available_from: 1518998400
+ VITE: Object
+id: 921524
+symbol: "VITE"
+partner_symbol: "VITE"
+data_available_from: 1524614400
+ VIU: Object
+id: 393656
+symbol: "VIU"
+partner_symbol: "VIU"
+data_available_from: 1535068800
+ VME: Object
+id: 921401
+symbol: "VME"
+partner_symbol: "VME"
+data_available_from: 1515542400
+ VNX: Object
+id: 926362
+symbol: "VNX"
+partner_symbol: "VNX"
+data_available_from: 1539820800
+ VOISE: Object
+id: 188352
+symbol: "VOISE"
+partner_symbol: "VOISE"
+data_available_from: 1505433600
+ VRA: Object
+id: 886955
+symbol: "VRA"
+partner_symbol: "VRA"
+data_available_from: 1526601600
+ VRS: Object
+id: 33399
+symbol: "VRS"
+partner_symbol: "VRS"
+data_available_from: 1523318400
+ VSL: Object
+id: 32880
+symbol: "VSL"
+partner_symbol: "VSL"
+data_available_from: 1481673600
+ VZT: Object
+id: 350476
+symbol: "VZT"
+partner_symbol: "VZT"
+data_available_from: 1515628800
+ WAB: Object
+id: 915420
+symbol: "WAB"
+partner_symbol: "WAB"
+data_available_from: 1529193600
+ WABI: Object
+id: 340940
+symbol: "WABI"
+partner_symbol: "WABI"
+data_available_from: 1512777600
+ WAN: Object
+id: 240142
+symbol: "WAN"
+partner_symbol: "WAN"
+data_available_from: 1507248000
+ WAND: Object
+id: 320621
+symbol: "WAND"
+partner_symbol: "WAND"
+data_available_from: 1509062400
+ WAX: Object
+id: 338541
+symbol: "WAX"
+partner_symbol: "WAX"
+data_available_from: 1513641600
+ WBTC: Object
+id: 928761
+symbol: "WBTC"
+partner_symbol: "WBTC"
+data_available_from: 1543276800
+ WCOIN: Object
+id: 876102
+symbol: "WCOIN"
+partner_symbol: "WIN"
+data_available_from: 1517875200
+ WEB: Object
+id: 320596
+symbol: "WEB"
+partner_symbol: "WEB"
+data_available_from: 1521158400
+ WELL: Object
+id: 653806
+symbol: "WELL"
+partner_symbol: "WELL"
+data_available_from: 1529712000
+ WETH: Object
+id: 928486
+symbol: "WETH"
+partner_symbol: "WETH"
+data_available_from: 1513555200
+ WHEN: Object
+id: 924369
+symbol: "WHEN"
+partner_symbol: "WHEN"
+data_available_from: 1521331200
+ WINGS: Object
+id: 25946
+symbol: "WINGS"
+partner_symbol: "WINGS"
+data_available_from: 1493078400
+ WISH: Object
+id: 411620
+symbol: "WISH"
+partner_symbol: "WISH"
+data_available_from: 1508457600
+ WIZ: Object
+id: 310052
+symbol: "WIZ"
+partner_symbol: "WIZ"
+data_available_from: 1519776000
+ WPP: Object
+id: 924955
+symbol: "WPP"
+partner_symbol: "WPP"
+data_available_from: 1531267200
+ WPR: Object
+id: 355242
+symbol: "WPR"
+partner_symbol: "WPR"
+data_available_from: 1517356800
+ WRC: Object
+id: 296844
+symbol: "WRC"
+partner_symbol: "WRC"
+data_available_from: 1503878400
+ WT: Object
+id: 746288
+symbol: "WT"
+partner_symbol: "WT"
+data_available_from: 1526947200
+ WTC: Object
+id: 299397
+symbol: "WTC"
+partner_symbol: "WTC"
+data_available_from: 1500595200
+ WTL: Object
+id: 926317
+symbol: "WTL"
+partner_symbol: "WTL"
+data_available_from: 1525046400
+ WYS: Object
+id: 899504
+symbol: "WYS"
+partner_symbol: "WYS"
+data_available_from: 1510876800
+ X8X: Object
+id: 450337
+symbol: "X8X"
+partner_symbol: "X8X"
+data_available_from: 1509840000
+ XAUR: Object
+id: 25082
+symbol: "XAUR"
+partner_symbol: "XAUR"
+data_available_from: 1470614400
+ XBASE: Object
+id: 927584
+symbol: "XBASE"
+partner_symbol: "XBASE"
+data_available_from: 1555632000
+ XBB: Object
+id: 898360
+symbol: "XBB"
+partner_symbol: "BBK"
+data_available_from: 1517184000
+ XBL: Object
+id: 375352
+symbol: "XBL"
+partner_symbol: "XBL"
+data_available_from: 1501545600
+ XBX: Object
+id: 928785
+symbol: "XBX"
+partner_symbol: "XBX"
+data_available_from: 1546128000
+ XCD: Object
+id: 726598
+symbol: "XCD"
+partner_symbol: "XCD"
+data_available_from: 1525305600
+ XCLR: Object
+id: 848134
+symbol: "XCLR"
+partner_symbol: "XCLR"
+data_available_from: 1510790400
+ XDCE: Object
+id: 477743
+symbol: "XDCE"
+partner_symbol: "XDCE"
+data_available_from: 1517184000
+ XES: Object
+id: 887706
+symbol: "XES"
+partner_symbol: "XES"
+data_available_from: 1516924800
+ XET: Object
+id: 913066
+symbol: "XET"
+partner_symbol: "XET"
+data_available_from: 1527638400
+ XMX: Object
+id: 921375
+symbol: "XMX"
+partner_symbol: "XMX"
+data_available_from: 1525910400
+ XNG: Object
+id: 35953
+symbol: "XNG"
+partner_symbol: "ENG"
+data_available_from: 1507766400
+ XNK: Object
+id: 794362
+symbol: "XNK"
+partner_symbol: "XNK"
+data_available_from: 1519344000
+ XOV: Object
+id: 929356
+symbol: "XOV"
+partner_symbol: "XOV"
+data_available_from: 1524873600
+ XPAT: Object
+id: 920249
+symbol: "XPAT"
+partner_symbol: "XPAT"
+data_available_from: 1523923200
+ XUC: Object
+id: 184221
+symbol: "XUC"
+partner_symbol: "XUC"
+data_available_from: 1502409600
+ XYO: Object
+id: 795305
+symbol: "XYO"
+partner_symbol: "XYO"
+data_available_from: 1515196800
+ XZC: Object
+id: 30022
+symbol: "XZC"
+partner_symbol: "XZC"
+data_available_from: 1518912000
+ YEE: Object
+id: 719272
+symbol: "YEE"
+partner_symbol: "YEE"
+data_available_from: 1515628800
+ YOYOW: Object
+id: 322002
+symbol: "YOYOW"
+partner_symbol: "YOYOW"
+data_available_from: 1503705600
+ YUP: Object
+id: 921549
+symbol: "YUP"
+partner_symbol: "YUP"
+data_available_from: 1520380800
+ ZAP: Object
+id: 684747
+symbol: "ZAP"
+partner_symbol: "ZAP"
+data_available_from: 1507334400
+ ZCN: Object
+id: 917256
+symbol: "ZCN"
+partner_symbol: "ZCN"
+data_available_from: 1527724800
+ ZCO: Object
+id: 876390
+symbol: "ZCO"
+partner_symbol: "ZCO"
+data_available_from: 1517788800
+ ZEC: Object
+id: 24854
+symbol: "ZEC"
+partner_symbol: "ZEC"
+data_available_from: 1477612800
+ ZEON: Object
+id: 929494
+symbol: "ZEON"
+partner_symbol: "ZEON"
+data_available_from: 1539561600
+ ZIL: Object
+id: 716725
+symbol: "ZIL"
+partner_symbol: "ZIL"
+data_available_from: 1515715200
+ ZINC: Object
+id: 916851
+symbol: "ZINC"
+partner_symbol: "ZINC"
+data_available_from: 1519084800
+ ZIP: Object
+id: 925165
+symbol: "ZIP"
+partner_symbol: "ZIP"
+data_available_from: 1517097600
+ ZIPT: Object
+id: 899541
+symbol: "ZIPT"
+partner_symbol: "ZIPT"
+data_available_from: 1522281600
+ ZLA: Object
+id: 866472
+symbol: "ZLA"
+partner_symbol: "ZLA"
+data_available_from: 1512000000
+ ZMN: Object
+id: 912878
+symbol: "ZMN"
+partner_symbol: "ZMN"
+data_available_from: 1516320000
+ ZPR: Object
+id: 925282
+symbol: "ZPR"
+partner_symbol: "ZPR"
+data_available_from: 1526515200
+ ZRX: Object
+id: 186277
+symbol: "ZRX"
+partner_symbol: "ZRX"
+data_available_from: 1502409600
+ ZSC: Object
+id: 341328
+symbol: "ZSC"
+partner_symbol: "ZSC"
+data_available_from: 1499558400
+ ZT: Object
+id: 932086
+symbol: "ZT"
+partner_symbol: "ZT"
+data_available_from: 1531872000
+ ZXC: Object
+id: 920958
+symbol: "ZXC"
+partner_symbol: "ZXC"
+data_available_from: 1529971200
+

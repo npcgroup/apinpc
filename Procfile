@@ -1,0 +1,1 @@
+web: streamlit run src/scripts/funding_streamlit_app_stable.py 

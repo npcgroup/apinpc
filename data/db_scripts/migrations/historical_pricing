@@ -1,0 +1,256 @@
+-- Create schema if it doesn't exist
+CREATE SCHEMA IF NOT EXISTS crypto_historical;
+
+-- Create a base table template for historical price data
+CREATE TABLE IF NOT EXISTS crypto_historical.price_history (
+    id BIGSERIAL PRIMARY KEY,
+    symbol VARCHAR(20) NOT NULL,
+    timestamp BIGINT NOT NULL,
+    datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+    open DECIMAL(24,8) NOT NULL,
+    high DECIMAL(24,8) NOT NULL,
+    low DECIMAL(24,8) NOT NULL,
+    close DECIMAL(24,8) NOT NULL,
+    volumefrom DECIMAL(24,8) NOT NULL,
+    volumeto DECIMAL(24,8) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create indexes for common queries
+CREATE INDEX IF NOT EXISTS idx_price_history_symbol ON crypto_historical.price_history(symbol);
+CREATE INDEX IF NOT EXISTS idx_price_history_datetime ON crypto_historical.price_history(datetime);
+CREATE INDEX IF NOT EXISTS idx_price_history_symbol_datetime ON crypto_historical.price_history(symbol, datetime);
+
+-- Create a function to update the updated_at timestamp
+CREATE OR REPLACE FUNCTION crypto_historical.update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Create a trigger to automatically update the updated_at column
+CREATE TRIGGER update_price_history_updated_at
+    BEFORE UPDATE ON crypto_historical.price_history
+    FOR EACH ROW
+    EXECUTE FUNCTION crypto_historical.update_updated_at_column();
+
+-- Create a view for the latest prices
+CREATE OR REPLACE VIEW crypto_historical.latest_prices AS
+SELECT DISTINCT ON (symbol)
+    symbol,
+    datetime,
+    open,
+    high,
+    low,
+    close,
+    volumefrom,
+    volumeto
+FROM crypto_historical.price_history
+ORDER BY symbol, datetime DESC;
+
+-- Create a function to upsert price data
+CREATE OR REPLACE FUNCTION crypto_historical.upsert_price_history(
+    p_symbol VARCHAR,
+    p_timestamp BIGINT,
+    p_datetime TIMESTAMP WITH TIME ZONE,
+    p_open DECIMAL,
+    p_high DECIMAL,
+    p_low DECIMAL,
+    p_close DECIMAL,
+    p_volumefrom DECIMAL,
+    p_volumeto DECIMAL
+) RETURNS void AS $$
+BEGIN
+    INSERT INTO crypto_historical.price_history (
+        symbol,
+        timestamp,
+        datetime,
+        open,
+        high,
+        low,
+        close,
+        volumefrom,
+        volumeto
+    ) VALUES (
+        p_symbol,
+        p_timestamp,
+        p_datetime,
+        p_open,
+        p_high,
+        p_low,
+        p_close,
+        p_volumefrom,
+        p_volumeto
+    )
+    ON CONFLICT (symbol, timestamp)
+    DO UPDATE SET
+        datetime = EXCLUDED.datetime,
+        open = EXCLUDED.open,
+        high = EXCLUDED.high,
+        low = EXCLUDED.low,
+        close = EXCLUDED.close,
+        volumefrom = EXCLUDED.volumefrom,
+        volumeto = EXCLUDED.volumeto,
+        updated_at = NOW();
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create RLS policies
+ALTER TABLE crypto_historical.price_history ENABLE ROW LEVEL SECURITY;
+
+-- Allow read access to authenticated users
+CREATE POLICY "Allow read access to authenticated users"
+    ON crypto_historical.price_history
+    FOR SELECT
+    TO authenticated
+    USING (true);
+
+-- Allow insert/update access to authenticated users
+CREATE POLICY "Allow insert/update access to authenticated users"
+    ON crypto_historical.price_history
+    FOR ALL
+    TO authenticated
+    USING (true)
+    WITH CHECK (true);
+
+-- Create helper functions for analysis
+
+-- Function to calculate moving average
+CREATE OR REPLACE FUNCTION crypto_historical.calculate_ma(
+    p_symbol VARCHAR,
+    p_period INTEGER,
+    p_end_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+) RETURNS TABLE (
+    datetime TIMESTAMP WITH TIME ZONE,
+    ma DECIMAL(24,8)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        ph.datetime,
+        AVG(ph.close) OVER (
+            ORDER BY ph.datetime
+            ROWS BETWEEN p_period-1 PRECEDING AND CURRENT ROW
+        ) as ma
+    FROM crypto_historical.price_history ph
+    WHERE ph.symbol = p_symbol
+    AND ph.datetime <= p_end_date
+    ORDER BY ph.datetime DESC
+    LIMIT p_period;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to calculate volatility
+CREATE OR REPLACE FUNCTION crypto_historical.calculate_volatility(
+    p_symbol VARCHAR,
+    p_period INTEGER,
+    p_end_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+) RETURNS DECIMAL(24,8) AS $$
+DECLARE
+    v_volatility DECIMAL(24,8);
+BEGIN
+    SELECT STDDEV(close) INTO v_volatility
+    FROM crypto_historical.price_history
+    WHERE symbol = p_symbol
+    AND datetime <= p_end_date
+    ORDER BY datetime DESC
+    LIMIT p_period;
+    
+    RETURN v_volatility;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the daily OHLCV table
+CREATE TABLE IF NOT EXISTS crypto_historical.daily_ohlcv (
+    id BIGSERIAL PRIMARY KEY,
+    symbol VARCHAR(20) NOT NULL,
+    date TIMESTAMP WITH TIME ZONE NOT NULL,
+    open DECIMAL(24,8) NOT NULL,
+    high DECIMAL(24,8) NOT NULL,
+    low DECIMAL(24,8) NOT NULL,
+    close DECIMAL(24,8) NOT NULL,
+    volumefrom DECIMAL(24,8) NOT NULL,
+    volumeto DECIMAL(24,8) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create indexes
+CREATE UNIQUE INDEX IF NOT EXISTS idx_daily_ohlcv_symbol_date 
+ON crypto_historical.daily_ohlcv(symbol, date);
+
+-- Create RLS policies
+ALTER TABLE crypto_historical.daily_ohlcv ENABLE ROW LEVEL SECURITY;
+
+-- Allow read access to authenticated users
+CREATE POLICY "Allow read access to authenticated users"
+    ON crypto_historical.daily_ohlcv
+    FOR SELECT
+    TO authenticated
+    USING (true);
+
+-- Allow insert/update access to service role
+CREATE POLICY "Allow insert/update access to service role"
+    ON crypto_historical.daily_ohlcv
+    FOR ALL
+    TO service_role
+    USING (true)
+    WITH CHECK (true);
+
+-- Create a refresh function for the materialized view
+CREATE OR REPLACE FUNCTION crypto_historical.refresh_daily_ohlcv()
+RETURNS void AS $$
+BEGIN
+    REFRESH MATERIALIZED VIEW CONCURRENTLY crypto_historical.daily_ohlcv;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create a function to get price history with technical indicators
+CREATE OR REPLACE FUNCTION crypto_historical.get_price_history_with_indicators(
+    p_symbol VARCHAR,
+    p_start_date TIMESTAMP WITH TIME ZONE,
+    p_end_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+) RETURNS TABLE (
+    datetime TIMESTAMP WITH TIME ZONE,
+    open DECIMAL(24,8),
+    high DECIMAL(24,8),
+    low DECIMAL(24,8),
+    close DECIMAL(24,8),
+    volumefrom DECIMAL(24,8),
+    volumeto DECIMAL(24,8),
+    ma_20 DECIMAL(24,8),
+    ma_50 DECIMAL(24,8),
+    volatility_20 DECIMAL(24,8)
+) AS $$
+BEGIN
+    RETURN QUERY
+    WITH base_data AS (
+        SELECT
+            ph.datetime,
+            ph.open,
+            ph.high,
+            ph.low,
+            ph.close,
+            ph.volumefrom,
+            ph.volumeto,
+            AVG(ph.close) OVER (ORDER BY ph.datetime ROWS BETWEEN 19 PRECEDING AND CURRENT ROW) as ma_20,
+            AVG(ph.close) OVER (ORDER BY ph.datetime ROWS BETWEEN 49 PRECEDING AND CURRENT ROW) as ma_50,
+            STDDEV(ph.close) OVER (ORDER BY ph.datetime ROWS BETWEEN 19 PRECEDING AND CURRENT ROW) as volatility_20
+        FROM crypto_historical.price_history ph
+        WHERE ph.symbol = p_symbol
+        AND ph.datetime BETWEEN p_start_date AND p_end_date
+    )
+    SELECT *
+    FROM base_data
+    ORDER BY datetime;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Add comments to tables and functions
+COMMENT ON TABLE crypto_historical.price_history IS 'Historical price data for cryptocurrencies';
+COMMENT ON TABLE crypto_historical.daily_ohlcv IS 'Daily OHLCV data aggregated from hourly data';
+COMMENT ON FUNCTION crypto_historical.calculate_ma IS 'Calculates moving average for specified period';
+COMMENT ON FUNCTION crypto_historical.calculate_volatility IS 'Calculates volatility for specified period';

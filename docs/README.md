@@ -38,6 +38,12 @@ const tvl = await client.protocols.getTVL('aave');
 const prices = await client.tokens.getPrices(['ethereum', 'bitcoin']);
 ```
 
+8db4399f-b7d3-48a5-a837-78838b736a19
+
+7dceb0dc-e3cb-4c26-8c57-022bdbf10a6e
+
+
+
 3. **Streaming Data**
 ```typescript
 // Subscribe to real-time updates

@@ -1,6 +1,11 @@
 import { DataIngestionService } from '../../src/services/dataIngestion';
 import type { PerpetualMetrics } from '../../src/services/dataIngestion';
 import { TOKEN_ADDRESSES } from '../../src/config/tokens';
+import * as dotenv from 'dotenv'
+import { resolve } from 'path'
+
+// Load environment variables from the project root
+dotenv.config({ path: resolve(__dirname, '../../.env') })
 
 const DEFAULT_METRIC_VALUES = {
   funding_rate: 0,
@@ -50,15 +55,26 @@ async function processSymbol(
 }
 
 async function main() {
+  // Add environment variable check at the start
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_KEY) {
+    console.error('❌ Missing required environment variables:');
+    console.error('NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? '✓ Set' : '✗ Missing');
+    console.error('NEXT_PUBLIC_SUPABASE_KEY:', process.env.NEXT_PUBLIC_SUPABASE_KEY ? '✓ Set' : '✗ Missing');
+    process.exit(1);
+  }
+
   const service = new DataIngestionService();
   let failedSymbols: string[] = [];
   
   try {
-    // Test connection first
+    // Add more detailed connection testing
+    console.log('Testing Supabase connection...');
     const isConnected = await service.testSupabaseConnection();
     if (!isConnected) {
-      throw new Error('Failed to connect to Supabase');
+      console.error('❌ Supabase connection test failed. Please check your credentials and connection settings.');
+      throw new Error('Failed to connect to Supabase - connection test returned false');
     }
+    console.log('✅ Successfully connected to Supabase');
     
     // Process all symbols concurrently with rate limiting
     const batchSize = 3; // Process 3 symbols at a time
@@ -88,6 +104,10 @@ async function main() {
     }
   } catch (error) {
     console.error('Fatal error:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', error.message);
+      console.error('Stack trace:', error.stack);
+    }
     process.exit(1);
   }
 }

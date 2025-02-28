@@ -700,54 +700,90 @@ def main():
         st.set_page_config(
             page_title="Funding Rate Dashboard",
             page_icon="📊",
-            layout="wide"
+            layout="wide",
+            menu_items={
+                'About': 'Funding Rate Analysis Dashboard'
+            }
         )
         
-        # Initialize session state
+        # Add auto-refresh using HTML
+        st.markdown(
+            """
+            <meta http-equiv="refresh" content="300">
+            <style>
+                #auto-refresh-status {
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    z-index: 999;
+                }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Initialize session state for refresh tracking
         if 'last_refresh' not in st.session_state:
             st.session_state.last_refresh = time.time()
+            st.session_state.refresh_count = 0
+        
+        # Calculate time until next refresh
+        time_since_refresh = time.time() - st.session_state.last_refresh
+        time_until_refresh = max(0, 300 - time_since_refresh)  # 300 seconds = 5 minutes
+        
+        # Display refresh status
+        st.sidebar.markdown("### Auto-Refresh Status")
+        st.sidebar.markdown(f"Next refresh in: {int(time_until_refresh)} seconds")
+        st.sidebar.markdown(f"Refresh count: {st.session_state.refresh_count}")
+        
+        # Check if it's time to refresh
+        should_refresh = time_since_refresh >= 300
         
         if not load_environment():
             st.stop()
         
-        # Check if it's time to auto-refresh (every 10 minutes)
-        time_since_refresh = time.time() - st.session_state.last_refresh
-        should_refresh = time_since_refresh >= 600  # 600 seconds = 10 minutes
-        
         # Run analysis with progress and error handling
         if ('df' not in st.session_state or 
-            st.button("🔄 Refresh Data", key="auto_refresh") or 
+            st.button("🔄 Refresh Now", key="manual_refresh") or 
             should_refresh):
             
-            # Update last refresh time
+            # Update refresh tracking
             st.session_state.last_refresh = time.time()
+            st.session_state.refresh_count += 1
             
-            try:
-                df = fetch_data()
-                if not df.empty:
-                    st.session_state.df = df
-                    st.session_state.stats = calculate_stats(df)
-                    st.session_state.last_update = datetime.now()
-                    
-                    # Create visualizations
-                    viz_data = create_visualizations(df)
-                    
-                    # Push data to Supabase
-                    with st.spinner("Pushing data to Supabase..."):
-                        if push_to_supabase(df, st.session_state.stats, viz_data):
-                            st.success("Data successfully pushed to Supabase")
-                        else:
-                            st.warning("Failed to push data to Supabase")
-                    
-                    st.session_state.viz_data = viz_data
-                else:
-                    if st.button("Retry", key="retry_fetch"):
-                        st.rerun()
+            with st.spinner("Fetching latest data..."):
+                try:
+                    df = fetch_data()
+                    if not df.empty:
+                        st.session_state.df = df
+                        st.session_state.stats = calculate_stats(df)
+                        st.session_state.last_update = datetime.now()
+                        
+                        # Create visualizations
+                        viz_data = create_visualizations(df)
+                        
+                        # Push data to Supabase
+                        with st.spinner("Updating database..."):
+                            if push_to_supabase(df, st.session_state.stats, viz_data):
+                                st.success("Data successfully updated")
+                            else:
+                                st.warning("Failed to update database")
+                        
+                        st.session_state.viz_data = viz_data
+                    else:
+                        st.error("No data retrieved")
+                        if st.button("Retry", key="retry_fetch"):
+                            st.rerun()
+                        return
+                except Exception as e:
+                    logger.error(f"Error fetching data: {e}")
+                    st.error(f"Error fetching data: {str(e)}")
                     return
-            except Exception as e:
-                logger.error(f"Error fetching data: {e}")
-                st.error(f"Error fetching data: {str(e)}")
-                return
+
+        # Display last update time
+        st.sidebar.markdown("---")
+        if 'last_update' in st.session_state:
+            st.sidebar.markdown(f"Last updated: {st.session_state.last_update.strftime('%Y-%m-%d %H:%M:%S')}")
 
         # Display data if available
         if 'df' in st.session_state and not st.session_state.df.empty:
@@ -824,7 +860,7 @@ def main():
                 if st.button("Retry Display", key="retry_display"):
                     st.rerun()
         else:
-            st.info("Waiting for data... Click Refresh Data to start.")
+            st.info("Waiting for initial data...")
             
     except Exception as e:
         logger.error(f"Main function error: {e}")

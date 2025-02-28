@@ -10,65 +10,220 @@
 ## System Architecture
 
 ```mermaid
-graph TB
-subgraph Data Sources
-DL[DeFi Llama]
-DA[Dune Analytics]
-BQ[Bitquery]
-HL[Hyperliquid]
-TG[The Graph]
-FA[Footprint Analytics]
-end
-subgraph Ingestion Layer
-WS[WebSocket Service]
-DI[Data Ingestion Service]
-RL[Rate Limiter]
-end
-subgraph Processing Layer
-VP[Validation Pipeline]
-NP[Normalization Pipeline]
-QS[Quality Scoring]
-AD[Anomaly Detection]
-end
-subgraph Storage Layer
-RC[Redis Cache]
-TS[Time Series DB]
-SB[Supabase]
-end
-subgraph Analytics Engine
-MA[Market Analysis]
-FA2[Funding Arbitrage]
-LM[Liquidity Monitoring]
-VM[Volume Metrics]
-end
-subgraph API Layer
-REST[REST API]
-WS2[WebSocket API]
-GQL[GraphQL API]
-end
-%% Data flow connections
-DL & DA & BQ & HL & TG & FA --> WS & DI
-WS & DI --> RL
-RL --> VP
-VP --> NP
-NP --> QS
-QS --> AD
-AD --> RC
-RC --> TS
-TS --> SB
-SB --> MA & FA2 & LM & VM
-MA & FA2 & LM & VM --> REST & WS2 & GQL
-%% Styling
-classDef source fill:#f9f,stroke:#333,stroke-width:2px
-classDef service fill:#bbf,stroke:#333,stroke-width:2px
-classDef storage fill:#bfb,stroke:#333,stroke-width:2px
-classDef analytics fill:#ffb,stroke:#333,stroke-width:2px
-classDef api fill:#fbb,stroke:#333,stroke-width:2px
-class DL,DA,BQ,HL,TG,FA source
-class WS,DI,RL,VP,NP,QS,AD service
-class RC,TS,SB storage
-class MA,FA2,LM,VM analytics
-class REST,WS2,GQL api
+graph TD
+    %% Core Data Sources
+    subgraph DataSources["External Data Sources"]
+        CCXT[CCXT Integration]
+        HL[HyperLiquid API]
+        DL[DefiLlama API]
+        DU[Dune Analytics]
+        FL[Flipside API]
+        HE[Helius API]
+        JU[Dune API]
+    end
+
+    %% Core Schema Structure
+    subgraph CoreSchema["Core Database Schema"]
+        direction TB
+        FRS[("Metric Base
+        metric_base.sql")]
+        AS[("Assets
+        assets.sql")]
+        LPM[("LP Metrics
+        lp_metrics.sql")]
+        MES[("Market Stats
+        market_stats.sql")]
+        PEM[("Perpetual Metrics
+        perpetuals_schema.sql")]
+        DQM[("Data Quality Metrics
+        blockchain_analytics.sql")]
+        
+    end
+
+    %% Data Flow
+    DataSources --> |Real-time Sync| CoreSchema
+    
+    %% Detailed Tables
+    subgraph DetailedSchema["Detailed Schema Structure"]
+        direction LR
+        
+        MetricBase["Metric Base
+        (The foundational table that all metric-specific tables inherit from. Contains common fields for)"]
+        
+        Assets["Assets
+        (Core asset tracking table)"]
+        
+        Lp_metrics["lP Metrics
+        (Core asset tracking table)"]
+        
+        MarketStats["Market Statistics
+        (Spot market and network stats on leading protocols)"]
+        
+        PerpMetrics["Perpetual Metrics
+        (Relevant perp metrics for leading exchanges)"]
+        
+        QualityTracking["Quality Tracking
+        (Trans. Edges)"]
+    end
+
+    %% Relationships and Indexes
+    subgraph Optimization["Performance Optimization"]
+    
+        IDX["Index Optimization
+        (Time-Series Optimized Indexes Partitioning Strategy)"]
+    
+        QP["Query Optimization
+        (Materialized Views)"]
+    
+        BRIN["BRIN Indexes
+        (Block Range Index)"]
+        
+        Constraints["Data Constraints
+        (Validation Rules)"]
+        
+        DataQuality["Quality Checks
+        (Memory Config)"]
+        
+        VS["Vacuum Strategy
+        (Scale Factors Analysis Thresholds)"]
+    end
+
+    classDef core fill:#f9f,stroke:#333,stroke-width:2px
+    class FRS,PEM,DQM,LPM,AS,MES core
+
+    %% Data Processing Layer
+    subgraph Processing["Processing Layer"]
+        FRC[Metrics Collector]
+        NRM[Data Normalizer]
+        VAL[Validator]
+    end
+
+    %% Storage Layer
+    subgraph Storage["PostgreSQL Schema"]
+        direction TB
+        MB[Metric Base]
+        LP[LP Metrics]
+        TM[Token Metrics]
+        PM[Protocol Metrics]
+        MS[Market Snapshots]
+        ASS[Assets]
+        PM[Perpetual Metrics]
+        DQ[Data Quality]
+        ST[Statistics]
+    end
+
+    %% Analytics Layer
+    subgraph Analytics["Analytics Engine"]
+        direction LR
+        ARB[Arbitrage Detection]
+        VOL[Volatility Analysis]
+        PRED[Rate Prediction]
+        CEF[Cross-Exchange Efficiency]
+        LS[Liquidation Surface Analysis]
+        FLW[Flow Toxicity Analysis]
+    end
+
+    %% Relationships
+    DataSources --> Processing
+    Processing --> Storage
+    Storage --> Analytics
+
+    %% Detailed Table Structure
+    MS --> |Contains| TM
+    MS --> |Contains| LP
+    MS --> |Tracks| PM
+    ST --> |Validates| DQ
+    MS --> |Aggregates| ST
+    MB --> |Contains| LP
+    MB --> |Contains| PM
+    MB --> |Tracks| ST
+    MB --> |Tracks| ASS
+    MS --> |Validates| MB
+    ST --> |Aggregates| MB
+    MB --> |Aggregates| MS
+
+    %% Table Specifications
+    classDef tableSpec fill:#f9f,stroke:#333,stroke-width:2px
+    class MS,FR,PM,DQ,ST,MB,ASS,TM,LP tableSpec
+
+    %% Table Details
+    MS -.- MSDetails[["Market Snapshots
+        - id: BIGSERIAL
+        - timestamp: TIMESTAMPTZ
+        - environment: environment
+        - source_id: BIGINT
+        - raw_data: JSONB"]]
+
+    MB -.- MBDetails[["Metrics Base
+        - id: BIGSERIAL
+        - timestamp: TIMESTAMPTZ
+        - environment: VARCHAR(20)
+        - source_id: BIGINT
+        - confidence_score: DECIMAL(5,2)
+        - raw_data: JSONB"]]
+
+    ASS -.- ATDetails[["Assets
+        - id: BIGSERIAL
+        - symbol: VARCHAR(20)
+        - name: VARCHAR(100)
+        - type: asset_type
+        - chain: chain_name
+        - protocol_id: BIGINT
+        - contract_address: TEXT
+        - metadata: JSONB"]]
+
+    TM -.- TMDetails[["Token Metrics
+        - asset_id: BIGINT
+        - price: DECIMAL(24,8)
+        - volume_24h: DECIMAL(24,8)
+        - market_cap: DECIMAL(24,8)
+        - total_supply: DECIMAL(24,8)
+        - holder_count: INTEGER"]]
+
+    PM -.- PMDetails[["Perpetual Metrics
+        - asset_id: BIGINT
+        - funding_rate: DECIMAL(18,8)
+        - predicted_rate: DECIMAL(18,8)
+        - open_interest: DECIMAL(24,8)
+        - long_positions: DECIMAL(24,8)
+        - short_positions: DECIMAL(24,8)
+        - liquidations_24h: DECIMAL(24,8)
+        - mark_price: DECIMAL(24,8)
+        - index_price: DECIMAL(24,8)"]]
+
+    LP -.- LMDetails[["LP Metrics
+        - pool_address: VARCHAR(44)
+        - token_a_id: BIGINT
+        - token_b_id: BIGINT
+        - Pair_name:VARCHAR(44))
+        - tvl_usd: DECIMAL(24,8)
+        - volume_24h: DECIMAL(24,8)
+        - fee_apr: DECIMAL(10,4)
+        - il_24h: DECIMAL(10,4)
+        - reserves_a: DECIMAL(24,8)
+        - reserves_b: DECIMAL(24,8)"]]
+
+   ST -.- Insights[["Stats Insights
+        - name: VARCHAR(44)
+        - type: BIGINT
+        - tvl_usd: BIGINT
+        - volume_avg: DECIMAL(24,8)
+        - volume_score: DECIMAL(24,8)
+        - fee_apr: DECIMAL(10,4)
+        - sentiment_score: DECIMAL(10,4)
+        - risk_score: DECIMAL(24,8)
+        - health_score: DECIMAL(24,8)"]]
+
+    DQ -.- DQDetails[["Data Quality
+        - id: BIGSERIAL
+        - metric_table: VARCHAR(50)
+        - metric_id: BIGINT
+        - completeness_score: DECIMAL(5,2)
+        - accuracy_score: DECIMAL(5,2)
+        - timeliness_score: DECIMAL(5,2)
+        - consistency_score: DECIMAL(5,2)
+        - validation_errors: JSONB"]]
+
 ```
 
 ## Features

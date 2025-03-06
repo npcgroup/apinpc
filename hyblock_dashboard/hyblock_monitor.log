@@ -1,0 +1,580 @@
+2025-03-06 09:34:10,735 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:34:10,735 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:34:10,736 - hyblock_monitor - INFO - Data collector started with PID 83791
+2025-03-06 09:34:10,736 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:34:10,737 - hyblock_monitor - INFO - Streamlit app started with PID 83792
+2025-03-06 09:34:10,790 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:34:10,810 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:34:10,810 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:34:10,810 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:35:10,814 - hyblock_monitor - WARNING - Data collector is not running
+2025-03-06 09:35:10,815 - hyblock_monitor - INFO - Attempting to restart data collector (attempt 1/3)
+2025-03-06 09:35:10,815 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:35:10,820 - hyblock_monitor - INFO - Data collector started with PID 83852
+2025-03-06 09:35:10,821 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:35:10,827 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:35:10,828 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:35:10,829 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:36:10,830 - hyblock_monitor - WARNING - Data collector is not running
+2025-03-06 09:36:10,830 - hyblock_monitor - INFO - Attempting to restart data collector (attempt 2/3)
+2025-03-06 09:36:10,831 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:36:10,836 - hyblock_monitor - INFO - Data collector started with PID 83891
+2025-03-06 09:36:10,837 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:36:10,845 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:36:10,845 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:36:10,846 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Terminated data collector process (PID 83891)
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Terminated Streamlit process (PID 83792)
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:36:17,753 - hyblock_monitor - INFO - Terminated data collector process (PID 83891)
+2025-03-06 09:36:17,754 - hyblock_monitor - INFO - Terminated Streamlit process (PID 83792)
+2025-03-06 09:38:06,508 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:38:06,508 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:38:06,509 - hyblock_monitor - INFO - Data collector started with PID 84100
+2025-03-06 09:38:06,509 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:38:06,510 - hyblock_monitor - INFO - Streamlit app started with PID 84101
+2025-03-06 09:38:06,522 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:38:06,529 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:38:06,529 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:38:06,530 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:39:06,534 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:39:06,546 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:39:06,546 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:39:06,547 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:40:06,553 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:40:06,559 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:40:06,560 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:40:06,560 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:41:06,566 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:41:06,578 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:41:06,579 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:41:06,580 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:42:06,585 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:42:06,592 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:42:06,593 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:42:06,593 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:43:06,595 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:43:06,601 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:43:06,601 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:43:06,602 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:43:12,606 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:43:12,606 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:43:12,606 - hyblock_monitor - INFO - Terminated data collector process (PID 84100)
+2025-03-06 09:43:12,607 - hyblock_monitor - INFO - Terminated Streamlit process (PID 84101)
+2025-03-06 09:43:12,607 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:43:12,607 - hyblock_monitor - INFO - Terminated data collector process (PID 84100)
+2025-03-06 09:43:12,608 - hyblock_monitor - INFO - Terminated Streamlit process (PID 84101)
+2025-03-06 09:47:53,455 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:47:53,455 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:47:53,456 - hyblock_monitor - INFO - Data collector started with PID 85069
+2025-03-06 09:47:53,456 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:47:53,457 - hyblock_monitor - INFO - Streamlit app started with PID 85070
+2025-03-06 09:47:53,469 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:47:53,477 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:47:53,477 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:47:53,478 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:48:53,484 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:48:53,490 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:48:53,490 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:48:53,491 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:49:53,493 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:49:53,497 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:49:53,497 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:49:53,497 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Terminated data collector process (PID 85069)
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85070)
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Terminated data collector process (PID 85069)
+2025-03-06 09:49:58,803 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85070)
+2025-03-06 09:50:00,633 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:50:00,633 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:50:00,634 - hyblock_monitor - INFO - Data collector started with PID 85340
+2025-03-06 09:50:00,634 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:50:00,635 - hyblock_monitor - INFO - Streamlit app started with PID 85341
+2025-03-06 09:50:00,648 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:50:00,656 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:50:00,656 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:50:00,657 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Terminated data collector process (PID 85340)
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85341)
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Terminated data collector process (PID 85340)
+2025-03-06 09:50:29,444 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85341)
+2025-03-06 09:50:30,451 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:50:30,451 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:50:30,452 - hyblock_monitor - INFO - Data collector started with PID 85468
+2025-03-06 09:50:30,452 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:50:30,453 - hyblock_monitor - INFO - Streamlit app started with PID 85469
+2025-03-06 09:50:30,465 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:50:30,476 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:50:30,476 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:50:30,477 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:50:49,062 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:50:49,063 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:50:49,063 - hyblock_monitor - INFO - Terminated data collector process (PID 85468)
+2025-03-06 09:50:49,064 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85469)
+2025-03-06 09:50:49,064 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:50:49,064 - hyblock_monitor - INFO - Terminated data collector process (PID 85468)
+2025-03-06 09:50:49,064 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85469)
+2025-03-06 09:50:49,891 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:50:49,892 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:50:49,892 - hyblock_monitor - INFO - Data collector started with PID 85582
+2025-03-06 09:50:49,893 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:50:49,894 - hyblock_monitor - INFO - Streamlit app started with PID 85583
+2025-03-06 09:50:49,906 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:50:49,914 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:50:49,915 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:50:49,915 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:51:49,916 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:51:49,923 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:51:49,923 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:51:49,924 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:52:49,926 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:52:49,934 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:52:49,934 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:52:49,935 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:53:49,939 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:53:49,948 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:53:49,948 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:53:49,948 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:54:03,154 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:54:03,154 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:54:03,154 - hyblock_monitor - INFO - Terminated data collector process (PID 85582)
+2025-03-06 09:54:03,154 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85583)
+2025-03-06 09:54:03,155 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:54:03,155 - hyblock_monitor - INFO - Terminated data collector process (PID 85582)
+2025-03-06 09:54:03,155 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85583)
+2025-03-06 09:54:12,053 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:54:12,053 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:54:12,054 - hyblock_monitor - INFO - Data collector started with PID 85928
+2025-03-06 09:54:12,055 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:54:12,055 - hyblock_monitor - INFO - Streamlit app started with PID 85929
+2025-03-06 09:54:12,069 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:54:12,076 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:54:12,076 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:54:12,077 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:55:12,078 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:55:12,084 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:55:12,084 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:55:12,085 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Terminated data collector process (PID 85928)
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85929)
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Terminated data collector process (PID 85928)
+2025-03-06 09:55:53,682 - hyblock_monitor - INFO - Terminated Streamlit process (PID 85929)
+2025-03-06 09:55:56,121 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:55:56,121 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:55:56,123 - hyblock_monitor - INFO - Data collector started with PID 86134
+2025-03-06 09:55:56,123 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:55:56,123 - hyblock_monitor - INFO - Streamlit app started with PID 86135
+2025-03-06 09:55:56,135 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:55:56,143 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:55:56,143 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:55:56,143 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:56:56,146 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:56:56,152 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:56:56,152 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:56:56,153 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Terminated data collector process (PID 86134)
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86135)
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:57:36,661 - hyblock_monitor - INFO - Terminated data collector process (PID 86134)
+2025-03-06 09:57:36,662 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86135)
+2025-03-06 09:57:37,623 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:57:37,623 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:57:37,624 - hyblock_monitor - INFO - Data collector started with PID 86333
+2025-03-06 09:57:37,624 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:57:37,625 - hyblock_monitor - INFO - Streamlit app started with PID 86334
+2025-03-06 09:57:37,637 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:57:37,645 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:57:37,645 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:57:37,645 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:58:37,650 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:58:37,658 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:58:37,658 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:58:37,659 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:58:53,040 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:58:53,040 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:58:53,041 - hyblock_monitor - INFO - Terminated data collector process (PID 86333)
+2025-03-06 09:58:53,041 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86334)
+2025-03-06 09:58:53,041 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:58:53,041 - hyblock_monitor - INFO - Terminated data collector process (PID 86333)
+2025-03-06 09:58:53,041 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86334)
+2025-03-06 09:58:54,393 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 09:58:54,393 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 09:58:54,394 - hyblock_monitor - INFO - Data collector started with PID 86512
+2025-03-06 09:58:54,394 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 09:58:54,395 - hyblock_monitor - INFO - Streamlit app started with PID 86513
+2025-03-06 09:58:54,407 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:58:54,415 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:58:54,415 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 09:58:54,416 - database - DEBUG - Query returned 1 rows
+2025-03-06 09:59:05,690 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Terminated data collector process (PID 86512)
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86513)
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Terminated data collector process (PID 86512)
+2025-03-06 09:59:05,691 - hyblock_monitor - INFO - Terminated Streamlit process (PID 86513)
+2025-03-06 10:20:59,655 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 10:20:59,655 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 10:20:59,656 - hyblock_monitor - INFO - Data collector started with PID 89111
+2025-03-06 10:20:59,656 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 10:20:59,657 - hyblock_monitor - INFO - Streamlit app started with PID 89112
+2025-03-06 10:20:59,701 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 10:20:59,712 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 10:20:59,712 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 10:20:59,713 - database - DEBUG - Query returned 1 rows
+2025-03-06 10:21:59,717 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 10:21:59,718 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 1/3)
+2025-03-06 10:21:59,718 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 10:21:59,722 - hyblock_monitor - INFO - Streamlit app started with PID 89202
+2025-03-06 10:21:59,723 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 10:21:59,729 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 10:21:59,729 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 10:21:59,729 - database - DEBUG - Query returned 1 rows
+2025-03-06 10:22:09,586 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 10:22:09,586 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 10:22:09,586 - hyblock_monitor - INFO - Terminated data collector process (PID 89111)
+2025-03-06 10:22:09,586 - hyblock_monitor - INFO - Terminated Streamlit process (PID 89202)
+2025-03-06 10:22:09,587 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 10:22:09,587 - hyblock_monitor - INFO - Terminated data collector process (PID 89111)
+2025-03-06 10:22:09,587 - hyblock_monitor - INFO - Terminated Streamlit process (PID 89202)
+2025-03-06 12:17:15,962 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 12:17:15,962 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 12:17:15,963 - hyblock_monitor - INFO - Data collector started with PID 91370
+2025-03-06 12:17:15,963 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:17:15,964 - hyblock_monitor - INFO - Streamlit app started with PID 91371
+2025-03-06 12:17:16,019 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:17:16,030 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:17:16,030 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:17:16,031 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:18:16,035 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 12:18:16,035 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 1/3)
+2025-03-06 12:18:16,035 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:18:16,038 - hyblock_monitor - INFO - Streamlit app started with PID 91462
+2025-03-06 12:18:16,038 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:18:16,042 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:18:16,043 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:18:16,043 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:19:16,048 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 12:19:16,049 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 12:19:16,050 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:19:16,056 - hyblock_monitor - INFO - Streamlit app started with PID 91508
+2025-03-06 12:19:16,056 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:19:16,064 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:19:16,064 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:19:16,064 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:20:16,069 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 12:20:16,069 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 12:20:16,069 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:20:16,076 - hyblock_monitor - INFO - Streamlit app started with PID 91545
+2025-03-06 12:20:16,077 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:20:16,085 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:20:16,085 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:20:16,086 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:20:42,019 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 12:20:42,019 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:20:42,019 - hyblock_monitor - INFO - Terminated data collector process (PID 91370)
+2025-03-06 12:20:42,020 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91545)
+2025-03-06 12:20:42,020 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:20:42,020 - hyblock_monitor - INFO - Terminated data collector process (PID 91370)
+2025-03-06 12:20:42,020 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91545)
+2025-03-06 12:20:42,903 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 12:20:42,903 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 12:20:42,904 - hyblock_monitor - INFO - Data collector started with PID 91617
+2025-03-06 12:20:42,904 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:20:42,905 - hyblock_monitor - INFO - Streamlit app started with PID 91618
+2025-03-06 12:20:42,917 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:20:42,926 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:20:42,926 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:20:42,927 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:21:23,446 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 12:21:23,447 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:21:23,447 - hyblock_monitor - INFO - Terminated data collector process (PID 91617)
+2025-03-06 12:21:23,447 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91618)
+2025-03-06 12:21:23,449 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:21:23,449 - hyblock_monitor - INFO - Terminated data collector process (PID 91617)
+2025-03-06 12:21:23,449 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91618)
+2025-03-06 12:21:24,438 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 12:21:24,438 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 12:21:24,439 - hyblock_monitor - INFO - Data collector started with PID 91748
+2025-03-06 12:21:24,439 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:21:24,440 - hyblock_monitor - INFO - Streamlit app started with PID 91749
+2025-03-06 12:21:24,453 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:21:24,460 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:21:24,460 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:21:24,461 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:21:49,714 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 12:21:49,714 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:21:49,714 - hyblock_monitor - INFO - Terminated data collector process (PID 91748)
+2025-03-06 12:21:49,714 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91749)
+2025-03-06 12:21:49,714 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:21:49,715 - hyblock_monitor - INFO - Terminated data collector process (PID 91748)
+2025-03-06 12:21:49,715 - hyblock_monitor - INFO - Terminated Streamlit process (PID 91749)
+2025-03-06 12:58:38,673 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 12:58:38,673 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 12:58:38,674 - hyblock_monitor - INFO - Data collector started with PID 93529
+2025-03-06 12:58:38,675 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 12:58:38,675 - hyblock_monitor - INFO - Streamlit app started with PID 93530
+2025-03-06 12:58:38,687 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 12:58:38,696 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 12:58:38,696 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 12:58:38,697 - database - DEBUG - Query returned 1 rows
+2025-03-06 12:58:49,815 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 12:58:49,816 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:58:49,816 - hyblock_monitor - INFO - Terminated data collector process (PID 93529)
+2025-03-06 12:58:49,816 - hyblock_monitor - INFO - Terminated Streamlit process (PID 93530)
+2025-03-06 12:58:49,817 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 12:58:49,817 - hyblock_monitor - INFO - Terminated data collector process (PID 93529)
+2025-03-06 12:58:49,817 - hyblock_monitor - INFO - Terminated Streamlit process (PID 93530)
+2025-03-06 13:45:04,762 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 13:45:04,762 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 13:45:04,763 - hyblock_monitor - INFO - Data collector started with PID 95052
+2025-03-06 13:45:04,763 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 13:45:04,764 - hyblock_monitor - INFO - Streamlit app started with PID 95053
+2025-03-06 13:45:04,785 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 13:45:04,796 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 13:45:04,796 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 13:45:04,796 - database - DEBUG - Query returned 1 rows
+2025-03-06 13:45:09,676 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 13:45:09,678 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 13:45:09,678 - hyblock_monitor - INFO - Terminated data collector process (PID 95052)
+2025-03-06 13:45:09,678 - hyblock_monitor - INFO - Terminated Streamlit process (PID 95053)
+2025-03-06 13:45:09,679 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 13:45:09,679 - hyblock_monitor - INFO - Terminated data collector process (PID 95052)
+2025-03-06 13:45:09,679 - hyblock_monitor - INFO - Terminated Streamlit process (PID 95053)
+2025-03-06 13:45:14,774 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 13:45:14,774 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 13:45:14,776 - hyblock_monitor - INFO - Data collector started with PID 95128
+2025-03-06 13:45:14,776 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 13:45:14,777 - hyblock_monitor - INFO - Streamlit app started with PID 95129
+2025-03-06 13:45:14,789 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 13:45:14,798 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 13:45:14,798 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 13:45:14,799 - database - DEBUG - Query returned 1 rows
+2025-03-06 13:45:28,956 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 13:45:28,956 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 13:45:28,957 - hyblock_monitor - INFO - Terminated data collector process (PID 95128)
+2025-03-06 13:45:28,958 - hyblock_monitor - INFO - Terminated Streamlit process (PID 95129)
+2025-03-06 13:45:28,958 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 13:45:28,958 - hyblock_monitor - INFO - Terminated data collector process (PID 95128)
+2025-03-06 13:45:28,958 - hyblock_monitor - INFO - Terminated Streamlit process (PID 95129)
+2025-03-06 14:55:30,703 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 14:55:30,703 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 14:55:30,704 - hyblock_monitor - INFO - Data collector started with PID 97919
+2025-03-06 14:55:30,704 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 14:55:30,705 - hyblock_monitor - INFO - Streamlit app started with PID 97920
+2025-03-06 14:55:30,717 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 14:55:30,726 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 14:55:30,726 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 14:55:30,727 - database - DEBUG - Query returned 1 rows
+2025-03-06 14:56:30,728 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 14:56:30,729 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 1/3)
+2025-03-06 14:56:30,729 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 14:56:30,732 - hyblock_monitor - INFO - Streamlit app started with PID 98041
+2025-03-06 14:56:30,733 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 14:56:30,739 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 14:56:30,739 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 14:56:30,740 - database - DEBUG - Query returned 1 rows
+2025-03-06 14:57:30,745 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 14:57:30,746 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 14:57:30,746 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 14:57:30,750 - hyblock_monitor - INFO - Streamlit app started with PID 98097
+2025-03-06 14:57:30,751 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 14:57:30,756 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 14:57:30,756 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 14:57:30,757 - database - DEBUG - Query returned 1 rows
+2025-03-06 14:58:30,758 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 14:58:30,758 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 14:58:30,759 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 14:58:30,763 - hyblock_monitor - INFO - Streamlit app started with PID 98196
+2025-03-06 14:58:30,764 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 14:58:30,771 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 14:58:30,772 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 14:58:30,772 - database - DEBUG - Query returned 1 rows
+2025-03-06 14:59:30,776 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 14:59:30,776 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 14:59:30,776 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 14:59:30,780 - hyblock_monitor - INFO - Streamlit app started with PID 98266
+2025-03-06 14:59:30,780 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 14:59:30,786 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 14:59:30,786 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 14:59:30,787 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:00:30,789 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:00:30,789 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:00:30,789 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:00:30,792 - hyblock_monitor - INFO - Streamlit app started with PID 98330
+2025-03-06 15:00:30,793 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:00:30,798 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:00:30,798 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:00:30,798 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:01:30,803 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:01:30,803 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:01:30,804 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:01:30,809 - hyblock_monitor - INFO - Streamlit app started with PID 98395
+2025-03-06 15:01:30,810 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:01:30,816 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:01:30,817 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:01:30,817 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:02:30,822 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:02:30,824 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:02:30,825 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:02:30,831 - hyblock_monitor - INFO - Streamlit app started with PID 98454
+2025-03-06 15:02:30,831 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:02:30,838 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:02:30,838 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:02:30,838 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:03:30,843 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:03:30,843 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:03:30,843 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:03:30,849 - hyblock_monitor - INFO - Streamlit app started with PID 98516
+2025-03-06 15:03:30,849 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:03:30,855 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:03:30,855 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:03:30,855 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:04:30,860 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:04:30,861 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:04:30,861 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:04:30,867 - hyblock_monitor - INFO - Streamlit app started with PID 98578
+2025-03-06 15:04:30,868 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:04:30,876 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:04:30,876 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:04:30,877 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:05:30,877 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:05:30,878 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:05:30,878 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:05:30,883 - hyblock_monitor - INFO - Streamlit app started with PID 98645
+2025-03-06 15:05:30,884 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:05:30,892 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:05:30,892 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:05:30,893 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:06:30,899 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:06:30,899 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:06:30,899 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:06:30,904 - hyblock_monitor - INFO - Streamlit app started with PID 98710
+2025-03-06 15:06:30,904 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:06:30,910 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:06:30,910 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:06:30,911 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:07:30,921 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:07:30,922 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:07:30,922 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:07:30,931 - hyblock_monitor - INFO - Streamlit app started with PID 98776
+2025-03-06 15:07:30,932 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:07:30,943 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:07:30,943 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:07:30,944 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:08:30,954 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:08:30,954 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:08:30,954 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:08:30,956 - hyblock_monitor - INFO - Streamlit app started with PID 98845
+2025-03-06 15:08:30,956 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:08:30,961 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:08:30,961 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:08:30,962 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:09:30,972 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:09:30,973 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:09:30,974 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:09:30,980 - hyblock_monitor - INFO - Streamlit app started with PID 98907
+2025-03-06 15:09:30,981 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:09:30,987 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:09:30,987 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:09:30,987 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:10:31,055 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:10:31,055 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:10:31,055 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:10:31,061 - hyblock_monitor - INFO - Streamlit app started with PID 98980
+2025-03-06 15:10:31,062 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:10:31,071 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:10:31,071 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:10:31,072 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:11:31,108 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:11:31,109 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:11:31,109 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:11:31,115 - hyblock_monitor - INFO - Streamlit app started with PID 99058
+2025-03-06 15:11:31,116 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:11:31,123 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:11:31,123 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:11:31,124 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:12:31,146 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:12:31,147 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:12:31,147 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:12:31,152 - hyblock_monitor - INFO - Streamlit app started with PID 99115
+2025-03-06 15:12:31,152 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:12:31,159 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:12:31,159 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:12:31,159 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:13:31,246 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:13:31,246 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:13:31,247 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:13:31,252 - hyblock_monitor - INFO - Streamlit app started with PID 99177
+2025-03-06 15:13:31,253 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:13:31,259 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:13:31,259 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:13:31,260 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:14:31,285 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:14:31,286 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:14:31,286 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:14:31,291 - hyblock_monitor - INFO - Streamlit app started with PID 99243
+2025-03-06 15:14:31,292 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:14:31,299 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:14:31,300 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:14:31,300 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:15:31,324 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:15:31,325 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:15:31,325 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:15:31,331 - hyblock_monitor - INFO - Streamlit app started with PID 99303
+2025-03-06 15:15:31,332 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:15:31,340 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:15:31,340 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:15:31,341 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:30:00,491 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:30:00,492 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 1/3)
+2025-03-06 15:30:00,492 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:30:00,498 - hyblock_monitor - INFO - Streamlit app started with PID 99378
+2025-03-06 15:30:00,499 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:30:00,508 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:30:00,508 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:30:00,509 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:32:40,699 - hyblock_monitor - WARNING - Streamlit app is not running
+2025-03-06 15:32:40,699 - hyblock_monitor - INFO - Attempting to restart Streamlit app (attempt 2/3)
+2025-03-06 15:32:40,699 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:32:40,705 - hyblock_monitor - INFO - Streamlit app started with PID 99461
+2025-03-06 15:32:40,705 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:32:40,712 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:32:40,712 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:32:40,713 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:32:58,308 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 15:32:58,309 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 15:32:58,309 - hyblock_monitor - INFO - Terminated data collector process (PID 97919)
+2025-03-06 15:32:58,310 - hyblock_monitor - INFO - Terminated Streamlit process (PID 99461)
+2025-03-06 15:32:58,310 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 15:32:58,310 - hyblock_monitor - INFO - Terminated data collector process (PID 97919)
+2025-03-06 15:32:58,310 - hyblock_monitor - INFO - Terminated Streamlit process (PID 99461)
+2025-03-06 15:33:00,301 - hyblock_monitor - INFO - Starting Hyblock system monitor...
+2025-03-06 15:33:00,301 - hyblock_monitor - INFO - Starting data collector...
+2025-03-06 15:33:00,302 - hyblock_monitor - INFO - Data collector started with PID 99539
+2025-03-06 15:33:00,302 - hyblock_monitor - INFO - Starting Streamlit app...
+2025-03-06 15:33:00,303 - hyblock_monitor - INFO - Streamlit app started with PID 99540
+2025-03-06 15:33:00,316 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 15:33:00,325 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 15:33:00,325 - database - DEBUG - Executing query: SELECT 1
+2025-03-06 15:33:00,326 - database - DEBUG - Query returned 1 rows
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Received signal 2, shutting down...
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Terminated data collector process (PID 99539)
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Terminated Streamlit process (PID 99540)
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Cleaning up processes...
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Terminated data collector process (PID 99539)
+2025-03-06 15:33:28,412 - hyblock_monitor - INFO - Terminated Streamlit process (PID 99540)

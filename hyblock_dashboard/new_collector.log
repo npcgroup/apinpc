@@ -1,0 +1,11 @@
+2025-03-05 19:47:57,764 - hyblock_collector - INFO - Testing database connection...
+2025-03-05 19:47:57,764 - database - INFO - Connecting to database at localhost:5432/hyblock_data as postgres
+2025-03-05 19:47:57,780 - database - INFO - Successfully connected to TimescaleDB
+2025-03-05 19:47:57,780 - hyblock_collector - INFO - Database connection successful
+2025-03-05 19:47:57,780 - hyblock_collector - INFO - Testing API connection...
+2025-03-05 19:47:57,780 - hyblock_collector - INFO - Getting new access token
+2025-03-05 19:47:57,992 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): auth-api.hyblockcapital.com:443
+2025-03-05 19:47:59,041 - urllib3.connectionpool - DEBUG - https://auth-api.hyblockcapital.com:443 "POST /oauth2/token HTTP/1.1" 400 None
+2025-03-05 19:47:59,043 - hyblock_collector - ERROR - Failed to get access token: 400 - {"error":"invalid_client"}
+2025-03-05 19:47:59,045 - hyblock_collector - ERROR - Failed to get access token. Check your CLIENT_ID and CLIENT_SECRET environment variables.
+2025-03-05 19:47:59,046 - hyblock_collector - ERROR - API connection test failed. Check your API key and network connection.

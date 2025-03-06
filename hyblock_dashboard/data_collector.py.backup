@@ -1,0 +1,1263 @@
+#!/usr/bin/env python3
+"""
+Hyblock Data Collector
+
+This script collects data from the Hyblock API for various crypto metrics
+and stores it in a PostgreSQL database.
+"""
+
+import os
+import sys
+import json
+import time
+import logging
+import requests
+import schedule
+from datetime import datetime, timedelta
+import concurrent.futures
+from typing import Dict, List, Any, Optional, Tuple
+import threading
+
+# Add parent directory to path to import utils
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.database import connect_to_database, execute_query, get_logger
+
+# Set up logger
+logger = get_logger("hyblock_collector")
+
+# Configuration
+API_BASE_URL = "https://api.hyblock.co/api/v1"
+API_KEY = os.environ.get("HYBLOCK_API_KEY", "")
+CATALOG_FILE = "hyblock_dashboard/catalog.json"
+MAX_WORKERS = 10  # Increased from 5 to 10 for better parallelization
+RATE_LIMIT_DELAY = 0.5  # Reduced from 1 to 0.5 seconds
+MAX_RETRIES = 3  # Maximum number of retries for failed API requests
+RETRY_DELAY = 2  # Base delay between retries in seconds
+
+# Metric categories and endpoints
+METRICS = {
+    "orderbook": [
+        "asksIncreaseDecrease",
+        "bidAsk",
+        "bidsIncreaseDecrease",
+        "bidAskRatio",
+        "bidAskDelta",
+        "bidAskRatioDiff",
+        "combinedBook",
+        "bidsAskSpread"
+    ],
+    "options": [
+        "bvol",
+        "dvol"
+    ],
+    "orderflow": [
+        "botTracker",
+        "buyVolume",
+        "klines",
+        "sellVolume",
+        "volumeDelta",
+        "anchoredCVD",
+        "marketOrderCount",
+        "limitOrderCount",
+        "marketOrderAverageSize",
+        "limitOrderAverageSize",
+        "pdLevels",
+        "pwLevels",
+        "pmLevels",
+        "slippage",
+        "transferofcontracts",
+        "participationratio"
+    ],
+    "open_interest": [
+        "openInterest",
+        "openInterestDelta",
+        "anchoredOIDelta",
+        "openInterestProfile"
+    ],
+    "liquidity": [
+        "cumulativeLiqLevel",
+        "liquidationLevels",
+        "liquidation",
+        "liquidationHeatmap",
+        "averageLeverageUsed",
+        "averageLeverageDelta",
+        "anchoredLLC",
+        "anchoredLLS",
+        "anchoredCLLCD",
+        "anchoredCLLSD"
+    ],
+    "funding_rate": [
+        "fundingRate"
+    ],
+    "long_short": [
+        "binanceGlobalAccounts",
+        "anchoredBinanceGlobalAccounts",
+        "binanceTopTraderAccounts",
+        "anchoredBinanceTopTraderAccounts",
+        "binanceTopTraderPositions",
+        "anchoredBinanceTopTraderPositions",
+        "binanceTrueRetailLongShort",
+        "binanceWhaleRetailDelta",
+        "anchoredBinanceWhaleRetailDelta",
+        "traderSentimentGap",
+        "whalePositionDominance",
+        "bybitGlobalAccounts",
+        "huobiTopTraderAccounts",
+        "huobiTopTraderAccountsQuarterly",
+        "huobiTopTraderPositions",
+        "huobiTopTraderPositionsQuarterly",
+        "netLongShort",
+        "anchoredCLS",
+        "netLongShortDelta",
+        "anchoredCLSD",
+        "okxGlobalAccounts",
+        "okxTopTraderAccounts",
+        "okxWhaleRetailDelta"
+    ],
+    "sentiment": [
+        "bitmexLeaderboardNotionalProfit",
+        "bitmexLeaderboardROEProfit",
+        "fearAndGreed",
+        "marginLendingRatio",
+        "trollbox",
+        "userBotRatio",
+        "stablecoinPremiumP2P",
+        "wbtcMintBurn"
+    ],
+    "profile": [
+        "openInterestProfile",
+        "volumeProfile"
+    ],
+    "catalog": [
+        "catalog"
+    ],
+    "api_usage": [
+        "remainingHitBalance"
+    ]
+}
+
+# Timeframes to collect data for
+TIMEFRAMES = ["1m", "5m", "15m", "1h", "4h", "1d"]
+
+# Exchanges with good API support
+PRIORITY_EXCHANGES = [
+    "binance",
+    "bybit",
+    "coinbase",
+    "deribit",
+    "okx"
+]
+
+# Database connection pool
+db_connection_pool = []
+DB_POOL_SIZE = 5  # Number of database connections to keep in the pool
+DB_POOL_LOCK = threading.Lock()
+
+# Initialize connection pool
+def init_db_pool():
+    """Initialize the database connection pool"""
+    global db_connection_pool
+    with DB_POOL_LOCK:
+        for _ in range(DB_POOL_SIZE):
+            conn = connect_to_database()
+            if conn:
+                db_connection_pool.append(conn)
+                logger.debug(f"Added connection to pool, size: {len(db_connection_pool)}")
+            else:
+                logger.error("Failed to create database connection for pool")
+
+# Get a connection from the pool
+def get_db_connection():
+    """Get a database connection from the pool or create a new one if needed"""
+    global db_connection_pool
+    conn = None
+    with DB_POOL_LOCK:
+        if db_connection_pool:
+            conn = db_connection_pool.pop()
+            logger.debug(f"Got connection from pool, remaining: {len(db_connection_pool)}")
+        else:
+            logger.debug("Pool empty, creating new connection")
+    
+    if not conn:
+        conn = connect_to_database()
+    
+    return conn
+
+# Return a connection to the pool
+def return_db_connection(conn):
+    """Return a database connection to the pool"""
+    global db_connection_pool
+    if not conn:
+        return
+    
+    try:
+        # Test if connection is still valid
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1")
+            cur.fetchone()
+        
+        # Connection is valid, return to pool
+        with DB_POOL_LOCK:
+            if len(db_connection_pool) < DB_POOL_SIZE:
+                db_connection_pool.append(conn)
+                logger.debug(f"Returned connection to pool, size: {len(db_connection_pool)}")
+            else:
+                conn.close()
+                logger.debug("Pool full, closed connection")
+    except Exception as e:
+        # Connection is invalid, close it
+        logger.warning(f"Invalid connection, closing: {e}")
+        try:
+            conn.close()
+        except:
+            pass
+
+def load_catalog() -> Dict[str, List[str]]:
+    """Load the catalog of available coins for each exchange."""
+    try:
+        if not os.path.exists(CATALOG_FILE):
+            logger.warning(f"Catalog file not found: {CATALOG_FILE}")
+            return {}
+        
+        with open(CATALOG_FILE, 'r') as f:
+            catalog_data = json.load(f)
+        
+        return catalog_data.get("data", {})
+    except Exception as e:
+        logger.error(f"Error loading catalog: {e}")
+        return {}
+
+def get_api_usage() -> Dict[str, Any]:
+    """Get the current API usage and remaining hits."""
+    try:
+        url = f"{API_BASE_URL}/remainingHitBalance"
+        headers = {"x-api-key": API_KEY}
+        
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            
+            # Store API usage in database
+            conn = get_db_connection()
+            if conn:
+                try:
+                    query = """
+                        INSERT INTO api_usage (endpoint, remaining_hits, reset_time)
+                        VALUES (%s, %s, %s)
+                    """
+                    
+                    reset_time = datetime.fromtimestamp(data.get("resetTime", 0) / 1000)
+                    params = ("remainingHitBalance", data.get("remainingHits", 0), reset_time)
+                    
+                    execute_query(conn, query, params, fetch=False)
+                finally:
+                    # Return the connection to the pool
+                    return_db_connection(conn)
+            
+            return data
+        else:
+            logger.error(f"Failed to get API usage: {response.status_code} - {response.text}")
+            return {}
+    except Exception as e:
+        logger.error(f"Error getting API usage: {e}")
+        return {}
+
+def fetch_data(endpoint: str, coin: str, exchange: str = None, timeframe: str = None) -> Optional[Dict[str, Any]]:
+    """Fetch data from the Hyblock API for a specific endpoint, coin, exchange, and timeframe."""
+    max_retries = 3
+    retry_delay = 2  # seconds
+    backoff_factor = 2  # for exponential backoff
+    
+    for attempt in range(max_retries):
+        try:
+            url = f"{API_BASE_URL}/{endpoint}"
+            headers = {"x-api-key": API_KEY}
+            params = {"coin": coin}
+            
+            if exchange:
+                params["exchange"] = exchange
+            
+            if timeframe:
+                params["timeframe"] = timeframe
+            
+            logger.debug(f"Fetching data for {endpoint} - {coin} - {exchange} - {timeframe}")
+            response = requests.get(
+                url, 
+                headers=headers, 
+                params=params,
+                timeout=30  # Set timeout to avoid hanging requests
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                return data
+            elif response.status_code == 429:  # Rate limit exceeded
+                retry_after = int(response.headers.get("Retry-After", retry_delay * backoff_factor ** attempt))
+                logger.warning(f"Rate limit exceeded for {endpoint} - {coin} - {exchange} - {timeframe}. Retrying after {retry_after} seconds.")
+                time.sleep(retry_after)
+                continue
+            elif response.status_code >= 500:  # Server error, retry
+                if attempt < max_retries - 1:
+                    logger.warning(f"Server error ({response.status_code}) for {endpoint} - {coin} - {exchange} - {timeframe}. Retrying in {retry_delay * backoff_factor ** attempt} seconds.")
+                    time.sleep(retry_delay * backoff_factor ** attempt)
+                    continue
+                else:
+                    logger.error(f"Failed to fetch data after {max_retries} attempts for {endpoint} - {coin} - {exchange} - {timeframe}: {response.status_code} - {response.text}")
+                    return None
+            else:
+                logger.warning(f"Failed to fetch data for {endpoint} - {coin} - {exchange} - {timeframe}: {response.status_code} - {response.text}")
+                return None
+        except requests.exceptions.Timeout:
+            logger.warning(f"Request timeout for {endpoint} - {coin} - {exchange} - {timeframe}. Attempt {attempt + 1}/{max_retries}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay * backoff_factor ** attempt)
+                continue
+            else:
+                logger.error(f"Request timed out after {max_retries} attempts for {endpoint} - {coin} - {exchange} - {timeframe}")
+                return None
+        except requests.exceptions.ConnectionError:
+            logger.warning(f"Connection error for {endpoint} - {coin} - {exchange} - {timeframe}. Attempt {attempt + 1}/{max_retries}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay * backoff_factor ** attempt)
+                continue
+            else:
+                logger.error(f"Connection error after {max_retries} attempts for {endpoint} - {coin} - {exchange} - {timeframe}")
+                return None
+        except Exception as e:
+            logger.error(f"Error fetching data for {endpoint} - {coin} - {exchange} - {timeframe}: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay * backoff_factor ** attempt)
+                continue
+            else:
+                return None
+    
+    return None
+
+def store_data_in_hyblock_table(endpoint: str, coin: str, exchange: str, timeframe: str, data: Dict[str, Any]) -> bool:
+    """Store the raw data in the hyblock_data table."""
+    max_retries = 3
+    retry_delay = 2  # seconds
+    
+    for attempt in range(max_retries):
+        conn = None
+        try:
+            # Get a connection from the pool
+            conn = get_db_connection()
+            if not conn:
+                logger.error(f"Failed to get connection from pool on attempt {attempt + 1}/{max_retries}")
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    retry_delay *= 2  # Exponential backoff
+                    continue
+                return False
+            
+            # Determine market cap category
+            market_cap_category = get_market_cap_category(coin)
+            
+            # Convert timestamps if present in the data
+            if isinstance(data, dict) and "data" in data and isinstance(data["data"], list):
+                for item in data["data"]:
+                    if "openDate" in item and isinstance(item["openDate"], int):
+                        # Convert Unix timestamp in milliseconds to datetime string
+                        try:
+                            dt = datetime.fromtimestamp(item["openDate"] / 1000)
+                            item["timestamp"] = dt.isoformat()
+                        except (ValueError, OverflowError):
+                            # Handle invalid timestamps
+                            pass
+            
+            query = """
+                INSERT INTO hyblock_data (endpoint, coin, exchange, timeframe, market_cap_category, data)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                ON CONFLICT (endpoint, coin, exchange, timeframe, timestamp)
+                DO UPDATE SET data = EXCLUDED.data
+            """
+            
+            params = (
+                endpoint,
+                coin,
+                exchange,
+                timeframe,
+                market_cap_category,
+                json.dumps(data)
+            )
+            
+            # Use execute_query with the connection from the pool
+            result = execute_query(conn, query, params, fetch=False)
+            
+            if result:
+                logger.debug(f"Successfully stored {endpoint} data for {coin} on {exchange} ({timeframe})")
+                return True
+            else:
+                logger.warning(f"Failed to store {endpoint} data for {coin} on {exchange} ({timeframe})")
+                if attempt < max_retries - 1:
+                    time.sleep(retry_delay)
+                    retry_delay *= 2
+                    continue
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error storing data in hyblock_data table (attempt {attempt + 1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+                retry_delay *= 2
+                continue
+            return False
+        finally:
+            # Always return the connection to the pool if it exists
+            if conn:
+                return_db_connection(conn)
+    
+    return False
+
+def process_orderbook_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store orderbook data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO orderbook_data (
+                    coin, exchange, bid_price, ask_price, bid_size, ask_size, bid_ask_ratio, spread
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    bid_price = EXCLUDED.bid_price,
+                    ask_price = EXCLUDED.ask_price,
+                    bid_size = EXCLUDED.bid_size,
+                    ask_size = EXCLUDED.ask_size,
+                    bid_ask_ratio = EXCLUDED.bid_ask_ratio,
+                    spread = EXCLUDED.spread
+            """
+            
+            params = (
+                coin,
+                exchange,
+                latest.get("bidPrice"),
+                latest.get("askPrice"),
+                latest.get("bidSize"),
+                latest.get("askSize"),
+                latest.get("bidAskRatio"),
+                latest.get("spread")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing orderbook data: {e}")
+        return False
+
+def process_options_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store options data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO options_data (
+                    coin, exchange, bvol, dvol, term_structure
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    bvol = EXCLUDED.bvol,
+                    dvol = EXCLUDED.dvol,
+                    term_structure = EXCLUDED.term_structure
+            """
+            
+            params = (
+                coin,
+                exchange,
+                latest.get("bvol"),
+                latest.get("dvol"),
+                json.dumps(latest.get("termStructure", {}))
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing options data: {e}")
+        return False
+
+def process_orderflow_data(coin: str, exchange: str, timeframe: str, data: Dict[str, Any]) -> bool:
+    """Process and store orderflow data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO orderflow_data (
+                    coin, exchange, timeframe, buy_volume, sell_volume, volume_delta, market_orders, limit_orders
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timeframe, timestamp)
+                DO UPDATE SET 
+                    buy_volume = EXCLUDED.buy_volume,
+                    sell_volume = EXCLUDED.sell_volume,
+                    volume_delta = EXCLUDED.volume_delta,
+                    market_orders = EXCLUDED.market_orders,
+                    limit_orders = EXCLUDED.limit_orders
+            """
+            
+            params = (
+                coin,
+                exchange,
+                timeframe,
+                latest.get("buyVolume"),
+                latest.get("sellVolume"),
+                latest.get("volumeDelta"),
+                latest.get("marketOrders"),
+                latest.get("limitOrders")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing orderflow data: {e}")
+        return False
+
+def process_open_interest_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store open interest data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO open_interest_data (
+                    coin, exchange, open_interest, open_interest_delta, open_interest_usd
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    open_interest = EXCLUDED.open_interest,
+                    open_interest_delta = EXCLUDED.open_interest_delta,
+                    open_interest_usd = EXCLUDED.open_interest_usd
+            """
+            
+            params = (
+                coin,
+                exchange,
+                latest.get("openInterest"),
+                latest.get("openInterestDelta"),
+                latest.get("openInterestUsd")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing open interest data: {e}")
+        return False
+
+def process_liquidity_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store liquidity data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO liquidity_data (
+                    coin, exchange, liquidation_levels, average_leverage, liquidity_score
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    liquidation_levels = EXCLUDED.liquidation_levels,
+                    average_leverage = EXCLUDED.average_leverage,
+                    liquidity_score = EXCLUDED.liquidity_score
+            """
+            
+            liquidation_levels = latest.get("liquidationLevels", {})
+            
+            params = (
+                coin,
+                exchange,
+                json.dumps(liquidation_levels) if liquidation_levels else None,
+                latest.get("averageLeverage"),
+                latest.get("liquidityScore")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing liquidity data: {e}")
+        return False
+
+def process_funding_rate_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store funding rate data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO funding_rate_data (
+                    coin, exchange, funding_rate, next_funding_time, predicted_funding_rate
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    funding_rate = EXCLUDED.funding_rate,
+                    next_funding_time = EXCLUDED.next_funding_time,
+                    predicted_funding_rate = EXCLUDED.predicted_funding_rate
+            """
+            
+            next_funding_time = None
+            if "nextFundingTime" in latest:
+                try:
+                    next_funding_time = datetime.fromtimestamp(latest["nextFundingTime"] / 1000)
+                except:
+                    pass
+            
+            params = (
+                coin,
+                exchange,
+                latest.get("fundingRate"),
+                next_funding_time,
+                latest.get("predictedFundingRate")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing funding rate data: {e}")
+        return False
+
+def process_long_short_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store long/short data."""
+    try:
+        if not data or "data" not in data:
+            return False
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            data_points = data["data"]
+            if not isinstance(data_points, list) or not data_points:
+                return False
+            
+            # Get the latest data point
+            latest = data_points[0]
+            
+            query = """
+                INSERT INTO long_short_data (
+                    coin, exchange, long_positions, short_positions, net_long_short, 
+                    net_long_short_delta, long_short_ratio
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET 
+                    long_positions = EXCLUDED.long_positions,
+                    short_positions = EXCLUDED.short_positions,
+                    net_long_short = EXCLUDED.net_long_short,
+                    net_long_short_delta = EXCLUDED.net_long_short_delta,
+                    long_short_ratio = EXCLUDED.long_short_ratio
+            """
+            
+            params = (
+                coin,
+                exchange,
+                latest.get("longPositions"),
+                latest.get("shortPositions"),
+                latest.get("netLongShort"),
+                latest.get("netLongShortDelta"),
+                latest.get("longShortRatio")
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing long/short data: {e}")
+        return False
+
+def process_sentiment_data(coin: str, data: Dict[str, Any]) -> bool:
+    """Process and store sentiment data."""
+    try:
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            # Extract data
+            timestamp = datetime.now()
+            fear_greed_value = None
+            fear_greed_classification = None
+            margin_lending_ratio = None
+            user_bot_ratio = None
+            bitmex_leaderboard_notional_profit = None
+            bitmex_leaderboard_roe_profit = None
+            trollbox_sentiment = None
+            stablecoin_premium_p2p = None
+            wbtc_mint_burn = None
+            
+            if "fearAndGreed" in data:
+                fear_greed_data = data.get("fearAndGreed", {})
+                fear_greed_value = fear_greed_data.get("value")
+                fear_greed_classification = fear_greed_data.get("classification")
+            
+            if "marginLendingRatio" in data:
+                margin_lending_ratio = data.get("marginLendingRatio", {}).get("value")
+            
+            if "userBotRatio" in data:
+                user_bot_ratio = data.get("userBotRatio", {}).get("value")
+            
+            if "bitmexLeaderboardNotionalProfit" in data:
+                bitmex_leaderboard_notional_profit = json.dumps(data.get("bitmexLeaderboardNotionalProfit", {}))
+            
+            if "bitmexLeaderboardROEProfit" in data:
+                bitmex_leaderboard_roe_profit = json.dumps(data.get("bitmexLeaderboardROEProfit", {}))
+            
+            if "trollbox" in data:
+                trollbox_sentiment = json.dumps(data.get("trollbox", {}))
+            
+            if "stablecoinPremiumP2P" in data:
+                stablecoin_premium_p2p = data.get("stablecoinPremiumP2P", {}).get("value")
+            
+            if "wbtcMintBurn" in data:
+                wbtc_mint_burn = json.dumps(data.get("wbtcMintBurn", {}))
+            
+            # Insert or update data
+            query = """
+                INSERT INTO sentiment_data (
+                    coin, timestamp, fear_greed_value, fear_greed_classification,
+                    margin_lending_ratio, user_bot_ratio, bitmex_leaderboard_notional_profit,
+                    bitmex_leaderboard_roe_profit, trollbox_sentiment, stablecoin_premium_p2p,
+                    wbtc_mint_burn
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (coin, timestamp)
+                DO UPDATE SET
+                    fear_greed_value = EXCLUDED.fear_greed_value,
+                    fear_greed_classification = EXCLUDED.fear_greed_classification,
+                    margin_lending_ratio = EXCLUDED.margin_lending_ratio,
+                    user_bot_ratio = EXCLUDED.user_bot_ratio,
+                    bitmex_leaderboard_notional_profit = EXCLUDED.bitmex_leaderboard_notional_profit,
+                    bitmex_leaderboard_roe_profit = EXCLUDED.bitmex_leaderboard_roe_profit,
+                    trollbox_sentiment = EXCLUDED.trollbox_sentiment,
+                    stablecoin_premium_p2p = EXCLUDED.stablecoin_premium_p2p,
+                    wbtc_mint_burn = EXCLUDED.wbtc_mint_burn
+            """
+            
+            params = (
+                coin, timestamp, fear_greed_value, fear_greed_classification,
+                margin_lending_ratio, user_bot_ratio, bitmex_leaderboard_notional_profit,
+                bitmex_leaderboard_roe_profit, trollbox_sentiment, stablecoin_premium_p2p,
+                wbtc_mint_burn
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing sentiment data: {e}")
+        return False
+
+def process_profile_data(coin: str, exchange: str, data: Dict[str, Any]) -> bool:
+    """Process and store profile data."""
+    try:
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            # Extract data
+            timestamp = datetime.now()
+            open_interest_profile = None
+            volume_profile = None
+            
+            if "openInterestProfile" in data:
+                open_interest_profile = json.dumps(data.get("openInterestProfile", {}))
+            
+            if "volumeProfile" in data:
+                volume_profile = json.dumps(data.get("volumeProfile", {}))
+            
+            # Insert or update data
+            query = """
+                INSERT INTO profile_data (
+                    coin, exchange, timestamp, open_interest_profile, volume_profile
+                )
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (coin, exchange, timestamp)
+                DO UPDATE SET
+                    open_interest_profile = EXCLUDED.open_interest_profile,
+                    volume_profile = EXCLUDED.volume_profile
+            """
+            
+            params = (
+                coin, exchange, timestamp, open_interest_profile, volume_profile
+            )
+            
+            result = execute_query(conn, query, params, fetch=False)
+            return result
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error processing profile data: {e}")
+        return False
+
+def get_market_cap_category(coin: str) -> Optional[str]:
+    """Get the market cap category for a coin from the database."""
+    try:
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return None
+        
+        try:
+            query = """
+                SELECT category
+                FROM market_cap_categories
+                WHERE coin = %s
+            """
+            
+            results = execute_query(conn, query, (coin,), fetch=True)
+            
+            if results and results[0]:
+                return results[0][0]
+            return None
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error getting market cap category: {e}")
+        return None
+
+def update_market_cap_categories() -> bool:
+    """Update market cap categories for all coins."""
+    try:
+        # Define market cap categories
+        large_cap = ["BTC", "ETH"]
+        mid_cap = ["SOL", "XRP", "BNB", "ADA", "DOGE", "AVAX", "DOT", "LINK", "MATIC", "UNI"]
+        # All other coins are considered small cap
+        
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool")
+            return False
+        
+        try:
+            # Get all coins from the catalog
+            catalog = load_catalog()
+            all_coins = set()
+            
+            for exchange, coins in catalog.items():
+                all_coins.update(coins)
+            
+            # Update categories
+            for coin in all_coins:
+                category = "large_cap" if coin in large_cap else "mid_cap" if coin in mid_cap else "small_cap"
+                
+                query = """
+                    INSERT INTO market_cap_categories (coin, category)
+                    VALUES (%s, %s)
+                    ON CONFLICT (coin)
+                    DO UPDATE SET 
+                        category = EXCLUDED.category,
+                        last_updated = NOW()
+                """
+                
+                execute_query(conn, query, (coin, category), fetch=False)
+            
+            return True
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error updating market cap categories: {e}")
+        return False
+
+def collect_data_for_coin_exchange(coin: str, exchange: str) -> None:
+    """Collect all metric data for a specific coin and exchange."""
+    logger.info(f"Collecting data for {coin} on {exchange}")
+    
+    # Track success rate for reporting
+    total_endpoints = 0
+    successful_endpoints = 0
+    
+    try:
+        # Collect orderbook data
+        for endpoint in METRICS["orderbook"]:
+            total_endpoints += 1
+            try:
+                data = fetch_data(endpoint, coin, exchange)
+                if data:
+                    if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                        successful_endpoints += 1
+                    if endpoint == "bidAsk":
+                        process_orderbook_data(coin, exchange, data)
+                time.sleep(RATE_LIMIT_DELAY)
+            except Exception as e:
+                logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect options data (only for certain exchanges)
+        if exchange in ["deribit", "binance", "okx"]:
+            for endpoint in METRICS["options"]:
+                total_endpoints += 1
+                try:
+                    data = fetch_data(endpoint, coin, exchange)
+                    if data:
+                        if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                            successful_endpoints += 1
+                        if endpoint == "bvol":
+                            process_options_data(coin, exchange, data)
+                    time.sleep(RATE_LIMIT_DELAY)
+                except Exception as e:
+                    logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect orderflow data
+        for timeframe in TIMEFRAMES:
+            for endpoint in METRICS["orderflow"]:
+                total_endpoints += 1
+                try:
+                    data = fetch_data(endpoint, coin, exchange, timeframe)
+                    if data:
+                        if store_data_in_hyblock_table(endpoint, coin, exchange, timeframe, data):
+                            successful_endpoints += 1
+                        if endpoint in ["buyVolume", "sellVolume"]:
+                            process_orderflow_data(coin, exchange, timeframe, data)
+                    time.sleep(RATE_LIMIT_DELAY)
+                except Exception as e:
+                    logger.error(f"Error collecting {endpoint} data for {coin} on {exchange} with timeframe {timeframe}: {e}")
+        
+        # Collect open interest data
+        for endpoint in METRICS["open_interest"]:
+            total_endpoints += 1
+            try:
+                data = fetch_data(endpoint, coin, exchange)
+                if data:
+                    if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                        successful_endpoints += 1
+                    if endpoint == "openInterest":
+                        process_open_interest_data(coin, exchange, data)
+                    elif endpoint in ["openInterestProfile"]:
+                        process_profile_data(coin, exchange, data)
+                time.sleep(RATE_LIMIT_DELAY)
+            except Exception as e:
+                logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect liquidity data
+        for endpoint in METRICS["liquidity"]:
+            total_endpoints += 1
+            try:
+                data = fetch_data(endpoint, coin, exchange)
+                if data:
+                    if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                        successful_endpoints += 1
+                    if endpoint == "liquidationLevels":
+                        process_liquidity_data(coin, exchange, data)
+                time.sleep(RATE_LIMIT_DELAY)
+            except Exception as e:
+                logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect funding rate data
+        for endpoint in METRICS["funding_rate"]:
+            total_endpoints += 1
+            try:
+                data = fetch_data(endpoint, coin, exchange)
+                if data:
+                    if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                        successful_endpoints += 1
+                    process_funding_rate_data(coin, exchange, data)
+                time.sleep(RATE_LIMIT_DELAY)
+            except Exception as e:
+                logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect long/short data
+        for endpoint in METRICS["long_short"]:
+            total_endpoints += 1
+            try:
+                data = fetch_data(endpoint, coin, exchange)
+                if data:
+                    if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                        successful_endpoints += 1
+                    if endpoint == "netLongShort":
+                        process_long_short_data(coin, exchange, data)
+                time.sleep(RATE_LIMIT_DELAY)
+            except Exception as e:
+                logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Collect profile data
+        for endpoint in METRICS["profile"]:
+            if endpoint != "openInterestProfile":  # Already collected in open_interest section
+                total_endpoints += 1
+                try:
+                    data = fetch_data(endpoint, coin, exchange)
+                    if data:
+                        if store_data_in_hyblock_table(endpoint, coin, exchange, None, data):
+                            successful_endpoints += 1
+                        process_profile_data(coin, exchange, data)
+                    time.sleep(RATE_LIMIT_DELAY)
+                except Exception as e:
+                    logger.error(f"Error collecting {endpoint} data for {coin} on {exchange}: {e}")
+        
+        # Report collection statistics
+        success_rate = (successful_endpoints / total_endpoints * 100) if total_endpoints > 0 else 0
+        logger.info(f"Data collection for {coin} on {exchange} completed: {successful_endpoints}/{total_endpoints} endpoints successful ({success_rate:.2f}%)")
+    
+    except Exception as e:
+        logger.error(f"Critical error during data collection for {coin} on {exchange}: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
+
+def collect_sentiment_data(coin: str) -> None:
+    """Collect sentiment data for a specific coin."""
+    logger.info(f"Collecting sentiment data for {coin}")
+    
+    for endpoint in METRICS["sentiment"]:
+        data = fetch_data(endpoint, coin)
+        if data:
+            store_data_in_hyblock_table(endpoint, coin, None, None, data)
+            process_sentiment_data(coin, data)
+        time.sleep(RATE_LIMIT_DELAY)
+
+def log_collection_stats():
+    """Log detailed statistics about collected data and database contents."""
+    try:
+        conn = get_db_connection()
+        if not conn:
+            logger.error("Failed to get connection from pool for statistics")
+            return
+        
+        try:
+            # Get total record counts for each table
+            tables = [
+                "hyblock_data", "orderbook_data", "options_data", "orderflow_data", 
+                "open_interest_data", "liquidity_data", "funding_rate_data", 
+                "long_short_data", "sentiment_data", "profile_data"
+            ]
+            
+            logger.info("=== DATABASE STATISTICS ===")
+            
+            for table in tables:
+                query = f"SELECT COUNT(*) FROM {table}"
+                result = execute_query(conn, query, fetch=True)
+                count = result[0][0] if result and result[0] else 0
+                logger.info(f"{table}: {count} records")
+            
+            # Get record counts by endpoint in hyblock_data
+            logger.info("=== ENDPOINT STATISTICS ===")
+            endpoint_query = """
+                SELECT endpoint, COUNT(*) 
+                FROM hyblock_data 
+                GROUP BY endpoint 
+                ORDER BY COUNT(*) DESC
+            """
+            
+            endpoint_results = execute_query(conn, endpoint_query, fetch=True)
+            for endpoint, count in endpoint_results:
+                logger.info(f"Endpoint {endpoint}: {count} records")
+        finally:
+            # Return the connection to the pool
+            return_db_connection(conn)
+    except Exception as e:
+        logger.error(f"Error logging collection stats: {e}")
+
+def run_data_collection() -> None:
+    """Run the data collection process."""
+    logger.info("Starting data collection")
+    
+    # Check API usage
+    api_usage = get_api_usage()
+    remaining_hits = api_usage.get("remainingHits", 0)
+    
+    logger.info(f"API hits remaining: {remaining_hits}")
+    if remaining_hits < 100:
+        logger.warning(f"Low API hits remaining: {remaining_hits}")
+        return
+    
+    # Update market cap categories
+    update_market_cap_categories()
+    
+    # Load catalog
+    catalog = load_catalog()
+    if not catalog:
+        logger.error("Failed to load catalog")
+        return
+    
+    # Include all exchanges from catalog.json, with priority to PRIORITY_EXCHANGES
+    all_exchanges = list(catalog.keys())
+    
+    # Sort exchanges to prioritize the ones in PRIORITY_EXCHANGES
+    exchange_priority = {exchange: idx for idx, exchange in enumerate(PRIORITY_EXCHANGES)}
+    sorted_exchanges = sorted(
+        all_exchanges, 
+        key=lambda x: exchange_priority.get(x, len(PRIORITY_EXCHANGES))
+    )
+    
+    # Important coins that should be processed for each exchange
+    priority_coins = [
+        "BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "DOT", "LINK", 
+        "PEPE", "SHIB", "MATIC", "LTC", "UNI", "OP", "ARB", "TON", "INJ", "NEAR"
+    ]
+    
+    # Process each exchange
+    for exchange in sorted_exchanges:
+        coins = catalog.get(exchange, [])
+        if not coins:
+            logger.warning(f"No coins found for exchange: {exchange}")
+            continue
+            
+        # Select coins to process for this exchange
+        # Prioritize important coins, then add extra coins if needed
+        coins_to_process = [coin for coin in priority_coins if coin in coins]
+        
+        # If we have less than 10 priority coins, add more from the catalog
+        if len(coins_to_process) < 10 and len(coins) > len(coins_to_process):
+            additional_coins = [c for c in coins if c not in coins_to_process]
+            # Add up to 10 total coins
+            coins_to_process.extend(additional_coins[:10 - len(coins_to_process)])
+        
+        if not coins_to_process:
+            logger.warning(f"No coins selected for exchange: {exchange}")
+            continue
+            
+        logger.info(f"Processing {len(coins_to_process)} coins for {exchange}: {', '.join(coins_to_process)}")
+        
+        # Use ThreadPoolExecutor for concurrent data collection
+        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            # Submit coin-exchange data collection tasks
+            for coin in coins_to_process:
+                executor.submit(collect_data_for_coin_exchange, coin, exchange)
+            
+            # Always collect sentiment data for important coins (doesn't depend on exchange)
+            # Use a set to avoid duplicate submissions
+            sentiment_coins = set(coins_to_process[:5])  # Limit to top 5 coins to save API hits
+            for coin in sentiment_coins:
+                executor.submit(collect_sentiment_data, coin)
+    
+    # Log detailed statistics after collection
+    log_collection_stats()
+    
+    logger.info("Data collection completed")
+
+def schedule_data_collection() -> None:
+    """Schedule regular data collection."""
+    # Run immediately on startup
+    run_data_collection()
+    
+    # Schedule to run every 15 minutes
+    schedule.every(15).minutes.do(run_data_collection)
+    
+    # Keep the script running
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+if __name__ == "__main__":
+    if not API_KEY:
+        logger.error("HYBLOCK_API_KEY environment variable not set")
+        sys.exit(1)
+    
+    try:
+        schedule_data_collection()
+    except KeyboardInterrupt:
+        logger.info("Data collection stopped by user")
+    except Exception as e:
+        logger.error(f"Error in data collection: {e}")
+        sys.exit(1) 

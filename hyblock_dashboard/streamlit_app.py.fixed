@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+"""
+Hyblock Data Dashboard
+
+This script provides a Streamlit dashboard for exploring and analyzing data from the Hyblock API.
+"""
+
+import os
+import sys
+import json
+import pandas as pd
+import numpy as np
+import streamlit as st
+import plotly.express as px
+import plotly.graph_objects as go
+from datetime import datetime, timedelta
+import time
+import re
+import logging
+
+# Add parent directory to path to import utils
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.database import connect_to_database, execute_query, get_logger
+
+# Set up logger
+logger = get_logger("streamlit_dashboard")
+
+# Set page config
+st.set_page_config(
+    page_title="Hyblock Data Dashboard",
+    page_icon="📊",
+    layout="wide"
+)
+
+# Title
+st.title("Hyblock Data Dashboard")
+st.markdown("Explore data from the Hyblock API")
+
+# Simple function to load available endpoints
+@st.cache_data(persist="disk")
+def load_endpoints():
+    """Load available endpoints from the database"""
+    try:
+        conn = connect_to_database()
+        if not conn:
+            return []
+        
+        query = "SELECT DISTINCT endpoint FROM hyblock_data ORDER BY endpoint"
+        
+        results = execute_query(conn, query)
+        conn.close()
+        
+        if not results:
+            return []
+        
+        endpoints = [result[0] for result in results]
+        return endpoints
+    except Exception as e:
+        logger.error(f"Error loading endpoints: {e}")
+        return []
+
+# Simple function to load available coins
+@st.cache_data(persist="disk")
+def load_coins():
+    """Load available coins from the database"""
+    try:
+        conn = connect_to_database()
+        if not conn:
+            return []
+        
+        query = "SELECT DISTINCT coin FROM hyblock_data ORDER BY coin"
+        
+        results = execute_query(conn, query)
+        conn.close()
+        
+        if not results:
+            return []
+        
+        coins = [result[0] for result in results]
+        return coins
+    except Exception as e:
+        logger.error(f"Error loading coins: {e}")
+        return []
+
+# Main function to load data
+@st.cache_data(persist="disk")
+def load_data(endpoint, coin, exchange, timeframe, time_range):
+    """Load data from the database based on selected filters"""
+    try:
+        conn = connect_to_database()
+        if not conn:
+            return None
+        
+        # Construct base query
+        query = f"""
+            SELECT * FROM hyblock_data 
+            WHERE endpoint = %s 
+            AND coin = %s 
+        """
+        
+        params = [endpoint, coin]
+        
+        # Add exchange filter if specified
+        if exchange:
+            query += "AND exchange = %s "
+            params.append(exchange)
+        
+        # Add timeframe filter if specified
+        if timeframe:
+            query += "AND timeframe = %s "
+            params.append(timeframe)
+        
+        # Add time range filter if specified
+        if time_range:
+            hours = {
+                "1 hour": 1,
+                "6 hours": 6,
+                "12 hours": 12,
+                "1 day": 24,
+                "3 days": 72,
+                "1 week": 168,
+                "1 month": 720
+            }
+            hours_value = hours.get(time_range, 24)
+            query += "AND timestamp > NOW() - INTERVAL %s HOUR "
+            params.append(hours_value)
+        
+        # Add order by
+        query += "ORDER BY timestamp DESC LIMIT 10000"
+        
+        results = execute_query(conn, query, params)
+        conn.close()
+        
+        if not results:
+            return None
+        
+        # Get column names
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM hyblock_data LIMIT 0")
+        columns = [desc[0] for desc in cursor.description]
+        
+        # Create DataFrame
+        df = pd.DataFrame(results, columns=columns)
+        
+        # Convert timestamp to datetime
+        if 'timestamp' in df.columns:
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+        
+        return df
+    except Exception as e:
+        logger.error(f"Error loading data: {e}")
+        return None
+
+# Main function
+def main():
+    # Sidebar for filters
+    st.sidebar.header("Filters")
+    
+    # Load available endpoints and coins
+    endpoints = load_endpoints()
+    coins = load_coins()
+    
+    # Select endpoint
+    endpoint = st.sidebar.selectbox("Select Endpoint", options=endpoints)
+    
+    # Select coin
+    coin = st.sidebar.selectbox("Select Coin", options=coins)
+    
+    # Load available exchanges and timeframes for the selected endpoint and coin
+    exchanges = ["All"]
+    timeframes = ["All"]
+    
+    # Select exchange
+    exchange = st.sidebar.selectbox("Select Exchange", options=exchanges)
+    exchange = None if exchange == "All" else exchange
+    
+    # Select timeframe
+    timeframe = st.sidebar.selectbox("Select Timeframe", options=timeframes)
+    timeframe = None if timeframe == "All" else timeframe
+    
+    # Select time range
+    time_range = st.sidebar.selectbox(
+        "Select Time Range",
+        options=["1 hour", "6 hours", "12 hours", "1 day", "3 days", "1 week", "1 month"]
+    )
+    
+    # Load data based on filters
+    data = load_data(endpoint, coin, exchange, timeframe, time_range)
+    
+    # Display data
+    if data is not None:
+        st.subheader(f"Data for {endpoint} - {coin}")
+        st.dataframe(data)
+        
+        # Plot data if timestamp column exists
+        if 'timestamp' in data.columns:
+            numeric_cols = data.select_dtypes(include=['number']).columns.tolist()
+            
+            if numeric_cols:
+                selected_col = st.selectbox("Select Column to Plot", options=numeric_cols)
+                
+                fig = px.line(data, x='timestamp', y=selected_col, title=f"{selected_col} over time")
+                st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.warning("No data found with the selected filters.")
+
+if __name__ == "__main__":
+    main() 

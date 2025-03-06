@@ -1,0 +1,62 @@
+{
+  "endpoint_exchange_compatibility": {
+    "dvol": {
+      "supported_exchanges": ["deribit"],
+      "supported_coins": ["BTC", "ETH"]
+    },
+    "bvol": {
+      "supported_exchanges": ["deribit", "binance"],
+      "supported_coins": ["BTC", "ETH"]
+    },
+    "fundingRate": {
+      "supported_exchanges": ["binance", "bybit", "okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "openInterest": {
+      "supported_exchanges": ["binance", "bybit", "okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "openInterestDelta": {
+      "supported_exchanges": ["binance", "bybit", "okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "binanceGlobalAccounts": {
+      "supported_exchanges": ["binance"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "binanceTopTraderAccounts": {
+      "supported_exchanges": ["binance"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "binanceTopTraderPositions": {
+      "supported_exchanges": ["binance"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "bybitGlobalAccounts": {
+      "supported_exchanges": ["bybit"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "okxGlobalAccounts": {
+      "supported_exchanges": ["okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "averageLeverageDelta": {
+      "supported_exchanges": ["binance", "bybit", "okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "liquidation": {
+      "supported_exchanges": ["binance", "bybit", "okx"],
+      "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE"]
+    },
+    "fearAndGreed": {
+      "supported_exchanges": ["all"],
+      "supported_coins": ["BTC"]
+    }
+  },
+  "default_compatibility": {
+    "supported_exchanges": ["binance", "bybit", "okx", "deribit", "coinbase"],
+    "supported_coins": ["BTC", "ETH", "SOL", "XRP", "BNB", "AVAX", "LINK", "DOT", "ADA", "DOGE", 
+                        "1000SATS", "1000SHIB", "1000PEPE", "1000FLOKI", "1000X", "1000CAT", 
+                        "1000BONK", "1000LUNC", "1000000MOG", "AAVE"]
+  }
+} 

@@ -1,0 +1,5 @@
+2025-03-05 19:23:56,160 - hyblock_collector - INFO - Starting data collection
+2025-03-05 19:23:56,165 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.hyblock.co:443
+2025-03-05 19:23:56,166 - hyblock_collector - ERROR - Error getting API usage: HTTPSConnectionPool(host='api.hyblock.co', port=443): Max retries exceeded with url: /api/v1/remainingHitBalance (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x104453820>: Failed to resolve 'api.hyblock.co' ([Errno 8] nodename nor servname provided, or not known)"))
+2025-03-05 19:23:56,166 - hyblock_collector - INFO - API hits remaining: 0
+2025-03-05 19:23:56,166 - hyblock_collector - WARNING - Low API hits remaining: 0

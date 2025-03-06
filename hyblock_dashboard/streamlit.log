@@ -1,0 +1,458 @@
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:34:11.710 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.712 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.713 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.713 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.714 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.714 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.715 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.715 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.716 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11.716 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:34:11,721 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:34:11,728 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:34:11,729 - streamlit_dashboard - DEBUG - Query: 
+            SELECT timestamp, data, market_cap_category
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+         AND exchange = %s AND timeframe = %s AND timestamp >= %s ORDER BY timestamp
+2025-03-06 09:34:11,729 - streamlit_dashboard - DEBUG - Parameters: ['anchoredCVD', 'ADA', 'No exchanges available', '1h', datetime.datetime(2025, 3, 5, 14, 34, 11, 721519)]
+2025-03-06 09:34:11,729 - database - DEBUG - Executing query: 
+            SELECT timestamp, data, market_cap_category
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+         AND exchange = %s AND timeframe = %s AND timestamp >= %s ORDER BY timestamp
+2025-03-06 09:34:11,729 - database - DEBUG - Query parameters: ['anchoredCVD', 'ADA', 'No exchanges available', '1h', datetime.datetime(2025, 3, 5, 14, 34, 11, 721519)]
+2025-03-06 09:34:11,731 - database - DEBUG - Query returned 0 rows
+2025-03-06 09:35:12.057 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.058 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.058 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.059 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.060 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.060 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.061 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.062 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.062 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:12.062 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.802 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.804 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.805 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.806 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.807 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.808 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.810 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.811 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.811 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56.812 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:35:56,818 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:35:56,823 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:35:56,823 - streamlit_dashboard - DEBUG - Query: 
+            SELECT timestamp, data, market_cap_category
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+         AND exchange = %s AND timeframe = %s AND timestamp >= %s ORDER BY timestamp
+2025-03-06 09:35:56,823 - streamlit_dashboard - DEBUG - Parameters: ['bidAsk', 'ADA', 'binance', '1h', datetime.datetime(2025, 3, 5, 14, 35, 56, 818847)]
+2025-03-06 09:35:56,823 - database - DEBUG - Executing query: 
+            SELECT timestamp, data, market_cap_category
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+         AND exchange = %s AND timeframe = %s AND timestamp >= %s ORDER BY timestamp
+2025-03-06 09:35:56,823 - database - DEBUG - Query parameters: ['bidAsk', 'ADA', 'binance', '1h', datetime.datetime(2025, 3, 5, 14, 35, 56, 818847)]
+2025-03-06 09:35:56,827 - database - DEBUG - Query returned 0 rows
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:38:07.701 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.702 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.703 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.703 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.704 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.704 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.705 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.705 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.706 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:38:07.706 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.017 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.018 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.019 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.019 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.020 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.021 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.023 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.023 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.024 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:39:08.024 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.324 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.325 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.326 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.326 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.327 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.327 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.329 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.329 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.330 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:08.330 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.187 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.189 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.190 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.190 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.192 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.193 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.196 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.197 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.197 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:40:47.198 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.572 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.574 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.576 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.577 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.579 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.579 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.581 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.582 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.583 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10.583 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:41:10,595 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-06 09:41:10,606 - database - INFO - Successfully connected to TimescaleDB
+2025-03-06 09:41:10,606 - database - DEBUG - Executing query: 
+            SELECT * FROM funding_rate_data
+            ORDER BY timestamp DESC
+            LIMIT 100
+        
+2025-03-06 09:41:10,610 - database - DEBUG - Query returned 0 rows
+2025-03-06 09:41:10,610 - database - DEBUG - Executing query: 
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name = 'funding_rate_data'
+            ORDER BY ordinal_position
+        
+2025-03-06 09:41:10,621 - database - DEBUG - Query returned 7 rows
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:47:54.585 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.587 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.587 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.588 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.588 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.589 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.590 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.590 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.590 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:47:54.591 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.864 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.865 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.865 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.866 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.867 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.867 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.868 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.868 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.869 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:48:54.869 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.160 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.160 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.161 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.161 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.162 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.162 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.163 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.164 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.164 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:49:55.164 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+
+  A new version of Streamlit is available.
+
+  See what's new at https://discuss.streamlit.io/c/announcements
+
+  Enter the following command to upgrade:
+  $ pip install streamlit --upgrade
+
+2025-03-06 09:50:03.156 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.158 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.159 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.159 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.160 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.160 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.161 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.162 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.162 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.162 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.384 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.384 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.385 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.385 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.386 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.386 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.387 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.388 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.388 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:03.388 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:50:31.622 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.624 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.624 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.625 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.625 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.625 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.626 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.627 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.627 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:31.628 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:50:51.031 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.033 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.033 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.034 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.034 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.035 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.036 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.036 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.036 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:50:51.037 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.329 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.330 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.331 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.331 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.333 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.333 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.334 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.335 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.335 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:51:51.336 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.650 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.651 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.651 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.652 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.653 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.653 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.655 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.655 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.656 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:52:51.656 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.924 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.925 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.926 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.927 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.927 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.928 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.929 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.930 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.930 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:53:51.931 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:54:13.324 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.326 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.326 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.327 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.327 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.328 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.329 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.329 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.329 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:54:13.330 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:55:57.214 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.216 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.216 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.216 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.217 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.217 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.218 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.219 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.219 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:55:57.220 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.481 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.483 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.484 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.485 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.486 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.486 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.489 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.489 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.490 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:56:14.491 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:57:38.782 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.784 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.784 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.784 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.785 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.785 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.786 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.787 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.787 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:57:38.788 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.145.190.201:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-06 09:58:55.561 The cached function 'load_endpoints_from_json' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.562 The cached function 'load_endpoints' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.563 The cached function 'load_coins' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.563 The cached function 'load_filters' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.564 The cached function 'load_market_cap_categories' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.564 The cached function 'load_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.565 The cached function 'get_all_tables' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.565 The cached function 'get_table_count' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.565 The cached function 'get_table_data' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+2025-03-06 09:58:55.566 The cached function 'execute_query_to_df' has a TTL that will be ignored. Persistent cached functions currently don't support TTL.
+  Stopping...
+  Stopping...
+  Stopping...
+2025-03-06 10:21:00.280 Port 8501 is already in use
+2025-03-06 10:22:00.202 Port 8501 is already in use
+2025-03-06 12:17:16.620 Port 8501 is already in use
+2025-03-06 12:18:16.463 Port 8501 is already in use
+2025-03-06 12:19:16.484 Port 8501 is already in use
+2025-03-06 12:20:16.505 Port 8501 is already in use
+2025-03-06 12:20:43.468 Port 8501 is already in use
+2025-03-06 12:21:25.007 Port 8501 is already in use
+2025-03-06 12:58:40.099 Port 8501 is already in use
+2025-03-06 13:45:04.971 Port 8501 is already in use
+2025-03-06 13:45:14.932 Port 8501 is already in use
+2025-03-06 14:55:30.935 Port 8501 is already in use
+2025-03-06 14:56:30.969 Port 8501 is already in use
+2025-03-06 14:57:30.910 Port 8501 is already in use
+2025-03-06 14:58:30.928 Port 8501 is already in use
+2025-03-06 14:59:30.942 Port 8501 is already in use
+2025-03-06 15:00:30.952 Port 8501 is already in use
+2025-03-06 15:01:30.974 Port 8501 is already in use
+2025-03-06 15:02:30.989 Port 8501 is already in use
+2025-03-06 15:03:31.003 Port 8501 is already in use
+2025-03-06 15:04:31.031 Port 8501 is already in use
+2025-03-06 15:05:31.048 Port 8501 is already in use
+2025-03-06 15:06:31.072 Port 8501 is already in use
+2025-03-06 15:07:31.097 Port 8501 is already in use
+2025-03-06 15:08:31.109 Port 8501 is already in use
+2025-03-06 15:09:31.145 Port 8501 is already in use
+2025-03-06 15:10:31.300 Port 8501 is already in use
+2025-03-06 15:11:31.283 Port 8501 is already in use
+2025-03-06 15:12:31.317 Port 8501 is already in use
+2025-03-06 15:13:31.413 Port 8501 is already in use
+2025-03-06 15:14:31.464 Port 8501 is already in use
+2025-03-06 15:15:31.498 Port 8501 is already in use
+2025-03-06 15:30:00.669 Port 8501 is already in use
+2025-03-06 15:32:40.945 Port 8501 is already in use
+2025-03-06 15:33:00.458 Port 8501 is already in use

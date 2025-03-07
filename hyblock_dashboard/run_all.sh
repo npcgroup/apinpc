@@ -77,7 +77,7 @@ export DB_NAME=${DB_NAME:-"hyblock_data"}
 export DB_USER=${DB_USER:-"postgres"}
 export DB_PASSWORD=${DB_PASSWORD:-"postgres"}
 export LOG_LEVEL=${LOG_LEVEL:-"INFO"}
-export STREAMLIT_SERVER_PORT=${STREAMLIT_SERVER_PORT:-"8501"}
+export STREAMLIT_SERVER_PORT=${STREAMLIT_SERVER_PORT:-"8505"}
 
 # Check if API key is set
 if [ "$HYBLOCK_API_KEY" = "your_api_key_here" ]; then
@@ -162,7 +162,7 @@ MONITOR_DASHBOARD_PID=$!
 
 # Start the Streamlit app
 print_success "Starting Hyblock Streamlit app..."
-streamlit run "$SCRIPT_DIR/streamlit_app.py" --server.port 8501 > "$SCRIPT_DIR/streamlit_app.log" 2>&1 &
+streamlit run "$SCRIPT_DIR/streamlit_app.py" --server.port 8505 > "$SCRIPT_DIR/streamlit_app.log" 2>&1 &
 STREAMLIT_PID=$!
 
 # Wait for the monitor to start the collector and Streamlit app
@@ -181,6 +181,13 @@ fi
 if ! is_process_running $MONITOR_DASHBOARD_PID; then
     print_error "Monitoring dashboard failed to start"
     cat "$SCRIPT_DIR/monitor_dashboard.log"
+    cleanup
+    exit 1
+fi
+
+if ! is_process_running $STREAMLIT_PID; then
+    print_error "Streamlit app failed to start"
+    cat "$SCRIPT_DIR/streamlit_app.log"
     cleanup
     exit 1
 fi

@@ -456,3 +456,165 @@
 2025-03-06 15:30:00.669 Port 8501 is already in use
 2025-03-06 15:32:40.945 Port 8501 is already in use
 2025-03-06 15:33:00.458 Port 8501 is already in use
+2025-03-06 16:58:03.791 Port 8501 is already in use
+2025-03-06 16:59:03.775 Port 8501 is already in use
+2025-03-06 17:00:03.802 Port 8501 is already in use
+2025-03-06 17:01:03.818 Port 8501 is already in use
+2025-03-06 17:02:03.841 Port 8501 is already in use
+2025-03-06 17:03:03.850 Port 8501 is already in use
+2025-03-06 17:04:03.877 Port 8501 is already in use
+2025-03-06 17:05:03.889 Port 8501 is already in use
+2025-03-06 17:06:03.910 Port 8501 is already in use
+2025-03-06 17:07:03.916 Port 8501 is already in use
+2025-03-06 17:08:03.933 Port 8501 is already in use
+2025-03-06 17:09:03.955 Port 8501 is already in use
+2025-03-06 17:10:03.974 Port 8501 is already in use
+2025-03-06 17:11:03.967 Port 8501 is already in use
+2025-03-06 17:12:03.990 Port 8501 is already in use
+2025-03-06 17:13:04.010 Port 8501 is already in use
+2025-03-06 17:14:04.025 Port 8501 is already in use
+2025-03-06 17:15:04.048 Port 8501 is already in use
+2025-03-06 17:16:04.046 Port 8501 is already in use
+2025-03-06 17:17:04.075 Port 8501 is already in use
+2025-03-06 17:57:38.292 Port 8501 is already in use
+2025-03-07 10:08:55.212 Port 8501 is already in use
+2025-03-07 10:09:32.738 Port 8501 is already in use
+2025-03-07 10:14:17.165 Port 8501 is already in use
+2025-03-07 10:16:09.519 Port 8501 is already in use
+2025-03-07 10:17:14.983 Port 8502 is already in use
+2025-03-07 10:17:34.401 Port 8505 is already in use
+2025-03-07 10:18:23.498 Port 8505 is already in use
+2025-03-07 10:18:50.713 Port 8505 is already in use
+2025-03-07 10:19:01.446 Port 8505 is already in use
+2025-03-07 10:19:18.085 Port 8505 is already in use
+2025-03-07 11:13:26.755 Port 8505 is already in use
+2025-03-07 11:14:26.887 Port 8505 is already in use
+2025-03-07 11:15:26.954 Port 8505 is already in use
+2025-03-07 11:16:27.047 Port 8505 is already in use
+2025-03-07 11:17:27.086 Port 8505 is already in use
+2025-03-07 11:18:27.168 Port 8505 is already in use
+2025-03-07 11:19:27.206 Port 8505 is already in use
+2025-03-07 11:20:27.255 Port 8505 is already in use
+2025-03-07 11:21:27.256 Port 8505 is already in use
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8505
+  Network URL: http://10.145.190.201:8505
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+  Stopping...
+  Stopping...
+Exception ignored in: <module 'threading' from '/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py'>
+Traceback (most recent call last):
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1525, in _shutdown
+    atexit_call()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/concurrent/futures/thread.py", line 31, in _python_exit
+    t.join()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1089, in join
+    self._wait_for_tstate_lock()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1105, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/bootstrap.py", line 44, in signal_handler
+    server.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/server/server.py", line 469, in stop
+    cli_util.print_to_cli("  Stopping...", fg="blue")
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/cli_util.py", line 34, in print_to_cli
+    click.secho(message, **kwargs)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/click/termui.py", line 603, in secho
+    def secho(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/bootstrap.py", line 44, in signal_handler
+    server.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/server/server.py", line 470, in stop
+    self._runtime.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/runtime/runtime.py", line 337, in stop
+    async_objs.eventloop.call_soon_threadsafe(stop_on_eventloop)
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 790, in call_soon_threadsafe
+    self._check_closed()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+2025-03-07 11:26:10.123 Port 8505 is already in use
+2025-03-07 11:27:10.180 Port 8505 is already in use
+2025-03-07 11:27:49.312 Port 8505 is already in use
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8505
+  Network URL: http://10.145.190.201:8505
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+  Stopping...
+  Stopping...
+Exception ignored in: <module 'threading' from '/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py'>
+Traceback (most recent call last):
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1525, in _shutdown
+    atexit_call()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/concurrent/futures/thread.py", line 31, in _python_exit
+    t.join()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1089, in join
+    self._wait_for_tstate_lock()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1105, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/bootstrap.py", line 44, in signal_handler
+    server.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/server/server.py", line 469, in stop
+    cli_util.print_to_cli("  Stopping...", fg="blue")
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/cli_util.py", line 34, in print_to_cli
+    click.secho(message, **kwargs)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/click/termui.py", line 634, in secho
+    return echo(message, file=file, nl=nl, err=err, color=color)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/click/utils.py", line 310, in echo
+    if should_strip_ansi(file, color):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/click/_compat.py", line 502, in should_strip_ansi
+    return not isatty(stream) and not _is_jupyter_kernel_output(stream)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/click/_compat.py", line 490, in _is_jupyter_kernel_output
+    while isinstance(stream, (_FixupStream, _NonClosingTextIOWrapper)):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/bootstrap.py", line 44, in signal_handler
+    server.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/server/server.py", line 470, in stop
+    self._runtime.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/runtime/runtime.py", line 337, in stop
+    async_objs.eventloop.call_soon_threadsafe(stop_on_eventloop)
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 790, in call_soon_threadsafe
+    self._check_closed()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+2025-03-07 11:31:14.919 Port 8505 is already in use
+2025-03-07 11:32:14.994 Port 8505 is already in use
+2025-03-07 11:33:15.033 Port 8505 is already in use
+2025-03-07 11:34:15.078 Port 8505 is already in use
+2025-03-07 11:35:15.106 Port 8505 is already in use
+2025-03-07 11:36:15.142 Port 8505 is already in use
+2025-03-07 11:37:15.164 Port 8505 is already in use
+2025-03-07 11:38:15.219 Port 8505 is already in use
+2025-03-07 11:39:15.270 Port 8505 is already in use
+2025-03-07 11:40:15.304 Port 8505 is already in use
+2025-03-07 11:41:15.344 Port 8505 is already in use
+2025-03-07 11:42:15.374 Port 8505 is already in use
+2025-03-07 11:43:15.418 Port 8505 is already in use
+2025-03-07 11:44:15.490 Port 8505 is already in use
+2025-03-07 11:45:15.494 Port 8505 is already in use
+2025-03-07 11:46:15.473 Port 8505 is already in use
+2025-03-07 11:47:15.513 Port 8505 is already in use
+2025-03-07 11:48:15.526 Port 8505 is already in use
+2025-03-07 11:49:15.587 Port 8505 is already in use
+2025-03-07 11:50:15.630 Port 8505 is already in use
+2025-03-07 11:51:15.683 Port 8505 is already in use
+2025-03-07 11:52:15.718 Port 8505 is already in use
+2025-03-07 11:53:15.774 Port 8505 is already in use
+2025-03-07 11:54:15.844 Port 8505 is already in use
+2025-03-07 11:55:15.866 Port 8505 is already in use
+2025-03-07 11:56:15.905 Port 8505 is already in use
+2025-03-07 11:57:15.947 Port 8505 is already in use
+2025-03-07 11:58:16.101 Port 8505 is already in use
+2025-03-07 11:59:16.126 Port 8505 is already in use

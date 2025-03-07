@@ -1,1 +1,97 @@
-2025-03-06 15:33:00.434 Port 8501 is already in use
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8505
+  Network URL: http://10.145.190.201:8505
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-03-07 11:31:29,779 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:29,792 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:29,792 - database - DEBUG - Executing query: 
+                SELECT DISTINCT coin
+                FROM hyblock_data
+                WHERE endpoint = %s
+                ORDER BY coin
+            
+2025-03-07 11:31:29,792 - database - DEBUG - Query parameters: ('anchoredCLLSD',)
+2025-03-07 11:31:29,821 - database - DEBUG - Query returned 7 rows
+2025-03-07 11:31:29,823 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:29,827 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:29,827 - database - DEBUG - Executing query: 
+            SELECT DISTINCT exchange
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+            ORDER BY exchange
+        
+2025-03-07 11:31:29,827 - database - DEBUG - Query parameters: ('anchoredCLLSD', 'AVAX')
+2025-03-07 11:31:29,835 - database - DEBUG - Query returned 1 rows
+2025-03-07 11:31:29,835 - database - DEBUG - Executing query: 
+            SELECT DISTINCT timeframe
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+            ORDER BY timeframe
+        
+2025-03-07 11:31:29,835 - database - DEBUG - Query parameters: ('anchoredCLLSD', 'AVAX')
+2025-03-07 11:31:29,835 - database - DEBUG - Query returned 6 rows
+2025-03-07 11:31:29,837 - streamlit_dashboard - INFO - Executing MCP query: 
+        SELECT *
+        FROM hyblock_data
+        WHERE endpoint = 'anchoredCLLSD'
+          AND coin = 'AVAX'
+          AND exchange = 'binance'
+          AND timeframe = '1m'
+        ORDER BY timestamp DESC
+        LIMIT 1
+    
+2025-03-07 11:31:29,838 - streamlit_dashboard - INFO - Using direct database connection for query
+2025-03-07 11:31:29,838 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:29,840 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:35,882 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:35,888 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:35,888 - database - DEBUG - Executing query: 
+            SELECT DISTINCT exchange
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+            ORDER BY exchange
+        
+2025-03-07 11:31:35,888 - database - DEBUG - Query parameters: ('anchoredCLLSD', 'BTC')
+2025-03-07 11:31:35,923 - database - DEBUG - Query returned 2 rows
+2025-03-07 11:31:35,924 - database - DEBUG - Executing query: 
+            SELECT DISTINCT timeframe
+            FROM hyblock_data
+            WHERE endpoint = %s AND coin = %s
+            ORDER BY timeframe
+        
+2025-03-07 11:31:35,924 - database - DEBUG - Query parameters: ('anchoredCLLSD', 'BTC')
+2025-03-07 11:31:35,924 - database - DEBUG - Query returned 6 rows
+2025-03-07 11:31:35,926 - streamlit_dashboard - INFO - Executing MCP query: 
+        SELECT *
+        FROM hyblock_data
+        WHERE endpoint = 'anchoredCLLSD'
+          AND coin = 'BTC'
+          AND exchange = 'binance'
+          AND timeframe = '1m'
+        ORDER BY timestamp DESC
+        LIMIT 1
+    
+2025-03-07 11:31:35,926 - streamlit_dashboard - INFO - Using direct database connection for query
+2025-03-07 11:31:35,927 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:35,929 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:43,608 - streamlit_dashboard - INFO - Executing MCP query: 
+        SELECT *
+        FROM hyblock_data
+        WHERE endpoint = 'anchoredCLLSD'
+          AND coin = 'BTC'
+          AND exchange = 'binance'
+          AND timeframe = '1d'
+        ORDER BY timestamp DESC
+        LIMIT 1
+    
+2025-03-07 11:31:43,608 - streamlit_dashboard - INFO - Using direct database connection for query
+2025-03-07 11:31:43,608 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:43,612 - database - INFO - Successfully connected to TimescaleDB
+  Stopping...

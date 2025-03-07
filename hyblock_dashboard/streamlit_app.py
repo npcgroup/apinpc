@@ -70,7 +70,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title and description
-st.title("🚀 Hyblock Data Dashboard")
+st.title("Hyblock Data Dashboard")
 st.markdown("Real-time monitoring of crypto data across multiple exchanges")
 
 # Load endpoints from JSON file
@@ -1008,8 +1008,6 @@ def add_database_explorer_section():
 # Function to display the main dashboard
 def display_dashboard():
     """Display the main dashboard with key metrics and charts"""
-    st.header("📊 Hyblock Data Dashboard")
-    st.markdown("Real-time monitoring of crypto data across multiple exchanges")
     
     # Sidebar filters for the dashboard
     st.sidebar.header("Data Filters")

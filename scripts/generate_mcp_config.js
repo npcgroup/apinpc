@@ -1,4 +1,8 @@
-{
+// Script to generate MCP configuration
+const fs = require('fs');
+const path = require('path');
+
+const mcpConfig = {
   "mcpServers": {
     "postgres": {
       "command": "npx",
@@ -125,4 +129,21 @@
       ]
     }
   }
-}
+};
+
+// Write the configuration to file
+const outputDir = path.resolve(__dirname, '../.cursor');
+const outputPath = path.join(outputDir, 'mcp.json');
+
+try {
+  // Create directory if it doesn't exist
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+  
+  // Write the file
+  fs.writeFileSync(outputPath, JSON.stringify(mcpConfig, null, 2));
+  console.log(`MCP configuration written to ${outputPath}`);
+} catch (error) {
+  console.error('Error writing MCP configuration:', error);
+} 

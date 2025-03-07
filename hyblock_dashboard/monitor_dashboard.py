@@ -220,7 +220,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title and description
-st.title("🔍 Hyblock Data Collection Monitor")
+st.title("Hyblock Data Collection Monitor")
 st.markdown("Monitor the status of data collection from the Hyblock API")
 
 # Function to get collection statistics
@@ -429,7 +429,7 @@ def get_recent_errors():
 # Function to display collection status
 def display_collection_status():
     """Display the collection status page."""
-    st.header("📊 Collection Status")
+    st.header("Collection Status")
     st.markdown("Overview of data collection across different endpoints")
     
     # Get collection stats

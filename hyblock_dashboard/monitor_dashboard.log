@@ -9,152 +9,42 @@
   $ xcode-select --install
   $ pip install watchdog
             
-2025-03-06 15:33:01.397 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 624, in main
-    display_collection_status()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 443, in display_collection_status
-    stats = get_collection_stats()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:03.692 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 626, in main
-    display_endpoint_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 533, in display_endpoint_coverage
-    coverage = get_endpoint_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:04.750 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 628, in main
-    display_exchange_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 547, in display_exchange_coverage
-    coverage = get_exchange_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:05,415 - monitor_dashboard - INFO - Executing MCP query: 
+2025-03-07 11:31:16,120 - monitor_dashboard - INFO - Executing MCP query: 
             SELECT 
-                coin, 
-                COUNT(DISTINCT endpoint) as endpoint_count,
-                COUNT(DISTINCT exchange) as exchange_count,
-                COUNT(DISTINCT timeframe) as timeframe_count,
-                COUNT(*) as record_count
+                endpoint, 
+                COUNT(*) as record_count,
+                MAX(timestamp) as latest_timestamp,
+                MIN(timestamp) as earliest_timestamp
             FROM 
                 hyblock_data
             GROUP BY 
-                coin
+                endpoint
             ORDER BY 
                 record_count DESC
         
-2025-03-06 15:33:05,415 - monitor_dashboard - INFO - Using direct database connection for query
-2025-03-06 15:33:05,415 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
-2025-03-06 15:33:05,423 - database - INFO - Successfully connected to TimescaleDB
-2025-03-06 15:33:07.845 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 628, in main
-    display_exchange_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 547, in display_exchange_coverage
-    coverage = get_exchange_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:13.856 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 626, in main
-    display_endpoint_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 533, in display_endpoint_coverage
-    coverage = get_endpoint_coverage()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:14.641 Uncaught app execution
-Traceback (most recent call last):
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 121, in exec_func_with_error_handling
-    result = func()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 593, in code_to_exec
-    exec(code, module.__dict__)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 643, in <module>
-    main()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 624, in main
-    display_collection_status()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/monitor_dashboard.py", line 443, in display_collection_status
-    stats = get_collection_stats()
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 217, in __call__
-    return self._get_or_create_cached_value(args, kwargs, spinner_message)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_utils.py", line 241, in _get_or_create_cached_value
-    cached_result = cache.read_result(value_key)
-  File "/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cache_data_api.py", line 637, in read_result
-    entry = pickle.loads(pickled_entry)
-AttributeError: Can't get attribute 'MultiCacheResults' on <module 'streamlit.runtime.caching.cached_message_replay' from '/Users/shaanp/Documents/GitHub/apinpc/hyblock_dashboard/venv/lib/python3.10/site-packages/streamlit/runtime/caching/cached_message_replay.py'>
-2025-03-06 15:33:16,455 - monitor_dashboard - INFO - Executing MCP query: 
-            SELECT 
-                timeframe, 
-                COUNT(DISTINCT endpoint) as endpoint_count,
-                COUNT(DISTINCT exchange) as exchange_count,
-                COUNT(DISTINCT coin) as coin_count,
-                COUNT(*) as record_count
-            FROM 
-                hyblock_data
-            GROUP BY 
-                timeframe
-            ORDER BY 
-                record_count DESC
-        
-2025-03-06 15:33:16,456 - monitor_dashboard - INFO - Using direct database connection for query
-2025-03-06 15:33:16,456 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
-2025-03-06 15:33:16,463 - database - INFO - Successfully connected to TimescaleDB
+2025-03-07 11:31:16,121 - monitor_dashboard - INFO - Using direct database connection for query
+2025-03-07 11:31:16,121 - database - INFO - Connecting to database at localhost:5432/hyblock_data as shaanp
+2025-03-07 11:31:16,129 - database - INFO - Successfully connected to TimescaleDB
   Stopping...
+  Stopping...
+Exception ignored in: <module 'threading' from '/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py'>
+Traceback (most recent call last):
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1525, in _shutdown
+    atexit_call()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/concurrent/futures/thread.py", line 31, in _python_exit
+    t.join()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1089, in join
+    self._wait_for_tstate_lock()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/threading.py", line 1105, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/bootstrap.py", line 44, in signal_handler
+    server.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/web/server/server.py", line 470, in stop
+    self._runtime.stop()
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/streamlit/runtime/runtime.py", line 337, in stop
+    async_objs.eventloop.call_soon_threadsafe(stop_on_eventloop)
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 790, in call_soon_threadsafe
+    self._check_closed()
+  File "/Users/shaanp/.pyenv/versions/3.10.0/lib/python3.10/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed

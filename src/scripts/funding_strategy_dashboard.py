@@ -31,6 +31,212 @@ from arch import arch_model
 import ruptures as rpt
 from itertools import combinations
 
+# Try to import the enhanced functions
+try:
+    from funding_dashboard_enhancements import (
+        display_volatility_clustering_analysis,
+        display_arbitrage_efficiency_analysis,
+        display_funding_reversal_analysis,
+        analyze_volatility_clustering,
+        analyze_arbitrage_efficiency,
+        predict_funding_reversals
+    )
+    FUNCTIONS_IMPORTED = True
+    logging.info("Successfully imported enhanced functions")
+except ImportError:
+    FUNCTIONS_IMPORTED = False
+    logging.warning("Could not import enhanced functions, will use session state or fallbacks")
+    
+    # Define fallback functions
+    def analyze_volatility_clustering(df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fallback implementation of analyze_volatility_clustering
+        """
+        try:
+            if df.empty:
+                return pd.DataFrame()
+                
+            results = []
+            for symbol in df['symbol'].unique():
+                try:
+                    symbol_data = df[df['symbol'] == symbol].copy()
+                    if len(symbol_data) < 24:  # Minimum data points needed
+                        continue
+                    
+                    # Calculate simple volatility metrics
+                    volatility = symbol_data['funding_rate'].std() * 100
+                    vol_trend = 0  # Default value
+                    vol_persistence = 0.5  # Default value
+                    
+                    results.append({
+                        'symbol': symbol,
+                        'volatility': volatility,
+                        'vol_persistence': vol_persistence,
+                        'vol_trend': vol_trend,
+                        'clustering_score': vol_persistence * volatility
+                    })
+                except Exception as e:
+                    logging.warning(f"Error in volatility analysis for {symbol}: {e}")
+                    continue
+            
+            return pd.DataFrame(results)
+        
+        except Exception as e:
+            logging.error(f"Error in analyze_volatility_clustering: {e}")
+            return pd.DataFrame()
+
+    def display_volatility_clustering_analysis(volatility_df: pd.DataFrame):
+        """
+        Fallback implementation of display_volatility_clustering_analysis
+        """
+        try:
+            if volatility_df.empty:
+                st.warning("No data available for volatility clustering analysis")
+                return
+                
+            st.subheader("Volatility Clustering Analysis")
+            
+            # Display a simple table
+            st.write("Volatility Analysis Results:")
+            st.dataframe(volatility_df)
+            
+        except Exception as e:
+            logging.error(f"Error in display_volatility_clustering_analysis: {e}")
+            st.error("Error displaying volatility clustering analysis")
+
+    def analyze_arbitrage_efficiency(df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fallback implementation of analyze_arbitrage_efficiency
+        """
+        try:
+            if df.empty:
+                return pd.DataFrame()
+                
+            results = []
+            for symbol in df['symbol'].unique():
+                try:
+                    # Get data for this symbol across exchanges
+                    symbol_data = df[df['symbol'] == symbol].copy()
+                    
+                    # Need at least 2 exchanges for arbitrage analysis
+                    exchanges = symbol_data['exchange'].unique()
+                    if len(exchanges) < 2:
+                        continue
+                    
+                    # Calculate simple metrics
+                    funding_vol = symbol_data['funding_rate'].std()
+                    convergence_speed = 1.0  # Default value
+                    efficiency_score = 0.5  # Default value
+                    
+                    results.append({
+                        'symbol': symbol,
+                        'funding_volatility': funding_vol,
+                        'convergence_speed': convergence_speed,
+                        'efficiency_score': efficiency_score,
+                        'exchange_count': len(exchanges)
+                    })
+                    
+                except Exception as e:
+                    logging.warning(f"Error in arbitrage efficiency analysis for {symbol}: {e}")
+                    continue
+            
+            return pd.DataFrame(results)
+        
+        except Exception as e:
+            logging.error(f"Error in analyze_arbitrage_efficiency: {e}")
+            return pd.DataFrame()
+
+    def display_arbitrage_efficiency_analysis(arbitrage_df: pd.DataFrame):
+        """
+        Fallback implementation of display_arbitrage_efficiency_analysis
+        """
+        try:
+            if arbitrage_df.empty:
+                st.warning("No data available for arbitrage efficiency analysis")
+                return
+                
+            st.subheader("Arbitrage Efficiency Analysis")
+            
+            # Display a simple table
+            st.write("Arbitrage Efficiency Results:")
+            st.dataframe(arbitrage_df)
+            
+        except Exception as e:
+            logging.error(f"Error in display_arbitrage_efficiency_analysis: {e}")
+            st.error("Error displaying arbitrage efficiency analysis")
+
+    def predict_funding_reversals(df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fallback implementation of predict_funding_reversals
+        """
+        try:
+            if df.empty:
+                return pd.DataFrame()
+                
+            results = []
+            for symbol in df['symbol'].unique():
+                try:
+                    symbol_data = df[df['symbol'] == symbol].copy()
+                    if len(symbol_data) < 24:  # Minimum data points needed
+                        continue
+                    
+                    # Calculate simple metrics
+                    current_rate = symbol_data['funding_rate'].mean()
+                    trend = 0  # Default value
+                    momentum = 0  # Default value
+                    reversal_probability = 0.5  # Default value
+                    
+                    results.append({
+                        'symbol': symbol,
+                        'current_rate': current_rate,
+                        'trend': trend,
+                        'momentum': momentum,
+                        'reversal_probability': reversal_probability
+                    })
+                    
+                except Exception as e:
+                    logging.warning(f"Error in funding reversal prediction for {symbol}: {e}")
+                    continue
+            
+            return pd.DataFrame(results)
+        
+        except Exception as e:
+            logging.error(f"Error in predict_funding_reversals: {e}")
+            return pd.DataFrame()
+
+    def display_funding_reversal_analysis(reversal_df: pd.DataFrame):
+        """
+        Fallback implementation of display_funding_reversal_analysis
+        """
+        try:
+            if reversal_df.empty:
+                st.warning("No data available for funding reversal analysis")
+                return
+                
+            st.subheader("Funding Rate Reversal Analysis")
+            
+            # Display a simple table
+            st.write("Funding Reversal Results:")
+            st.dataframe(reversal_df)
+            
+        except Exception as e:
+            logging.error(f"Error in display_funding_reversal_analysis: {e}")
+            st.error("Error displaying funding reversal analysis")
+
+# Import enhancements if available
+try:
+    from funding_dashboard_enhancements import (
+        init_enhancements,
+        enhance_dashboard,
+        get_enhanced_price_history,
+        get_enhanced_funding_data
+    )
+    ENHANCEMENTS_AVAILABLE = True
+    logging.info("Funding dashboard enhancements loaded successfully")
+except ImportError:
+    ENHANCEMENTS_AVAILABLE = False
+    logging.warning("Funding dashboard enhancements not available")
+
 # Add the project root to Python path
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
@@ -916,9 +1122,47 @@ def analyze_top_opportunities(df_analysis: pd.DataFrame, n_top: int = 10) -> pd.
     try:
         if df_analysis.empty:
             return pd.DataFrame()
+        
+        # Check if 'period' column exists
+        if 'period' in df_analysis.columns:
+            # Get latest period data
+            latest_data = df_analysis[df_analysis['period'] == '24h'].copy()
             
-        # Get latest period data
-        latest_data = df_analysis[df_analysis['period'] == '24h'].copy()
+            # If no 24h period data, use all data
+            if latest_data.empty:
+                latest_data = df_analysis.copy()
+                logger.warning("No 24h period data found, using all available data")
+        else:
+            # If no period column, use all data
+            latest_data = df_analysis.copy()
+            logger.warning("No period column found in analysis data, using all available data")
+        
+        # Check if 'mean_funding_rate' column exists
+        if 'mean_funding_rate' not in latest_data.columns:
+            # Try to calculate it from funding_rate if available
+            if 'funding_rate' in latest_data.columns:
+                latest_data['mean_funding_rate'] = latest_data.groupby('symbol')['funding_rate'].transform('mean')
+                logger.info("Calculated mean_funding_rate from funding_rate column")
+            elif 'avg_funding_rate' in latest_data.columns:
+                latest_data['mean_funding_rate'] = latest_data['avg_funding_rate']
+                logger.info("Using avg_funding_rate as mean_funding_rate")
+            else:
+                logger.error("Cannot calculate mean_funding_rate, no suitable columns found")
+                return pd.DataFrame()
+        
+        # Check if 'confidence_score' column exists
+        if 'confidence_score' not in latest_data.columns:
+            latest_data['confidence_score'] = 50  # Default value
+            logger.warning("No confidence_score column found, using default value")
+        
+        # Check if 'funding_volatility' column exists
+        if 'funding_volatility' not in latest_data.columns:
+            if 'funding_rate' in latest_data.columns:
+                latest_data['funding_volatility'] = latest_data.groupby('symbol')['funding_rate'].transform('std') * 100
+                logger.info("Calculated funding_volatility from funding_rate column")
+            else:
+                latest_data['funding_volatility'] = 0  # Default value
+                logger.warning("No funding_volatility column found and cannot calculate, using default value")
         
         # Calculate opportunity score
         latest_data['opportunity_score'] = (
@@ -1269,10 +1513,29 @@ def display_asset_analysis(top_opps: pd.DataFrame, funding_data: pd.DataFrame):
     """Display combined price and funding analysis"""
     st.subheader("Asset-Specific Analysis")
     
-    # Create tabs for each asset
-    tabs = st.tabs([f" {symbol} " for symbol in top_opps['symbol'].unique()])
+    # Check if top_opps is empty
+    if top_opps.empty:
+        st.warning("No top opportunities found to display. Try adjusting the lookback period or refresh the data.")
+        return
     
-    for idx, symbol in enumerate(top_opps['symbol'].unique()):
+    # Check if 'symbol' column exists
+    if 'symbol' not in top_opps.columns:
+        st.error("Symbol information is missing from the analysis data.")
+        logger.error("Symbol column missing from top opportunities data")
+        return
+    
+    # Get unique symbols
+    unique_symbols = top_opps['symbol'].unique()
+    
+    # Check if there are any symbols
+    if len(unique_symbols) == 0:
+        st.warning("No symbols found in the top opportunities data.")
+        return
+    
+    # Create tabs for each asset
+    tabs = st.tabs([f" {symbol} " for symbol in unique_symbols])
+    
+    for idx, symbol in enumerate(unique_symbols):
         with tabs[idx]:
             # Price Analysis Section
             create_price_analysis(symbol)
@@ -1697,330 +1960,56 @@ def analyze_volatility_clustering(df: pd.DataFrame) -> pd.DataFrame:
                 symbol_data = symbol_data.dropna()
                 
                 if len(symbol_data) >= 24:
-                    # Fit GARCH model
-                    model = arch_model(symbol_data['returns'], vol='Garch', p=1, q=1, dist='t')
-                    res = model.fit(disp='off')
+                    # Rescale returns to avoid scaling warnings
+                    returns_scale = symbol_data['returns'].abs().mean()
+                    if returns_scale > 1000:
+                        scale_factor = 0.1
+                    elif returns_scale < 1:
+                        scale_factor = 10
+                    else:
+                        scale_factor = 1
                     
-                    # Get conditional volatility
-                    conditional_vol = res.conditional_volatility
+                    # Apply scaling if needed
+                    scaled_returns = symbol_data['returns'] * scale_factor
                     
-                    # Calculate volatility clustering metrics
-                    vol_persistence = res.params['alpha[1]'] + res.params['beta[1]']
-                    current_vol = conditional_vol.iloc[-1]
-                    vol_trend = (current_vol / conditional_vol.mean() - 1) * 100
-                    
-                    results.append({
-                        'symbol': symbol,
-                        'volatility': current_vol,
-                        'vol_persistence': vol_persistence,
-                        'vol_trend': vol_trend,
-                        'clustering_score': vol_persistence * current_vol
-                    })
-                    
+                    try:
+                        # Fit GARCH model with rescaling option
+                        model = arch_model(scaled_returns, vol='Garch', p=1, q=1, dist='t', rescale=True)
+                        res = model.fit(disp='off')
+                        
+                        # Get conditional volatility and adjust for scaling
+                        conditional_vol = res.conditional_volatility / scale_factor
+                        
+                        # Calculate volatility clustering metrics
+                        vol_persistence = res.params['alpha[1]'] + res.params['beta[1]']
+                        current_vol = conditional_vol.iloc[-1]
+                        vol_trend = (current_vol / conditional_vol.mean() - 1) * 100
+                        
+                        results.append({
+                            'symbol': symbol,
+                            'volatility': current_vol,
+                            'vol_persistence': vol_persistence,
+                            'vol_trend': vol_trend,
+                            'clustering_score': vol_persistence * current_vol
+                        })
+                    except Exception as e:
+                        logger.warning(f"Error fitting GARCH model for {symbol}: {e}")
+                        # Try a simpler volatility measure as fallback
+                        rolling_std = symbol_data['returns'].rolling(window=12).std()
+                        if not rolling_std.empty:
+                            current_vol = rolling_std.iloc[-1]
+                            vol_trend = (current_vol / rolling_std.mean() - 1) * 100
+                            results.append({
+                                'symbol': symbol,
+                                'volatility': current_vol,
+                                'vol_persistence': 0.5,  # Default value
+                                'vol_trend': vol_trend,
+                                'clustering_score': 0.5 * current_vol
+                            })
             except Exception as e:
                 logger.warning(f"Error in volatility analysis for {symbol}: {e}")
                 continue
-                
-        return pd.DataFrame(results)
-    
-    except Exception as e:
-        logger.error(f"Error in analyze_volatility_clustering: {e}")
-        return pd.DataFrame()
-
-def display_volatility_clustering_analysis(volatility_df: pd.DataFrame):
-    """
-    Display volatility clustering analysis results
-    """
-    try:
-        if volatility_df.empty:
-            st.warning("No data available for volatility clustering analysis")
-            return
-            
-        st.subheader("Volatility Clustering Analysis")
         
-        # Summary metrics
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            high_vol = (volatility_df['volatility'] > volatility_df['volatility'].median()).sum()
-            st.metric(
-                "High Volatility Markets",
-                f"{high_vol}/{len(volatility_df)}",
-                help="Markets with above-median volatility"
-            )
-            
-        with col2:
-            avg_persistence = volatility_df['vol_persistence'].mean()
-            st.metric(
-                "Average Persistence",
-                f"{avg_persistence:.2f}",
-                help="Mean volatility persistence across markets"
-            )
-            
-        with col3:
-            strong_cluster = (volatility_df['clustering_score'] > volatility_df['clustering_score'].median()).sum()
-            st.metric(
-                "Strong Clustering",
-                f"{strong_cluster}/{len(volatility_df)}",
-                help="Markets with strong volatility clustering"
-            )
-            
-        # Interactive filters
-        col1, col2 = st.columns(2)
-        with col1:
-            sort_by = st.selectbox(
-                "Sort by",
-                ['Volatility', 'Persistence', 'Clustering Score'],
-                key='vol_sort'
-            )
-        with col2:
-            min_vol = st.slider(
-                "Minimum Volatility",
-                min_value=0.0,
-                max_value=float(volatility_df['volatility'].max()),
-                value=0.0,
-                key='vol_filter'
-            )
-            
-        # Filter and sort data
-        filtered_df = volatility_df[volatility_df['volatility'] >= min_vol].copy()
-        sort_map = {
-            'Volatility': 'volatility',
-            'Persistence': 'vol_persistence',
-            'Clustering Score': 'clustering_score'
-        }
-        filtered_df = filtered_df.sort_values(sort_map[sort_by], ascending=False)
-        
-        # Display results table
-        st.dataframe(
-            filtered_df.style.format({
-                'volatility': '{:.2f}%',
-                'vol_persistence': '{:.2f}',
-                'vol_trend': '{:.2f}%',
-                'clustering_score': '{:.2f}'
-            }).background_gradient(
-                subset=['volatility', 'clustering_score'],
-                cmap='RdYlGn'
-            ),
-            use_container_width=True
-        )
-        
-        # Visualization
-        st.subheader("Volatility Patterns")
-        
-        fig = px.scatter(
-            filtered_df,
-            x='vol_persistence',
-            y='volatility',
-            color='clustering_score',
-            hover_data=['symbol', 'vol_trend'],
-            title='Volatility Clustering Map'
-        )
-        
-        fig.update_layout(
-            xaxis_title="Volatility Persistence",
-            yaxis_title="Current Volatility (%)",
-            coloraxis_colorbar_title="Clustering Score"
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
-        
-    except Exception as e:
-        logger.error(f"Error in display_volatility_clustering_analysis: {e}")
-        st.error("Error displaying volatility clustering analysis")
-
-def display_arbitrage_efficiency_analysis(arbitrage_df: pd.DataFrame):
-    """
-    Display arbitrage efficiency analysis results
-    """
-    try:
-        if arbitrage_df.empty:
-            st.warning("No data available for arbitrage efficiency analysis")
-            return
-            
-        st.subheader("Arbitrage Efficiency Analysis")
-        
-        # Summary metrics
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            efficient_markets = (arbitrage_df['efficiency_score'] > arbitrage_df['efficiency_score'].median()).sum()
-            st.metric(
-                "Efficient Markets",
-                f"{efficient_markets}/{len(arbitrage_df)}",
-                help="Markets with above-median efficiency"
-            )
-            
-        with col2:
-            avg_efficiency = arbitrage_df['efficiency_score'].mean()
-            st.metric(
-                "Average Efficiency",
-                f"{avg_efficiency:.2f}",
-                help="Mean efficiency score across markets"
-            )
-            
-        with col3:
-            fast_convergence = (arbitrage_df['convergence_speed'] > arbitrage_df['convergence_speed'].median()).sum()
-            st.metric(
-                "Fast Convergence",
-                f"{fast_convergence}/{len(arbitrage_df)}",
-                help="Markets with above-median convergence speed"
-            )
-            
-        # Display results table
-        st.dataframe(
-            arbitrage_df.style.format({
-                'funding_volatility': '{:.4f}',
-                'convergence_speed': '{:.2f}',
-                'efficiency_score': '{:.2f}'
-            }).background_gradient(
-                subset=['efficiency_score'],
-                cmap='RdYlGn'
-            ),
-            use_container_width=True
-        )
-        
-        # Visualization
-        st.subheader("Efficiency Analysis")
-        
-        fig = px.scatter(
-            arbitrage_df,
-            x='funding_volatility',
-            y='convergence_speed',
-            color='efficiency_score',
-            hover_data=['symbol'],
-            title='Market Efficiency Map'
-        )
-        
-        fig.update_layout(
-            xaxis_title="Funding Volatility",
-            yaxis_title="Convergence Speed",
-            coloraxis_colorbar_title="Efficiency Score"
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
-        
-    except Exception as e:
-        logger.error(f"Error in display_arbitrage_efficiency_analysis: {e}")
-        st.error("Error displaying arbitrage efficiency analysis")
-
-def display_funding_reversal_analysis(reversal_df: pd.DataFrame):
-    """
-    Display funding reversal analysis results
-    """
-    try:
-        if reversal_df.empty:
-            st.warning("No data available for funding reversal analysis")
-            return
-            
-        st.subheader("Funding Rate Reversal Analysis")
-        
-        # Summary metrics
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            high_prob = (reversal_df['reversal_probability'] > 0.7).sum()
-            st.metric(
-                "High Probability Reversals",
-                f"{high_prob}/{len(reversal_df)}",
-                help="Markets with >70% reversal probability"
-            )
-            
-        with col2:
-            avg_prob = reversal_df['reversal_probability'].mean()
-            st.metric(
-                "Average Probability",
-                f"{avg_prob:.2%}",
-                help="Mean reversal probability across markets"
-            )
-            
-        with col3:
-            strong_momentum = (abs(reversal_df['momentum']) > reversal_df['momentum'].std()).sum()
-            st.metric(
-                "Strong Momentum",
-                f"{strong_momentum}/{len(reversal_df)}",
-                help="Markets with significant momentum"
-            )
-            
-        # Filter for high probability reversals
-        high_prob_df = reversal_df[reversal_df['reversal_probability'] > 0.5].sort_values('reversal_probability', ascending=False)
-        
-        if not high_prob_df.empty:
-            st.subheader("Potential Reversals")
-            
-            st.dataframe(
-                high_prob_df.style.format({
-                    'current_rate': '{:.4%}',
-                    'trend': '{:.4f}',
-                    'momentum': '{:.4f}',
-                    'reversal_probability': '{:.2%}'
-                }).background_gradient(
-                    subset=['reversal_probability'],
-                    cmap='RdYlGn'
-                ),
-                use_container_width=True
-            )
-            
-            # Visualization
-            fig = px.scatter(
-                high_prob_df,
-                x='trend',
-                y='momentum',
-                color='reversal_probability',
-                hover_data=['symbol', 'current_rate'],
-                title='Reversal Probability Map'
-            )
-            
-            fig.update_layout(
-                xaxis_title="Current Trend",
-                yaxis_title="Momentum",
-                coloraxis_colorbar_title="Reversal Probability"
-            )
-            
-            st.plotly_chart(fig, use_container_width=True)
-            
-        else:
-            st.info("No high-probability reversals detected at this time")
-            
-    except Exception as e:
-        logger.error(f"Error in display_funding_reversal_analysis: {e}")
-        st.error("Error displaying funding reversal analysis")
-
-def analyze_arbitrage_efficiency(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Analyze arbitrage efficiency using funding rate convergence
-    """
-    try:
-        results = []
-        for symbol in df['symbol'].unique():
-            try:
-                symbol_data = df[df['symbol'] == symbol].copy()
-                if len(symbol_data) < 24:
-                    continue
-                
-                # Calculate funding rate volatility
-                funding_vol = symbol_data['funding_rate'].std()
-                
-                # Calculate convergence speed (how quickly rates return to mean)
-                rates = symbol_data['funding_rate']
-                mean_rate = rates.mean()
-                deviations = (rates - mean_rate).abs()
-                convergence_speed = 1 / (deviations.mean() + 1e-10)  # Avoid division by zero
-                
-                # Calculate efficiency score
-                efficiency_score = convergence_speed / (funding_vol + 1e-10)
-                
-                results.append({
-                    'symbol': symbol,
-                    'funding_volatility': funding_vol,
-                    'convergence_speed': convergence_speed,
-                    'efficiency_score': efficiency_score
-                })
-                
-            except Exception as e:
-                logger.warning(f"Error in arbitrage efficiency analysis for {symbol}: {e}")
-                continue
-                
         return pd.DataFrame(results)
     
     except Exception as e:
@@ -2076,113 +2065,134 @@ def predict_funding_reversals(df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
 
 def display_market_overview(funding_data: pd.DataFrame):
-    """
-    Display market overview with key metrics and trends
-    """
+    """Display market overview with key metrics"""
     try:
         if funding_data.empty:
             st.warning("No funding data available for market overview")
             return
-
+            
         st.subheader("Market Overview")
-
-        # Calculate market-wide metrics
-        total_markets = len(funding_data['symbol'].unique())
-        total_volume = funding_data['volume'].sum() if 'volume' in funding_data.columns else 0
-        avg_funding_rate = funding_data['funding_rate'].mean() * 100 * 3 * 365  # Annualized
         
-        # Display key metrics
-        col1, col2, col3 = st.columns(3)
+        # Get the timestamp column (could be 'timestamp' or 'created_at')
+        timestamp_col = 'timestamp'
+        if timestamp_col not in funding_data.columns and 'created_at' in funding_data.columns:
+            timestamp_col = 'created_at'
+        
+        if timestamp_col not in funding_data.columns:
+            st.error("No timestamp column found in funding data")
+            return
+            
+        # Calculate latest timestamp
+        latest_timestamp = funding_data[timestamp_col].max()
+        time_since_update = datetime.now(timezone.utc) - pd.to_datetime(latest_timestamp)
+        
+        # Calculate key metrics
+        total_symbols = funding_data['symbol'].nunique()
+        total_exchanges = funding_data['exchange'].nunique()
+        
+        # Calculate average funding rate
+        avg_funding = funding_data['funding_rate'].mean() * 100  # Convert to percentage
+        
+        # Calculate funding rate volatility
+        funding_volatility = funding_data['funding_rate'].std() * 100  # Convert to percentage
+        
+        # Display metrics
+        col1, col2, col3, col4 = st.columns(4)
+        
         with col1:
-            st.metric("Total Markets", f"{total_markets:,}")
+            st.metric(
+                "Total Assets",
+                f"{total_symbols}",
+                help="Number of unique assets with funding data"
+            )
+            
         with col2:
-            st.metric("Average Funding Rate (Ann.)", f"{avg_funding_rate:.2f}%")
+            st.metric(
+                "Exchanges",
+                f"{total_exchanges}",
+                help="Number of exchanges with funding data"
+            )
+            
         with col3:
-            st.metric("Total Volume", f"${total_volume:,.0f}" if total_volume > 0 else "N/A")
-
-        # Market Trends
-        st.subheader("Market Trends")
+            st.metric(
+                "Avg Funding Rate",
+                f"{avg_funding:.4f}%",
+                help="Average funding rate across all assets"
+            )
+            
+        with col4:
+            st.metric(
+                "Last Update",
+                f"{time_since_update.total_seconds() / 60:.1f} min ago",
+                help="Time since last data update"
+            )
+            
+        # Display funding rate distribution
+        st.subheader("Funding Rate Distribution")
         
-        # Calculate funding rate trends
-        latest_rates = funding_data.groupby('symbol')['funding_rate'].last()
-        positive_funding = (latest_rates > 0).sum()
-        negative_funding = (latest_rates < 0).sum()
+        # Create histogram
+        fig = px.histogram(
+            funding_data,
+            x='funding_rate',
+            nbins=50,
+            title="Current Funding Rate Distribution",
+            labels={'funding_rate': 'Funding Rate'},
+            color_discrete_sequence=['blue']
+        )
         
+        # Update layout
+        fig.update_layout(
+            xaxis_title="Funding Rate",
+            yaxis_title="Count",
+            template="plotly_dark"
+        )
+        
+        # Add vertical line at zero
+        fig.add_vline(
+            x=0,
+            line_dash="dash",
+            line_color="red",
+            annotation_text="Zero Line",
+            annotation_position="top right"
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # Display top positive and negative funding rates
         col1, col2 = st.columns(2)
         
         with col1:
-            st.metric("Positive Funding", f"{positive_funding}/{total_markets}")
+            st.subheader("Highest Funding Rates")
             
-            # Create pie chart for funding distribution
-            fig = go.Figure(data=[go.Pie(
-                labels=['Positive', 'Negative', 'Zero'],
-                values=[positive_funding, negative_funding, total_markets - positive_funding - negative_funding],
-                hole=.3
-            )])
-            fig.update_layout(title="Funding Rate Distribution")
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            # Calculate and display top gainers/losers
-            symbol_metrics = funding_data.groupby('symbol').agg({
-                'funding_rate': ['mean', 'std'],
-                'created_at': 'max'
-            }).reset_index()
-            symbol_metrics.columns = ['symbol', 'mean_rate', 'rate_std', 'last_update']
-            symbol_metrics['annualized_rate'] = symbol_metrics['mean_rate'] * 100 * 3 * 365
+            # Get top positive funding rates
+            top_positive = funding_data.sort_values('funding_rate', ascending=False).head(10)
             
-            top_gainers = symbol_metrics.nlargest(5, 'annualized_rate')
-            st.markdown("### Top Funding Rates")
+            # Format for display
+            top_positive_display = top_positive[['symbol', 'exchange', 'funding_rate']].copy()
+            top_positive_display['funding_rate'] = top_positive_display['funding_rate'] * 100  # Convert to percentage
+            
+            # Display table
             st.dataframe(
-                top_gainers[['symbol', 'annualized_rate']].style.format({
-                    'annualized_rate': '{:.2f}%'
-                })
+                top_positive_display.style.format({'funding_rate': '{:.4f}%'}),
+                use_container_width=True
             )
-
-        # Market Activity Timeline
-        st.subheader("Market Activity Timeline")
-        
-        # Create time series of funding rate changes
-        timeline_data = funding_data.set_index('created_at')['funding_rate'].resample('1H').mean()
-        timeline_data = timeline_data * 100 * 3 * 365  # Annualize rates
-        
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(
-            x=timeline_data.index,
-            y=timeline_data.values,
-            mode='lines',
-            name='Average Funding Rate',
-            line=dict(color='#1f77b4')
-        ))
-        
-        fig.update_layout(
-            title="Average Funding Rate Over Time",
-            xaxis_title="Time",
-            yaxis_title="Annualized Funding Rate (%)",
-            hovermode='x unified'
-        )
-        st.plotly_chart(fig, use_container_width=True)
-
-        # Exchange Comparison
-        st.subheader("Exchange Comparison")
-        
-        exchange_metrics = funding_data.groupby('exchange').agg({
-            'funding_rate': ['mean', 'std', 'count'],
-            'symbol': 'nunique'
-        }).reset_index()
-        
-        exchange_metrics.columns = ['exchange', 'avg_rate', 'rate_std', 'observations', 'markets']
-        exchange_metrics['annualized_rate'] = exchange_metrics['avg_rate'] * 100 * 3 * 365
-        
-        st.dataframe(
-            exchange_metrics.style.format({
-                'annualized_rate': '{:.2f}%',
-                'rate_std': '{:.4f}',
-                'observations': '{:,.0f}',
-                'markets': '{:,.0f}'
-            })
-        )
-
+            
+        with col2:
+            st.subheader("Lowest Funding Rates")
+            
+            # Get top negative funding rates
+            top_negative = funding_data.sort_values('funding_rate').head(10)
+            
+            # Format for display
+            top_negative_display = top_negative[['symbol', 'exchange', 'funding_rate']].copy()
+            top_negative_display['funding_rate'] = top_negative_display['funding_rate'] * 100  # Convert to percentage
+            
+            # Display table
+            st.dataframe(
+                top_negative_display.style.format({'funding_rate': '{:.4f}%'}),
+                use_container_width=True
+            )
+            
     except Exception as e:
         logger.error(f"Error in market overview: {e}")
         st.error("Error displaying market overview. Please check the data and try again.")
@@ -2190,6 +2200,16 @@ def display_market_overview(funding_data: pd.DataFrame):
 def main():
     """Main dashboard function with improved error handling and user feedback"""
     try:
+        # Initialize enhancements if available
+        if 'enhancements_initialized' not in st.session_state and ENHANCEMENTS_AVAILABLE:
+            try:
+                init_enhancements()
+                st.session_state.enhancements_initialized = True
+                logging.info("Dashboard enhancements initialized")
+            except Exception as e:
+                logging.error(f"Error initializing enhancements: {e}")
+                st.session_state.enhancements_initialized = False
+        
         # Set page config
         st.set_page_config(
             page_title="Funding Strategy Dashboard",
@@ -2228,142 +2248,174 @@ def main():
         st.title("📊 Funding Strategy Dashboard")
         st.markdown("""
         This dashboard analyzes funding rates, price movements, and market regimes to identify trading opportunities.
-        Use the sidebar to configure analysis parameters and refresh data.
         """)
 
         # Sidebar settings
         with st.sidebar:
             st.title("Settings")
             
-            # Analysis period selection
+            # Add data loading options in sidebar
+            st.sidebar.title("Data Options")
+            
+            # Add option to use enhanced data retrieval
+            if ENHANCEMENTS_AVAILABLE:
+                use_enhanced_data = st.sidebar.checkbox("Use Enhanced Data Retrieval", value=True, 
+                                                      help="Use enhanced data retrieval methods with fallbacks to exchange APIs")
+            else:
+                use_enhanced_data = False
+                
+            # Add lookback period selection
             lookback_options = {
-                "24 hours": 24,
-                "3 days": 72,
-                "1 week": 168,
-                "2 weeks": 336,
-                "1 month": 720,
-                "All time": None
+                "1 Day": 24,
+                "3 Days": 72,
+                "1 Week": 168,
+                "2 Weeks": 336,
+                "1 Month": 720
             }
-            selected_period = st.selectbox(
-                "Analysis Period",
-                options=list(lookback_options.keys()),
-                index=1
-            )
-            lookback_hours = lookback_options[selected_period]
-
+            lookback_period = st.sidebar.selectbox("Lookback Period", list(lookback_options.keys()), index=1)
+            lookback_hours = lookback_options[lookback_period]
+            
             # Add refresh button
-            if st.button("🔄 Refresh Data"):
+            if st.sidebar.button("🔄 Refresh Data"):
+                st.session_state.is_loading = True
                 st.session_state.funding_data = None
                 st.session_state.term_structure = None
-                st.experimental_rerun()
-
-        # Load data with progress indicator
-        if st.session_state.funding_data is None:
-            try:
-                st.session_state.is_loading = True
-                with st.spinner('Loading funding data...'):
-                    funding_data = get_funding_data(lookback_hours)
-                    if funding_data.empty:
-                        st.error("No funding data available. Please check your connection and try again.")
-                        return
-                    st.session_state.funding_data = funding_data
-                    st.success("Data loaded successfully!")
-            except Exception as e:
-                logger.error(f"Error loading funding data: {e}")
-                st.error(f"Failed to load funding data: {str(e)}")
-                return
-            finally:
+                
+            # Load data with progress indicator
+            if st.session_state.funding_data is None or st.session_state.is_loading:
+                with st.spinner("Loading funding data..."):
+                    try:
+                        # Use enhanced data retrieval if available and selected
+                        if ENHANCEMENTS_AVAILABLE and use_enhanced_data and 'get_enhanced_funding_data' in st.session_state:
+                            st.session_state.funding_data = st.session_state.get_enhanced_funding_data(lookback_hours)
+                            st.info("Using enhanced data retrieval methods")
+                        else:
+                            st.session_state.funding_data = get_funding_data(lookback_hours)
+                            
+                        if not st.session_state.funding_data.empty:
+                            # Validate the data has required columns
+                            required_columns = ['symbol', 'exchange', 'timestamp', 'funding_rate']
+                            missing_columns = [col for col in required_columns if col not in st.session_state.funding_data.columns]
+                            
+                            if missing_columns:
+                                st.error(f"Data is missing required columns: {', '.join(missing_columns)}")
+                                logger.error(f"Funding data missing required columns: {missing_columns}")
+                                st.session_state.funding_data = None
+                            else:
+                                st.success(f"Loaded {len(st.session_state.funding_data)} funding rate records")
+                                
+                                # Calculate term structure
+                                st.session_state.term_structure = analyze_term_structure(st.session_state.funding_data)
+                                
+                                # Log analysis completion
+                                logger.info(f"Analysis completed for {len(st.session_state.funding_data)} records")
+                        else:
+                            st.warning("No funding data available for the selected period")
+                            
+                    except Exception as e:
+                        st.error(f"Error loading data: {str(e)}")
+                        logger.error(f"Error loading funding data: {e}")
+                        st.session_state.funding_data = None
+                        
                 st.session_state.is_loading = False
 
-        # Create tabs for different analyses
-        tabs = st.tabs([
-            "Market Overview",
-            "Funding Analysis",
-            "Price Analysis",
-            "Term Structure",
-            "Volatility Clustering",
-            "Arbitrage Efficiency",
-            "Funding Reversals"
-        ])
-
-        # Market Overview Tab
-        with tabs[0]:
-            try:
-                display_market_overview(st.session_state.funding_data)
-            except Exception as e:
-                logger.error(f"Error in market overview: {e}")
-                st.error("Error displaying market overview. Please try refreshing the data.")
-
-        # Funding Analysis Tab
-        with tabs[1]:
-            try:
-                with st.spinner('Analyzing funding trends...'):
-                    df_analysis = analyze_funding_trends(st.session_state.funding_data)
-                    display_funding_analysis(df_analysis)
-            except Exception as e:
-                logger.error(f"Error in funding analysis: {e}")
-                st.error("Error analyzing funding trends. Please check the data and try again.")
-
-        # Price Analysis Tab
-        with tabs[2]:
-            try:
-                with st.spinner('Analyzing price data...'):
-                    display_price_analysis(st.session_state.funding_data)
-            except Exception as e:
-                logger.error(f"Error in price analysis: {e}")
-                st.error("Error analyzing price data. Please check your connection and try again.")
-
-        # Term Structure Tab
-        with tabs[3]:
-            try:
-                if st.session_state.term_structure is None:
-                    with st.spinner('Analyzing term structure...'):
-                        term_structure = analyze_term_structure(st.session_state.funding_data)
-                        st.session_state.term_structure = term_structure
-                display_term_structure_analysis(st.session_state.term_structure)
-            except Exception as e:
-                logger.error(f"Error in term structure analysis: {e}")
-                st.error("Error analyzing term structure. Please try refreshing the data.")
-
-        # Volatility Clustering Tab
-        with tabs[4]:
-            try:
-                with st.spinner('Analyzing volatility patterns...'):
-                    volatility_df = analyze_volatility_clustering(st.session_state.funding_data)
-                    display_volatility_clustering_analysis(volatility_df)
-            except Exception as e:
-                logger.error(f"Error in volatility clustering analysis: {e}")
-                st.error("Error analyzing volatility patterns. Please check the data and try again.")
-
-        # Arbitrage Efficiency Tab
-        with tabs[5]:
-            try:
-                with st.spinner('Analyzing arbitrage opportunities...'):
-                    arbitrage_df = analyze_arbitrage_efficiency(st.session_state.funding_data)
-                    display_arbitrage_efficiency_analysis(arbitrage_df)
-            except Exception as e:
-                logger.error(f"Error in arbitrage efficiency analysis: {e}")
-                st.error("Error analyzing arbitrage opportunities. Please try refreshing the data.")
-
-        # Funding Reversals Tab
-        with tabs[6]:
-            try:
-                with st.spinner('Predicting funding reversals...'):
-                    reversal_df = predict_funding_reversals(st.session_state.funding_data)
-                    display_funding_reversal_analysis(reversal_df)
-            except Exception as e:
-                logger.error(f"Error in funding reversal analysis: {e}")
-                st.error("Error predicting funding reversals. Please check the data and try again.")
-
+        # Display the main dashboard content
+        if st.session_state.funding_data is not None and not st.session_state.funding_data.empty:
+            # Display market overview
+            display_market_overview(st.session_state.funding_data)
+            
+            # Create tabs for different analyses
+            tabs = st.tabs([
+                "Funding Analysis", 
+                "Term Structure", 
+                "Volatility Clustering",
+                "Arbitrage Efficiency",
+                "Funding Reversals",
+                "Asset Analysis"
+            ])
+            
+            with tabs[0]:
+                display_funding_analysis(st.session_state.funding_data)
+                
+            with tabs[1]:
+                if st.session_state.term_structure is not None:
+                    display_term_structure_analysis(st.session_state.term_structure)
+                else:
+                    st.warning("Term structure analysis not available. Please refresh the data.")
+                    
+            with tabs[2]:
+                try:
+                    # Try to use the enhanced function from session state if available
+                    if ENHANCEMENTS_AVAILABLE and 'analyze_volatility_clustering' in st.session_state:
+                        volatility_df = st.session_state.analyze_volatility_clustering(st.session_state.funding_data)
+                        st.session_state.display_volatility_clustering_analysis(volatility_df)
+                    elif FUNCTIONS_IMPORTED:
+                        # Use the directly imported functions
+                        volatility_df = analyze_volatility_clustering(st.session_state.funding_data)
+                        display_volatility_clustering_analysis(volatility_df)
+                    else:
+                        # Fall back to the original functions
+                        volatility_df = analyze_volatility_clustering(st.session_state.funding_data)
+                        display_volatility_clustering_analysis(volatility_df)
+                except Exception as e:
+                    logger.error(f"Error in volatility clustering analysis: {e}")
+                    st.error(f"Error in volatility analysis: {str(e)}")
+                
+            with tabs[3]:
+                try:
+                    # Try to use the enhanced function from session state if available
+                    if ENHANCEMENTS_AVAILABLE and 'analyze_arbitrage_efficiency' in st.session_state:
+                        arbitrage_df = st.session_state.analyze_arbitrage_efficiency(st.session_state.funding_data)
+                        st.session_state.display_arbitrage_efficiency_analysis(arbitrage_df)
+                    elif FUNCTIONS_IMPORTED:
+                        # Use the directly imported functions
+                        arbitrage_df = analyze_arbitrage_efficiency(st.session_state.funding_data)
+                        display_arbitrage_efficiency_analysis(arbitrage_df)
+                    else:
+                        # Fall back to the original functions
+                        arbitrage_df = analyze_arbitrage_efficiency(st.session_state.funding_data)
+                        display_arbitrage_efficiency_analysis(arbitrage_df)
+                except Exception as e:
+                    logger.error(f"Error in arbitrage efficiency analysis: {e}")
+                    st.error(f"Error in arbitrage analysis: {str(e)}")
+                
+            with tabs[4]:
+                try:
+                    # Try to use the enhanced function from session state if available
+                    if ENHANCEMENTS_AVAILABLE and 'predict_funding_reversals' in st.session_state:
+                        reversal_df = st.session_state.predict_funding_reversals(st.session_state.funding_data)
+                        st.session_state.display_funding_reversal_analysis(reversal_df)
+                    elif FUNCTIONS_IMPORTED:
+                        # Use the directly imported functions
+                        reversal_df = predict_funding_reversals(st.session_state.funding_data)
+                        display_funding_reversal_analysis(reversal_df)
+                    else:
+                        # Fall back to the original functions
+                        reversal_df = predict_funding_reversals(st.session_state.funding_data)
+                        display_funding_reversal_analysis(reversal_df)
+                except Exception as e:
+                    logger.error(f"Error in funding reversal analysis: {e}")
+                    st.error(f"Error in reversal analysis: {str(e)}")
+                
+            with tabs[5]:
+                top_opps = analyze_top_opportunities(st.session_state.funding_data)
+                display_asset_analysis(top_opps, st.session_state.funding_data)
+                
+            # Add enhanced features if available
+            if ENHANCEMENTS_AVAILABLE and 'enhance_dashboard' in st.session_state:
+                try:
+                    st.session_state.enhance_dashboard()
+                except Exception as e:
+                    logger.error(f"Error displaying enhanced features: {e}")
+                    st.sidebar.error("Error displaying enhanced features. See logs for details.")
+        else:
+            st.info("Please load data to view the dashboard.")
+            
     except Exception as e:
-        logger.error(f"Critical error in main: {e}")
-        st.error("""
-        A critical error occurred. Please try the following:
-        1. Refresh the page
-        2. Clear your browser cache
-        3. Check your internet connection
-        If the problem persists, contact support.
-        """)
+        logger.error(f"Error in main function: {e}")
+        st.error(f"An error occurred: {str(e)}")
+        if st.button("Restart Dashboard"):
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     main()

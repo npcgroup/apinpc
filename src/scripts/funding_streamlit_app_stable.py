@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import plotly.graph_objects as go
 import plotly.express as px
 from rich.console import Console
@@ -15,6 +15,10 @@ from pathlib import Path
 import sys
 import logging.config
 import math
+import requests
+import json
+from types import SimpleNamespace
+import argparse
 
 # Configure logging
 logging.config.dictConfig({
@@ -69,11 +73,17 @@ def load_environment():
 def get_predicted_rates():
     """Fetch predicted rates from Supabase with proper rate normalization"""
     try:
+        # Connect to Supabase for read operations
         load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials")
+            return pd.DataFrame()
+            
+        # Initialize Supabase client with minimal parameters
+        supabase = create_client(supabase_url, supabase_key)
         
         # Get current UTC time
         current_utc = pd.Timestamp.now(tz='UTC')
@@ -160,10 +170,15 @@ def check_supabase_connection():
     """Check Supabase connection and data availability before fetching exchange data"""
     try:
         load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials")
+            return False
+            
+        # Initialize Supabase client with minimal parameters
+        supabase = create_client(supabase_url, supabase_key)
         
         # Test connection with a small query
         response = (supabase.table('predicted_funding_rates')
@@ -197,21 +212,60 @@ def calculate_opportunity_score(row):
         logger.error(f"Error calculating opportunity score: {e}")
         return 0.0
 
-def fetch_data():
+def fetch_data(use_cache=True, max_retries=3):
     """Fetch and combine current and predicted rates with proper rate matching"""
-    try:
-        # Get predicted rates first
-        predicted_df = get_predicted_rates()
-        logger.info(f"Predicted rates shape: {predicted_df.shape if not predicted_df.empty else 'Empty'}")
-        
-        # Get current rates
-        logger.info("Fetching Hyperliquid rates first...")
-        analyzer = AdvancedFundingAnalyzer()
-        df = analyzer.analyze_funding_opportunities()
-        
-        if isinstance(df, pd.DataFrame) and not df.empty:
+    retry_count = 0
+    while retry_count < max_retries:
+        try:
+            # Check cache first if enabled
+            cache_file = 'funding_data_cache.pkl'
+            cache_max_age = 3600  # 1 hour in seconds
+            
+            if use_cache and os.path.exists(cache_file):
+                cache_modified_time = os.path.getmtime(cache_file)
+                cache_age = time.time() - cache_modified_time
+                
+                if cache_age < cache_max_age:
+                    try:
+                        df = pd.read_pickle(cache_file)
+                        logger.info(f"Using cached data ({cache_age:.1f} seconds old)")
+                        return df
+                    except Exception as cache_error:
+                        logger.warning(f"Cache read failed: {cache_error}")
+            
+            # Get predicted rates first
+            logger.info("Fetching predicted rates from Supabase...")
+            predicted_df = get_predicted_rates()
+            
+            if predicted_df.empty:
+                logger.warning("No predicted rates found in Supabase. Will use current rates as predictions.")
+            else:
+                logger.info(f"Successfully fetched {len(predicted_df)} predicted rates from Supabase")
+                logger.info(f"Predicted rates shape: {predicted_df.shape}")
+                logger.info(f"Predicted rates exchanges: {predicted_df['exchange'].unique().tolist()}")
+                logger.info(f"Sample predicted rates: {predicted_df[['symbol', 'exchange', 'predicted_rate']].head(3).to_dict('records')}")
+            
+            # Get current rates
+            logger.info("Fetching current rates from exchanges...")
+            analyzer = AdvancedFundingAnalyzer()
+            df = analyzer.analyze_funding_opportunities()
+            
+            if not isinstance(df, pd.DataFrame) or df.empty:
+                logger.error("Failed to fetch current rates from exchanges")
+                retry_count += 1
+                if retry_count < max_retries:
+                    logger.warning(f"Retry {retry_count}/{max_retries} for fetch_data due to empty result")
+                    time.sleep(5)  # Wait 5 seconds before retrying
+                    continue
+                else:
+                    logger.error(f"All {max_retries} retries failed, returning empty DataFrame")
+                    return pd.DataFrame()
+            
             # Create a copy to avoid modifying original
             df = df.copy()
+            logger.info(f"Successfully fetched {len(df)} current rates from exchanges")
+            logger.info(f"Current rates exchanges: {df['exchange'].unique().tolist()}")
+            logger.info(f"Sample current rates: {df[['symbol', 'exchange', 'funding_rate']].head(3).to_dict('records')}")
             
             # Initialize required columns with defaults
             required_columns = ['predicted_rate', 'direction', 'rate_diff']
@@ -235,12 +289,17 @@ def fetch_data():
                     required_pred_columns = ['symbol', 'exchange', 'predicted_rate', 'direction']
                     if all(col in predicted_df.columns for col in required_pred_columns):
                         # Merge with predicted rates matching on both symbol and exchange
+                        logger.info("Merging current and predicted rates...")
                         merged_df = df.merge(
                             predicted_df,
                             on=['symbol', 'exchange'],
                             how='left',
                             suffixes=('', '_pred')
                         )
+                        
+                        # Log merge results
+                        logger.info(f"Merged data shape: {merged_df.shape}")
+                        logger.info(f"Matched predictions: {merged_df['predicted_rate_pred'].notna().sum()} out of {len(merged_df)}")
                         
                         # Update original df with merged data
                         if 'predicted_rate_pred' in merged_df.columns:
@@ -253,10 +312,11 @@ def fetch_data():
                         else:
                             df['direction'] = 'neutral'
                     else:
-                        logger.warning("Missing required columns in predicted_df")
+                        logger.warning(f"Missing required columns in predicted_df. Available columns: {predicted_df.columns.tolist()}")
                         df['predicted_rate'] = df['funding_rate']
                         df['direction'] = 'neutral'
                 else:
+                    logger.info("Using current rates as predictions (no predicted rates available)")
                     df['predicted_rate'] = df['funding_rate']
                     df['direction'] = 'neutral'
                 
@@ -275,21 +335,40 @@ def fetch_data():
                 # Log successful processing
                 logger.info(f"Successfully processed {len(df)} rows")
                 logger.info(f"Columns after processing: {df.columns.tolist()}")
+                logger.info(f"Top 5 opportunities: {df.nlargest(5, 'opportunity_score')[['symbol', 'exchange', 'funding_rate', 'predicted_rate', 'opportunity_score']].to_dict('records')}")
                 
             except Exception as merge_error:
                 logger.error(f"Error during merge/processing: {merge_error}")
+                logger.error("Error details:", exc_info=True)
                 # Fallback to using funding rates as predictions
                 df['predicted_rate'] = df['funding_rate']
                 df['direction'] = 'neutral'
                 df['rate_diff'] = 0.0
+                df['opportunity_score'] = df.apply(calculate_opportunity_score, axis=1)
             
-            return df.sort_values('opportunity_score', ascending=False)
-        
-        return pd.DataFrame()
-        
-    except Exception as e:
-        logger.error(f"Error in fetch_data: {e}")
-        return pd.DataFrame()
+            # Sort by opportunity score
+            result_df = df.sort_values('opportunity_score', ascending=False)
+            
+            # Cache the result if caching is enabled
+            if use_cache:
+                try:
+                    result_df.to_pickle(cache_file)
+                    logger.info(f"Data cached to {cache_file}")
+                except Exception as cache_error:
+                    logger.warning(f"Failed to cache data: {cache_error}")
+            
+            return result_df
+            
+        except Exception as e:
+            retry_count += 1
+            if retry_count < max_retries:
+                logger.warning(f"Retry {retry_count}/{max_retries} for fetch_data due to error: {e}")
+                logger.warning("Error details:", exc_info=True)
+                time.sleep(5)  # Wait 5 seconds before retrying
+            else:
+                logger.error(f"All {max_retries} retries failed with error: {e}")
+                logger.error("Error details:", exc_info=True)
+                return pd.DataFrame()
 
 def calculate_stats(df: pd.DataFrame) -> dict:
     """Calculate statistics from the funding data with multiple timeframes"""
@@ -336,6 +415,7 @@ def create_arbitrage_visualization(df):
         
         # Find common symbols and create arbitrage data
         common_symbols = set(binance_df['symbol']) & set(hl_df['symbol'])
+        
         arb_data = []
         
         for symbol in common_symbols:
@@ -604,75 +684,148 @@ def save_config_file(config: dict) -> str:
 
 def push_to_supabase(df: pd.DataFrame, stats: dict, viz_data: dict):
     """Push analyzed data to Supabase tables"""
+    if df.empty:
+        logger.error("Cannot push empty DataFrame to Supabase")
+        return False
+        
     try:
         load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
         
-        # Push current market snapshot
-        market_data = df.apply(lambda x: {
-            'symbol': x['symbol'],
-            'exchange': x['exchange'],
-            'funding_rate': float(x['funding_rate']),
-            'predicted_rate': float(x['predicted_rate']),
-            'rate_diff': float(x['rate_diff']),
-            'time_to_funding': float(x['time_to_funding']),
-            'direction': x['direction'],
-            'annualized_rate': float(x['annualized_rate']),
-            'opportunity_score': float(x['opportunity_score']),
-            'mark_price': float(x['mark_price']),
-            'suggested_position': "Long" if x['funding_rate'] < 0 else "Short",
-            'created_at': datetime.now().isoformat(),
-        }, axis=1).tolist()
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials")
+            return False
+            
+        # Initialize Supabase client with minimal parameters
+        supabase = create_client(supabase_url, supabase_key)
         
-        # Push market snapshot
-        response = supabase.table('funding_market_snapshots').insert(market_data).execute()
-        logger.info(f"Pushed {len(market_data)} market records")
+        # Validate DataFrame columns
+        required_columns = ['symbol', 'exchange', 'funding_rate', 'predicted_rate', 'rate_diff', 
+                           'time_to_funding', 'direction', 'annualized_rate', 'opportunity_score', 'mark_price']
+        missing_columns = [col for col in required_columns if col not in df.columns]
+        if missing_columns:
+            logger.error(f"Missing required columns in DataFrame: {missing_columns}")
+            return False
+            
+        # Prepare market data with proper type handling
+        logger.info("Preparing market data for Supabase...")
+        market_data = []
+        timestamp = datetime.now().isoformat()
+        
+        for _, row in df.iterrows():
+            try:
+                market_data.append({
+                    'symbol': str(row['symbol']),
+                    'exchange': str(row['exchange']),
+                    'funding_rate': float(row['funding_rate']),
+                    'predicted_rate': float(row['predicted_rate']),
+                    'rate_diff': float(row['rate_diff']),
+                    'time_to_funding': float(row['time_to_funding']),
+                    'direction': str(row['direction']),
+                    'annualized_rate': float(row['annualized_rate']),
+                    'opportunity_score': float(row['opportunity_score']),
+                    'mark_price': float(row['mark_price']),
+                    'suggested_position': "Long" if row['funding_rate'] < 0 else "Short",
+                    'created_at': timestamp,
+                })
+            except Exception as row_error:
+                logger.warning(f"Error processing row for Supabase: {row_error}")
+                continue
+        
+        if not market_data:
+            logger.error("No valid market data to push to Supabase")
+            return False
+            
+        logger.info(f"Pushing {len(market_data)} market records to Supabase...")
+        
+        # Push market snapshot in batches to avoid payload size issues
+        batch_size = 100
+        success_count = 0
+        
+        for i in range(0, len(market_data), batch_size):
+            batch = market_data[i:i+batch_size]
+            try:
+                response = supabase.table('funding_market_snapshots').insert(batch).execute()
+                success_count += len(batch)
+                logger.info(f"Pushed batch {i//batch_size + 1} with {len(batch)} market records")
+            except Exception as batch_error:
+                logger.error(f"Error pushing batch {i//batch_size + 1} to Supabase: {batch_error}")
+                
+        if success_count == 0:
+            logger.error("Failed to push any market records to Supabase")
+            return False
+            
+        logger.info(f"Successfully pushed {success_count}/{len(market_data)} market records to Supabase")
         
         # Push statistics
-        stats_data = {
-            'total_markets': stats['total_markets'],
-            'binance_markets': stats['binance_markets'],
-            'hl_markets': stats['hl_markets'],
-            'hourly_rate': float(stats['hourly_rate']),
-            'eight_hour_rate': float(stats['eight_hour_rate']),
-            'daily_rate': float(stats['daily_rate']),
-            'created_at': datetime.now().isoformat()
-        }
-        
-        response = supabase.table('funding_statistics').insert(stats_data).execute()
-        logger.info("Pushed statistics")
+        if not stats:
+            logger.warning("No statistics to push to Supabase")
+        else:
+            try:
+                stats_data = {
+                    'total_markets': int(stats.get('total_markets', 0)),
+                    'binance_markets': int(stats.get('binance_markets', 0)),
+                    'hl_markets': int(stats.get('hl_markets', 0)),
+                    'hourly_rate': float(stats.get('hourly_rate', 0.0)),
+                    'eight_hour_rate': float(stats.get('eight_hour_rate', 0.0)),
+                    'daily_rate': float(stats.get('daily_rate', 0.0)),
+                    'created_at': timestamp
+                }
+                
+                response = supabase.table('funding_statistics').insert(stats_data).execute()
+                logger.info("Successfully pushed statistics to Supabase")
+            except Exception as stats_error:
+                logger.error(f"Error pushing statistics to Supabase: {stats_error}")
         
         # Push top opportunities
-        if 'top_opportunities' in viz_data:
-            top_opps = viz_data['top_opportunities'].apply(lambda x: {
-                'symbol': x['symbol'],
-                'exchange': x['exchange'],
-                'funding_rate': float(x['funding_rate']),
-                'predicted_rate': float(x['predicted_rate']),
-                'opportunity_score': float(x['opportunity_score']),
-                'created_at': datetime.now().isoformat()
-            }, axis=1).tolist()
-            
-            response = supabase.table('funding_top_opportunities').insert(top_opps).execute()
-            logger.info(f"Pushed {len(top_opps)} top opportunities")
+        if 'top_opportunities' not in viz_data or viz_data['top_opportunities'].empty:
+            logger.warning("No top opportunities to push to Supabase")
+        else:
+            try:
+                top_opps = []
+                for _, row in viz_data['top_opportunities'].iterrows():
+                    try:
+                        top_opps.append({
+                            'symbol': str(row['symbol']),
+                            'exchange': str(row['exchange']),
+                            'funding_rate': float(row['funding_rate']),
+                            'predicted_rate': float(row['predicted_rate']),
+                            'opportunity_score': float(row['opportunity_score']),
+                            'created_at': timestamp
+                        })
+                    except Exception as row_error:
+                        logger.warning(f"Error processing top opportunity for Supabase: {row_error}")
+                        continue
+                
+                if top_opps:
+                    response = supabase.table('funding_top_opportunities').insert(top_opps).execute()
+                    logger.info(f"Successfully pushed {len(top_opps)} top opportunities to Supabase")
+                else:
+                    logger.warning("No valid top opportunities to push to Supabase")
+            except Exception as opps_error:
+                logger.error(f"Error pushing top opportunities to Supabase: {opps_error}")
         
         return True
         
     except Exception as e:
         logger.error(f"Error pushing to Supabase: {e}")
+        logger.error("Error details:", exc_info=True)
         return False
 
 def test_supabase_query():
     """Test direct SQL query to Supabase"""
     try:
         load_dotenv()
-        supabase = create_client(
-            os.getenv("NEXT_PUBLIC_SUPABASE_URL"),
-            os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
-        )
+        supabase_url = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+        supabase_key = os.getenv("NEXT_PUBLIC_SUPABASE_KEY")
+        
+        if not supabase_url or not supabase_key:
+            logger.error("Missing Supabase credentials")
+            return pd.DataFrame()
+            
+        # Initialize Supabase client with minimal parameters
+        supabase = create_client(supabase_url, supabase_key)
         
         # Direct SQL query
         query = """
@@ -702,25 +855,68 @@ def main():
             page_icon="📊",
             layout="wide",
             menu_items={
-                'About': 'Funding Rate Analysis Dashboard'
+                'About': 'Funding Rate Analysis Dashboard - Real-time funding rate analysis for crypto perpetual futures'
             }
         )
+        
+        # Custom CSS for better styling
+        st.markdown("""
+        <style>
+        .main-header {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .sub-header {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2196F3;
+            margin-bottom: 0.5rem;
+        }
+        .info-text {
+            font-size: 1rem;
+            color: #757575;
+        }
+        .highlight {
+            background-color: rgba(76, 175, 80, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 5px solid #4CAF50;
+        }
+        .warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 5px solid #FF9800;
+        }
+        .error {
+            background-color: rgba(244, 67, 54, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 5px solid #F44336;
+        }
+        #auto-refresh-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 999;
+        }
+        </style>
+        """, unsafe_allow_html=True)
         
         # Add auto-refresh using HTML
         st.markdown(
             """
             <meta http-equiv="refresh" content="300">
-            <style>
-                #auto-refresh-status {
-                    position: fixed;
-                    top: 10px;
-                    right: 10px;
-                    z-index: 999;
-                }
-            </style>
             """,
             unsafe_allow_html=True
         )
+        
+        # Display header
+        st.markdown('<div class="main-header">Crypto Funding Rate Dashboard</div>', unsafe_allow_html=True)
+        st.markdown('<div class="info-text">Real-time analysis of funding rates across major exchanges</div>', unsafe_allow_html=True)
         
         # Initialize session state for refresh tracking
         if 'last_refresh' not in st.session_state:
@@ -731,29 +927,51 @@ def main():
         time_since_refresh = time.time() - st.session_state.last_refresh
         time_until_refresh = max(0, 300 - time_since_refresh)  # 300 seconds = 5 minutes
         
-        # Display refresh status
-        st.sidebar.markdown("### Auto-Refresh Status")
-        st.sidebar.markdown(f"Next refresh in: {int(time_until_refresh)} seconds")
-        st.sidebar.markdown(f"Refresh count: {st.session_state.refresh_count}")
+        # Display refresh status in sidebar
+        st.sidebar.markdown('<div class="sub-header">Dashboard Status</div>', unsafe_allow_html=True)
         
-        # Check if it's time to refresh
-        should_refresh = time_since_refresh >= 300
+        refresh_col1, refresh_col2 = st.sidebar.columns(2)
+        with refresh_col1:
+            st.markdown(f"**Next refresh in:**")
+        with refresh_col2:
+            st.markdown(f"**{int(time_until_refresh)} seconds**")
+            
+        count_col1, count_col2 = st.sidebar.columns(2)
+        with count_col1:
+            st.markdown(f"**Refresh count:**")
+        with count_col2:
+            st.markdown(f"**{st.session_state.refresh_count}**")
         
+        st.sidebar.markdown("---")
+        
+        # Environment check
         if not load_environment():
+            st.error("❌ Failed to load environment variables. Please check your .env file.")
             st.stop()
+        
+        # Check if manual refresh button was clicked
+        manual_refresh = st.button("🔄 Refresh Data Now", key="manual_refresh")
+        if manual_refresh:
+            st.session_state._manual_refresh = True
         
         # Run analysis with progress and error handling
         if ('df' not in st.session_state or 
-            st.button("🔄 Refresh Now", key="manual_refresh") or 
+            manual_refresh or 
             should_refresh):
             
             # Update refresh tracking
             st.session_state.last_refresh = time.time()
             st.session_state.refresh_count += 1
             
-            with st.spinner("Fetching latest data..."):
+            with st.spinner("🔄 Fetching latest funding rate data..."):
                 try:
-                    df = fetch_data()
+                    # Use cache for auto-refresh, but not for manual refresh
+                    use_cache = not st.session_state.get('_manual_refresh', False)
+                    df = fetch_data(use_cache=use_cache)
+                    
+                    # Reset manual refresh flag
+                    st.session_state._manual_refresh = False
+                    
                     if not df.empty:
                         st.session_state.df = df
                         st.session_state.stats = calculate_stats(df)
@@ -763,33 +981,40 @@ def main():
                         viz_data = create_visualizations(df)
                         
                         # Push data to Supabase
-                        with st.spinner("Updating database..."):
+                        with st.spinner("📤 Updating database..."):
                             if push_to_supabase(df, st.session_state.stats, viz_data):
-                                st.success("Data successfully updated")
+                                st.success("✅ Data successfully updated in database")
                             else:
-                                st.warning("Failed to update database")
+                                st.warning("⚠️ Failed to update database, but analysis will continue")
                         
                         st.session_state.viz_data = viz_data
                     else:
-                        st.error("No data retrieved")
-                        if st.button("Retry", key="retry_fetch"):
+                        st.error("❌ No data retrieved from exchanges")
+                        st.markdown('<div class="error">Failed to fetch funding rate data from exchanges. Please check the logs for details.</div>', unsafe_allow_html=True)
+                        if st.button("🔁 Retry", key="retry_fetch"):
                             st.rerun()
                         return
                 except Exception as e:
                     logger.error(f"Error fetching data: {e}")
-                    st.error(f"Error fetching data: {str(e)}")
+                    logger.error("Error details:", exc_info=True)
+                    st.error(f"❌ Error fetching data: {str(e)}")
+                    st.markdown(f'<div class="error">An error occurred while fetching data: {str(e)}</div>', unsafe_allow_html=True)
+                    if st.button("🔁 Retry", key="retry_error"):
+                        st.rerun()
                     return
 
         # Display last update time
-        st.sidebar.markdown("---")
         if 'last_update' in st.session_state:
-            st.sidebar.markdown(f"Last updated: {st.session_state.last_update.strftime('%Y-%m-%d %H:%M:%S')}")
+            st.sidebar.markdown('<div class="sub-header">Data Status</div>', unsafe_allow_html=True)
+            st.sidebar.markdown(f"**Last updated:** {st.session_state.last_update.strftime('%Y-%m-%d %H:%M:%S')}")
 
         # Display data if available
         if 'df' in st.session_state and not st.session_state.df.empty:
             try:
                 # Display metrics
                 stats = st.session_state.stats
+                st.markdown('<div class="sub-header">Market Overview</div>', unsafe_allow_html=True)
+                
                 col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
@@ -800,73 +1025,75 @@ def main():
                     )
                 with col2:
                     st.metric(
-                        "1H Rate",
+                        "1H Funding Rate",
                         f"{stats['hourly_rate']:.4f}%",
                         f"{stats['hourly_rate']*365*24:.1f}% APR"
                     )
                 with col3:
                     st.metric(
-                        "8H Rate",
+                        "8H Funding Rate",
                         f"{stats['eight_hour_rate']:.4f}%",
                         f"{stats['eight_hour_rate']*365/8:.1f}% APR"
                     )
                 with col4:
                     st.metric(
-                        "24H Rate",
+                        "24H Funding Rate",
                         f"{stats['daily_rate']:.4f}%",
                         f"{stats['daily_rate']*365/24:.1f}% APR"
                     )
 
                 # Create tabs
-                tab1, tab2, tab3 = st.tabs([
+                tab1, tab2, tab3, tab4 = st.tabs([
                     "🎯 Top Opportunities",
                     "📊 Market Analysis",
+                    "🔄 Cross-Exchange",
                     "🔍 Detailed View"
                 ])
-
-                # Get visualization data
-                viz_data = st.session_state.viz_data
-
-                # Display tabs content
+                
                 with tab1:
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        if 'opportunity_scatter' in viz_data:
-                            st.plotly_chart(viz_data['opportunity_scatter'], use_container_width=True)
-                    with col2:
-                        if 'arb_scatter' in viz_data:
-                            st.plotly_chart(viz_data['arb_scatter'], use_container_width=True)
+                    display_top_opportunities(st.session_state.viz_data.get('top_opportunities', pd.DataFrame()))
                     
-                    if 'top_opportunities' in viz_data:
-                        display_top_opportunities(viz_data['top_opportunities'])
-
                 with tab2:
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        if 'funding_distribution' in viz_data:
-                            st.plotly_chart(viz_data['funding_distribution'], use_container_width=True)
-                        if 'exchange_comparison' in viz_data:
-                            st.plotly_chart(viz_data['exchange_comparison'], use_container_width=True)
-                    with col2:
-                        if 'funding_heatmap' in viz_data:
-                            st.plotly_chart(viz_data['funding_heatmap'], use_container_width=True)
-
+                    display_directional_opportunities(st.session_state.df)
+                    
                 with tab3:
+                    display_cross_exchange_opportunities(st.session_state.df)
+                    
+                with tab4:
                     display_detailed_view(st.session_state.df)
-
+                
+                # Add config generation option
+                st.sidebar.markdown('<div class="sub-header">Tools</div>', unsafe_allow_html=True)
+                if st.sidebar.button("Generate Hummingbot Config"):
+                    generate_hummingbot_config(st.session_state.df)
+                    
+                # Add data download option
+                if st.sidebar.button("Download Data as CSV"):
+                    csv = st.session_state.df.to_csv(index=False)
+                    st.sidebar.download_button(
+                        label="Download CSV",
+                        data=csv,
+                        file_name=f"funding_data_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                        mime="text/csv"
+                    )
+                
             except Exception as e:
-                st.error(f"Error displaying data: {str(e)}")
-                logger.error(f"Display error: {str(e)}", exc_info=True)
-                if st.button("Retry Display", key="retry_display"):
-                    st.rerun()
+                logger.error(f"Error displaying dashboard: {e}")
+                logger.error("Error details:", exc_info=True)
+                st.error(f"❌ Error displaying dashboard: {str(e)}")
+                st.markdown(f'<div class="error">An error occurred while displaying the dashboard: {str(e)}</div>', unsafe_allow_html=True)
         else:
-            st.info("Waiting for initial data...")
+            st.warning("⚠️ No data available. Please refresh to fetch the latest data.")
+            
+        # Add footer
+        st.markdown("---")
+        st.markdown('<div class="info-text" style="text-align: center;">Funding Rate Dashboard | Data refreshes every 5 minutes</div>', unsafe_allow_html=True)
             
     except Exception as e:
-        logger.error(f"Main function error: {e}")
-        st.error(f"An error occurred: {str(e)}")
-        if st.button("Restart App", key="restart_app"):
-            st.rerun()
+        logger.error(f"Error in main function: {e}")
+        logger.error("Error details:", exc_info=True)
+        st.error(f"❌ Application error: {str(e)}")
+        st.markdown(f'<div class="error">An unexpected error occurred: {str(e)}</div>', unsafe_allow_html=True)
 
 def display_top_opportunities(top_opps):
     """Display both directional and cross-exchange funding opportunities side by side"""
@@ -1071,5 +1298,101 @@ def display_detailed_view(df):
         logger.error(f"Error in detailed view: {e}")
         st.error("Error displaying detailed view")
 
+# Add a scheduled refresh function that can be called externally
+def scheduled_refresh():
+    """Function to be called by external scheduler to refresh data"""
+    start_time = time.time()
+    logger.info("=== Starting scheduled data refresh ===")
+    
+    try:
+        # Load environment variables
+        if not load_environment():
+            logger.error("Failed to load environment variables")
+            return False
+            
+        # Check Supabase connection
+        if not check_supabase_connection():
+            logger.error("Failed to connect to Supabase")
+            return False
+            
+        # Fetch data with caching enabled but with fewer retries for scheduled runs
+        logger.info("Fetching latest data...")
+        df = fetch_data(use_cache=True, max_retries=3)
+        
+        if df.empty:
+            logger.error("No data retrieved during scheduled refresh")
+            return False
+            
+        # Calculate statistics
+        logger.info("Calculating statistics...")
+        stats = calculate_stats(df)
+        
+        # Create visualizations
+        logger.info("Creating visualizations...")
+        viz_data = create_visualizations(df)
+        
+        # Push to Supabase
+        logger.info("Pushing data to Supabase...")
+        success = push_to_supabase(df, stats, viz_data)
+        
+        if success:
+            elapsed_time = time.time() - start_time
+            logger.info(f"Scheduled refresh completed successfully in {elapsed_time:.2f} seconds")
+            logger.info(f"Processed {len(df)} market records")
+            
+            # Save a backup of the data
+            try:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                backup_file = f"funding_data_backup_{timestamp}.pkl"
+                df.to_pickle(backup_file)
+                logger.info(f"Created data backup: {backup_file}")
+                
+                # Clean up old backups (keep only the 5 most recent)
+                backup_files = sorted([f for f in os.listdir('.') if f.startswith('funding_data_backup_')])
+                if len(backup_files) > 5:
+                    for old_file in backup_files[:-5]:
+                        try:
+                            os.remove(old_file)
+                            logger.info(f"Removed old backup: {old_file}")
+                        except Exception as rm_error:
+                            logger.warning(f"Could not remove old backup {old_file}: {rm_error}")
+            except Exception as backup_error:
+                logger.warning(f"Failed to create data backup: {backup_error}")
+            
+            return True
+        else:
+            logger.error("Failed to push data to Supabase during scheduled refresh")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error during scheduled refresh: {e}")
+        logger.error("Error details:", exc_info=True)
+        return False
+    finally:
+        logger.info("=== Scheduled refresh process completed ===")
+        
+        # Log memory usage
+        try:
+            import psutil
+            process = psutil.Process(os.getpid())
+            memory_info = process.memory_info()
+            logger.info(f"Memory usage: {memory_info.rss / 1024 / 1024:.2f} MB")
+        except ImportError:
+            logger.info("psutil not installed, skipping memory usage logging")
+        except Exception as mem_error:
+            logger.warning(f"Failed to log memory usage: {mem_error}")
+
 if __name__ == "__main__":
-    main() 
+    # Check for command line arguments
+    parser = argparse.ArgumentParser(description='Funding Rate Analysis Dashboard')
+    parser.add_argument('--scheduled', action='store_true', help='Run in scheduled mode (no UI)')
+    args = parser.parse_args()
+    
+    if args.scheduled:
+        # Run in scheduled mode
+        print("Running in scheduled mode...")
+        success = scheduled_refresh()
+        sys.exit(0 if success else 1)
+    else:
+        # Run in normal UI mode
+        main() 

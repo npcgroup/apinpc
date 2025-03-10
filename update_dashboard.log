@@ -1,0 +1,63 @@
+2025-03-07 19:21:13,937 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 19:21:13,937 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 19:21:14,859 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 19:21:14,860 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 19:21:14,861 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 19:21:14,861 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 19:21:14,861 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 19:21:14,862 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 19:21:14,862 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 20:22:14,462 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:22:14,462 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 20:22:15,392 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:22:15,394 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:22:15,394 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 20:22:15,395 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 20:22:15,395 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 20:22:15,395 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:22:15,395 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 20:34:17,228 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:34:17,228 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 20:34:18,128 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:34:18,129 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:34:18,130 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 20:34:18,130 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 20:34:18,130 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 20:34:18,130 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:34:18,130 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 20:41:35,536 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:41:35,536 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 20:41:36,464 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:41:36,466 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:41:36,466 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 20:41:36,467 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 20:41:36,467 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 20:41:36,467 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:41:36,467 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 21:51:04,916 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 21:51:04,917 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 21:51:05,614 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 21:51:05,616 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 21:51:05,616 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 21:51:05,618 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 21:51:05,619 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 21:51:05,619 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 21:51:05,619 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 22:02:00,579 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 22:02:00,579 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 22:02:01,573 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 22:02:01,574 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 22:02:01,574 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 22:02:01,574 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 22:02:01,575 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 22:02:01,575 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 22:02:01,575 - __main__ - INFO - Please create the table manually using the SQL script
+2025-03-07 22:15:08,642 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 22:15:08,643 - __main__ - INFO - Starting update of dashboard to use price history table
+2025-03-07 22:15:09,339 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=id&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 22:15:09,340 - __main__ - ERROR - Error checking crypto_price_history table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 22:15:09,340 - __main__ - WARNING - crypto_price_history table does not exist
+2025-03-07 22:15:09,340 - __main__ - INFO - Would execute SQL script to create table (not implemented)
+2025-03-07 22:15:09,340 - __main__ - INFO - Please run the SQL script manually using the Supabase SQL editor
+2025-03-07 22:15:09,340 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 22:15:09,340 - __main__ - INFO - Please create the table manually using the SQL script

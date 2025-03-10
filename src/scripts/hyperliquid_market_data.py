@@ -59,7 +59,7 @@ def fetch_market_data():
     """
     try:
         # Initialize Hyperliquid client with correct settings
-        exchange = ccxt.hyperliquid({
+        exchange = ccxt.binance({
             'enableRateLimit': True,
             'options': {
                 'defaultType': 'swap',

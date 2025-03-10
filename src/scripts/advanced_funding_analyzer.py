@@ -10,11 +10,10 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
 from rich.panel import Panel
 import time
-from hyperliquid.info import Info
-from hyperliquid.utils import constants
 import aiohttp
 import asyncio
 from rich.table import Table
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -33,14 +32,7 @@ class AdvancedFundingAnalyzer:
                 'adjustForTimeDifference': True
             }
         })
-        # Use CCXT for Hyperliquid
-        self.hyperliquid = ccxt.hyperliquid({
-            'enableRateLimit': True,
-            'options': {
-                'defaultType': 'swap',  # for perpetual futures
-                'adjustForTimeDifference': True
-            }
-        })
+        # We're using direct API calls for Hyperliquid instead of the SDK
 
     def get_binance_all_rates(self) -> List[Dict]:
         """Fetch both current and predicted funding rates from Binance"""
@@ -88,42 +80,131 @@ class AdvancedFundingAnalyzer:
             return []
 
     def get_hyperliquid_all_rates(self) -> List[Dict]:
-        """Fetch funding rates from Hyperliquid using CCXT"""
+        """Fetch funding rates from Hyperliquid using direct API call"""
         try:
-            # Disable progress display for integration
+            console.print("[cyan]Fetching Hyperliquid markets...[/cyan]")
+            
             formatted_rates = []
             
             try:
-                # Load markets without progress display
-                markets = self.hyperliquid.load_markets()
+                # Use direct API call instead of SDK
                 
-                # Fetch funding rates directly
-                funding_rates = self.hyperliquid.fetch_funding_rates()
+                # API endpoint for Hyperliquid
+                url = "https://api.hyperliquid.xyz/info"
                 
-                for symbol, data in funding_rates.items():
+                # Request payload
+                payload = {
+                    "type": "metaAndAssetCtxs"
+                }
+                
+                # Headers
+                headers = {
+                    "Content-Type": "application/json"
+                }
+                
+                # Make the API call with timeout
+                response = requests.post(url, json=payload, headers=headers, timeout=10)
+                
+                # Check if the request was successful
+                if response.status_code != 200:
+                    console.print(f"[red]Failed to fetch Hyperliquid data: HTTP {response.status_code}[/red]")
+                    return []
+                
+                # Parse the response
+                try:
+                    data = response.json()
+                except Exception as json_error:
+                    console.print(f"[red]Failed to parse Hyperliquid API response: {str(json_error)}[/red]")
+                    return []
+                
+                # Extract universe (metadata) and asset contexts
+                if not data or len(data) < 2:
+                    console.print("[red]Invalid response format from Hyperliquid API[/red]")
+                    return []
+                    
+                # Validate universe data
+                if not isinstance(data[0], dict) or 'universe' not in data[0]:
+                    console.print("[red]Invalid universe data in Hyperliquid API response[/red]")
+                    return []
+                    
+                # Validate asset contexts data
+                if not isinstance(data[1], list):
+                    console.print("[red]Invalid asset contexts data in Hyperliquid API response[/red]")
+                    return []
+                    
+                universe = data[0].get('universe', [])
+                asset_contexts = data[1]
+                
+                # Debug output
+                console.print(f"[green]Got {len(universe)} assets in universe and {len(asset_contexts)} asset contexts[/green]")
+                
+                # Map asset names to their contexts
+                for i, asset_ctx in enumerate(asset_contexts):
                     try:
-                        base = symbol.split('/')[0]
+                        if i < len(universe):
+                            asset_name = universe[i].get('name')
+                        else:
+                            console.print(f"[yellow]Warning: Asset context at index {i} has no corresponding universe entry[/yellow]")
+                            continue
+                            
+                        if not asset_name:
+                            continue
+                            
+                        # Get current funding rate
+                        funding_rate = float(asset_ctx.get('funding', 0))
+                        
+                        # Use the same value for predicted rate (Hyperliquid doesn't provide predictions)
+                        predicted_rate = funding_rate
+                        
+                        # Get mark price
+                        mark_price = float(asset_ctx.get('markPx', 0))
+                        
+                        # Calculate next funding time (Hyperliquid funding occurs hourly)
+                        current_time = time.time()
+                        next_hour = current_time - (current_time % 3600) + 3600
+                        
                         formatted_rates.append({
                             'exchange': 'Hyperliquid',
-                            'symbol': base,
-                            'funding_rate': float(data['fundingRate']),
-                            'predicted_rate': float(data.get('predictedRate', 0)),
-                            'next_funding_time': datetime.fromtimestamp(data.get('fundingTimestamp', time.time()) / 1000),
-                            'mark_price': float(data.get('markPrice', 0)),
-                            'payment_interval': 1
+                            'symbol': asset_name,
+                            'funding_rate': funding_rate,
+                            'predicted_rate': predicted_rate,
+                            'next_funding_time': datetime.fromtimestamp(next_hour),
+                            'mark_price': mark_price,
+                            'payment_interval': 1  # Hourly funding
                         })
                     except Exception as e:
-                        logger.warning(f"Error processing Hyperliquid rate for {symbol}: {e}")
+                        logger.warning(f"Error processing Hyperliquid rate for asset at index {i}: {e}")
                         continue
                 
+                # Debug output
+                if formatted_rates:
+                    console.print(f"[green]✓ Successfully fetched {len(formatted_rates)} Hyperliquid rates[/green]")
+                    console.print("[cyan]Sample rates:[/cyan]")
+                    for rate in formatted_rates[:3]:
+                        console.print(f"  {rate['symbol']}: {rate['funding_rate']}")
+                else:
+                    console.print("[yellow]No Hyperliquid rates found after processing[/yellow]")
+                    
                 return formatted_rates
 
+            except requests.exceptions.Timeout:
+                console.print("[red]Timeout while fetching Hyperliquid rates[/red]")
+                logger.error("Timeout while fetching Hyperliquid rates")
+                return []
+            except requests.exceptions.RequestException as req_error:
+                console.print(f"[red]Request error while fetching Hyperliquid rates: {str(req_error)}[/red]")
+                logger.error(f"Request error while fetching Hyperliquid rates: {str(req_error)}")
+                return []
             except Exception as e:
+                console.print(f"[red]Error fetching Hyperliquid rates: {str(e)}[/red]")
                 logger.error(f"Error fetching Hyperliquid rates: {str(e)}")
+                logger.error("Error details:", exc_info=True)
                 return []
 
         except Exception as e:
+            console.print(f"[red]Error in Hyperliquid rate fetch: {str(e)}[/red]")
             logger.error(f"Error in Hyperliquid rate fetch: {str(e)}")
+            logger.error("Error details:", exc_info=True)
             return []
 
     async def _fetch_single_coinalyze_rate(self, session, symbol: str) -> Optional[float]:
@@ -197,40 +278,83 @@ class AdvancedFundingAnalyzer:
     def analyze_funding_opportunities(self) -> pd.DataFrame:
         """Analyze funding opportunities across exchanges"""
         try:
+            all_rates = []
+            
             # Get Hyperliquid rates first with debugging
             console.print("\n[cyan]Fetching Hyperliquid rates first...[/cyan]")
             hl_rates = self.get_hyperliquid_all_rates()
             
-            if not hl_rates:
-                console.print("[red]❌ No Hyperliquid rates available[/red]")
-                return pd.DataFrame()
-            
-            # Debug output for Hyperliquid rates
-            console.print(f"\n[green]✓ Successfully fetched {len(hl_rates)} Hyperliquid rates[/green]")
-            console.print("\nSample Hyperliquid rates:")
-            for rate in hl_rates[:3]:
-                console.print(f"Symbol: {rate['symbol']}, Rate: {rate['funding_rate']}, Predicted: {rate['predicted_rate']}")
+            if hl_rates:
+                console.print(f"\n[green]✓ Successfully fetched {len(hl_rates)} Hyperliquid rates[/green]")
+                console.print("\nSample Hyperliquid rates:")
+                for rate in hl_rates[:3]:
+                    console.print(f"Symbol: {rate['symbol']}, Rate: {rate['funding_rate']}, Predicted: {rate['predicted_rate']}")
+                all_rates.extend(hl_rates)
+            else:
+                console.print("[yellow]⚠️ No Hyperliquid rates available, continuing with other exchanges[/yellow]")
             
             # Get Binance rates
             console.print("\n[cyan]Fetching Binance rates...[/cyan]")
             binance_rates = self.get_binance_all_rates()
+            
+            if binance_rates:
+                console.print(f"\n[green]✓ Successfully fetched {len(binance_rates)} Binance rates[/green]")
+                console.print("\nSample Binance rates:")
+                for rate in binance_rates[:3]:
+                    console.print(f"Symbol: {rate['symbol']}, Rate: {rate['funding_rate']}")
+                all_rates.extend(binance_rates)
+            else:
+                console.print("[yellow]⚠️ No Binance rates available[/yellow]")
 
             # Combine and process rates
-            all_rates = hl_rates + binance_rates
             if not all_rates:
-                console.print("[red]❌ No funding rates data available[/red]")
+                console.print("[red]❌ No funding rates data available from any exchange[/red]")
                 return pd.DataFrame()
 
+            # Create DataFrame and calculate annualized rates
             df = pd.DataFrame(all_rates)
+            
+            # Ensure required columns exist
+            required_columns = ['symbol', 'exchange', 'funding_rate', 'payment_interval', 'mark_price']
+            for col in required_columns:
+                if col not in df.columns:
+                    if col == 'mark_price':
+                        df[col] = 0.0
+                    elif col == 'payment_interval':
+                        df[col] = 1.0
+                    else:
+                        console.print(f"[red]Missing required column: {col}[/red]")
+                        return pd.DataFrame()
+            
+            # Calculate annualized rates
             df['annualized_rate'] = df.apply(
-                lambda x: float(x['funding_rate']) * (365 * 24 / x['payment_interval']) * 100,
+                lambda x: float(x['funding_rate']) * (365 * 24 / float(x['payment_interval'])) * 100,
                 axis=1
             )
+            
+            # Add predicted_rate column if missing
+            if 'predicted_rate' not in df.columns:
+                df['predicted_rate'] = df['funding_rate']
+            
+            # Ensure all numeric columns are float
+            numeric_cols = ['funding_rate', 'predicted_rate', 'annualized_rate', 'mark_price']
+            for col in numeric_cols:
+                if col in df.columns:
+                    df[col] = df[col].astype(float)
+                
+            # Remove any duplicate symbols within the same exchange
+            df = df.drop_duplicates(subset=['symbol', 'exchange'], keep='first')
+            
+            # Log summary of data
+            console.print(f"\n[cyan]Total funding rates: {len(df)}[/cyan]")
+            console.print(f"[cyan]Exchanges: {df['exchange'].unique().tolist()}[/cyan]")
+            console.print(f"[cyan]Unique symbols: {df['symbol'].nunique()}[/cyan]")
 
             return df
 
         except Exception as e:
             logger.error(f"Error analyzing funding opportunities: {e}")
+            logger.error("Error details:", exc_info=True)
             return pd.DataFrame()
 
     def analyze_arbitrage_opportunities(self, comparison_df: pd.DataFrame) -> List[Dict]:

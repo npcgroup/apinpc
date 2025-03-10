@@ -966,3 +966,141 @@ TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
 2025-03-05 12:08:03,487 - __main__ - INFO - Predicted rates shape: Empty
 2025-03-05 12:08:03,487 - __main__ - INFO - Fetching Hyperliquid rates first...
 2025-03-05 12:08:03,491 - __main__ - ERROR - Error in fetch_data: module 'ccxt' has no attribute 'hyperliquid'
+2025-03-07 17:53:38,231 - __main__ - ERROR - Error fetching predicted rates: name 'connect_to_supabase' is not defined
+2025-03-07 17:53:38,231 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 77, in get_predicted_rates
+    supabase = connect_to_supabase(use_service_role=False)
+NameError: name 'connect_to_supabase' is not defined
+2025-03-07 17:53:38,234 - __main__ - INFO - Predicted rates shape: Empty
+2025-03-07 17:53:38,234 - __main__ - ERROR - No predicted rates found
+2025-03-07 17:59:40,744 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:40,745 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 85, in get_predicted_rates
+    supabase = create_client(supabase_url, supabase_key)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:40,747 - __main__ - INFO - Predicted rates shape: Empty
+2025-03-07 17:59:40,747 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-03-07 17:59:40,750 - __main__ - WARNING - Retry 1/3 for fetch_data due to error: module 'ccxt' has no attribute 'hyperliquid'
+2025-03-07 17:59:45,756 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:45,756 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 85, in get_predicted_rates
+    supabase = create_client(supabase_url, supabase_key)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:45,756 - __main__ - INFO - Predicted rates shape: Empty
+2025-03-07 17:59:45,756 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-03-07 17:59:45,762 - __main__ - WARNING - Retry 2/3 for fetch_data due to error: module 'ccxt' has no attribute 'hyperliquid'
+2025-03-07 17:59:50,767 - __main__ - ERROR - Error fetching predicted rates: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:50,767 - __main__ - ERROR - Error details:
+Traceback (most recent call last):
+  File "/Users/shaanp/Documents/GitHub/apinpc/src/scripts/funding_streamlit_app_stable.py", line 85, in get_predicted_rates
+    supabase = create_client(supabase_url, supabase_key)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 338, in create_client
+    return SyncClient.create(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 102, in create
+    client = cls(supabase_url, supabase_key, options)
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 79, in __init__
+    self.auth = self._init_supabase_auth_client(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/client.py", line 250, in _init_supabase_auth_client
+    return SyncSupabaseAuthClient(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/supabase/_sync/auth_client.py", line 31, in __init__
+    SyncGoTrueClient.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_client.py", line 101, in __init__
+    SyncGoTrueBaseAPI.__init__(
+  File "/Users/shaanp/Documents/GitHub/apinpc/venv/lib/python3.10/site-packages/gotrue/_sync/gotrue_base_api.py", line 28, in __init__
+    self._http_client = http_client or SyncClient(
+TypeError: Client.__init__() got an unexpected keyword argument 'proxy'
+2025-03-07 17:59:50,769 - __main__ - INFO - Predicted rates shape: Empty
+2025-03-07 17:59:50,769 - __main__ - INFO - Fetching Hyperliquid rates first...
+2025-03-07 17:59:50,778 - __main__ - ERROR - All 3 retries failed with error: module 'ccxt' has no attribute 'hyperliquid'
+2025-03-07 18:44:32,735 - __main__ - INFO - Fetching predicted rates from Supabase...
+2025-03-07 18:44:34,437 - __main__ - INFO - 
+=== Raw Data ===
+2025-03-07 18:44:34,437 - __main__ - INFO - Total records: 1000
+2025-03-07 18:44:34,440 - __main__ - INFO - Unique assets: 186
+2025-03-07 18:44:34,440 - __main__ - INFO - Unique exchanges: ['HlPerp', 'BinPerp', 'BybitPerp']
+2025-03-07 18:44:34,457 - __main__ - INFO - 
+=== Final Predictions (Normalized) ===
+2025-03-07 18:44:34,457 - __main__ - INFO - Total predictions: 350
+2025-03-07 18:44:34,458 - __main__ - INFO - 
+Binance predictions: 164
+2025-03-07 18:44:34,458 - __main__ - INFO - Sample Binance predictions (normalized):
+2025-03-07 18:44:34,459 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.00028030000000000004, 'next_funding_time': Timestamp('2025-03-08 00:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-03-08 00:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.0026407999999999996, 'next_funding_time': Timestamp('2025-03-08 00:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': -0.00031539999999999997, 'next_funding_time': Timestamp('2025-03-08 00:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': 0.0005, 'next_funding_time': Timestamp('2025-03-08 00:00:00+0000', tz='UTC')}]
+2025-03-07 18:44:34,459 - __main__ - INFO - Normalized rate range: -0.049024 to 0.001000
+2025-03-07 18:44:34,459 - __main__ - INFO - 
+Hyperliquid predictions: 186
+2025-03-07 18:44:34,459 - __main__ - INFO - Sample Hyperliquid predictions (normalized):
+2025-03-07 18:44:34,460 - __main__ - INFO - [{'symbol': 'AAVE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-03-07 23:00:00+0000', tz='UTC')}, {'symbol': 'ACE', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-03-07 23:00:00+0000', tz='UTC')}, {'symbol': 'ADA', 'predicted_rate': -0.01122111, 'next_funding_time': Timestamp('2025-03-07 23:00:00+0000', tz='UTC')}, {'symbol': 'AI', 'predicted_rate': 0.00125, 'next_funding_time': Timestamp('2025-03-07 23:00:00+0000', tz='UTC')}, {'symbol': 'AI16Z', 'predicted_rate': -0.00098856, 'next_funding_time': Timestamp('2025-03-07 23:00:00+0000', tz='UTC')}]
+2025-03-07 18:44:34,460 - __main__ - INFO - Normalized rate range: -0.117858 to 0.089925
+2025-03-07 18:44:34,460 - __main__ - INFO - Successfully fetched 350 predicted rates from Supabase
+2025-03-07 18:44:34,460 - __main__ - INFO - Predicted rates shape: (350, 6)
+2025-03-07 18:44:34,460 - __main__ - INFO - Predicted rates exchanges: ['Binance', 'Hyperliquid']
+2025-03-07 18:44:34,461 - __main__ - INFO - Sample predicted rates: [{'symbol': 'AAVE', 'exchange': 'Binance', 'predicted_rate': 0.00028030000000000004}, {'symbol': 'AAVE', 'exchange': 'Hyperliquid', 'predicted_rate': 0.00125}, {'symbol': 'ACE', 'exchange': 'Binance', 'predicted_rate': 0.0005}]
+2025-03-07 18:44:34,461 - __main__ - INFO - Fetching current rates from exchanges...
+2025-03-07 18:46:19,926 - __main__ - INFO - Successfully fetched 587 current rates from exchanges
+2025-03-07 18:46:19,926 - __main__ - INFO - Current rates exchanges: ['Hyperliquid', 'Binance']
+2025-03-07 18:46:19,927 - __main__ - INFO - Sample current rates: [{'symbol': 'BTC', 'exchange': 'Hyperliquid', 'funding_rate': 1.25e-05}, {'symbol': 'ETH', 'exchange': 'Hyperliquid', 'funding_rate': -1.2968e-05}, {'symbol': 'ATOM', 'exchange': 'Hyperliquid', 'funding_rate': -5.2071e-05}]
+2025-03-07 18:46:19,930 - __main__ - INFO - Merging current and predicted rates...
+2025-03-07 18:46:19,934 - __main__ - INFO - Merged data shape: (587, 14)
+2025-03-07 18:46:19,934 - __main__ - INFO - Matched predictions: 344 out of 587
+2025-03-07 18:46:19,943 - __main__ - INFO - Successfully processed 587 rows
+2025-03-07 18:46:19,943 - __main__ - INFO - Columns after processing: ['exchange', 'symbol', 'funding_rate', 'predicted_rate', 'next_funding_time', 'mark_price', 'payment_interval', 'annualized_rate', 'direction', 'rate_diff', 'time_to_funding', 'opportunity_score']
+2025-03-07 18:46:19,945 - __main__ - INFO - Top 5 opportunities: [{'symbol': 'HPOS', 'exchange': 'Hyperliquid', 'funding_rate': 0.08672068, 'predicted_rate': 0.08992483999999999, 'opportunity_score': 0.23}, {'symbol': 'REZ', 'exchange': 'Hyperliquid', 'funding_rate': -0.11396707, 'predicted_rate': -0.11785755, 'opportunity_score': 0.23}, {'symbol': 'REZ', 'exchange': 'Binance', 'funding_rate': -0.046057499999999994, 'predicted_rate': -0.0490236, 'opportunity_score': 0.18}, {'symbol': 'CELO', 'exchange': 'Hyperliquid', 'funding_rate': -0.006599300000000001, 'predicted_rate': -0.00561319, 'opportunity_score': 0.09}, {'symbol': 'REQ', 'exchange': 'Hyperliquid', 'funding_rate': -0.00851172, 'predicted_rate': -0.00752174, 'opportunity_score': 0.08}]
+2025-03-07 18:46:19,946 - __main__ - INFO - Data cached to funding_data_cache.pkl
+2025-03-07 18:46:20,194 - __main__ - INFO - Preparing market data for Supabase...
+2025-03-07 18:46:20,207 - __main__ - INFO - Pushing 587 market records to Supabase...
+2025-03-07 18:46:21,606 - __main__ - INFO - Pushed batch 1 with 100 market records
+2025-03-07 18:46:22,342 - __main__ - INFO - Pushed batch 2 with 100 market records
+2025-03-07 18:46:22,978 - __main__ - INFO - Pushed batch 3 with 100 market records
+2025-03-07 18:46:23,549 - __main__ - INFO - Pushed batch 4 with 100 market records
+2025-03-07 18:46:23,907 - __main__ - INFO - Pushed batch 5 with 100 market records
+2025-03-07 18:46:24,392 - __main__ - INFO - Pushed batch 6 with 87 market records
+2025-03-07 18:46:24,392 - __main__ - INFO - Successfully pushed 587/587 market records to Supabase
+2025-03-07 18:46:24,931 - __main__ - INFO - Successfully pushed statistics to Supabase
+2025-03-07 18:46:25,937 - __main__ - INFO - Successfully pushed 587 top opportunities to Supabase
+2025-03-07 18:46:26,210 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/Apple Color Emoji.ttc: In FT2Font: Could not set the fontsize (invalid pixel size; error code 0x17)
+2025-03-07 18:46:26,247 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/LastResort.otf: tuple indices must be integers or slices, not str
+2025-03-07 18:46:26,342 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/Supplemental/NISC18030.ttf: In FT2Font: Could not set the fontsize (invalid pixel size; error code 0x17)
+2025-03-07 18:46:26,463 - matplotlib.font_manager - INFO - generated new fontManager
+2025-03-07 18:48:31,562 - __main__ - INFO - Using cached data (131.6 seconds old)
+2025-03-07 18:48:31,787 - __main__ - INFO - Preparing market data for Supabase...
+2025-03-07 18:48:31,801 - __main__ - INFO - Pushing 587 market records to Supabase...
+2025-03-07 18:48:33,515 - __main__ - INFO - Pushed batch 1 with 100 market records
+2025-03-07 18:48:34,254 - __main__ - INFO - Pushed batch 2 with 100 market records
+2025-03-07 18:48:34,820 - __main__ - INFO - Pushed batch 3 with 100 market records
+2025-03-07 18:48:35,390 - __main__ - INFO - Pushed batch 4 with 100 market records
+2025-03-07 18:48:35,990 - __main__ - INFO - Pushed batch 5 with 100 market records
+2025-03-07 18:48:36,584 - __main__ - INFO - Pushed batch 6 with 87 market records
+2025-03-07 18:48:36,584 - __main__ - INFO - Successfully pushed 587/587 market records to Supabase
+2025-03-07 18:48:36,918 - __main__ - INFO - Successfully pushed statistics to Supabase
+2025-03-07 18:48:37,890 - __main__ - INFO - Successfully pushed 587 top opportunities to Supabase

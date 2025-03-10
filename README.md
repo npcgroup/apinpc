@@ -1,225 +1,104 @@
-# Advanced Protocol Intelligence and Analytics
+# Crypto Funding Rate Analysis Platform
 
-A sophisticated suite of trading strategies and analytics tools for cryptocurrency protocols, focusing on market microstructure, risk management, and protocol optimization.
+This repository contains tools for analyzing cryptocurrency funding rates and price data to identify trading opportunities and market regimes.
 
 ## Overview
 
-This system implements a collection of advanced trading strategies and analysis tools designed to:
-- Monitor and analyze market microstructure
-- Detect trading opportunities and risks
-- Optimize protocol parameters
-- Provide real-time market intelligence
-- Generate actionable trading signals
+The platform consists of several components:
+- Data collection scripts for funding rates and price history
+- Streamlit dashboards for visualizing and analyzing the data
+- Supabase database for storing and querying the data
 
-## Core Components
+## Features
 
-### Base Strategy Framework
-The system is built on an extensible base strategy framework (`BaseStrategy`) that provides:
-- Standardized initialization and execution flows
-- Consistent data access patterns
-- Unified logging and monitoring
-- Configurable parameters and settings
-- Result persistence and analysis
+- **Funding Rate Analysis**: Track and analyze funding rates across multiple exchanges
+- **Price-Funding Correlation**: Analyze the relationship between price movements and funding rates
+- **Term Structure Analysis**: Visualize the term structure of funding rates
+- **Volatility Clustering**: Identify periods of high volatility
+- **Arbitrage Efficiency**: Analyze arbitrage opportunities between exchanges
+- **Funding Reversals**: Detect when funding rates reverse direction
 
-### Strategy Runner
-A robust execution engine (`StrategyRunner`) that:
-- Manages concurrent strategy execution
-- Handles error recovery and retries
-- Provides graceful shutdown mechanisms
-- Monitors strategy performance
-- Coordinates data flow between strategies
+## Getting Started
 
-## Implemented Strategies
+### Prerequisites
 
-### 1. Markov Regime Funding Strategy
-Analyzes funding rate regimes using Markov chain models.
+- Python 3.8+
+- Supabase account
+- API keys for supported exchanges (Binance, Hyperliquid)
 
-**Key Features:**
-- Regime state identification
-- Transition probability calculation
-- Confidence-based predictions
-- Historical pattern analysis
-- Regime stability metrics
+### Installation
 
-**Configuration Parameters:**
-- `lookbackPeriodDays`: Historical data window 
-- `minSampleSize`: Minimum required data points
-- `regimeCount`: Number of distinct regimes
-- `confidenceThreshold`: Minimum prediction confidence
-- `assets`: Target trading pairs
-
-### 2. Liquidity Impact Strategy
-Analyzes market impact and liquidity conditions.
-
-**Key Features:**
-- Trade size analysis by quintiles
-- Price impact calculation
-- Liquidity scoring
-- Market impact regime detection
-- Volume-price impact correlation
-
-**Configuration Parameters:**
-- `tradeQuintiles`: Size-based trade categories
-- `impactWindowMinutes`: Analysis timeframe
-- `minTradeCount`: Minimum sample size
-- `significanceLevel`: Impact threshold
-- `assets`: Monitored assets
-
-### 3. Cross-Exchange Arbitrage Strategy
-Identifies and analyzes funding rate arbitrage opportunities across exchanges.
-
-**Key Features:**
-- Multi-exchange rate comparison
-- Liquidity-adjusted profitability
-- Risk-adjusted opportunity scoring
-- Market efficiency metrics
-- Real-time opportunity detection
-
-**Configuration Parameters:**
-- `assets`: Tradeable assets
-- `exchanges`: Target exchanges
-- `minProfitThreshold`: Minimum profitable spread
-- `maxSlippageTolerance`: Maximum acceptable slippage
-- `minLiquidityRequired`: Minimum required liquidity
-- `rebalanceThreshold`: Position adjustment trigger
-
-### 4. Funding Volatility Strategy
-Analyzes volatility clustering in funding rates.
-
-**Key Features:**
-- Volatility cluster identification
-- Stress event detection
-- Pattern persistence analysis
-- Risk level assessment
-- Early warning signals
-
-**Configuration Parameters:**
-- `lookbackDays`: Historical window
-- `volatilityThreshold`: Cluster detection threshold
-- `clusterMinSize`: Minimum cluster size
-- `stressEventThreshold`: Stress level indicator
-- `assets`: Monitored assets
-
-### 5. Basis Trading Strategy
-Analyzes and optimizes basis trading opportunities.
-
-**Key Features:**
-- Historical basis analysis
-- Market efficiency scoring
-- Liquidity-adjusted signals
-- Risk-reward optimization
-- Cross-venue basis comparison
-
-**Configuration Parameters:**
-- `assets`: Tradeable assets
-- `exchanges`: Target venues
-- `minBasisThreshold`: Minimum basis spread
-- `lookbackPeriodHours`: Analysis window
-- `minSpotLiquidity`: Minimum spot market depth
-- `minPerpLiquidity`: Minimum perpetual market depth
-- `rebalanceThreshold`: Position adjustment trigger
-
-### 6. Liquidation Cascade Strategy
-Predicts and analyzes potential liquidation cascades.
-
-**Key Features:**
-- Historical cascade pattern recognition
-- Risk position monitoring
-- Cascade probability calculation
-- Impact estimation
-- Early warning system
-
-**Configuration Parameters:**
-- `lookbackPeriodHours`: Historical window
-- `minCascadeSize`: Minimum cascade events
-- `priceImpactThreshold`: Impact significance level
-- `liquidationThreshold`: Risk position trigger
-- `riskWindowMinutes`: Forward-looking window
-
-### 7. Margin Health Strategy
-Analyzes and forecasts margin health metrics.
-
-**Key Features:**
-- Position health scoring
-- Margin ratio forecasting
-- Volatility risk assessment
-- Early warning indicators
-- Portfolio risk analysis
-
-**Configuration Parameters:**
-- `lookbackPeriodHours`: Analysis window
-- `marginThresholds`: Health level definitions
-- `volatilityWindowSize`: Volatility calculation period
-- `forecastHorizonMinutes`: Prediction timeframe
-- `confidenceLevel`: Forecast confidence threshold
-
-### 8. Cross-Margin Efficiency Strategy
-Optimizes margin utilization across assets and positions.
-
-**Key Features:**
-- Correlation-based risk analysis
-- Dynamic margin optimization
-- Portfolio rebalancing recommendations
-- Efficiency scoring
-- Risk-adjusted position sizing
-
-**Configuration Parameters:**
-- `minMarginRatio`: Minimum required margin
-- `targetMarginRatio`: Optimal margin level
-- `rebalanceThreshold`: Rebalancing trigger
-- `correlationWindow`: Correlation calculation period
-- `riskLimits`: Position and portfolio constraints
-
-## Usage
-
-1. Configure strategy parameters in the environment file
-2. Initialize the StrategyRunner with desired strategies
-3. Start the runner to begin real-time analysis
-4. Monitor signals and metrics through the logging system
-5. Act on strategy recommendations as needed
-
-```typescript
-const runner = new StrategyRunner({
-  supabaseUrl: process.env.SUPABASE_URL!,
-  supabaseKey: process.env.SUPABASE_KEY!,
-  strategies: [
-    new MarkovRegimeFundingStrategy(config1, supabaseClient),
-    new LiquidityImpactStrategy(config2, supabaseClient),
-    // Add other strategies as needed
-  ],
-  executionIntervalMs: 5 * 60 * 1000, // Run every 5 minutes
-  errorRetryCount: 3,
-  errorRetryDelayMs: 30 * 1000
-});
-
-await runner.start();
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/crypto-funding-analysis.git
+cd crypto-funding-analysis
 ```
 
-## Data Requirements
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-The system requires access to the following data:
-- Real-time and historical price data
-- Order book snapshots and updates
-- Trading volume and liquidity metrics
-- Funding rates and basis data
-- Position and margin information
-- Market impact and slippage data
+3. Set up environment variables:
+Create a `.env` file with the following variables:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_KEY=your_supabase_key
+```
 
-## Dependencies
+4. Create the required database tables:
+```bash
+psql -h your_supabase_host -d postgres -U postgres -f src/scripts/create_price_history_table.sql
+```
 
-- Node.js 16+
-- TypeScript 4.5+
-- Supabase for data persistence
-- Various market data APIs
+### Usage
+
+#### Data Collection
+
+To collect funding rate data:
+```bash
+python src/scripts/funding_streamlit_app_stable.py --collect-only
+```
+
+To collect price history data:
+```bash
+python src/scripts/populate_price_history.py --days 30 --exchange both
+```
+
+#### Running the Dashboard
+
+To run the funding strategy dashboard:
+```bash
+streamlit run src/scripts/funding_strategy_dashboard.py
+```
+
+## Dashboard Components
+
+### Funding Analysis
+- Visualize funding rates over time
+- Compare funding rates across exchanges
+- Identify coins with extreme funding rates
+
+### Term Structure
+- Analyze the term structure of funding rates
+- Identify contango and backwardation
+
+### Volatility Clustering
+- Identify periods of high volatility
+- Analyze the relationship between volatility and funding rates
+
+### Arbitrage Efficiency
+- Analyze arbitrage opportunities between exchanges
+- Track the efficiency of funding rate arbitrage
+
+### Funding Reversals
+- Detect when funding rates reverse direction
+- Analyze the impact of funding reversals on price
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Add tests if applicable
-5. Submit a pull request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License - See LICENSE file for details
+This project is licensed under the MIT License - see the LICENSE file for details.

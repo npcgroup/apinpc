@@ -1,0 +1,13 @@
+2025-03-07 18:23:59,261 - __main__ - INFO - Fetching historical funding rates from 2025-03-06 18:23:59.261599 to 2025-03-07 18:23:59.261599
+2025-03-07 18:24:00,644 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/hyperliquid_historical_funding?select=count&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 18:24:00,644 - __main__ - WARNING - Table hyperliquid_historical_funding might not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.hyperliquid_historical_funding" does not exist'}
+2025-03-07 18:24:00,946 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/_dummy?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 18:24:00,947 - __main__ - ERROR - Error creating table: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public._dummy" does not exist'}
+2025-03-07 18:24:00,947 - __main__ - ERROR - Failed to ensure Supabase table exists, exiting
+2025-03-07 18:24:39,936 - __main__ - INFO - Fetching historical funding rates from 2025-03-06 18:24:39.936383 to 2025-03-07 18:24:39.936383
+2025-03-07 18:24:40,847 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/hyperliquid_historical_funding?select=count&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 18:24:40,848 - __main__ - WARNING - Table hyperliquid_historical_funding might not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.hyperliquid_historical_funding" does not exist'}
+2025-03-07 18:24:41,491 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/hyperliquid_historical_funding "HTTP/2 404 Not Found"
+2025-03-07 18:24:41,491 - __main__ - ERROR - Error creating table: {}
+2025-03-07 18:24:41,491 - __main__ - ERROR - Please create the table manually using the SQL script
+2025-03-07 18:24:41,491 - __main__ - ERROR - Failed to ensure Supabase table exists, exiting

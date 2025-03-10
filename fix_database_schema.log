@@ -1,0 +1,50 @@
+2025-03-07 20:22:12,538 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:22:12,538 - __main__ - INFO - Starting database schema fix
+2025-03-07 20:22:13,509 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:22:13,509 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:22:14,039 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 20:22:14,040 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 20:22:14,040 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:22:14,040 - __main__ - INFO - Database schema fix completed
+2025-03-07 20:34:12,402 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:34:12,402 - __main__ - INFO - Starting database schema fix
+2025-03-07 20:34:15,341 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:34:15,341 - __main__ - INFO - Starting database schema fix
+2025-03-07 20:34:16,237 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:34:16,238 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:34:16,792 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 20:34:16,793 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 20:34:16,793 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:34:16,793 - __main__ - INFO - Database schema fix completed
+2025-03-07 20:41:33,724 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 20:41:33,724 - __main__ - INFO - Starting database schema fix
+2025-03-07 20:41:34,745 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 20:41:34,746 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 20:41:35,054 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 20:41:35,055 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 20:41:35,055 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 20:41:35,056 - __main__ - INFO - Database schema fix completed
+2025-03-07 21:51:02,895 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 21:51:02,895 - __main__ - INFO - Starting database schema fix
+2025-03-07 21:51:04,136 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 21:51:04,137 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 21:51:04,472 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 21:51:04,474 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 21:51:04,474 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 21:51:04,475 - __main__ - INFO - Database schema fix completed
+2025-03-07 22:01:58,924 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 22:01:58,925 - __main__ - INFO - Starting database schema fix
+2025-03-07 22:01:59,818 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 22:01:59,819 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 22:02:00,130 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 22:02:00,131 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 22:02:00,132 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 22:02:00,132 - __main__ - INFO - Database schema fix completed
+2025-03-07 22:15:06,965 - __main__ - INFO - Supabase client initialized successfully
+2025-03-07 22:15:06,965 - __main__ - INFO - Starting database schema fix
+2025-03-07 22:15:07,826 - httpx - INFO - HTTP Request: GET https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/crypto_price_history?select=%2A&limit=1 "HTTP/2 404 Not Found"
+2025-03-07 22:15:07,827 - __main__ - WARNING - Table crypto_price_history does not exist: {'code': '42P01', 'details': None, 'hint': None, 'message': 'relation "public.crypto_price_history" does not exist'}
+2025-03-07 22:15:08,134 - httpx - INFO - HTTP Request: POST https://llanxjeohlxpnndhqbdp.supabase.co/rest/v1/rpc/exec_sql "HTTP/2 404 Not Found"
+2025-03-07 22:15:08,135 - __main__ - ERROR - Error creating crypto_price_history table: {'code': 'PGRST202', 'details': 'Searched for the function public.exec_sql with parameter sql or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.', 'hint': None, 'message': 'Could not find the function public.exec_sql(sql) in the schema cache'}
+2025-03-07 22:15:08,135 - __main__ - ERROR - Failed to create crypto_price_history table
+2025-03-07 22:15:08,135 - __main__ - INFO - Database schema fix completed
